@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "fourteen-karat",
+    "prod": "fourteen-karat",
+    "dev": "fourteen-karat-dev"
+  },
+  "targets": {},
+  "etags": {}
+}
