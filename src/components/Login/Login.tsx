@@ -59,7 +59,7 @@ function Login() {
           <div className='ImageContainer'></div>
           <div className='FormContainer'>
             <div className='Header'>
-              <Logo size='large' />
+              <Logo />
             </div>
             <div className="Body">
               <div className="ui form">

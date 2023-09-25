@@ -24,7 +24,6 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
     <div className={`ui sidebar inverted vertical menu visible ${collapsed ? 'collapsed' : ''}`}>
       <div className="Header">
         <Logo
-          size={collapsed ? 'small' : 'medium'}
           interactive
           onClick={() => navigate('/')}
         />

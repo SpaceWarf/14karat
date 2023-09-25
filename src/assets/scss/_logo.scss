@@ -8,30 +8,10 @@
   }
 
   .LogoIcon {
-    &.small {
-      width: 40px;
-    }
-
-    &.medium {
-      width: 60px;
-    }
-
-    &.large {
-      width: 100px;
-    }
+    width: 75%
   }
 
   .LogoText {
-    &.small {
-      width: 60px;
-    }
-
-    &.medium {
-      width: 100px;
-    }
-
-    &.large {
-      width: 175px;
-    }
+    width: 100%
   }
 }
