@@ -2,6 +2,8 @@ import { AnyAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import profileReducer from "./reducers/profile";
 import divisions from "./reducers/divisions";
 import roles from "./reducers/roles";
+import driverStrats from "./reducers/driverStrats";
+import neighbourhoods from "./reducers/neighbourhoods";
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === 'RESET') {
@@ -12,6 +14,8 @@ const rootReducer = (state: any, action: AnyAction) => {
     profile: profileReducer,
     divisions: divisions,
     roles: roles,
+    driverStrats: driverStrats,
+    neighbourhoods: neighbourhoods,
   })(state, action);
 }
 

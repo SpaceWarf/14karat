@@ -1,0 +1,76 @@
+@import "../../assets/scss/index";
+
+.DriverStrats {
+  .content {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+
+    .segments {
+      width: 500px;
+
+      .segment {
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+          background-color: lightgray;
+        }
+      }
+    }
+  }
+}
+
+.NeighbourghoodGallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  .content {
+    width: 1300px;
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 5px 10px 5px;
+
+      p {
+        cursor: pointer;
+        margin: 0;
+
+        &:hover {
+          text-decoration: underline;
+
+          i {
+            text-decoration: none;
+          }
+        }
+      }
+
+      .button {
+        width: 300px;
+
+        &.hover-animation {
+          .label {
+            width: 65px;
+          }
+
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 90px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 90px) / 2);
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ import NotFound from './components/NotFound/NotFound';
 import Profile from './components/Profile/Profile';
 import PageLayout from './components/PageLayout/PageLayout';
 import Employees from './components/Employees/Employees';
+import DriverStrats from './components/DriverStrats/DriverStrats';
+import NeighbourghoodGallery from './components/DriverStrats/NeighbourhoodGallery';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route element={<ProtectedRoute><PageLayout /></ProtectedRoute>}>
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
+            <Route path='/driver-strats' element={<DriverStrats />} />
+            <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             <Route element={<AdminRoute />}>
               <Route path='/roster' element={<Employees />} />
             </Route>

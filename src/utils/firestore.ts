@@ -4,10 +4,14 @@ import { ProfileInfo } from "../redux/reducers/profile";
 import { Unsubscribe } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
+import { DriverStrats } from "../redux/reducers/driverStrats";
+import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 
 const profilesRef = collection(db, "profiles");
 const rolesRef = collection(db, "roles");
 const divisionRef = collection(db, "divisions");
+const driverStratsRef = collection(db, "driver-strats");
+const neighbourhoodsRef = collection(db, "neighbourhoods");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -66,4 +70,22 @@ export async function getRoles(): Promise<Role[]> {
     roles.push({ id: doc.id, ...doc.data() });
   });
   return roles;
+}
+
+export async function getDriverStrats(): Promise<DriverStrats[]> {
+  const snapshot = await getDocs(driverStratsRef);
+  const driverStrats: DriverStrats[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    driverStrats.push({ id: doc.id, ...doc.data() });
+  });
+  return driverStrats;
+}
+
+export async function getNeighbourhoods(): Promise<Neighbourhood[]> {
+  const snapshot = await getDocs(neighbourhoodsRef);
+  const neighbourhood: Neighbourhood[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    neighbourhood.push({ id: doc.id, ...doc.data() });
+  });
+  return neighbourhood;
 }
