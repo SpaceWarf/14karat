@@ -21,6 +21,22 @@
         }
       }
     }
+
+    .button.hover-animation {
+      .label {
+        width: 65px;
+      }
+
+      &:hover:not(:disabled) {
+        .label {
+          left: calc((100% - 90px) / 2);
+        }
+
+        .IconContainer {
+          right: calc((100% - 90px) / 2);
+        }
+      }
+    }
   }
 }
 
@@ -72,5 +88,15 @@
         }
       }
     }
+  }
+}
+
+.NewStratModal {
+  .ui.form .input.field {
+    margin-top: 20px;
+  }
+
+  .small {
+    margin: 10px 0 0 0;
   }
 }

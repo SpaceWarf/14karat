@@ -5,6 +5,8 @@ import { getDriverStratsByNeighbourhood } from "../../redux/selectors/driversStr
 import { RootState } from "../../redux/store";
 import VideoGallery from "../Common/VideoGallery";
 import { useNavigate, useParams } from "react-router-dom";
+import NewStratModal from "./NewStratModal";
+import { DriverStrat } from "../../redux/reducers/driverStrats";
 
 function NeighbourghoodGallery() {
   const { neighbourhood } = useParams();
@@ -22,24 +24,23 @@ function NeighbourghoodGallery() {
     }
   }
 
-  const handleAddNew = () => {
-    console.log("Add New")
+  const getOrderedEmbeds = () => {
+    return (driverStratsMap.get(neighbourhood) || [])
+      .sort((a: DriverStrat, b: DriverStrat) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      .map((strat: DriverStrat) => strat.embed);
   }
 
   return (
     <div className="NeighbourghoodGallery">
-      <Header text={`${getNeighbourhoodFromParams()} Gallery`} decorated />
+      <Header text={`${getNeighbourhoodFromParams()} Strats`} decorated />
       <div className="content">
         <div className="actions">
           <p onClick={() => navigate('/driver-strats')}><i className='arrow left icon' /> back</p>
-          <div>
-            <button className="ui button positive hover-animation" onClick={handleAddNew}>
-              <p className='label contrast'>Add New</p>
-              <p className='IconContainer contrast'><i className='add icon'></i></p>
-            </button>
-          </div>
+          {neighbourhood && <NewStratModal neighbourhood={neighbourhood} />}
         </div>
-        <VideoGallery embeds={driverStratsMap.get(neighbourhood) || []}></VideoGallery>
+        <VideoGallery embeds={getOrderedEmbeds()}></VideoGallery>
       </div>
     </div>
   );

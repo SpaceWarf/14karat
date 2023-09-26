@@ -6,6 +6,7 @@ import { getDriverStratsByNeighbourhood } from "../../redux/selectors/driversStr
 import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import map from '../../assets/images/neighbourhoods-map.png';
+import NewStratModal from "./NewStratModal";
 
 function DriverStrats() {
   const navigate = useNavigate();
@@ -22,11 +23,15 @@ function DriverStrats() {
       <div className="content">
         <img src={map} alt="Map" />
         <div>
+          <NewStratModal neighbourhood={neighbourhoods[0].id} />
           <Segment.Group>
-            {neighbourhoods.map(({ id, name }) => {
-              const count = getStratCountForNeighbourhood(id);
-              return count ? <Segment onClick={() => navigate(`/driver-strats/${id}`)}>{name} ({count})</Segment> : <></>
-            })}
+            {[...neighbourhoods]
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(({ id, name }) => {
+                const count = getStratCountForNeighbourhood(id);
+                return count ? <Segment onClick={() => navigate(`/driver-strats/${id}`)}>{name} ({count})</Segment> : <></>
+              })
+            }
           </Segment.Group>
         </div>
       </div>

@@ -316,6 +316,7 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
                 readonly={!isAdmin}
                 options={getRolesDropdownOptions()}
                 value={profileRoles}
+                clearable
                 onChange={handleChangeRole}
               />
             </div>

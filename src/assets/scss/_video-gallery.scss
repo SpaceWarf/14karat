@@ -9,6 +9,11 @@
       background-color: lightgray;
       max-width: 640px;
       max-height: 360px;
+
+      iframe {
+        width: 640px;
+        height: 360px;
+      }
     }
   }
 

@@ -7,25 +7,27 @@ export interface DropdownOption {
   value: any;
 }
 
-interface InputProps {
+interface DropdownProps {
   placeholder: string,
   multiple?: boolean,
   disabled?: boolean,
   readonly?: boolean,
   options: DropdownOption[],
   value: string | string[],
+  clearable?: boolean,
   onChange: (e: SyntheticEvent, data: any) => void;
 }
 
-function Input({
+function CustomDropdown({
   placeholder,
   multiple,
   disabled,
   readonly,
   options,
   value,
+  clearable,
   onChange,
-}: InputProps) {
+}: DropdownProps) {
   const [showCopyLabel, setShowCopyLabel] = useState(false);
 
   function handleClick() {
@@ -38,12 +40,10 @@ function Input({
           copyValue = selectedOption.text;
         }
       } else {
-        console.log(options, value)
         const selectedOptions = options
           .filter(option => value.indexOf(option.key) >= 0)
           .map(option => option.text);
         if (selectedOptions.length > 0) {
-          console.log(selectedOptions)
           copyValue = selectedOptions.join(', ');
         }
       }
@@ -65,7 +65,7 @@ function Input({
         selection
         search
         multiple={multiple}
-        clearable={!disabled && !readonly}
+        clearable={clearable && !disabled && !readonly}
         disabled={disabled || readonly}
         options={options}
         value={value}
@@ -80,4 +80,4 @@ function Input({
   );
 }
 
-export default Input;
+export default CustomDropdown;
