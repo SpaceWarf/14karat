@@ -23,7 +23,7 @@ function DriverStrats() {
       <div className="content">
         <img src={map} alt="Map" />
         <div>
-          <NewStratModal neighbourhood={neighbourhoods[0].id} />
+          <NewStratModal neighbourhood={neighbourhoods.length ? neighbourhoods[0].id : ""} />
           <Segment.Group>
             {[...neighbourhoods]
               .sort((a, b) => a.name.localeCompare(b.name))
