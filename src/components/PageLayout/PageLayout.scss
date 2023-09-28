@@ -5,6 +5,7 @@
   overflow: scroll;
 
   .PageContent {
+    height: 100%;
     margin-left: $sidebar-width;
     padding: 20px;
     transition: margin 0.2s ease-in-out !important;

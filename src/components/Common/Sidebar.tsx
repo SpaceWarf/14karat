@@ -31,6 +31,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
       <div className="Nav">
         <SidebarItem name='Dashboard' icon='chart bar' path='/' onClick={() => navigate('/')} />
         <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
+        <SidebarItem name='Stash Search' icon='search' path='/stash-search' onClick={() => navigate('/stash-search')} />
         {isAdmin && (
           <div className='AdminRoutes'>
             <div className='Divider'></div>

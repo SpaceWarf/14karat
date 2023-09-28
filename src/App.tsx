@@ -9,6 +9,7 @@ import PageLayout from './components/PageLayout/PageLayout';
 import Employees from './components/Employees/Employees';
 import DriverStrats from './components/DriverStrats/DriverStrats';
 import NeighbourghoodGallery from './components/DriverStrats/NeighbourhoodGallery';
+import StashSearch from './components/StashSearch/StashSearch';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path='/profile' element={<Profile />} />
             <Route path='/driver-strats' element={<DriverStrats />} />
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
+            <Route path='/stash-search' element={<StashSearch />} />
             <Route element={<AdminRoute />}>
               <Route path='/roster' element={<Employees />} />
             </Route>
