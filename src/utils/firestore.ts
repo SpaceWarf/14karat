@@ -88,14 +88,21 @@ export async function getDriverStrats(): Promise<DriverStrat[]> {
   const snapshot = await getDocs(driverStratsRef);
   const driverStrats: DriverStrat[] = [];
   snapshot.forEach((doc: DocumentData) => {
-    driverStrats.push({ id: doc.id, ...doc.data() });
+    if (!doc.data().deleted) {
+      driverStrats.push({ id: doc.id, ...doc.data() });
+    }
   });
   return driverStrats;
 }
 
-export async function createDriverStrat(neighbourhood: string, embed: string): Promise<DriverStrat> {
+export async function createDriverStrat(neighbourhood: string, embed: string, user: User | null): Promise<DriverStrat> {
   const now = new Date().toISOString();
-  const doc = await addDoc(driverStratsRef, { neighbourhood, embed, createdAt: now });
+  const doc = await addDoc(driverStratsRef, {
+    neighbourhood,
+    embed,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
   return {
     neighbourhood,
     embed,

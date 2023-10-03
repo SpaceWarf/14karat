@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FirestoreEntity } from "../../utils/firestore";
 
-export interface DriverStrat {
+export interface DriverStrat extends FirestoreEntity {
   id: string;
   neighbourhood: string;
   embed: string;
-  createdAt: string;
 }
 
 export interface DriverStratsState {

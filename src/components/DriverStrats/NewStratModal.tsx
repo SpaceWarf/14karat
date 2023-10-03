@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { createDriverStrat } from "../../utils/firestore";
 import { addDriverStrat } from "../../redux/reducers/driverStrats";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface NewStratModalProps {
   neighbourhood: string;
 }
 
 function NewStratModal(props: NewStratModalProps) {
+  const { user } = useAuth();
   const dispatch = useDispatch();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +28,7 @@ function NewStratModal(props: NewStratModalProps) {
 
   const handleAdd = async () => {
     setLoading(true)
-    const createdStrat = await createDriverStrat(selectedNeighbourhood, embed);
+    const createdStrat = await createDriverStrat(selectedNeighbourhood, embed, user);
     dispatch(addDriverStrat(createdStrat))
     setLoading(false)
     setOpen(false)

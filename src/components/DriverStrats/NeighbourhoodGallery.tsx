@@ -27,7 +27,7 @@ function NeighbourghoodGallery() {
   const getOrderedEmbeds = () => {
     return (driverStratsMap.get(neighbourhood) || [])
       .sort((a: DriverStrat, b: DriverStrat) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
       })
       .map((strat: DriverStrat) => strat.embed);
   }
