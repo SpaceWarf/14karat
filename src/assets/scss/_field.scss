@@ -16,6 +16,17 @@
     transition-duration: 0.3s;
   }
 
+  &.textarea .field-label {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    margin: 0;
+    color: $gray-pale;
+    background-color: $background-colour;
+    padding: 0 5px;
+    transition-duration: 0.3s;
+  }
+
   .input {
     border: none !important;
     background-color: transparent !important;
@@ -81,7 +92,8 @@
       color: $red;
     }
 
-    .input {
+    .input,
+    .textarea {
       color: $text-colour !important;
     }
 

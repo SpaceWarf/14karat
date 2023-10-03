@@ -86,3 +86,16 @@ button.hover-animation {
     }
   }
 }
+
+.back-button {
+  cursor: pointer;
+  margin: 0;
+
+  &:hover {
+    text-decoration: underline;
+
+    i {
+      text-decoration: none;
+    }
+  }
+}

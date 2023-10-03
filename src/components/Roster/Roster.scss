@@ -1,14 +1,14 @@
 @import "../../assets/scss/index";
 
-.Employees {
+.Roster {
   height: 100%;
-  
+
   .Division {
-    & > .Header {
+    &>.Header {
       margin-bottom: 20px;
     }
 
-    & > .content {
+    &>.content {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;

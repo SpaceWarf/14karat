@@ -6,12 +6,14 @@ import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
 import { DriverStrat } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
+import { Group } from "../redux/reducers/groups";
 
 const profilesRef = collection(db, "profiles");
 const rolesRef = collection(db, "roles");
 const divisionRef = collection(db, "divisions");
 const driverStratsRef = collection(db, "driver-strats");
 const neighbourhoodsRef = collection(db, "neighbourhoods");
+const groupsRef = collection(db, "groups");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -94,9 +96,22 @@ export async function createDriverStrat(neighbourhood: string, embed: string): P
 
 export async function getNeighbourhoods(): Promise<Neighbourhood[]> {
   const snapshot = await getDocs(neighbourhoodsRef);
-  const neighbourhood: Neighbourhood[] = [];
+  const neighbourhoods: Neighbourhood[] = [];
   snapshot.forEach((doc: DocumentData) => {
-    neighbourhood.push({ id: doc.id, ...doc.data() });
+    neighbourhoods.push({ id: doc.id, ...doc.data() });
   });
-  return neighbourhood;
+  return neighbourhoods;
+}
+
+export async function getGroups(): Promise<Group[]> {
+  const snapshot = await getDocs(groupsRef);
+  const groups: Group[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    groups.push({ id: doc.id, ...doc.data() });
+  });
+  return groups;
+}
+
+export async function updateGroup(id: string, group: Partial<Group>): Promise<void> {
+  await updateDoc(doc(db, "groups", id), { ...group });
 }

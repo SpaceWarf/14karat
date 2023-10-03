@@ -37,7 +37,7 @@ function NeighbourghoodGallery() {
       <Header text={`${getNeighbourhoodFromParams()} Strats`} decorated />
       <div className="content">
         <div className="actions">
-          <p onClick={() => navigate('/driver-strats')}><i className='arrow left icon' /> back</p>
+          <p className="back-button" onClick={() => navigate('/driver-strats')}><i className='arrow left icon' /> back</p>
           {neighbourhood && <NewStratModal neighbourhood={neighbourhood} />}
         </div>
         <VideoGallery embeds={getOrderedEmbeds()}></VideoGallery>

@@ -1,4 +1,4 @@
-import "./Employees.scss";
+import "./Roster.scss";
 import { useEffect, useState } from "react";
 import { getProfiles, onProfilesSnapshot } from "../../utils/firestore";
 import { ProfileInfo } from "../../redux/reducers/profile";
@@ -11,29 +11,29 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Division } from "../../redux/reducers/divisions";
 
-function Employees() {
+function Roster() {
   const { isAdmin } = useAuth();
   const { divisions } = useSelector((state: RootState) => state.divisions);
-  const [employees, setEmployees] = useState([] as ProfileInfo[]);
+  const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfiles = async () => {
       setLoading(true);
       const profiles = await getProfiles();
-      setEmployees(profiles);
-      onProfilesSnapshot((profiles: ProfileInfo[]) => setEmployees(profiles));
+      setMembers(profiles);
+      onProfilesSnapshot((profiles: ProfileInfo[]) => setMembers(profiles));
       setLoading(false);
     }
     fetchProfiles();
   }, []);
 
   function getEmployeesForDivision(division: Division): ProfileInfo[] {
-    return getAlphabeticallyOrdered(employees.filter(employee => employee.division === division.id), 'name');
+    return getAlphabeticallyOrdered(members.filter(member => member.division === division.id), 'name');
   }
 
   return (
-    <div className="Employees">
+    <div className="Roster">
       {loading ? (
         <Loading />
       ) : (
@@ -42,10 +42,10 @@ function Employees() {
             <div className="Division">
               <Header text={division.name} decorated />
               <div className="content">
-                {getEmployeesForDivision(division).map((employee: ProfileInfo) => (
+                {getEmployeesForDivision(division).map((member: ProfileInfo) => (
                   <ProfileCard
-                    key={employee.id}
-                    profile={employee}
+                    key={member.id}
+                    profile={member}
                     editable={isAdmin}
                     nameAsTitle
                   />
@@ -59,4 +59,4 @@ function Employees() {
   );
 }
 
-export default Employees;
+export default Roster;

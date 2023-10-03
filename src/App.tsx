@@ -6,10 +6,12 @@ import { useAuth } from './contexts/AuthContext';
 import NotFound from './components/NotFound/NotFound';
 import Profile from './components/Profile/Profile';
 import PageLayout from './components/PageLayout/PageLayout';
-import Employees from './components/Employees/Employees';
+import Roster from './components/Roster/Roster';
 import DriverStrats from './components/DriverStrats/DriverStrats';
 import NeighbourghoodGallery from './components/DriverStrats/NeighbourhoodGallery';
 import StashSearch from './components/StashSearch/StashSearch';
+import GroupsListing from './components/Groups/GroupsListing';
+import GroupDetails from './components/Groups/GroupDetails';
 
 function App() {
   return (
@@ -24,8 +26,10 @@ function App() {
             <Route path='/driver-strats' element={<DriverStrats />} />
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             <Route path='/stash-search' element={<StashSearch />} />
+            <Route path='/roster' element={<Roster />} />
             <Route element={<AdminRoute />}>
-              <Route path='/roster' element={<Employees />} />
+              <Route path='/groups' element={<GroupsListing />} />
+              <Route path='/groups/:id' element={<GroupDetails />} />
             </Route>
           </Route>
           <Route path='*' element={<Navigate to='/notfound' />} />

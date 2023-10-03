@@ -5,7 +5,8 @@ import {
   getDivisions,
   getRoles,
   getDriverStrats,
-  getNeighbourhoods
+  getNeighbourhoods,
+  getProfiles
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";

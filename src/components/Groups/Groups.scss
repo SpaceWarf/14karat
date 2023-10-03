@@ -1,0 +1,90 @@
+.GroupsListing {
+  &>.content {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+.GroupDetails {
+  .actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .GroupDetailsContainer {
+    display: flex;
+    justify-content: center;
+
+    .ui.card {
+      width: 75%;
+
+      .header {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .Row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+
+        .field {
+          margin-bottom: 20px !important;
+          flex-basis: calc(100% / 3);
+        }
+
+        &.large .field {
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
+}
+
+.GroupCard.ui.card {
+  width: calc(25% - 10px);
+
+  .Details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .DetailsRow {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 5px 0;
+
+      .Detail {
+        display: flex;
+        justify-content: flex-start;
+        flex-basis: 50%;
+
+        &.centered {
+          justify-content: center;
+          flex-basis: content;
+        }
+
+        &.large {
+          font-size: 1.1rem;
+        }
+
+        i {
+          margin-right: 5px;
+        }
+
+        p {
+          text-wrap: wrap;
+          text-align: left;
+        }
+      }
+
+      &.large .Detail {
+        flex-basis: 100%;
+      }
+    }
+  }
+}
