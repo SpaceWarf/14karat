@@ -4,10 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 interface GroupCardProps {
   group: Group
+  groups: Group[]
 }
 
 function GroupCard(props: GroupCardProps) {
   const navigate = useNavigate()
+
+  const getGroupName = (id: string): string => {
+    return props.groups.find(group => group.id === id)?.name ?? id;
+  }
 
   return (
     <div
@@ -38,11 +43,11 @@ function GroupCard(props: GroupCardProps) {
           <div className="DetailsRow">
             <div className="Detail">
               <i className="handshake outline icon" />
-              <p>{props.group.allies.join(", ") || "-"}</p>
+              <p>{props.group.allies.map(ally => getGroupName(ally)).join(", ") || "-"}</p>
             </div>
             <div className="Detail">
               <i className="thumbs down outline icon" />
-              <p>{props.group.enemies.join(", ") || "-"}</p>
+              <p>{props.group.enemies.map(enemy => getGroupName(enemy)).join(", ") || "-"}</p>
             </div>
           </div>
           <div className="DetailsRow large">

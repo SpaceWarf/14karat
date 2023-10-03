@@ -27,8 +27,8 @@ function GroupsListing() {
           <Loading />
         ) : (
           <>
-            {groups.filter(group => group.cardColor).map(group => <GroupCard group={group} />)}
-            {groups.filter(group => !group.cardColor).map(group => <GroupCard group={group} />)}
+            {groups.filter(group => group.cardColor).map(group => <GroupCard group={group} groups={groups} />)}
+            {groups.filter(group => !group.cardColor).map(group => <GroupCard group={group} groups={groups} />)}
           </>
         )}
       </div>

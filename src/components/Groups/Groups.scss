@@ -55,6 +55,7 @@
     .DetailsRow {
       display: flex;
       justify-content: center;
+      align-items: center;
       width: 100%;
       padding: 5px 0;
 
@@ -74,6 +75,7 @@
 
         i {
           margin-right: 5px;
+          line-height: 1.5em;
         }
 
         p {
