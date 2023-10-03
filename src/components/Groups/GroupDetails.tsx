@@ -1,7 +1,7 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { Group } from "../../redux/reducers/groups";
-import { getGroups, updateGroup } from "../../utils/firestore";
+import { Group, GroupUpdate } from "../../redux/reducers/groups";
+import { createGroup, getGroups, updateGroup } from "../../utils/firestore";
 import Header from "../Common/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
@@ -45,7 +45,11 @@ function GroupDetails() {
       setLoading(false);
     }
 
-    fetchGroup();
+    if (id !== 'new') {
+      fetchGroup();
+    } else {
+      setName("New Group");
+    }
   }, [id, navigate]);
 
   const setDefaults = (group: Group | undefined) => {
@@ -81,7 +85,7 @@ function GroupDetails() {
   }
 
   const isDataUpdated = (): boolean => {
-    return !!group && (
+    const isEdited = !!group && (
       name !== group.name
       || hq !== group.hq
       || flag !== group.flag
@@ -91,24 +95,38 @@ function GroupDetails() {
       || cardColour !== group.cardColor
       || notes !== group.notes
     );
+    return id === "new" || isEdited;
+  }
+
+  const canSave = (): boolean => {
+    return !!name
   }
 
   const handleSave = async () => {
-    if (group) {
-      setSaving(true);
-      const update: Partial<Group> = {
-        name,
-        hq,
-        flag,
-        identifiers,
-        allies,
-        enemies,
-        cardColor: cardColour,
-        notes,
-      };
+    setSaving(true);
+    let updatedId;
+    const update: GroupUpdate = {
+      name,
+      hq,
+      flag,
+      identifiers,
+      allies,
+      enemies,
+      cardColor: cardColour,
+      notes,
+    };
+
+    if (id === "new" && canSave()) {
+      const createdGroup = await createGroup(update);
+      updatedId = createdGroup.id;
+    } else if (group && canSave()) {
       await updateGroup(group.id, update);
+      updatedId = group.id;
+    }
+
+    if (updatedId) {
       setGroup({
-        id: group.id,
+        id: updatedId,
         name,
         hq,
         flag,
@@ -118,8 +136,8 @@ function GroupDetails() {
         cardColor: cardColour,
         notes,
       });
-      setSaving(false);
     }
+    setSaving(false);
   }
 
   return (
@@ -226,7 +244,7 @@ function GroupDetails() {
                     </button>
                     <button
                       className='ui button positive hover-animation'
-                      disabled={saving || !isDataUpdated()}
+                      disabled={saving || !isDataUpdated() || !canSave()}
                       onClick={handleSave}
                     >
                       <p className='label contrast'>Save</p>

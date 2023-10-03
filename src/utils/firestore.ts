@@ -6,7 +6,7 @@ import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
 import { DriverStrat } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
-import { Group } from "../redux/reducers/groups";
+import { Group, GroupUpdate } from "../redux/reducers/groups";
 
 const profilesRef = collection(db, "profiles");
 const rolesRef = collection(db, "roles");
@@ -112,6 +112,14 @@ export async function getGroups(): Promise<Group[]> {
   return groups;
 }
 
-export async function updateGroup(id: string, group: Partial<Group>): Promise<void> {
+export async function updateGroup(id: string, group: GroupUpdate): Promise<void> {
   await updateDoc(doc(db, "groups", id), { ...group });
+}
+
+export async function createGroup(group: GroupUpdate): Promise<Group> {
+  const doc = await addDoc(groupsRef, group);
+  return {
+    id: doc.id,
+    ...group,
+  }
 }

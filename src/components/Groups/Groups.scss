@@ -1,9 +1,28 @@
+@import "../../assets/scss/index";
+
 .GroupsListing {
   &>.content {
     margin: 20px 0;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+
+    .GroupCard.ui.card,
+    .AddGroupCard.ui.card {
+      width: calc(25% - 10px);
+    }
+
+    .AddGroupCard {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 3rem;
+        line-height: 3rem;
+        color: $green;
+      }
+    }
   }
 }
 
@@ -45,8 +64,6 @@
 }
 
 .GroupCard.ui.card {
-  width: calc(25% - 10px);
-
   .Details {
     display: flex;
     flex-direction: column;

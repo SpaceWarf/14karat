@@ -12,6 +12,17 @@ export interface Group {
   cardColor: string;
 }
 
+export interface GroupUpdate {
+  name: string;
+  allies: string[];
+  enemies: string[];
+  hq: string;
+  flag: string;
+  identifiers: string;
+  notes: string;
+  cardColor: string;
+}
+
 export interface GroupsState {
   groups: Group[];
 }
