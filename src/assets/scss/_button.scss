@@ -44,6 +44,16 @@ button.ui.button {
     &:hover {
       color: $primary-colour-dark !important;
     }
+
+    &.negative {
+      background-color: transparent !important;
+      color: $red !important;
+
+      &:hover:not(:disabled) {
+        background-color: transparent !important;
+        color: $red-dark !important;
+      }
+    }
   }
 }
 

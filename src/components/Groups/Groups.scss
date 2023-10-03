@@ -10,6 +10,7 @@
     .GroupCard.ui.card,
     .AddGroupCard.ui.card {
       width: calc(25% - 10px);
+      min-height: 170px;
     }
 
     .AddGroupCard {
@@ -41,7 +42,8 @@
       width: 75%;
 
       .header {
-        text-align: left;
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 20px;
       }
 

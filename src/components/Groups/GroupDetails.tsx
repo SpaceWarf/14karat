@@ -1,7 +1,7 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
 import { Group, GroupUpdate } from "../../redux/reducers/groups";
-import { createGroup, getGroups, updateGroup } from "../../utils/firestore";
+import { createGroup, deleteGroup, getGroups, updateGroup } from "../../utils/firestore";
 import Header from "../Common/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
@@ -9,11 +9,13 @@ import Input from "../Common/Input";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import Textarea from "../Common/Textarea";
 import { isEqual } from "lodash";
+import { useAuth } from "../../contexts/AuthContext";
 
 const COLOURS = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
 
 function GroupDetails() {
   const { id } = useParams();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [saving, setSaving] = useState<boolean>(false);
@@ -104,7 +106,6 @@ function GroupDetails() {
 
   const handleSave = async () => {
     setSaving(true);
-    let updatedId;
     const update: GroupUpdate = {
       name,
       hq,
@@ -117,16 +118,12 @@ function GroupDetails() {
     };
 
     if (id === "new" && canSave()) {
-      const createdGroup = await createGroup(update);
-      updatedId = createdGroup.id;
+      const createdGroup = await createGroup(update, user);
+      navigate(`/groups/${createdGroup.id}`);
     } else if (group && canSave()) {
-      await updateGroup(group.id, update);
-      updatedId = group.id;
-    }
-
-    if (updatedId) {
+      await updateGroup(group.id, update, user);
       setGroup({
-        id: updatedId,
+        id: group.id,
         name,
         hq,
         flag,
@@ -137,7 +134,17 @@ function GroupDetails() {
         notes,
       });
     }
+
     setSaving(false);
+  }
+
+  const handleDelete = async () => {
+    if (group) {
+      setSaving(true);
+      await deleteGroup(group.id, user);
+      navigate('/groups');
+      setSaving(false);
+    }
   }
 
   return (
@@ -154,7 +161,14 @@ function GroupDetails() {
             <div className="DetailsCard ui card">
               <div className="content">
                 <div className='header'>
-                  Group Details
+                  <p>Group Details</p>
+                  <div>
+                    {id !== 'new' && (
+                      <button className="ui icon negative button" onClick={handleDelete}>
+                        <i className="trash icon"></i>
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="ui form">
                   <div className="Row">
@@ -237,9 +251,9 @@ function GroupDetails() {
                     <button
                       className='ui button negative hover-animation'
                       disabled={saving || !isDataUpdated()}
-                      onClick={() => setDefaults(group)}
+                      onClick={() => id === 'new' ? navigate('/groups') : setDefaults(group)}
                     >
-                      <p className='label contrast'>Reset</p>
+                      <p className='label contrast'>{id === 'new' ? 'Cancel' : 'Reset'}</p>
                       <p className='IconContainer contrast'><i className='close icon'></i></p>
                     </button>
                     <button

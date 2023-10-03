@@ -1,12 +1,22 @@
-import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { DocumentData, addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { ProfileInfo } from "../redux/reducers/profile";
-import { Unsubscribe } from "firebase/auth";
+import { Unsubscribe, User } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
 import { DriverStrat } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../redux/reducers/groups";
+
+export interface FirestoreEntity {
+  createdAt?: string;
+  createdBy?: string;
+  updatedAt?: string;
+  updatedBy?: string;
+  deleted?: boolean;
+  deletedAt?: string;
+  deletedBy?: string;
+}
 
 const profilesRef = collection(db, "profiles");
 const rolesRef = collection(db, "roles");
@@ -107,19 +117,40 @@ export async function getGroups(): Promise<Group[]> {
   const snapshot = await getDocs(groupsRef);
   const groups: Group[] = [];
   snapshot.forEach((doc: DocumentData) => {
-    groups.push({ id: doc.id, ...doc.data() });
+    if (!doc.data().deleted) {
+      groups.push({ id: doc.id, ...doc.data() });
+    }
   });
   return groups;
 }
 
-export async function updateGroup(id: string, group: GroupUpdate): Promise<void> {
-  await updateDoc(doc(db, "groups", id), { ...group });
+export async function updateGroup(id: string, group: GroupUpdate, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "groups", id), {
+    ...group,
+    updatedAt: now,
+    updatedBy: user?.email ?? '',
+  });
 }
 
-export async function createGroup(group: GroupUpdate): Promise<Group> {
-  const doc = await addDoc(groupsRef, group);
+export async function createGroup(group: GroupUpdate, user: User | null): Promise<Group> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(groupsRef, {
+    ...group,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
   return {
     id: doc.id,
     ...group,
   }
+}
+
+export async function deleteGroup(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "groups", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
 }

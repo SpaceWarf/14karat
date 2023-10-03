@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FirestoreEntity } from "../../utils/firestore";
 
-export interface Group {
+export interface Group extends FirestoreEntity {
   id: string;
   name: string;
   allies: string[];
