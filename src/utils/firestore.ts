@@ -29,7 +29,9 @@ export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
   const profiles: ProfileInfo[] = [];
   snapshot.forEach((doc: DocumentData) => {
-    profiles.push({ id: doc.id, ...doc.data() });
+    if (!doc.data().deleted) {
+      profiles.push({ id: doc.id, ...doc.data() });
+    }
   });
   return profiles;
 }
@@ -38,7 +40,9 @@ export function onProfilesSnapshot(cb: (profile: ProfileInfo[]) => void): Unsubs
   return onSnapshot(profilesRef, {}, snapshot => {
     const profiles: ProfileInfo[] = [];
     snapshot.forEach((doc: DocumentData) => {
-      profiles.push({ id: doc.id, ...doc.data() });
+      if (!doc.data().deleted) {
+        profiles.push({ id: doc.id, ...doc.data() });
+      }
     });
     cb(profiles);
   });
@@ -55,10 +59,15 @@ export function onProfileByIdSnapshot(id: string, cb: (profile: ProfileInfo) => 
   });
 }
 
-export async function updateProfileInfo(id: string, profile: ProfileInfo): Promise<void> {
+export async function updateProfileInfo(id: string, profile: ProfileInfo, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
   const update: Partial<ProfileInfo> = { ...profile };
   delete update.id;
-  await updateDoc(doc(db, "profiles", id), { ...update });
+  await updateDoc(doc(db, "profiles", id), {
+    ...update,
+    updatedAt: now,
+    updatedBy: user?.email ?? "",
+  });
 }
 
 export async function getIsAdmin(id: string): Promise<boolean> {

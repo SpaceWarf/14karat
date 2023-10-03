@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FirestoreEntity } from "../../utils/firestore";
 
 export interface ProfileState {
   info: ProfileInfo;
   pfpUrl: string;
 }
 
-export interface ProfileInfo {
+export interface ProfileInfo extends FirestoreEntity {
   id: string;
   name: string;
   phone: string;

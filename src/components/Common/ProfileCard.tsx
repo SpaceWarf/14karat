@@ -166,7 +166,7 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
       dispatch(setPfpUrl(await getProfilePictureUrl(filename)));
     }
 
-    updateProfileInfo(profile.id, updatedProfile);
+    updateProfileInfo(profile.id, updatedProfile, user);
     setLoading(false);
     setShowSuccessMessage(true);
     setTimeout(() => setShowSuccessMessage(false), 5000);
