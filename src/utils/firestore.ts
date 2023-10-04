@@ -1,4 +1,4 @@
-import { DocumentData, addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { ProfileInfo } from "../redux/reducers/profile";
 import { Unsubscribe, User } from "firebase/auth";
@@ -6,7 +6,8 @@ import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
 import { DriverStrat } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
-import { Group, GroupUpdate } from "../redux/reducers/groups";
+import { Group, GroupUpdate } from "../state/groups";
+import { Member, MemberUpdate } from "../state/members";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -24,6 +25,7 @@ const divisionRef = collection(db, "divisions");
 const driverStratsRef = collection(db, "driver-strats");
 const neighbourhoodsRef = collection(db, "neighbourhoods");
 const groupsRef = collection(db, "groups");
+const membersRef = collection(db, "members");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -165,6 +167,49 @@ export async function createGroup(group: GroupUpdate, user: User | null): Promis
 export async function deleteGroup(id: string, user: User | null): Promise<void> {
   const now = new Date().toISOString();
   await updateDoc(doc(db, "groups", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
+}
+
+export async function getMembersForGroup(id: string): Promise<Member[]> {
+  const snapshot = await getDocs(membersRef);
+  const members: Member[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted && data.group === id) {
+      members.push({ id: doc.id, ...data });
+    }
+  });
+  return members;
+}
+
+export async function updateMember(id: string, member: MemberUpdate, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "members", id), {
+    ...member,
+    updatedAt: now,
+    updatedBy: user?.email ?? '',
+  });
+}
+
+export async function createMember(member: MemberUpdate, user: User | null): Promise<Member> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(membersRef, {
+    ...member,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...member,
+  }
+}
+
+export async function deleteMember(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "members", id), {
     deleted: true,
     deletedAt: now,
     deletedBy: user?.email ?? '',

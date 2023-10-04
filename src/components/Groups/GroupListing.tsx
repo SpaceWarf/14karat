@@ -3,9 +3,9 @@ import Header from "../Common/Header";
 import "./Groups.scss";
 import { getGroups } from "../../utils/firestore";
 import Loading from "../Common/Loading";
-import { Group } from "../../redux/reducers/groups";
 import GroupCard from "./GroupCard";
 import { useNavigate } from "react-router-dom";
+import { Group } from "../../state/groups";
 
 function GroupListing() {
   const [loading, setLoading] = useState<boolean>(false);

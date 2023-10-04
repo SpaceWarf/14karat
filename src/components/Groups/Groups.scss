@@ -1,19 +1,15 @@
 @import "../../assets/scss/index";
 
-.GroupListing {
+.GroupListing,
+.GroupMembers {
   &>.content {
     margin: 20px 0;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
 
-    .GroupCard.ui.card,
-    .AddGroupCard.ui.card {
-      width: calc(25% - 10px);
-      min-height: 170px;
-    }
-
-    .AddGroupCard {
+    .AddGroupCard,
+    .AddMemberCard {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -27,26 +23,22 @@
   }
 }
 
-.GroupDetails {
+.GroupDetails,
+.MemberDetails {
   .actions {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 20px;
   }
-
-  .ui.menu .item.active {
-    color: $primary-colour !important;
-    border-color: $primary-colour !important;
-  }
 }
 
-.GroupInformation {
+.GroupInformation,
+.MemberInformation {
   display: flex;
   justify-content: center;
 
-  .GroupInformationCard.ui.card {
-    width: 75%;
-
+  .GroupInformationCard.ui.card,
+  .MemberInformationCard.ui.card {
     .header {
       display: flex;
       justify-content: space-between;
@@ -60,7 +52,7 @@
 
       .field {
         margin-bottom: 20px !important;
-        flex-basis: calc(100% / 3);
+        flex: 1 1 0;
       }
 
       &.large .field {
@@ -68,9 +60,23 @@
       }
     }
   }
+
+  .GroupInformationCard.ui.card {
+    width: 75%;
+  }
+
+  .MemberInformationCard.ui.card {
+    width: 50%;
+  }
 }
 
-.GroupCard.ui.card {
+.GroupCard.ui.card,
+.MemberCard.ui.card,
+.AddGroupCard.ui.card,
+.AddMemberCard.ui.card {
+  width: calc(25% - 10px);
+  min-height: 170px;
+
   .Details {
     display: flex;
     flex-direction: column;

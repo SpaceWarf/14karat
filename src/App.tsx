@@ -12,6 +12,7 @@ import NeighbourghoodGallery from './components/DriverStrats/NeighbourhoodGaller
 import StashSearch from './components/StashSearch/StashSearch';
 import GroupListing from './components/Groups/GroupListing';
 import GroupDetails from './components/Groups/GroupDetails';
+import MemberDetails from './components/Groups/MemberDetails';
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
             <Route path='/roster' element={<Roster />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
-              <Route path='/groups/:id' element={<GroupDetails />} />
+              <Route path='/groups/:groupId' element={<GroupDetails />} />
+              <Route path='/groups/:groupId/members/:memberId' element={<MemberDetails />} />
             </Route>
           </Route>
           <Route path='*' element={<Navigate to='/notfound' />} />

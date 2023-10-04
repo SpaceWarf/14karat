@@ -1,5 +1,5 @@
+import { Group } from "../../state/groups";
 import "./Groups.scss";
-import { Group } from "../../redux/reducers/groups";
 import { useNavigate } from "react-router-dom";
 
 interface GroupCardProps {

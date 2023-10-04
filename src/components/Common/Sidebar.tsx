@@ -30,9 +30,9 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
       </div>
       <div className="Nav">
         <SidebarItem name='Dashboard' icon='chart bar' path='/' onClick={() => navigate('/')} />
+        <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
         <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
         <SidebarItem name='Stash Search' icon='search' path='/stash-search' onClick={() => navigate('/stash-search')} />
-        <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
         {isAdmin && (
           <div className='AdminRoutes'>
             <div className='Divider'></div>

@@ -1,6 +1,5 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { Group, GroupUpdate } from "../../redux/reducers/groups";
 import { createGroup, deleteGroup, getGroups, updateGroup } from "../../utils/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
@@ -9,11 +8,12 @@ import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import Textarea from "../Common/Textarea";
 import { isEqual } from "lodash";
 import { useAuth } from "../../contexts/AuthContext";
+import { Group, GroupUpdate } from "../../state/groups";
 
 const COLOURS = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
 
 const GroupInformation = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,7 +35,7 @@ const GroupInformation = () => {
       setLoading(true);
       const groups = await getGroups();
       setGroups(groups);
-      const group = groups.find(group => group.id === id);
+      const group = groups.find(group => group.id === groupId);
 
       if (group) {
         setDefaults(group);
@@ -46,13 +46,13 @@ const GroupInformation = () => {
       setLoading(false);
     }
 
-    if (id !== 'new') {
+    if (groupId !== 'new') {
       fetchGroup();
     } else {
       setName("New Group");
       setLoading(false);
     }
-  }, [id, navigate]);
+  }, [groupId, navigate]);
 
   const getColoursDropdownOptions = (): DropdownOption[] => {
     return COLOURS
@@ -97,7 +97,7 @@ const GroupInformation = () => {
       || cardColour !== group.cardColor
       || notes !== group.notes
     );
-    return id === "new" || isEdited;
+    return groupId === "new" || isEdited;
   }
 
   const canSave = (): boolean => {
@@ -117,7 +117,7 @@ const GroupInformation = () => {
       notes,
     };
 
-    if (id === "new" && canSave()) {
+    if (groupId === "new" && canSave()) {
       const createdGroup = await createGroup(update, user);
       navigate(`/groups/${createdGroup.id}`);
     } else if (group && canSave()) {
@@ -157,7 +157,7 @@ const GroupInformation = () => {
             <div className='header'>
               <p>General Information</p>
               <div>
-                {id !== 'new' && (
+                {groupId !== 'new' && (
                   <button className="ui icon negative button" onClick={handleDelete}>
                     <i className="trash icon"></i>
                   </button>
@@ -235,7 +235,7 @@ const GroupInformation = () => {
                 <Textarea
                   name="notes"
                   placeholder="Notes"
-                  icon="sticky note outline outline"
+                  icon="sticky note outline"
                   value={notes}
                   onChange={setNotes}
                   disabled={saving}
@@ -245,9 +245,9 @@ const GroupInformation = () => {
                 <button
                   className='ui button negative hover-animation'
                   disabled={saving || !isDataUpdated()}
-                  onClick={() => id === 'new' ? navigate('/groups') : setDefaults(group)}
+                  onClick={() => groupId === 'new' ? navigate('/groups') : setDefaults(group)}
                 >
-                  <p className='label contrast'>{id === 'new' ? 'Cancel' : 'Reset'}</p>
+                  <p className='label contrast'>{groupId === 'new' ? 'Cancel' : 'Reset'}</p>
                   <p className='IconContainer contrast'><i className='close icon'></i></p>
                 </button>
                 <button

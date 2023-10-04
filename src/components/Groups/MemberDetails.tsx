@@ -1,19 +1,14 @@
 import "./Groups.scss";
 import Header from "../Common/Header";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import GroupInformation from "./GroupInformation";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tab } from "semantic-ui-react";
-import GroupMembers from "./GroupMembers";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import MemberInformation from "./MemberInformation";
 
 const panes = [
   {
     menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-    render: () => <GroupInformation />
-  },
-  {
-    menuItem: { key: 'members', icon: 'users', content: 'Members' },
-    render: () => <GroupMembers />
+    render: () => <MemberInformation />
   },
   {
     menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },
@@ -21,7 +16,8 @@ const panes = [
   },
 ];
 
-function GroupDetails() {
+function MemberDetails() {
+  const { groupId } = useParams();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
@@ -38,11 +34,11 @@ function GroupDetails() {
   }
 
   return (
-    <div className="GroupDetails">
-      <Header text='Group Details' decorated />
+    <div className="MemberDetails">
+      <Header text='Member Details' decorated />
       <div className="content">
         <div className="actions">
-          <p className="back-button" onClick={() => navigate('/groups')}><i className='arrow left icon' />back</p>
+          <p className="back-button" onClick={() => navigate(`/groups/${groupId}?active=1`)}><i className='arrow left icon' />back</p>
         </div>
         <Tab
           menu={{ secondary: true, pointing: true }}
@@ -56,4 +52,4 @@ function GroupDetails() {
 }
 
 
-export default GroupDetails;
+export default MemberDetails;
