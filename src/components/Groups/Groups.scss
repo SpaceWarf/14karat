@@ -1,6 +1,6 @@
 @import "../../assets/scss/index";
 
-.GroupsListing {
+.GroupListing {
   &>.content {
     margin: 20px 0;
     display: flex;
@@ -34,32 +34,37 @@
     margin-bottom: 20px;
   }
 
-  .GroupDetailsContainer {
-    display: flex;
-    justify-content: center;
+  .ui.menu .item.active {
+    color: $primary-colour !important;
+    border-color: $primary-colour !important;
+  }
+}
 
-    .ui.card {
-      width: 75%;
+.GroupInformation {
+  display: flex;
+  justify-content: center;
 
-      .header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
+  .GroupInformationCard.ui.card {
+    width: 75%;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .Row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+
+      .field {
+        margin-bottom: 20px !important;
+        flex-basis: calc(100% / 3);
       }
 
-      .Row {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-
-        .field {
-          margin-bottom: 20px !important;
-          flex-basis: calc(100% / 3);
-        }
-
-        &.large .field {
-          flex-basis: 100%;
-        }
+      &.large .field {
+        flex-basis: 100%;
       }
     }
   }

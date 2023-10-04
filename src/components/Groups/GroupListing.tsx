@@ -7,7 +7,7 @@ import { Group } from "../../redux/reducers/groups";
 import GroupCard from "./GroupCard";
 import { useNavigate } from "react-router-dom";
 
-function GroupsListing() {
+function GroupListing() {
   const [loading, setLoading] = useState<boolean>(false);
   const [groups, setGroups] = useState<Group[]>([]);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function GroupsListing() {
   }, []);
 
   return (
-    <div className="GroupsListing">
+    <div className="GroupListing">
       <Header text="Group Listing" decorated />
       <div className="content">
         {loading ? (
@@ -42,4 +42,4 @@ function GroupsListing() {
   );
 }
 
-export default GroupsListing;
+export default GroupListing;

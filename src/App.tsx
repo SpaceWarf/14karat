@@ -10,7 +10,7 @@ import Roster from './components/Roster/Roster';
 import DriverStrats from './components/DriverStrats/DriverStrats';
 import NeighbourghoodGallery from './components/DriverStrats/NeighbourhoodGallery';
 import StashSearch from './components/StashSearch/StashSearch';
-import GroupsListing from './components/Groups/GroupsListing';
+import GroupListing from './components/Groups/GroupListing';
 import GroupDetails from './components/Groups/GroupDetails';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <Route path='/stash-search' element={<StashSearch />} />
             <Route path='/roster' element={<Roster />} />
             <Route element={<AdminRoute />}>
-              <Route path='/groups' element={<GroupsListing />} />
+              <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:id' element={<GroupDetails />} />
             </Route>
           </Route>
