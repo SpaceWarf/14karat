@@ -5,6 +5,13 @@ export interface DriverStrat extends FirestoreEntity {
   id: string;
   neighbourhood: string;
   embed: string;
+  notes: string;
+}
+
+export interface DriverStratUpdate {
+  neighbourhood: string;
+  embed: string;
+  notes: string;
 }
 
 export interface DriverStratsState {

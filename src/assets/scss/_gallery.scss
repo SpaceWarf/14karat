@@ -1,0 +1,44 @@
+.Gallery {
+  .items {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .EmbedContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: lightgray;
+      width: 640px;
+      height: 360px;
+
+      iframe {
+        width: 640px;
+        height: 360px;
+      }
+    }
+
+    .ImageContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      width: 640px;
+      height: 360px;
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 640px;
+        max-height: 360px;
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px
+  }
+}

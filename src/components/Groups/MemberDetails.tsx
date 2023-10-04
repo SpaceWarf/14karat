@@ -4,20 +4,10 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tab } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import MemberInformation from "./MemberInformation";
-
-const panes = [
-  {
-    menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-    render: () => <MemberInformation />
-  },
-  {
-    menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },
-    render: () => <div>TODO</div>
-  },
-];
+import MemberIntel from "./MemberIntel";
 
 function MemberDetails() {
-  const { groupId } = useParams();
+  const { groupId, memberId } = useParams();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
@@ -27,6 +17,22 @@ function MemberDetails() {
       setActive(Number(searchParams.get('active')))
     }
   }, [searchParams]);
+
+  const getPanes = () => (memberId === 'new' ? [
+    {
+      menuItem: { key: 'information', icon: 'address card', content: 'Information' },
+      render: () => <MemberInformation />
+    },
+  ] : [
+    {
+      menuItem: { key: 'information', icon: 'address card', content: 'Information' },
+      render: () => <MemberInformation />
+    },
+    {
+      menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },
+      render: () => <MemberIntel />
+    },
+  ]);
 
   const handleSetActive = (active: number) => {
     setActive(active);
@@ -42,7 +48,7 @@ function MemberDetails() {
         </div>
         <Tab
           menu={{ secondary: true, pointing: true }}
-          panes={panes}
+          panes={getPanes()}
           activeIndex={active}
           onTabChange={(_, { activeIndex }) => handleSetActive(Number(activeIndex))}
         />

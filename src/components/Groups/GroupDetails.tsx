@@ -1,28 +1,15 @@
 import "./Groups.scss";
 import Header from "../Common/Header";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import GroupInformation from "./GroupInformation";
 import { Tab } from "semantic-ui-react";
 import GroupMembers from "./GroupMembers";
 import { useEffect, useState } from "react";
-
-const panes = [
-  {
-    menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-    render: () => <GroupInformation />
-  },
-  {
-    menuItem: { key: 'members', icon: 'users', content: 'Members' },
-    render: () => <GroupMembers />
-  },
-  {
-    menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },
-    render: () => <div>TODO</div>
-  },
-];
+import GroupIntel from "./GroupIntel";
 
 function GroupDetails() {
   const navigate = useNavigate();
+  const { groupId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
 
@@ -31,6 +18,26 @@ function GroupDetails() {
       setActive(Number(searchParams.get('active')))
     }
   }, [searchParams]);
+
+  const getPanes = () => (groupId === 'new' ? [
+    {
+      menuItem: { key: 'information', icon: 'address card', content: 'Information' },
+      render: () => <GroupInformation />
+    }
+  ] : [
+    {
+      menuItem: { key: 'information', icon: 'address card', content: 'Information' },
+      render: () => <GroupInformation />
+    },
+    {
+      menuItem: { key: 'members', icon: 'users', content: 'Members' },
+      render: () => <GroupMembers />
+    },
+    {
+      menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },
+      render: () => <GroupIntel />
+    },
+  ]);
 
   const handleSetActive = (active: number) => {
     setActive(active);
@@ -46,7 +53,7 @@ function GroupDetails() {
         </div>
         <Tab
           menu={{ secondary: true, pointing: true }}
-          panes={panes}
+          panes={getPanes()}
           activeIndex={active}
           onTabChange={(_, { activeIndex }) => handleSetActive(Number(activeIndex))}
         />

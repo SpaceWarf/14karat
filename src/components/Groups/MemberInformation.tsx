@@ -31,7 +31,7 @@ const MemberInformation = () => {
       if (member) {
         setDefaults(member);
       } else {
-        navigate(`/groups/${groupId}`);
+        navigate(`/groups/${groupId}?active=1`);
       }
 
       setLoading(false);

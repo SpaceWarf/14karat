@@ -4,10 +4,11 @@ import { ProfileInfo } from "../redux/reducers/profile";
 import { Unsubscribe, User } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
-import { DriverStrat } from "../redux/reducers/driverStrats";
+import { DriverStrat, DriverStratUpdate } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/members";
+import { Intel } from "../state/intel";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -26,6 +27,7 @@ const driverStratsRef = collection(db, "driver-strats");
 const neighbourhoodsRef = collection(db, "neighbourhoods");
 const groupsRef = collection(db, "groups");
 const membersRef = collection(db, "members");
+const intelRef = collection(db, "intel");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -106,19 +108,17 @@ export async function getDriverStrats(): Promise<DriverStrat[]> {
   return driverStrats;
 }
 
-export async function createDriverStrat(neighbourhood: string, embed: string, user: User | null): Promise<DriverStrat> {
+export async function createDriverStrat(strat: DriverStratUpdate, user: User | null): Promise<DriverStrat> {
   const now = new Date().toISOString();
   const doc = await addDoc(driverStratsRef, {
-    neighbourhood,
-    embed,
+    ...strat,
     createdAt: now,
     createdBy: user?.email ?? '',
   });
   return {
-    neighbourhood,
-    embed,
+    id: doc.id,
+    ...strat,
     createdAt: now,
-    id: doc.id
   };
 }
 
@@ -214,4 +214,28 @@ export async function deleteMember(id: string, user: User | null): Promise<void>
     deletedAt: now,
     deletedBy: user?.email ?? '',
   });
+}
+
+export async function getIntelForGroup(id: string): Promise<Intel[]> {
+  const snapshot = await getDocs(intelRef);
+  const intel: Intel[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted && data.group === id) {
+      intel.push({ id: doc.id, ...data });
+    }
+  });
+  return intel;
+}
+
+export async function getIntelForMember(id: string): Promise<Intel[]> {
+  const snapshot = await getDocs(intelRef);
+  const intel: Intel[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted && data.member === id) {
+      intel.push({ id: doc.id, ...data });
+    }
+  });
+  return intel;
 }
