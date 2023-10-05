@@ -120,3 +120,41 @@
     }
   }
 }
+
+.GroupIntel,
+.MemberIntel {
+  position: relative;
+
+  .button.trigger {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    width: 250px;
+
+    &.hover-animation {
+      .label {
+        width: 65px;
+      }
+
+      &:hover:not(:disabled) {
+        .label {
+          left: calc((100% - 90px) / 2);
+        }
+
+        .IconContainer {
+          right: calc((100% - 90px) / 2);
+        }
+      }
+    }
+  }
+}
+
+.NewIntelModal {
+  .ui.form .field:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .small {
+    margin: 10px 0 0 0;
+  }
+}

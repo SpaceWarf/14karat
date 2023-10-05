@@ -235,7 +235,6 @@ const GroupInformation = () => {
                 <Textarea
                   name="notes"
                   placeholder="Notes"
-                  icon="sticky note outline"
                   value={notes}
                   onChange={setNotes}
                   disabled={saving}

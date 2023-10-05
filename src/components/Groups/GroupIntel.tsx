@@ -1,13 +1,13 @@
 import "./Groups.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getIntelForGroup } from "../../utils/firestore";
 import { Intel } from "../../state/intel";
 import Gallery from "../Common/Gallery";
 import { GalleryItem } from "../../state/gallery";
+import NewIntelModal from "./NewIntelModal";
 
 function GroupIntel() {
-  const navigate = useNavigate();
   const { groupId } = useParams();
   const [intel, setIntel] = useState<Intel[]>([]);
 
@@ -35,6 +35,12 @@ function GroupIntel() {
 
   return (
     <div className="GroupIntel">
+      {groupId && (
+        <NewIntelModal
+          groupId={groupId}
+          onAdd={async () => setIntel(await getIntelForGroup(groupId))}
+        />
+      )}
       <Gallery items={getOrderedItems()} />
     </div>
   );

@@ -8,7 +8,7 @@ import { DriverStrat, DriverStratUpdate } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/members";
-import { Intel } from "../state/intel";
+import { Intel, IntelUpdate } from "../state/intel";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -238,4 +238,17 @@ export async function getIntelForMember(id: string): Promise<Intel[]> {
     }
   });
   return intel;
+}
+
+export async function createIntel(intel: IntelUpdate, user: User | null): Promise<Intel> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(intelRef, {
+    ...intel,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...intel,
+  }
 }

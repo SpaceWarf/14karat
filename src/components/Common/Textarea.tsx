@@ -3,7 +3,6 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 interface TextareaProps {
   name: string;
   placeholder: string;
-  icon: string;
   value: string;
   onChange: (e: string) => void;
   disabled?: boolean;

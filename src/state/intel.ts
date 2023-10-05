@@ -8,3 +8,15 @@ export interface Intel extends FirestoreEntity {
   embed?: string;
   notes: string;
 }
+export interface IntelUpdate {
+  group?: string;
+  member?: string;
+  url?: string;
+  embed?: string;
+  notes: string;
+}
+
+export enum IntelType {
+  VIDEO = "video",
+  IMAGE = "image",
+}

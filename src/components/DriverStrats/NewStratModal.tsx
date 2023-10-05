@@ -8,6 +8,7 @@ import { RootState } from "../../redux/store";
 import { createDriverStrat } from "../../utils/firestore";
 import { addDriverStrat } from "../../redux/reducers/driverStrats";
 import { useAuth } from "../../contexts/AuthContext";
+import Textarea from "../Common/Textarea";
 
 interface NewStratModalProps {
   neighbourhood: string;
@@ -20,6 +21,7 @@ function NewStratModal(props: NewStratModalProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [embed, setEmbed] = useState<string>("");
   const [selectedNeighbourhood, setSelectedNeighbourhood] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
   const neighbourhoods = useSelector((state: RootState) => state.neighbourhoods.neighbourhoods);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function NewStratModal(props: NewStratModalProps) {
     const createdStrat = await createDriverStrat({
       neighbourhood: selectedNeighbourhood,
       embed,
-      notes: '',
+      notes,
     }, user);
     dispatch(addDriverStrat(createdStrat))
     setLoading(false)
@@ -83,11 +85,18 @@ function NewStratModal(props: NewStratModalProps) {
             onChange={e => setEmbed(e)}
             disabled={loading}
           />
+          <p className="small">
+            To find your clip's embed, click on the share button and select "Embed".
+            The embed should look something like: &lt;iframe <i>gibberish</i>&gt;&lt;/iframe&gt;.
+          </p>
+          <Textarea
+            name="notes"
+            placeholder="Notes"
+            value={notes}
+            onChange={e => setNotes(e)}
+            disabled={loading}
+          />
         </div>
-        <p className="small">
-          To find your clip's embed, click on the share button and select "Embed".
-          The embed should look something like: &lt;iframe <i>gibberish</i>&gt;&lt;/iframe&gt;.
-        </p>
       </Modal.Content>
       <Modal.Actions>
         <button className="ui button negative hover-animation" onClick={() => setOpen(false)}>

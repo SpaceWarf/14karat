@@ -16,24 +16,33 @@ function Gallery({ items }: GalleryProps) {
 
   return (
     <div className='Gallery'>
-      <div className="items">
-        {getActiveSlice().map(item => {
-          if (item.embed) {
-            return <div className="EmbedContainer" dangerouslySetInnerHTML={{ __html: item.embed }} />
-          }
-          if (item.url) {
-            return <div className="ImageContainer"><img src={item.url} /></div>
-          }
-          return <></>
-        })}
-      </div>
-      <div className="pagination">
-        <Pagination
-          activePage={activePage + 1}
-          onPageChange={(_, { activePage }) => setActivePage(Number(activePage) - 1)}
-          totalPages={Math.ceil(items.length / PAGE_SIZE)}
-        />
-      </div>
+      {items.length === 0 && (
+        <div className="items">
+          <p>Nothing to show</p>
+        </div>
+      )}
+      {items.length > 0 && (
+        <>
+          <div className="items">
+            {getActiveSlice().map(item => {
+              if (item.embed) {
+                return <div className="EmbedContainer" dangerouslySetInnerHTML={{ __html: item.embed }} />
+              }
+              if (item.url) {
+                return <div className="ImageContainer"><img src={item.url} /></div>
+              }
+              return <></>
+            })}
+          </div>
+          <div className="pagination">
+            <Pagination
+              activePage={activePage + 1}
+              onPageChange={(_, { activePage }) => setActivePage(Number(activePage) - 1)}
+              totalPages={Math.ceil(items.length / PAGE_SIZE)}
+            />
+          </div>
+        </>
+      )}
     </div>
   )
 }

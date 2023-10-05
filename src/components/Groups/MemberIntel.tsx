@@ -1,14 +1,14 @@
 import "./Groups.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getIntelForMember } from "../../utils/firestore";
 import { Intel } from "../../state/intel";
 import Gallery from "../Common/Gallery";
 import { GalleryItem } from "../../state/gallery";
+import NewIntelModal from "./NewIntelModal";
 
 function MemberIntel() {
-  const navigate = useNavigate();
-  const { memberId } = useParams();
+  const { groupId, memberId } = useParams();
   const [intel, setIntel] = useState<Intel[]>([]);
 
   useEffect(() => {
@@ -35,6 +35,13 @@ function MemberIntel() {
 
   return (
     <div className="MemberIntel">
+      {groupId && memberId && (
+        <NewIntelModal
+          groupId={groupId}
+          memberId={memberId}
+          onAdd={async () => setIntel(await getIntelForMember(memberId))}
+        />
+      )}
       <Gallery items={getOrderedItems()} />
     </div>
   );
