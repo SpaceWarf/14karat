@@ -9,10 +9,28 @@ interface GalleryProps {
 
 function Gallery(props: GalleryProps) {
   const [activePage, setActivePage] = useState<number>(0);
+  const [copying, setCopying] = useState<boolean>(false);
   const PAGE_SIZE = 4;
 
   const getActiveSlice = () => {
     return props.items.slice(activePage * PAGE_SIZE, activePage + PAGE_SIZE);
+  }
+
+  const onCopy = (item: GalleryItem) => {
+    if (item.url) {
+      navigator.clipboard.writeText(item.url);
+    } else if (item.embed) {
+      const regex = /src=["']([^\s]+)['"]/
+      const match = regex.exec(item.embed);
+
+      if (match) {
+        navigator.clipboard.writeText(match[1]);
+      }
+    }
+    setCopying(true);
+    setTimeout(() => {
+      setCopying(false);
+    }, 2000);
   }
 
   return (
@@ -36,15 +54,24 @@ function Gallery(props: GalleryProps) {
                   )}
                 </div>
                 <div className="extra content">
-                  <div>
+                  <div className="Details">
                     {item.notes || '-'}
                     <div className="Tags">
                       {item.tags.map(tag => <div className="ui horizontal label">{tag}</div>)}
                     </div>
                   </div>
-                  <button className="ui icon negative button" onClick={() => props.onDelete(item.id)}>
-                    <i className="trash icon"></i>
-                  </button>
+                  <div className="Actions">
+                    {copying ? (
+                      <i className="check circle icon"></i>
+                    ) : (
+                      <button className="ui icon button" onClick={() => onCopy(item)}>
+                        <i className="linkify icon"></i>
+                      </button>
+                    )}
+                    <button className="ui icon negative button" onClick={() => props.onDelete(item.id)}>
+                      <i className="trash icon"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             )
