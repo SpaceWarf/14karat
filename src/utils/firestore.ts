@@ -122,6 +122,15 @@ export async function createDriverStrat(strat: DriverStratUpdate, user: User | n
   };
 }
 
+export async function deleteDriverStrat(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "driver-strats", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
+}
+
 export async function getNeighbourhoods(): Promise<Neighbourhood[]> {
   const snapshot = await getDocs(neighbourhoodsRef);
   const neighbourhoods: Neighbourhood[] = [];
@@ -251,4 +260,13 @@ export async function createIntel(intel: IntelUpdate, user: User | null): Promis
     id: doc.id,
     ...intel,
   }
+}
+
+export async function deleteIntel(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "intel", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
 }

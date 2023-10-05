@@ -1,15 +1,19 @@
 import "./DriverStrats.scss";
 import Header from "../Common/Header"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDriverStratsByNeighbourhood } from "../../redux/selectors/driversStrats";
 import { RootState } from "../../redux/store";
 import Gallery from "../Common/Gallery";
 import { useNavigate, useParams } from "react-router-dom";
 import NewStratModal from "./NewStratModal";
-import { DriverStrat } from "../../redux/reducers/driverStrats";
+import { DriverStrat, removeDriverStrat } from "../../redux/reducers/driverStrats";
 import { GalleryItem } from "../../state/gallery";
+import { deleteDriverStrat } from "../../utils/firestore";
+import { useAuth } from "../../contexts/AuthContext";
 
 function NeighbourghoodGallery() {
+  const { user } = useAuth();
+  const dispatch = useDispatch();
   const { neighbourhood } = useParams();
   const navigate = useNavigate();
   const neighbourhoods = useSelector((state: RootState) => state.neighbourhoods.neighbourhoods);
@@ -31,9 +35,15 @@ function NeighbourghoodGallery() {
         return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
       })
       .map((strat: DriverStrat) => ({
+        id: strat.id,
         embed: strat.embed,
         notes: strat.notes,
       }));
+  }
+
+  const handleDelete = async (id: string) => {
+    await deleteDriverStrat(id, user);
+    dispatch(removeDriverStrat(id));
   }
 
   return (
@@ -44,7 +54,7 @@ function NeighbourghoodGallery() {
           <p className="back-button" onClick={() => navigate('/driver-strats')}><i className='arrow left icon' /> back</p>
           {neighbourhood && <NewStratModal neighbourhood={neighbourhood} />}
         </div>
-        <Gallery items={getOrderedItems()} />
+        <Gallery items={getOrderedItems()} onDelete={handleDelete} />
       </div>
     </div>
   );

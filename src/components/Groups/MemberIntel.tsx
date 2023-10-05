@@ -1,13 +1,15 @@
 import "./Groups.scss";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getIntelForMember } from "../../utils/firestore";
+import { deleteIntel, getIntelForMember } from "../../utils/firestore";
 import { Intel } from "../../state/intel";
 import Gallery from "../Common/Gallery";
 import { GalleryItem } from "../../state/gallery";
 import NewIntelModal from "./NewIntelModal";
+import { useAuth } from "../../contexts/AuthContext";
 
 function MemberIntel() {
+  const { user } = useAuth();
   const { groupId, memberId } = useParams();
   const [intel, setIntel] = useState<Intel[]>([]);
 
@@ -27,10 +29,19 @@ function MemberIntel() {
         return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
       })
       .map((intel: Intel) => ({
+        id: intel.id,
         url: intel.url,
         embed: intel.embed,
         notes: intel.notes,
       }));
+  }
+
+  const handleDelete = async (id: string) => {
+    await deleteIntel(id, user);
+
+    if (memberId) {
+      setIntel(await getIntelForMember(memberId));
+    }
   }
 
   return (
@@ -42,7 +53,7 @@ function MemberIntel() {
           onAdd={async () => setIntel(await getIntelForMember(memberId))}
         />
       )}
-      <Gallery items={getOrderedItems()} />
+      <Gallery items={getOrderedItems()} onDelete={handleDelete} />
     </div>
   );
 }

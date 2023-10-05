@@ -32,8 +32,11 @@ export const roles = createSlice({
     addDriverStrat: (state, action: PayloadAction<DriverStrat>) => {
       state.driverStrats = [action.payload, ...state.driverStrats];
     },
+    removeDriverStrat: (state, action: PayloadAction<string>) => {
+      state.driverStrats = state.driverStrats.filter(strat => strat.id !== action.payload);
+    },
   },
 });
 
-export const { setDriverStrats, addDriverStrat } = roles.actions;
+export const { setDriverStrats, addDriverStrat, removeDriverStrat } = roles.actions;
 export default roles.reducer;

@@ -29,15 +29,15 @@ function NewStratModal(props: NewStratModalProps) {
   }, [props.neighbourhood])
 
   const handleAdd = async () => {
-    setLoading(true)
+    setLoading(true);
     const createdStrat = await createDriverStrat({
       neighbourhood: selectedNeighbourhood,
       embed,
       notes,
     }, user);
-    dispatch(addDriverStrat(createdStrat))
-    setLoading(false)
-    setOpen(false)
+    dispatch(addDriverStrat(createdStrat));
+    setLoading(false);
+    setOpen(false);
   }
 
   const getDropdownOptions = () => {
