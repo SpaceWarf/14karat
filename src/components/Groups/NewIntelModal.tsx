@@ -65,7 +65,7 @@ function NewIntelModal(props: NewStratModalProps) {
   }
 
   const canAdd = () => {
-    return type === IntelType.IMAGE && !!url || type === IntelType.VIDEO && !!embed;
+    return (type === IntelType.IMAGE && !!url) || (type === IntelType.VIDEO && !!embed);
   }
 
   return (

@@ -31,7 +31,7 @@ function Gallery(props: GalleryProps) {
                   {item.embed && <div className="EmbedContainer" dangerouslySetInnerHTML={{ __html: item.embed }} />}
                   {item.url && (
                     <div className="ImageContainer">
-                      <img src={item.url} />
+                      <img src={item.url} alt={item.notes} />
                     </div>
                   )}
                 </div>

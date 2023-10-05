@@ -77,45 +77,52 @@
   width: calc(25% - 10px);
   min-height: 170px;
 
-  .Details {
+  .content {
     display: flex;
     flex-direction: column;
-    align-items: center;
 
-    .DetailsRow {
+    .Details {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      width: 100%;
-      padding: 5px 0;
+      justify-content: space-evenly;
+      flex: 1 1 0;
 
-      .Detail {
+      .DetailsRow {
         display: flex;
-        justify-content: flex-start;
-        flex-basis: 50%;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 5px 0;
 
-        &.centered {
-          justify-content: center;
-          flex-basis: content;
+        .Detail {
+          display: flex;
+          justify-content: flex-start;
+          flex-basis: 50%;
+
+          &.centered {
+            justify-content: center;
+            flex-basis: content;
+          }
+
+          &.large {
+            font-size: 1.1rem;
+          }
+
+          i {
+            margin-right: 5px;
+            line-height: 1.5em;
+          }
+
+          p {
+            text-wrap: wrap;
+            text-align: left;
+          }
         }
 
-        &.large {
-          font-size: 1.1rem;
+        &.large .Detail {
+          flex-basis: 100%;
         }
-
-        i {
-          margin-right: 5px;
-          line-height: 1.5em;
-        }
-
-        p {
-          text-wrap: wrap;
-          text-align: left;
-        }
-      }
-
-      &.large .Detail {
-        flex-basis: 100%;
       }
     }
   }
