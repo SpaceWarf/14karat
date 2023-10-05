@@ -1,12 +1,12 @@
-import { Modal } from "semantic-ui-react";
 import "./DriverStrats.scss";
+import { Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Input from "../Common/Input";
-import Dropdown from "../Common/Dropdown";
+import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { createDriverStrat } from "../../utils/firestore";
-import { addDriverStrat } from "../../redux/reducers/driverStrats";
+import { DriverStratTag, addDriverStrat } from "../../redux/reducers/driverStrats";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
 
@@ -22,6 +22,7 @@ function NewStratModal(props: NewStratModalProps) {
   const [embed, setEmbed] = useState<string>("");
   const [selectedNeighbourhood, setSelectedNeighbourhood] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]);
   const neighbourhoods = useSelector((state: RootState) => state.neighbourhoods.neighbourhoods);
 
   useEffect(() => {
@@ -34,17 +35,26 @@ function NewStratModal(props: NewStratModalProps) {
       neighbourhood: selectedNeighbourhood,
       embed,
       notes,
+      tags,
     }, user);
     dispatch(addDriverStrat(createdStrat));
     setLoading(false);
     setOpen(false);
   }
 
-  const getDropdownOptions = () => {
+  const getNeighbouhoodOptions = (): DropdownOption[] => {
     return neighbourhoods.map(hood => ({
       key: hood.id,
       text: hood.name,
       value: hood.id,
+    }));
+  }
+
+  const getTagsOptions = (): DropdownOption[] => {
+    return Object.values(DriverStratTag).map(tag => ({
+      key: tag,
+      text: tag,
+      value: tag,
     }));
   }
 
@@ -72,7 +82,7 @@ function NewStratModal(props: NewStratModalProps) {
           <Dropdown
             placeholder="Neighbourhood *"
             disabled={loading}
-            options={getDropdownOptions()}
+            options={getNeighbouhoodOptions()}
             value={selectedNeighbourhood}
             onChange={(_, { value }) => setSelectedNeighbourhood(value)}
           />
@@ -89,6 +99,15 @@ function NewStratModal(props: NewStratModalProps) {
             To find your clip's embed, click on the share button and select "Embed".
             The embed should look something like: &lt;iframe <i>gibberish</i>&gt;&lt;/iframe&gt;.
           </p>
+          <Dropdown
+            placeholder="Tags"
+            disabled={loading}
+            options={getTagsOptions()}
+            value={tags}
+            clearable
+            multiple
+            onChange={(_, { value }) => setTags(value)}
+          />
           <Textarea
             name="notes"
             placeholder="Notes"

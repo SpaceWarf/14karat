@@ -12,8 +12,20 @@
         display: flex;
         justify-content: space-between;
 
+        &>div {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
         &::after {
           display: none;
+        }
+
+        .Tags {
+          display: flex;
+          justify-content: flex-start;
+          margin-top: 5px;
         }
       }
 

@@ -2,11 +2,11 @@ import "./Groups.scss";
 import { Modal } from "semantic-ui-react";
 import { useState } from "react";
 import Input from "../Common/Input";
-import Dropdown from "../Common/Dropdown";
+import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { createIntel } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
-import { IntelType } from "../../state/intel";
+import { IntelTag, IntelType } from "../../state/intel";
 
 interface NewStratModalProps {
   groupId: string;
@@ -22,12 +22,21 @@ function NewIntelModal(props: NewStratModalProps) {
   const [url, setUrl] = useState<string>('');
   const [embed, setEmbed] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
 
-  const getDropdownOptions = () => {
-    return [IntelType.IMAGE, IntelType.VIDEO].map(type => ({
+  const getTypeOptions = (): DropdownOption[] => {
+    return Object.values(IntelType).map(type => ({
       key: type,
       text: type,
       value: type,
+    }));
+  }
+
+  const getTagsOptions = (): DropdownOption[] => {
+    return Object.values(IntelTag).map(tag => ({
+      key: tag,
+      text: tag,
+      value: tag,
     }));
   }
 
@@ -39,6 +48,7 @@ function NewIntelModal(props: NewStratModalProps) {
       url,
       embed,
       notes,
+      tags,
     }, user);
     props.onAdd();
     reset();
@@ -51,6 +61,7 @@ function NewIntelModal(props: NewStratModalProps) {
     setUrl('');
     setEmbed('');
     setNotes('');
+    setTags([]);
   }
 
   const canAdd = () => {
@@ -77,7 +88,7 @@ function NewIntelModal(props: NewStratModalProps) {
           <Dropdown
             placeholder="Type *"
             disabled={loading}
-            options={getDropdownOptions()}
+            options={getTypeOptions()}
             value={type}
             onChange={(_, { value }) => setType(value)}
           />
@@ -109,6 +120,15 @@ function NewIntelModal(props: NewStratModalProps) {
               </p>
             </>
           )}
+          <Dropdown
+            placeholder="Tags"
+            disabled={loading}
+            options={getTagsOptions()}
+            value={tags}
+            clearable
+            multiple
+            onChange={(_, { value }) => setTags(value)}
+          />
           <Textarea
             name="notes"
             placeholder="Notes"

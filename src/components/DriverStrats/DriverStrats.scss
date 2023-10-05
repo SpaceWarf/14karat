@@ -79,7 +79,7 @@
 }
 
 .NewStratModal {
-  .ui.form .input.field {
+  .ui.form .field:not(:first-child) {
     margin-top: 20px;
   }
 

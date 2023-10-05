@@ -36,7 +36,12 @@ function Gallery(props: GalleryProps) {
                   )}
                 </div>
                 <div className="extra content">
-                  {item.notes || '-'}
+                  <div>
+                    {item.notes || '-'}
+                    <div className="Tags">
+                      {item.tags.map(tag => <div className="ui horizontal label">{tag}</div>)}
+                    </div>
+                  </div>
                   <button className="ui icon negative button" onClick={() => props.onDelete(item.id)}>
                     <i className="trash icon"></i>
                   </button>

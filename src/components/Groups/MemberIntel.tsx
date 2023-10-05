@@ -33,6 +33,7 @@ function MemberIntel() {
         url: intel.url,
         embed: intel.embed,
         notes: intel.notes,
+        tags: intel.tags,
       }));
   }
 

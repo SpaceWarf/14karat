@@ -38,6 +38,7 @@ function NeighbourghoodGallery() {
         id: strat.id,
         embed: strat.embed,
         notes: strat.notes,
+        tags: strat.tags,
       }));
   }
 

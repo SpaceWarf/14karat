@@ -6,12 +6,20 @@ export interface DriverStrat extends FirestoreEntity {
   neighbourhood: string;
   embed: string;
   notes: string;
+  tags: string[];
 }
 
 export interface DriverStratUpdate {
   neighbourhood: string;
   embed: string;
   notes: string;
+  tags: string[];
+}
+
+export enum DriverStratTag {
+  SQUEEZE = "squeeze",
+  JUMP = "jump",
+  WALL_HOP = "wall hop",
 }
 
 export interface DriverStratsState {
