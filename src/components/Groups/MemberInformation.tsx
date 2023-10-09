@@ -7,6 +7,7 @@ import Input from "../Common/Input";
 import Textarea from "../Common/Textarea";
 import { useAuth } from "../../contexts/AuthContext";
 import { Member, MemberUpdate } from "../../state/members";
+import { Checkbox } from "semantic-ui-react";
 
 const MemberInformation = () => {
   const { groupId, memberId } = useParams();
@@ -21,6 +22,8 @@ const MemberInformation = () => {
   const [phone, setPhone] = useState<string>("");
   const [identifiers, setIdentifiers] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
+  const [leader, setLeader] = useState<boolean>(false);
+  const [dead, setDead] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchMember = async (groupId: string, memberId: string) => {
@@ -30,6 +33,7 @@ const MemberInformation = () => {
 
       if (member) {
         setDefaults(member);
+        console.log(member)
       } else {
         navigate(`/groups/${groupId}?active=1`);
       }
@@ -55,6 +59,8 @@ const MemberInformation = () => {
       setPhone(member.phone);
       setIdentifiers(member.identifiers);
       setNotes(member.notes);
+      setLeader(member.leader);
+      setDead(member.dead);
     }
   }
 
@@ -65,6 +71,8 @@ const MemberInformation = () => {
       || phone !== member.phone
       || identifiers !== member.identifiers
       || notes !== member.notes
+      || leader !== member.leader
+      || dead !== member.dead
     );
     return memberId === "new" || isEdited;
   }
@@ -83,6 +91,8 @@ const MemberInformation = () => {
         phone,
         identifiers,
         notes,
+        leader,
+        dead
       };
 
       if (memberId === "new" && canSave()) {
@@ -98,6 +108,8 @@ const MemberInformation = () => {
           phone,
           identifiers,
           notes,
+          leader,
+          dead,
         });
       }
 
@@ -180,6 +192,10 @@ const MemberInformation = () => {
                   onChange={setNotes}
                   disabled={saving}
                 />
+              </div>
+              <div className='Row large'>
+                <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />
+                <Checkbox checked={dead} label="Dead?" toggle onChange={() => setDead(!dead)} />
               </div>
               <div className="Row">
                 <button

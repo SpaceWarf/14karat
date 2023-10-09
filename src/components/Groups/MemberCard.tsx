@@ -1,6 +1,5 @@
-import { Group } from "../../state/groups";
-import { Member } from "../../state/members";
 import "./Groups.scss";
+import { Member } from "../../state/members";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface MemberCardProps {
@@ -13,12 +12,14 @@ function MemberCard(props: MemberCardProps) {
 
   return (
     <div
-      className='MemberCard ui link card attached'
+      className={`MemberCard ui link card attached ${props.member.dead ? 'red' : ''}`}
       onClick={() => navigate(`/groups/${groupId}/members/${props.member.id}`)}
     >
       <div className="content">
-        <div className="header">
-          {props.member.name}
+        <div className={`header ${props.member.dead ? 'negative' : ''}`}>
+          <p>{props.member.name}</p>
+          {props.member.dead ? <p> - DECEASED</p> : <></>}
+          {props.member.leader ? <i className="chess king icon" /> : <></>}
         </div>
         <div className="Details">
           <div className="DetailsRow">

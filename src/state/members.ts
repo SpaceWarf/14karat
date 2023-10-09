@@ -8,6 +8,8 @@ export interface Member extends FirestoreEntity {
   phone: string;
   identifiers: string;
   notes: string;
+  leader: boolean;
+  dead: boolean;
 }
 
 export interface MemberUpdate {
@@ -17,4 +19,6 @@ export interface MemberUpdate {
   phone: string;
   identifiers: string;
   notes: string;
+  leader: boolean;
+  dead: boolean;
 }

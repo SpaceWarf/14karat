@@ -1,6 +1,5 @@
 import "./Groups.scss";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { Member } from "../../state/members";
 import { getMembersForGroup } from "../../utils/firestore";
@@ -9,7 +8,6 @@ import MemberCard from "./MemberCard";
 
 function GroupMembers() {
   const { groupId } = useParams();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [members, setMembers] = useState<Member[]>([]);
@@ -25,13 +23,34 @@ function GroupMembers() {
     fetchMembers();
   }, [groupId]);
 
+  const getOrderedMembers = (): Member[] => {
+    const leaders: Member[] = [];
+    const hasPosition: Member[] = []
+    const ordinary: Member[] = [];
+    const dead: Member[] = [];
+    members
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .forEach(member => {
+        if (member.leader) {
+          leaders.push(member);
+        } else if (member.dead) {
+          dead.push(member);
+        } else if (member.position) {
+          hasPosition.push(member);
+        } else {
+          ordinary.push(member);
+        }
+      });
+    return [...leaders, ...hasPosition, ...ordinary, ...dead];
+  }
+
   return (
     loading ? (
       <Loading />
     ) : (
       <div className="GroupMembers">
         <div className="content">
-          {members.map(member => <MemberCard member={member} />)}
+          {getOrderedMembers().map(member => <MemberCard member={member} />)}
           <div
             className='AddMemberCard ui link card attached'
             onClick={() => navigate(`/groups/${groupId}/members/new`)}

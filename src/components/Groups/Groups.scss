@@ -55,6 +55,10 @@
         flex: 1 1 0;
       }
 
+      .checkbox {
+        margin-bottom: 20px !important;
+      }
+
       &.large .field {
         flex-basis: 100%;
       }
@@ -80,6 +84,21 @@
   .content {
     display: flex;
     flex-direction: column;
+
+    .header {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      &.negative p,
+      &.negative i {
+        color: $red;
+      }
+    }
 
     .Details {
       display: flex;

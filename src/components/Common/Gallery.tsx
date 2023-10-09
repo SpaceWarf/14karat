@@ -30,7 +30,7 @@ function Gallery(props: GalleryProps) {
     setCopying(true);
     setTimeout(() => {
       setCopying(false);
-    }, 2000);
+    }, 1000);
   }
 
   return (
@@ -65,7 +65,7 @@ function Gallery(props: GalleryProps) {
                       <i className="check circle icon"></i>
                     ) : (
                       <button className="ui icon button" onClick={() => onCopy(item)}>
-                        <i className="linkify icon"></i>
+                        <i className="linkify icon" />
                       </button>
                     )}
                     <button className="ui icon negative button" onClick={() => props.onDelete(item.id)}>
