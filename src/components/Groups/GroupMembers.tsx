@@ -5,18 +5,22 @@ import { Member } from "../../state/members";
 import { getMembersForGroup } from "../../utils/firestore";
 import Loading from "../Common/Loading";
 import MemberCard from "./MemberCard";
+import Filters, { FilterData } from "../Common/Filters";
 
 function GroupMembers() {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [members, setMembers] = useState<Member[]>([]);
+  const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
 
   useEffect(() => {
     const fetchMembers = async () => {
       if (groupId) {
         setLoading(true);
-        setMembers(await getMembersForGroup(groupId));
+        const members = await getMembersForGroup(groupId)
+        setMembers(members);
+        setFilteredMembers(members);
         setLoading(false);
       }
     }
@@ -28,7 +32,7 @@ function GroupMembers() {
     const hasPosition: Member[] = []
     const ordinary: Member[] = [];
     const dead: Member[] = [];
-    members
+    filteredMembers
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(member => {
         if (member.leader) {
@@ -44,11 +48,32 @@ function GroupMembers() {
     return [...leaders, ...hasPosition, ...ordinary, ...dead];
   }
 
+  const handleFiltersUpdate = (update: FilterData) => {
+    setFilteredMembers(getFilteredMembers(update));
+  }
+
+  const getFilteredMembers = (filters: FilterData): Member[] => {
+    const filtered: Member[] = [];
+    members.forEach(member => {
+      const memberInfo = `${member.name} ${member.notes} ${member.phone} ${member.identifiers}`
+      const isSearched = filters.search.length === 0
+        || memberInfo.toLowerCase().includes(filters.search.toLowerCase());
+      const isTagged = filters.tags.length === 0
+        || filters.tags.includes("leader") && member.leader
+        || filters.tags.includes("dead") && member.dead;
+      if (isSearched && isTagged) {
+        filtered.push(member);
+      }
+    });
+    return filtered;
+  }
+
   return (
     loading ? (
       <Loading />
     ) : (
       <div className="GroupMembers">
+        <Filters tags={['leader', 'dead']} onUpdate={handleFiltersUpdate} />
         <div className="content">
           {getOrderedMembers().map(member => <MemberCard member={member} />)}
           <div
