@@ -1,0 +1,32 @@
+.Filters {
+  margin-bottom: 20px;
+
+  .form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .input {
+      width: 350px;
+    }
+
+    .Tags {
+      .label {
+        cursor: pointer;
+
+        &:hover {
+          background-color: $gray-pale;
+
+          &.selected {
+            background-color: $primary-colour-dark;
+          }
+        }
+
+        &.selected {
+          background-color: $primary-colour;
+          color: white;
+        }
+      }
+    }
+  }
+}

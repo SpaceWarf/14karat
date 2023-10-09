@@ -2,7 +2,7 @@ import "./Groups.scss";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { deleteIntel, getIntelForGroup } from "../../utils/firestore";
-import { Intel } from "../../state/intel";
+import { Intel, IntelTag } from "../../state/intel";
 import Gallery from "../Common/Gallery";
 import { GalleryItem } from "../../state/gallery";
 import NewIntelModal from "./NewIntelModal";
@@ -53,7 +53,11 @@ function GroupIntel() {
           onAdd={async () => setIntel(await getIntelForGroup(groupId))}
         />
       )}
-      <Gallery items={getOrderedItems()} onDelete={handleDelete} />
+      <Gallery
+        items={getOrderedItems()}
+        onDelete={handleDelete}
+        tags={Object.values(IntelTag)}
+      />
     </div>
   );
 }

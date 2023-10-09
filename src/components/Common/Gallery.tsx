@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "semantic-ui-react";
 import { GalleryItem } from "../../state/gallery";
+import Filters, { FilterData } from "./Filters";
 
 interface GalleryProps {
   items: GalleryItem[];
+  tags: string[];
   onDelete: (id: string) => void
 }
 
 function Gallery(props: GalleryProps) {
+  const [filteredItems, setFilteredItems] = useState<GalleryItem[]>([]);
   const [activePage, setActivePage] = useState<number>(0);
   const [copying, setCopying] = useState<boolean>(false);
   const PAGE_SIZE = 4;
 
+  useEffect(() => {
+    setFilteredItems(props.items);
+  }, [props.items]);
+
   const getActiveSlice = () => {
-    return props.items.slice(activePage * PAGE_SIZE, activePage + PAGE_SIZE);
+    return filteredItems.slice(activePage * PAGE_SIZE, activePage + PAGE_SIZE);
   }
 
   const onCopy = (item: GalleryItem) => {
@@ -33,14 +40,31 @@ function Gallery(props: GalleryProps) {
     }, 1000);
   }
 
+  const handleFiltersUpdate = (update: FilterData) => {
+    setFilteredItems(getFilteredItems(update));
+  }
+
+  const getFilteredItems = (filters: FilterData): GalleryItem[] => {
+    const filtered: GalleryItem[] = [];
+    props.items.forEach(item => {
+      const isSearched = filters.search.length === 0 || item.notes.toLowerCase().includes(filters.search.toLowerCase());
+      const isTagged = filters.tags.length === 0 || item.tags.some(tag => filters.tags.includes(tag))
+      if (isSearched && isTagged) {
+        filtered.push(item);
+      }
+    });
+    return filtered;
+  }
+
   return (
     <div className='Gallery'>
-      {props.items.length === 0 && (
+      <Filters tags={props.tags} onUpdate={handleFiltersUpdate} />
+      {filteredItems.length === 0 && (
         <div className="items">
           <p>Nothing to show</p>
         </div>
       )}
-      {props.items.length > 0 && (
+      {filteredItems.length > 0 && (
         <>
           <div className="items">
             {getActiveSlice().map(item => (
@@ -81,7 +105,7 @@ function Gallery(props: GalleryProps) {
             <Pagination
               activePage={activePage + 1}
               onPageChange={(_, { activePage }) => setActivePage(Number(activePage) - 1)}
-              totalPages={Math.ceil(props.items.length / PAGE_SIZE)}
+              totalPages={Math.ceil(filteredItems.length / PAGE_SIZE)}
             />
           </div>
         </>
