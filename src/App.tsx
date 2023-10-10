@@ -13,6 +13,7 @@ import StashSearch from './components/StashSearch/StashSearch';
 import GroupListing from './components/Groups/GroupListing';
 import GroupDetails from './components/Groups/GroupDetails';
 import MemberDetails from './components/Groups/MemberDetails';
+import Calendar from './components/Calendar/Calendar';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             <Route path='/stash-search' element={<StashSearch />} />
             <Route path='/roster' element={<Roster />} />
+            <Route path='/calendar' element={<Calendar />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />

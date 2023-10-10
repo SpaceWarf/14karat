@@ -4,60 +4,6 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
-
-    .ui.card {
-      width: 640px;
-
-      .extra.content {
-        display: flex;
-        justify-content: space-between;
-
-        .Details {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        &::after {
-          display: none;
-        }
-
-        .Tags {
-          display: flex;
-          justify-content: flex-start;
-          margin-top: 5px;
-        }
-
-        .Actions {
-          display: flex;
-          justify-content: flex-end;
-        }
-      }
-
-      .EmbedContainer,
-      .ImageContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: black;
-        width: 640px;
-        height: 360px;
-        border-radius: 5px 5px 0 0;
-        overflow: hidden;
-
-        iframe {
-          width: 640px;
-          height: 360px;
-        }
-
-        img {
-          width: auto;
-          height: auto;
-          max-width: 640px;
-          max-height: 360px;
-        }
-      }
-    }
   }
 
   .pagination {

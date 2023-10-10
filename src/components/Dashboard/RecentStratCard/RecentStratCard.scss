@@ -1,0 +1,35 @@
+@import "../../../assets/scss/index";
+
+.RecentStratCard.ui.card {
+  width: 680px;
+
+  .embeds {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+
+    .EmbedContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      width: 640px;
+      height: 360px;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+
+      iframe {
+        width: 640px;
+        height: 360px;
+      }
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 640px;
+        max-height: 360px;
+      }
+    }
+  }
+}

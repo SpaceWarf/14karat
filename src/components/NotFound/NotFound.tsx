@@ -10,7 +10,7 @@ function NotFound() {
         <i className='exclamation triangle icon'></i>
         <p>404: Not Found</p>
       </div>
-      <button className='ui button' onClick={() => { navigate('/') }}>Back To Safety</button>
+      <button className='ui positive button' onClick={() => { navigate('/') }}>Back To Safety</button>
     </div>
   );
 }

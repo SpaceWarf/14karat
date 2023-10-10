@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Input from "./Input";
-import { debounce } from "lodash";
 
 interface FiltersProps {
   tags: string[];

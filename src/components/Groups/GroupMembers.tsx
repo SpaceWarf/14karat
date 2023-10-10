@@ -59,8 +59,8 @@ function GroupMembers() {
       const isSearched = filters.search.length === 0
         || memberInfo.toLowerCase().includes(filters.search.toLowerCase());
       const isTagged = filters.tags.length === 0
-        || filters.tags.includes("leader") && member.leader
-        || filters.tags.includes("dead") && member.dead;
+        || (filters.tags.includes("leader") && member.leader)
+        || (filters.tags.includes("dead") && member.dead);
       if (isSearched && isTagged) {
         filtered.push(member);
       }
