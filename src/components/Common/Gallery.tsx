@@ -20,7 +20,7 @@ function Gallery(props: GalleryProps) {
   }, [props.items]);
 
   const getActiveSlice = () => {
-    return filteredItems.slice(activePage * PAGE_SIZE, activePage + PAGE_SIZE);
+    return filteredItems.slice(activePage * PAGE_SIZE, (activePage * PAGE_SIZE) + PAGE_SIZE);
   }
 
   const handleFiltersUpdate = (update: FilterData) => {
