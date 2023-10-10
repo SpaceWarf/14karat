@@ -20,6 +20,9 @@ export enum DriverStratTag {
   SQUEEZE = "squeeze",
   JUMP = "jump",
   WALL_HOP = "wall hop",
+  FENCE = "fence",
+  WALL_BREAK = "wall break",
+  STAIRS = "stairs",
 }
 
 export interface DriverStratsState {
