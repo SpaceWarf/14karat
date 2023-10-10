@@ -7,11 +7,18 @@ import UpcomingEventsCard from './UpcomingEventsCard/UpcomingEventsCard';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
-  const { divisions } = useSelector((state: RootState) => state.divisions);
+  const { roles } = useSelector((state: RootState) => state.roles);
   const navigate = useNavigate();
 
-  const getDivision = (): string => {
-    return divisions.find(division => division.id === profile.info.division)?.name ?? '';
+  const getRoles = (): string[] => {
+    const foundRoles: string[] = [];
+    profile.info.roles.forEach(roleId => {
+      const foundRole = roles.find(role => role.id === roleId);
+      if (foundRole) {
+        foundRoles.push(foundRole.name);
+      }
+    });
+    return foundRoles;
   }
 
   return (
@@ -21,7 +28,7 @@ function Dashboard() {
           <img src={profile.pfpUrl} alt="Profile" />
           <div>
             <h1 className='Name'>{profile.info.name}</h1>
-            <h4 className='Division'>{getDivision()}</h4>
+            <h4 className='Division'>{getRoles().join(', ')}</h4>
           </div>
         </div>
       </div>
