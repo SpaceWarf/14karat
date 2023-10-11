@@ -14,14 +14,15 @@
       padding: 30px 10px 20px 10px;
 
       .Logo {
-        width: 50px
+        width: 50px;
       }
     }
 
     .SidebarItem {
       justify-content: center;
 
-      i {
+      i,
+      img {
         font-size: 1.2rem;
         margin: 0;
       }
@@ -31,18 +32,40 @@
       }
     }
 
-    .ClockedInLabel {
-      position: absolute;
-      right: 5px;
+    .button.Collapse {
+      right: 0px;
+      top: 0px;
+    }
+  }
 
-      p {
+  @media only screen and (max-width: 1600px) {
+    width: $sidebar-width-collapsed !important;
+
+    .Header {
+      height: 85px;
+      padding: 30px 10px 20px 10px;
+
+      .Logo {
+        width: 50px !important;
+      }
+    }
+
+    .SidebarItem {
+      justify-content: center !important;
+
+      i,
+      img {
+        font-size: 1.2rem;
+        margin: 0 !important;
+      }
+
+      span {
         display: none;
       }
     }
 
     .button.Collapse {
-      right: 0px;
-      top: 0px;
+      display: none;
     }
   }
 
@@ -60,7 +83,8 @@
       background-color: $sidebar-background-colour-light;
     }
 
-    i {
+    i,
+    img {
       line-height: 1em;
       margin-right: 10px;
     }
@@ -75,7 +99,6 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      margin-right: 10px;
     }
 
     .Label {
@@ -119,7 +142,7 @@
     padding: 20px 10px;
 
     .Logo {
-      width: 100px
+      width: 100px;
     }
   }
 

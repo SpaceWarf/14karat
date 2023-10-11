@@ -79,6 +79,7 @@
 .AddGroupCard.ui.card,
 .AddMemberCard.ui.card {
   width: calc(25% - 10px);
+  min-width: 300px;
   min-height: 170px;
 
   .content {
