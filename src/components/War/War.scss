@@ -4,11 +4,8 @@
   .content {
     display: flex;
     justify-content: center;
+    gap: 100px;
     margin-top: 20px;
-
-    &>* {
-      flex-basis: 25%;
-    }
 
     .LastWar {
       display: flex;
@@ -26,10 +23,12 @@
       }
     }
 
-    .CurrentWar .Label {
+    .CurrentWar {
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 25%;
+      min-width: 250px;
 
       h1 {
         font-size: 3rem;
@@ -90,7 +89,9 @@
     }
 
     .Rules {
-      margin-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      width: 35%;
 
       h4 {
         font-size: 1.3rem;
@@ -105,6 +106,17 @@
           margin-bottom: 5px;
           list-style-position: inside;
         }
+      }
+    }
+
+    .Asset {
+      display: flex;
+      align-items: flex-start;
+      width: 35%;
+
+      img {
+        height: auto;
+        width: 100%;
       }
     }
   }

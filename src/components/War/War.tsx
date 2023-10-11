@@ -73,69 +73,71 @@ function War() {
         {!warInfo.endedAt && (
           <>
             <div className='Rules'>
-              <h4>Standard War Procedure</h4>
-              <ul>
-                <li>No bleets related to the war.</li>
-                <li>Working at businesses is allowed.</li>
-                <li>Do not hangout alone at the block.</li>
-                <li>Always carry a gun & armour.</li>
-                <li>Do not wear your katana or chain.</li>
-              </ul>
+              <div>
+                <h4>Standard War Procedure</h4>
+                <ul>
+                  <li>No bleets related to the war.</li>
+                  <li>Working at businesses is allowed.</li>
+                  <li>Do not hangout alone at the block.</li>
+                  <li>Always carry a gun & armour.</li>
+                  <li>Do not wear your katana or chain.</li>
+                </ul>
+              </div>
             </div>
             <div className='CurrentWar'>
-              <div className='Label'>
-                <div className='Controls'>
-                  <div className='Score'>
-                    <div className='KillControls'>
-                      {isAdmin && (
-                        <div className="mini ui vertical buttons">
-                          <button
-                            className='ui button positive hover-animation'
-                            disabled={loading}
-                            onClick={handleAddKill}
-                          ><i className='add icon' /> </button>
-                          <button
-                            className='ui button negative hover-animation'
-                            disabled={loading}
-                            onClick={handleRemoveKill}
-                          ><i className='minus icon' /> </button>
-                        </div>
-                      )}
-                    </div>
-                    <h1 className={getScoreClass()}>{warInfo.kills} - {warInfo.deaths}</h1>
-                    <div className='DeathControls'>
-                      {isAdmin && (
-                        <div className="mini ui vertical buttons">
-                          <button
-                            className='ui button positive hover-animation'
-                            disabled={loading}
-                            onClick={handleAddDeath}
-                          ><i className='add icon' /> </button>
-                          <button
-                            className='ui button negative hover-animation'
-                            disabled={loading}
-                            onClick={handleRemoveDeath}
-                          ><i className='minus icon' /> </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className='EndWarContainer'>
+              <div className='Controls'>
+                <div className='Score'>
+                  <div className='KillControls'>
                     {isAdmin && (
-                      <button
-                        className='ui button negative hover-animation'
-                        disabled={loading}
-                        onClick={handleEndWar}
-                      >
-                        <p className='label contrast'>End War</p>
-                        <p className='IconContainer contrast'><i className='handshake icon'></i></p>
-                      </button>
+                      <div className="mini ui vertical buttons">
+                        <button
+                          className='ui button positive hover-animation'
+                          disabled={loading}
+                          onClick={handleAddKill}
+                        ><i className='add icon' /> </button>
+                        <button
+                          className='ui button negative hover-animation'
+                          disabled={loading}
+                          onClick={handleRemoveKill}
+                        ><i className='minus icon' /> </button>
+                      </div>
+                    )}
+                  </div>
+                  <h1 className={getScoreClass()}>{warInfo.kills} - {warInfo.deaths}</h1>
+                  <div className='DeathControls'>
+                    {isAdmin && (
+                      <div className="mini ui vertical buttons">
+                        <button
+                          className='ui button positive hover-animation'
+                          disabled={loading}
+                          onClick={handleAddDeath}
+                        ><i className='add icon' /> </button>
+                        <button
+                          className='ui button negative hover-animation'
+                          disabled={loading}
+                          onClick={handleRemoveDeath}
+                        ><i className='minus icon' /> </button>
+                      </div>
                     )}
                   </div>
                 </div>
+                <div className='EndWarContainer'>
+                  {isAdmin && (
+                    <button
+                      className='ui button negative hover-animation'
+                      disabled={loading}
+                      onClick={handleEndWar}
+                    >
+                      <p className='label contrast'>End War</p>
+                      <p className='IconContainer contrast'><i className='handshake icon'></i></p>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-            <div></div>
+            <div className='Asset'>
+              {warInfo.asset && <img src={warInfo.asset} alt='War Asset' />}
+            </div>
           </>
         )}
       </div>

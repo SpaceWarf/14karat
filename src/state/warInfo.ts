@@ -4,4 +4,5 @@ export interface WarInfo {
   group?: string;
   kills?: number;
   deaths?: number;
+  asset?: string;
 }
