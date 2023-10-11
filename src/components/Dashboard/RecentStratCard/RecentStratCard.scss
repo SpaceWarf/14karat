@@ -31,5 +31,22 @@
         max-height: 360px;
       }
     }
+
+    @media only screen and (max-width: 1600px) {
+      .EmbedContainer {
+        width: 426px;
+        height: 240px;
+
+        iframe {
+          width: 426px;
+          height: 240px;
+        }
+
+        img {
+          max-width: 426px;
+          max-height: 240px;
+        }
+      }
+    }
   }
 }
