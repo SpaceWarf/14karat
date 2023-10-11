@@ -9,6 +9,7 @@ import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/members";
 import { Intel, IntelUpdate } from "../state/intel";
+import { WarInfo } from "../state/warInfo";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -28,6 +29,7 @@ const neighbourhoodsRef = collection(db, "neighbourhoods");
 const groupsRef = collection(db, "groups");
 const membersRef = collection(db, "members");
 const intelRef = collection(db, "intel");
+const warsRef = collection(db, "wars");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -106,6 +108,18 @@ export async function getDriverStrats(): Promise<DriverStrat[]> {
     }
   });
   return driverStrats;
+}
+
+export function onDriverStratsSnapshot(cb: (strats: DriverStrat[]) => void): Unsubscribe {
+  return onSnapshot(driverStratsRef, {}, snapshot => {
+    const driverStrats: DriverStrat[] = [];
+    snapshot.forEach((doc: DocumentData) => {
+      if (!doc.data().deleted) {
+        driverStrats.push({ id: doc.id, ...doc.data() });
+      }
+    });
+    cb(driverStrats);
+  });
 }
 
 export async function createDriverStrat(strat: DriverStratUpdate, user: User | null): Promise<DriverStrat> {
@@ -268,5 +282,18 @@ export async function deleteIntel(id: string, user: User | null): Promise<void> 
     deleted: true,
     deletedAt: now,
     deletedBy: user?.email ?? '',
+  });
+}
+
+export async function getWarInfo(): Promise<WarInfo> {
+  const snapshot = await getDocs(warsRef);
+  return {
+    ...snapshot.docs[0].data(),
+  };
+}
+
+export function onWarInfoSnapshot(cb: (warInfo: WarInfo) => void): Unsubscribe {
+  return onSnapshot(warsRef, {}, snapshot => {
+    cb({ ...snapshot.docs[0].data() } as WarInfo);
   });
 }

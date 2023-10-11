@@ -4,6 +4,7 @@ import './Dashboard.scss';
 import { useNavigate } from 'react-router-dom';
 import RecentStratCard from './RecentStratCard/RecentStratCard';
 import UpcomingEventsCard from './UpcomingEventsCard/UpcomingEventsCard';
+import WarCard from './WarCard/WarCard';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -33,8 +34,9 @@ function Dashboard() {
         </div>
       </div>
       <div className='content'>
-        <div><RecentStratCard /></div>
-        <div><UpcomingEventsCard /></div>
+        <div className='Row'><RecentStratCard /></div>
+        <div className='Row'><UpcomingEventsCard /></div>
+        <div className='Row'><WarCard /></div>
       </div>
     </div>
   );
