@@ -1,6 +1,7 @@
 import { ReactElement, useState } from "react";
 import { GalleryItem } from "../../state/gallery";
 import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface GalleryProps {
   item: GalleryItem;
@@ -9,6 +10,7 @@ interface GalleryProps {
 }
 
 function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
+  const { isAdmin } = useAuth();
   const [_, setSearchParams] = useSearchParams();
   const [copying, setCopying] = useState<boolean>(false);
 
@@ -55,7 +57,7 @@ function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
               <i className="linkify icon" />
             </button>
           )}
-          {onDelete && <button className="ui icon negative button" onClick={() => onDelete(item.id)}>
+          {isAdmin && onDelete && <button className="ui icon negative button" onClick={() => onDelete(item.id)}>
             <i className="trash icon"></i>
           </button>}
         </div>
