@@ -31,13 +31,12 @@ function NewStratModal(props: NewStratModalProps) {
 
   const handleAdd = async () => {
     setLoading(true);
-    const createdStrat = await createDriverStrat({
+    await createDriverStrat({
       neighbourhood: selectedNeighbourhood,
       embed,
       notes,
       tags,
     }, user);
-    dispatch(addDriverStrat(createdStrat));
     setLoading(false);
     setOpen(false);
   }

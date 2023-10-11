@@ -56,8 +56,8 @@ function MemberIntel() {
       )}
       <Gallery
         items={getOrderedItems()}
-        onDelete={handleDelete}
         tags={Object.values(IntelTag)}
+        onDelete={handleDelete}
       />
     </div>
   );

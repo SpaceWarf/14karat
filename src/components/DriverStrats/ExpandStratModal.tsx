@@ -1,0 +1,68 @@
+import { Modal } from "semantic-ui-react";
+import "./DriverStrats.scss";
+import { useEffect, useState } from "react";
+import { RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { DriverStrat, removeDriverStrat } from "../../redux/reducers/driverStrats";
+import Loading from "../Common/Loading";
+import AssetCard from "../Common/AssetCard";
+import { deleteDriverStrat } from "../../utils/firestore";
+import { useAuth } from "../../contexts/AuthContext";
+
+interface ExpandStratModal {
+
+}
+
+function ExpandStratModal() {
+  const dispatch = useDispatch();
+  const { user } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [open, setOpen] = useState<boolean>(false);
+  const { driverStrats } = useSelector((state: RootState) => state.driverStrats);
+  const [strat, setStrat] = useState<DriverStrat>();
+
+  useEffect(() => {
+    if (searchParams.has('expand')) {
+      const id = searchParams.get('expand');
+      const strat = driverStrats.find(strat => strat.id === id);
+      if (strat) {
+        setStrat(strat);
+      } else {
+        setOpen(false);
+      }
+    } else {
+      setOpen(false);
+    }
+  }, [searchParams]);
+
+  const handleDelete = async (id: string) => {
+    await deleteDriverStrat(id, user);
+    dispatch(removeDriverStrat(id));
+  }
+
+  return (
+    <Modal
+      className="ExpandStratModal Modal"
+      size="large"
+      onClose={() => { setSearchParams({}); setOpen(false); }}
+      onOpen={() => setOpen(true)}
+      open={open}
+      trigger={
+        <button className="ui icon button" onClick={() => setOpen(false)}>
+          <i className="expand arrows alternate icon" />
+        </button>
+      }
+    >
+      <Modal.Content>
+        {strat ? (
+          <AssetCard item={strat} onDelete={handleDelete} />
+        ) : (
+          <Loading />
+        )}
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export default ExpandStratModal;

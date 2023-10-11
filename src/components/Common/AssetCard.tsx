@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { GalleryItem } from "../../state/gallery";
+import { useSearchParams } from "react-router-dom";
 
 interface GalleryProps {
   item: GalleryItem;
-  onDelete?: (id: string) => void
+  onDelete?: (id: string) => void;
+  expandModal?: ReactElement;
 }
 
-function AssetCard({ item, onDelete }: GalleryProps) {
+function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
+  const [_, setSearchParams] = useSearchParams();
   const [copying, setCopying] = useState<boolean>(false);
 
   const onCopy = (item: GalleryItem) => {
@@ -38,12 +41,13 @@ function AssetCard({ item, onDelete }: GalleryProps) {
       </div>
       <div className="extra content">
         <div className="Details">
-          {item.notes || '-'}
           <div className="Tags">
             {item.tags.map(tag => <div className="ui horizontal label">{tag}</div>)}
           </div>
+          <p className="Notes">{item.notes || '-'}</p>
         </div>
         <div className="Actions">
+          <div onClick={() => setSearchParams({ expand: item.id })}>{expandModal}</div>
           {copying ? (
             <i className="check circle icon"></i>
           ) : (

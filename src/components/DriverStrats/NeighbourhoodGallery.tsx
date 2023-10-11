@@ -10,6 +10,7 @@ import { DriverStrat, DriverStratTag, removeDriverStrat } from "../../redux/redu
 import { GalleryItem } from "../../state/gallery";
 import { deleteDriverStrat } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
+import ExpandStratModal from "./ExpandStratModal";
 
 function NeighbourghoodGallery() {
   const { user } = useAuth();
@@ -57,8 +58,9 @@ function NeighbourghoodGallery() {
         </div>
         <Gallery
           items={getOrderedItems()}
-          onDelete={handleDelete}
           tags={Object.values(DriverStratTag)}
+          onDelete={handleDelete}
+          expandModal={<ExpandStratModal />}
         />
       </div>
     </div>

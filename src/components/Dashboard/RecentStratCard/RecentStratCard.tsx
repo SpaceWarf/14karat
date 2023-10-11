@@ -4,6 +4,7 @@ import { RootState } from '../../../redux/store';
 import { DriverStrat } from '../../../redux/reducers/driverStrats';
 import AssetCard from '../../Common/AssetCard';
 import { useNavigate } from 'react-router-dom';
+import ExpandStratModal from '../../DriverStrats/ExpandStratModal';
 
 function RecentStratCard() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function RecentStratCard() {
         <div className='embeds'>
           {getRecentStrats().length === 0 && <p>Nothing to show...</p>}
           {getRecentStrats().map(strat => (
-            <AssetCard item={strat} />
+            <AssetCard item={strat} expandModal={<ExpandStratModal />} />
           ))}
         </div>
       </div>

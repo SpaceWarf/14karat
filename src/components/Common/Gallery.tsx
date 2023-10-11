@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Pagination } from "semantic-ui-react";
 import { GalleryItem } from "../../state/gallery";
 import Filters, { FilterData } from "./Filters";
@@ -7,7 +7,8 @@ import AssetCard from "./AssetCard";
 interface GalleryProps {
   items: GalleryItem[];
   tags: string[];
-  onDelete?: (id: string) => void
+  onDelete?: (id: string) => void;
+  expandModal?: ReactElement;
 }
 
 function Gallery(props: GalleryProps) {
@@ -51,7 +52,7 @@ function Gallery(props: GalleryProps) {
         <>
           <div className="items">
             {getActiveSlice().map(item => (
-              <AssetCard item={item} onDelete={props.onDelete} />
+              <AssetCard item={item} onDelete={props.onDelete} expandModal={props.expandModal} />
             )
             )}
           </div>
