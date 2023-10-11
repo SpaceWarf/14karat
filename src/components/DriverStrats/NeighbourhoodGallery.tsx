@@ -45,7 +45,6 @@ function NeighbourghoodGallery() {
 
   const handleDelete = async (id: string) => {
     await deleteDriverStrat(id, user);
-    dispatch(removeDriverStrat(id));
   }
 
   return (

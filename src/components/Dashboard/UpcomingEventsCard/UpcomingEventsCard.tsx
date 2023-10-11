@@ -8,7 +8,7 @@ function UpcomingEventsCard() {
     <div className="UpcomingEventsCard ui card attached external">
       <div className="content">
         <div className='header'>
-          <p>Upcoming Events</p>
+          <p><i className='calendar alternate icon' /> Upcoming Events</p>
           <button className="ui icon button" onClick={() => navigate('/calendar')}>
             <i className='external alternate icon' />
           </button>

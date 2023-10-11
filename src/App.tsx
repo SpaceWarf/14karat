@@ -14,6 +14,7 @@ import GroupListing from './components/Groups/GroupListing';
 import GroupDetails from './components/Groups/GroupDetails';
 import MemberDetails from './components/Groups/MemberDetails';
 import Calendar from './components/Calendar/Calendar';
+import War from './components/War/War';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path='/stash-search' element={<StashSearch />} />
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
+            <Route path='/war' element={<War />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />

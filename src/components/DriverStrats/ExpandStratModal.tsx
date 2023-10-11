@@ -10,10 +10,6 @@ import AssetCard from "../Common/AssetCard";
 import { deleteDriverStrat } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 
-interface ExpandStratModal {
-
-}
-
 function ExpandStratModal() {
   const dispatch = useDispatch();
   const { user } = useAuth();
@@ -38,7 +34,6 @@ function ExpandStratModal() {
 
   const handleDelete = async (id: string) => {
     await deleteDriverStrat(id, user);
-    dispatch(removeDriverStrat(id));
   }
 
   return (

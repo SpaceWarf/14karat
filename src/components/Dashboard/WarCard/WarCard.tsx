@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 import './WarCard.scss';
 import { RootState } from '../../../redux/store';
+import { useNavigate } from 'react-router-dom';
 
 function WarCard() {
+  const navigate = useNavigate();
   const { warInfo } = useSelector((state: RootState) => state.warInfo);
 
   const getTimeString = (): string => {
@@ -36,8 +38,14 @@ function WarCard() {
   }
 
   return (
-    <div className={warInfo.endedAt ? "WarCard ui card attached green" : "WarCard ui card attached red"}>
+    <div className={warInfo.endedAt ? "WarCard ui card attached external green" : "WarCard ui card attached external red"}>
       <div className="content">
+        <div className='header'>
+          <p><i className='bomb icon' /> War Info</p>
+          <button className="ui icon button" onClick={() => navigate('/war')}>
+            <i className='external alternate icon' />
+          </button>
+        </div>
         {warInfo.endedAt && (
           <div className='LastWar'>
             <h2>{getTimeString()}</h2>
@@ -47,7 +55,6 @@ function WarCard() {
         {!warInfo.endedAt && (
           <>
             <div className='CurrentWar'>
-              <h3>At War With</h3>
               <div className='Label'>
                 <h2>{warInfo.group}</h2>
                 <h1 className={getScoreClass()}>{warInfo.kills} - {warInfo.deaths}</h1>
