@@ -3,10 +3,10 @@ import { Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Input from "../Common/Input";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { createDriverStrat } from "../../utils/firestore";
-import { DriverStratTag, addDriverStrat } from "../../redux/reducers/driverStrats";
+import { DriverStratTag } from "../../redux/reducers/driverStrats";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
 
@@ -16,7 +16,6 @@ interface NewStratModalProps {
 
 function NewStratModal(props: NewStratModalProps) {
   const { user } = useAuth();
-  const dispatch = useDispatch();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [embed, setEmbed] = useState<string>("");

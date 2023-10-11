@@ -1,12 +1,12 @@
 import "./DriverStrats.scss";
 import Header from "../Common/Header"
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getDriverStratsByNeighbourhood } from "../../redux/selectors/driversStrats";
 import { RootState } from "../../redux/store";
 import Gallery from "../Common/Gallery";
 import { useNavigate, useParams } from "react-router-dom";
 import NewStratModal from "./NewStratModal";
-import { DriverStrat, DriverStratTag, removeDriverStrat } from "../../redux/reducers/driverStrats";
+import { DriverStrat, DriverStratTag } from "../../redux/reducers/driverStrats";
 import { GalleryItem } from "../../state/gallery";
 import { deleteDriverStrat } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
@@ -14,7 +14,6 @@ import ExpandStratModal from "./ExpandStratModal";
 
 function NeighbourghoodGallery() {
   const { user } = useAuth();
-  const dispatch = useDispatch();
   const { neighbourhood } = useParams();
   const navigate = useNavigate();
   const neighbourhoods = useSelector((state: RootState) => state.neighbourhoods.neighbourhoods);

@@ -1,1 +1,111 @@
-.Calendar {}
+@import "../../assets/scss/index";
+
+.War {
+  .content {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    &>* {
+      flex-basis: 25%;
+    }
+
+    .LastWar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+
+      h3 {
+        margin: 0;
+      }
+
+      h2 {
+        margin: 10px 0;
+        color: $green;
+      }
+    }
+
+    .CurrentWar .Label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+      }
+
+      .Controls {
+        .Score {
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          gap: 20px;
+
+          .ui.button {
+            height: 30px;
+          }
+        }
+      }
+
+      .EndWarContainer {
+        margin-top: 20px;
+
+        button.negative.hover-animation {
+          .label {
+            width: 55px;
+          }
+
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 80px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 80px) / 2);
+            }
+          }
+        }
+      }
+
+      h1 {
+        margin: 0;
+      }
+
+      h1.green {
+        color: $green;
+      }
+
+      h1.red {
+        color: $red;
+      }
+
+      h1.yellow {
+        color: $yellow;
+      }
+    }
+
+    .Rules {
+      margin-top: 10px;
+
+      h4 {
+        font-size: 1.3rem;
+      }
+
+      ul {
+        padding: 0 0 0 5px;
+        margin: 0;
+
+        li {
+          font-size: 1.1rem;
+          margin-bottom: 5px;
+          list-style-position: inside;
+        }
+      }
+    }
+  }
+}

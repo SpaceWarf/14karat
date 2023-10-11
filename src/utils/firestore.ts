@@ -288,12 +288,26 @@ export async function deleteIntel(id: string, user: User | null): Promise<void> 
 export async function getWarInfo(): Promise<WarInfo> {
   const snapshot = await getDocs(warsRef);
   return {
+    id: snapshot.docs[0].id,
     ...snapshot.docs[0].data(),
   };
 }
 
 export function onWarInfoSnapshot(cb: (warInfo: WarInfo) => void): Unsubscribe {
   return onSnapshot(warsRef, {}, snapshot => {
-    cb({ ...snapshot.docs[0].data() } as WarInfo);
+    cb({
+      id: snapshot.docs[0].id,
+      ...snapshot.docs[0].data()
+    } as WarInfo);
+  });
+}
+
+export async function updateWarInfo(id: string, update: Partial<WarInfo>, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  console.log(id, update)
+  await updateDoc(doc(db, "wars", id), {
+    ...update,
+    updatedAt: now,
+    updatedBy: user?.email ?? '',
   });
 }

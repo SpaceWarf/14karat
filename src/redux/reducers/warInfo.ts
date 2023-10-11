@@ -6,7 +6,7 @@ export interface WarInfoState {
 }
 
 const initialState: WarInfoState = {
-  warInfo: {},
+  warInfo: {} as WarInfo,
 };
 
 export const warInfo = createSlice({

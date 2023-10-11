@@ -1,17 +1,16 @@
-import { Modal } from "semantic-ui-react";
 import "./DriverStrats.scss";
+import { Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { DriverStrat, removeDriverStrat } from "../../redux/reducers/driverStrats";
+import { DriverStrat } from "../../redux/reducers/driverStrats";
 import Loading from "../Common/Loading";
 import AssetCard from "../Common/AssetCard";
 import { deleteDriverStrat } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 
 function ExpandStratModal() {
-  const dispatch = useDispatch();
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState<boolean>(false);
@@ -30,7 +29,7 @@ function ExpandStratModal() {
     } else {
       setOpen(false);
     }
-  }, [searchParams]);
+  }, [searchParams, driverStrats]);
 
   const handleDelete = async (id: string) => {
     await deleteDriverStrat(id, user);

@@ -1,27 +1,15 @@
-import { useSelector } from 'react-redux';
 import './WarCard.scss';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
+import { getTimeSince } from '../../../utils/time';
 
 function WarCard() {
   const navigate = useNavigate();
   const { warInfo } = useSelector((state: RootState) => state.warInfo);
 
   const getTimeString = (): string => {
-    if (warInfo.endedAt) {
-      const now = new Date();
-      const lastEnd = new Date(warInfo.endedAt);
-      const ms = (now.getTime() - lastEnd.getTime());
-      const days = Math.floor(ms / 86400000);
-      const hours = Math.floor((ms % 86400000) / 3600000);
-      const minutes = Math.round(((ms % 86400000) % 3600000) / 60000);
-
-      const daysStr = days ? days === 1 ? `${days} day` : `${days} days` : '';
-      const hoursStr = hours ? hours === 1 ? `${hours} hour` : `${hours} hours` : '';
-      const minutesStr = minutes ? minutes === 1 ? `${minutes} minute` : `${minutes} minutes` : '';
-      return `${daysStr}${daysStr && (hoursStr || minutesStr) ? ', ' : ''}${hoursStr}${hoursStr && minutesStr ? ' and ' : ''}${minutesStr}`;
-    }
-    return '0 days';
+    return warInfo.endedAt ? getTimeSince(new Date(), new Date(warInfo.endedAt)) : '0 days';
   }
 
   const getScoreClass = (): string => {
@@ -31,7 +19,7 @@ function WarCard() {
 
     if (warInfo.kills > warInfo.deaths) {
       return 'green';
-    } else if (warInfo.kills > warInfo.deaths) {
+    } else if (warInfo.kills < warInfo.deaths) {
       return 'red';
     }
     return 'yellow';

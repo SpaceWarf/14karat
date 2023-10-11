@@ -1,4 +1,5 @@
 export interface WarInfo {
+  id: string;
   endedAt?: string;
   group?: string;
   kills?: number;
