@@ -36,15 +36,15 @@ function WarCard() {
   }
 
   return (
-    <div className={warInfo.group ? "WarCard ui card attached red" : "WarCard ui card attached green"}>
+    <div className={warInfo.endedAt ? "WarCard ui card attached green" : "WarCard ui card attached red"}>
       <div className="content">
-        {!warInfo.group && (
+        {warInfo.endedAt && (
           <div className='LastWar'>
-            <h3>Days Since Last War</h3>
             <h2>{getTimeString()}</h2>
+            <h3>Since Last War</h3>
           </div>
         )}
-        {warInfo.group && (
+        {!warInfo.endedAt && (
           <>
             <div className='CurrentWar'>
               <h3>At War With</h3>
