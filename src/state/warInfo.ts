@@ -1,6 +1,6 @@
 export interface WarInfo {
   endedAt?: string;
-  current?: string;
+  group?: string;
   kills?: number;
   deaths?: number;
 }

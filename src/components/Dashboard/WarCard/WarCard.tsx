@@ -22,18 +22,48 @@ function WarCard() {
     return '0 days';
   }
 
+  const getScoreClass = (): string => {
+    if (warInfo.kills === undefined || warInfo.deaths === undefined) {
+      return '';
+    }
+
+    if (warInfo.kills > warInfo.deaths) {
+      return 'green';
+    } else if (warInfo.kills > warInfo.deaths) {
+      return 'red';
+    }
+    return 'yellow';
+  }
+
   return (
-    <div className={warInfo.current ? "WarCard ui card attached red" : "WarCard ui card attached green"}>
+    <div className={warInfo.group ? "WarCard ui card attached red" : "WarCard ui card attached green"}>
       <div className="content">
-        <div>
-          <h3>Days Since Last War</h3>
-          <h2>{getTimeString()}</h2>
-        </div>
-        {warInfo.current && (
-          <div>
-            <h3>At War With</h3>
-            <h2>{warInfo.current} ({warInfo.kills} - {warInfo.deaths})</h2>
+        {!warInfo.group && (
+          <div className='LastWar'>
+            <h3>Days Since Last War</h3>
+            <h2>{getTimeString()}</h2>
           </div>
+        )}
+        {warInfo.group && (
+          <>
+            <div className='CurrentWar'>
+              <h3>At War With</h3>
+              <div className='Label'>
+                <h2>{warInfo.group}</h2>
+                <h1 className={getScoreClass()}>{warInfo.kills} - {warInfo.deaths}</h1>
+              </div>
+            </div>
+            <div className='Rules'>
+              <h4>Standard War Procedure</h4>
+              <ul>
+                <li>No bleets related to the war.</li>
+                <li>Working at businesses is allowed.</li>
+                <li>Do not hangout alone at the block.</li>
+                <li>Always carry a gun & armour.</li>
+                <li>Do not wear your katana or chain.</li>
+              </ul>
+            </div>
+          </>
         )}
       </div>
     </div>

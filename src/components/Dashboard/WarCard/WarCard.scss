@@ -4,19 +4,53 @@
   width: 100%;
 
   .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 20px;
 
+    h1,
     h2,
-    h3 {
+    h3,
+    h4 {
       margin: 0;
     }
 
     &::after {
       display: none;
+    }
+
+    .CurrentWar {
+      .Label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        h1.green {
+          color: $green;
+        }
+
+        h1.red {
+          color: $red;
+        }
+
+        h1.yellow {
+          color: $yellow;
+        }
+      }
+    }
+
+    .Rules {
+      margin-top: 10px;
+      text-align: start;
+
+      ul {
+        padding: 0 0 0 5px;
+        margin: 0;
+
+        li {
+          margin-bottom: 5px;
+          text-align: start;
+          list-style-position: inside;
+        }
+      }
     }
   }
 }
