@@ -2,17 +2,13 @@ import './War.scss';
 import Header from '../Common/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { getTimeSince } from '../../utils/time';
+import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../utils/time';
 import { useEffect, useState } from 'react';
 import { getWebhookById, updateWarInfo } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
 import Input from '../Common/Input';
-
-const OUR_TIMER_UP = 'We can slide';
-const THEIR_TIMER_UP = 'They can slide';
-const THREE_HOURS = 10800000;
 
 function War() {
   const { user, isAdmin } = useAuth();
@@ -106,22 +102,6 @@ function War() {
   const handleGroupUpdate = (group: string) => {
     setGroup(group);
     updateWarInfo(warInfo.id, { group }, user);
-  }
-
-  const getSlideTimer = (timer: string | undefined, upString: string): string => {
-    if (timer) {
-      const now = new Date();
-      const timerStart = new Date(timer);
-      const timerEnd = new Date(timerStart.getTime() + THREE_HOURS);
-
-      if (now.getTime() >= timerEnd.getTime()) {
-        return upString;
-      }
-
-      return getTimeSince(timerEnd, now);
-    }
-
-    return upString;
   }
 
   return (

@@ -2,7 +2,7 @@ import './WarCard.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
-import { getTimeSince } from '../../../utils/time';
+import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../../utils/time';
 
 function WarCard() {
   const navigate = useNavigate();
@@ -46,6 +46,20 @@ function WarCard() {
               <div className='Label'>
                 <h2>{warInfo.group}</h2>
                 <h1 className={getScoreClass()}>{warInfo.kills} - {warInfo.deaths}</h1>
+              </div>
+            </div>
+            <div className='Timers'>
+              <div className='OurTimer'>
+                <h3>Our Timer</h3>
+                <h2 className={getSlideTimer(warInfo.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                  {getSlideTimer(warInfo.ourSlide, OUR_TIMER_UP)}
+                </h2>
+              </div>
+              <div className='TheirTimer'>
+                <h3>Their Timer</h3>
+                <h2 className={getSlideTimer(warInfo.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                  {getSlideTimer(warInfo.theirSlide, THEIR_TIMER_UP)}
+                </h2>
               </div>
             </div>
             <div className='Rules'>
