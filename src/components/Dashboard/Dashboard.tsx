@@ -26,7 +26,9 @@ function Dashboard() {
     <div className="Dashboard">
       <div className='PageHeader'>
         <div className='UserInfo' onClick={() => navigate('/profile')}>
-          <img src={profile.pfpUrl} alt="Profile" />
+
+          {!profile.pfpUrl && <i className='user circle icon'></i>}
+          {profile.pfpUrl && <img src={profile.pfpUrl} alt="Profile" />}
           <div>
             <h1 className='Name'>{profile.info.name}</h1>
             <h4 className='Division'>{getRoles().join(', ')}</h4>

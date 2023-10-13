@@ -17,9 +17,13 @@
       color: white;
       cursor: pointer;
 
-      img {
+      img,
+      i {
         border-radius: 50%;
         height: 100px;
+        width: 100px;
+        font-size: 7rem;
+        line-height: 7rem;
       }
 
       h1,
