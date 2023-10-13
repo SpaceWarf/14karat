@@ -35,8 +35,8 @@ function Dashboard() {
       </div>
       <div className='content'>
         <div className='Row'><RecentStratCard /></div>
-        <div className='Row'><UpcomingEventsCard /></div>
         <div className='Row'><WarCard /></div>
+        <div className='Row'><UpcomingEventsCard /></div>
       </div>
     </div>
   );
