@@ -10,6 +10,7 @@ import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/members";
 import { Intel, IntelUpdate } from "../state/intel";
 import { WarInfo } from "../state/warInfo";
+import { Webhook } from "../state/webhook";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -304,10 +305,14 @@ export function onWarInfoSnapshot(cb: (warInfo: WarInfo) => void): Unsubscribe {
 
 export async function updateWarInfo(id: string, update: Partial<WarInfo>, user: User | null): Promise<void> {
   const now = new Date().toISOString();
-  console.log(id, update)
   await updateDoc(doc(db, "wars", id), {
     ...update,
     updatedAt: now,
     updatedBy: user?.email ?? '',
   });
+}
+
+export async function getWebhookById(id: string): Promise<Webhook> {
+  const snapshot = await getDoc(doc(db, "webhooks", id));
+  return { id: snapshot.id, ...snapshot.data() } as Webhook;
 }

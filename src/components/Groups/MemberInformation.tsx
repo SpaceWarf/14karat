@@ -33,7 +33,6 @@ const MemberInformation = () => {
 
       if (member) {
         setDefaults(member);
-        console.log(member)
       } else {
         navigate(`/groups/${groupId}?active=1`);
       }

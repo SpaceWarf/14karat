@@ -3,14 +3,31 @@ import Header from '../Common/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getTimeSince } from '../../utils/time';
-import { useState } from 'react';
-import { updateWarInfo } from '../../utils/firestore';
+import { useEffect, useState } from 'react';
+import { getWebhookById, updateWarInfo } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
+import { Webhook } from '../../state/webhook';
+import { triggerDiscordWebhook } from '../../services/functions';
 
 function War() {
   const { user, isAdmin } = useAuth();
   const { warInfo } = useSelector((state: RootState) => state.warInfo);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
+  const [webhook, setWebhook] = useState<Webhook>();
+  const [webhookSuccess, setWebhookSuccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchWebhook = async () => {
+      setLoadingWebhook(true);
+      setWebhook(await getWebhookById('score-update'));
+      setLoadingWebhook(false);
+    }
+
+    if (isAdmin) {
+      fetchWebhook();
+    }
+  }, [isAdmin]);
 
   const getTimeString = (): string => {
     return warInfo.endedAt ? getTimeSince(new Date(), new Date(warInfo.endedAt)) : '0 days';
@@ -59,6 +76,20 @@ function War() {
     setLoading(false);
   }
 
+  const handleSendToDiscord = () => {
+    if (webhook) {
+      triggerDiscordWebhook({
+        url: webhook.url,
+        content: `Current Score: **${warInfo.kills || 0} - ${warInfo.deaths || 0}**`
+      }).then(() => {
+        setWebhookSuccess(true);
+        setTimeout(() => setWebhookSuccess(false), 1000);
+      }).catch(error => {
+        console.error(error);
+      });
+    }
+  }
+
   return (
     <div className="War">
       <Header text={`${warInfo.endedAt ? 'No' : warInfo.group} War`} decorated />
@@ -77,10 +108,10 @@ function War() {
                 <h4>Standard War Procedure</h4>
                 <ul>
                   <li>No bleets related to the war.</li>
-                  <li>Working at businesses is allowed.</li>
                   <li>Do not hangout alone at the block.</li>
                   <li>Always carry a gun & armour.</li>
                   <li>Do not wear your katana or chain.</li>
+                  <li>Working at businesses is allowed.</li>
                 </ul>
               </div>
             </div>
@@ -121,16 +152,29 @@ function War() {
                     )}
                   </div>
                 </div>
-                <div className='EndWarContainer'>
+                <div className='ActionsContainer'>
                   {isAdmin && (
-                    <button
-                      className='ui button negative hover-animation'
-                      disabled={loading}
-                      onClick={handleEndWar}
-                    >
-                      <p className='label contrast'>End War</p>
-                      <p className='IconContainer contrast'><i className='handshake icon'></i></p>
-                    </button>
+                    <>
+                      <div className='DiscordAction'>
+                        <button
+                          className='ui button positive hover-animation'
+                          disabled={loading || loadingWebhook || !webhook}
+                          onClick={handleSendToDiscord}
+                        >
+                          <p className='label contrast'>Send to Discord</p>
+                          <p className='IconContainer contrast'><i className='discord icon'></i></p>
+                        </button>
+                        {webhookSuccess && <i className="check circle icon"></i>}
+                      </div>
+                      <button
+                        className='ui button negative hover-animation'
+                        disabled={loading}
+                        onClick={handleEndWar}
+                      >
+                        <p className='label contrast'>End War</p>
+                        <p className='IconContainer contrast'><i className='handshake icon'></i></p>
+                      </button>
+                    </>
                   )}
                 </div>
               </div>

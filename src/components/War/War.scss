@@ -51,8 +51,40 @@
         }
       }
 
-      .EndWarContainer {
+      .ActionsContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
         margin-top: 20px;
+
+        .DiscordAction {
+          position: relative;
+
+          i.check {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $green;
+            font-size: 1.2rem;
+          }
+        }
+
+        button.positive.hover-animation {
+          .label {
+            width: 105px;
+          }
+
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 130px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 130px) / 2);
+            }
+          }
+        }
 
         button.negative.hover-animation {
           .label {
