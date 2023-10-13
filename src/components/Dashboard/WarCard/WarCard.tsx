@@ -1,6 +1,5 @@
 import './WarCard.scss';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../../utils/time';
 import { getMostRecentWar } from '../../../redux/selectors/wars';

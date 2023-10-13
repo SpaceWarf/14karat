@@ -25,6 +25,7 @@ function Gallery(props: GalleryProps) {
   }
 
   const handleFiltersUpdate = (update: FilterData) => {
+    setActivePage(0);
     setFilteredItems(getFilteredItems(update));
   }
 
