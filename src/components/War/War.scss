@@ -36,9 +36,14 @@
 
       h2 {
         font-size: 2.5rem;
+        line-height: 2.5rem;
       }
 
       .Controls {
+        .ui.form {
+          margin-bottom: 20px;
+        }
+
         .Score {
           display: flex;
           justify-content: space-evenly;
@@ -124,6 +129,7 @@
       display: flex;
       justify-content: flex-end;
       width: 35%;
+      margin-top: 5px;
 
       h4 {
         font-size: 1.3rem;

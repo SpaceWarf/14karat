@@ -8,6 +8,7 @@ import { getWebhookById, updateWarInfo } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
+import Input from '../Common/Input';
 
 function War() {
   const { user, isAdmin } = useAuth();
@@ -16,6 +17,7 @@ function War() {
   const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
   const [webhookSuccess, setWebhookSuccess] = useState<boolean>(false);
+  const [group, setGroup] = useState<string>('');
 
   useEffect(() => {
     const fetchWebhook = async () => {
@@ -24,10 +26,14 @@ function War() {
       setLoadingWebhook(false);
     }
 
+    if (warInfo.group) {
+      setGroup(warInfo.group);
+    }
+
     if (isAdmin) {
       fetchWebhook();
     }
-  }, [isAdmin]);
+  }, [isAdmin, warInfo]);
 
   const getTimeString = (): string => {
     return warInfo.endedAt ? getTimeSince(new Date(), new Date(warInfo.endedAt)) : '0 days';
@@ -90,9 +96,14 @@ function War() {
     }
   }
 
+  const handleGroupUpdate = (group: string) => {
+    setGroup(group);
+    updateWarInfo(warInfo.id, { group }, user);
+  }
+
   return (
     <div className="War">
-      <Header text={`${warInfo.endedAt ? 'No' : warInfo.group} War`} decorated />
+      <Header text='War Info' decorated />
       <div className='content'>
         {warInfo.endedAt && (
           <div className='LastWar'>
@@ -117,6 +128,20 @@ function War() {
             </div>
             <div className='CurrentWar'>
               <div className='Controls'>
+                <div className='ui form'>
+                  {isAdmin ? (
+                    <Input
+                      type="text"
+                      name="group"
+                      placeholder="Group"
+                      icon="group"
+                      value={group}
+                      onChange={handleGroupUpdate}
+                    />
+                  ) : (
+                    <h2>{warInfo.group || 'New Group'}</h2>
+                  )}
+                </div>
                 <div className='Score'>
                   <div className='KillControls'>
                     {isAdmin && (
