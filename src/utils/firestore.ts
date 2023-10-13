@@ -295,7 +295,6 @@ export async function getWars(): Promise<War[]> {
       wars.push({ id: doc.id, ...data });
     }
   });
-  console.log(wars);
   return wars;
 }
 
@@ -308,7 +307,6 @@ export function onWarSnapshot(cb: (wars: War[]) => void): Unsubscribe {
         wars.push({ id: doc.id, ...data });
       }
     });
-    console.log(wars);
     cb(wars);
   });
 }

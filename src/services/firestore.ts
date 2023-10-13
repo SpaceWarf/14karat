@@ -38,7 +38,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getNeighbourhoods(),
     getWars(),
   ]);
-  console.log(wars)
   dispatch(setProfile(profile));
   dispatch(setRoles(roles));
   dispatch(setDivisions(divisions));
