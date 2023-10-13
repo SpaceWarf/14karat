@@ -3,30 +3,31 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../../utils/time';
+import { getMostRecentWar } from '../../../redux/selectors/wars';
 
 function WarCard() {
   const navigate = useNavigate();
-  const { warInfo } = useSelector((state: RootState) => state.warInfo);
+  const war = useSelector(getMostRecentWar);
 
   const getTimeString = (): string => {
-    return warInfo.endedAt ? getTimeSince(new Date(), new Date(warInfo.endedAt)) : '0 days';
+    return war.endedAt ? getTimeSince(new Date(), new Date(war.endedAt)) : '0 days';
   }
 
   const getScoreClass = (): string => {
-    if (warInfo.kills === undefined || warInfo.deaths === undefined) {
+    if (war.kills === undefined || war.deaths === undefined) {
       return '';
     }
 
-    if (warInfo.kills > warInfo.deaths) {
+    if (war.kills > war.deaths) {
       return 'green';
-    } else if (warInfo.kills < warInfo.deaths) {
+    } else if (war.kills < war.deaths) {
       return 'red';
     }
     return 'yellow';
   }
 
-  return (
-    <div className={warInfo.endedAt ? "WarCard ui card attached external green" : "WarCard ui card attached external red"}>
+  return war ? (
+    <div className={war.endedAt ? "WarCard ui card attached external green" : "WarCard ui card attached external red"}>
       <div className="content">
         <div className='header'>
           <p><i className='bomb icon' /> War Info</p>
@@ -34,31 +35,31 @@ function WarCard() {
             <i className='external alternate icon' />
           </button>
         </div>
-        {warInfo.endedAt && (
+        {war.endedAt && (
           <div className='LastWar'>
             <h2>{getTimeString()}</h2>
             <h3>Since Last War</h3>
           </div>
         )}
-        {!warInfo.endedAt && (
+        {!war.endedAt && (
           <>
             <div className='CurrentWar'>
               <div className='Label'>
-                <h2>{warInfo.group}</h2>
-                <h1 className={getScoreClass()}>{warInfo.kills} - {warInfo.deaths}</h1>
+                <h2>{war.group}</h2>
+                <h1 className={getScoreClass()}>{war.kills} - {war.deaths}</h1>
               </div>
             </div>
             <div className='Timers'>
               <div className='OurTimer'>
                 <h3>Our Timer</h3>
-                <h2 className={getSlideTimer(warInfo.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
-                  {getSlideTimer(warInfo.ourSlide, OUR_TIMER_UP)}
+                <h2 className={getSlideTimer(war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                  {getSlideTimer(war.ourSlide, OUR_TIMER_UP)}
                 </h2>
               </div>
               <div className='TheirTimer'>
                 <h3>Their Timer</h3>
-                <h2 className={getSlideTimer(warInfo.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
-                  {getSlideTimer(warInfo.theirSlide, THEIR_TIMER_UP)}
+                <h2 className={getSlideTimer(war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                  {getSlideTimer(war.theirSlide, THEIR_TIMER_UP)}
                 </h2>
               </div>
             </div>
@@ -76,7 +77,7 @@ function WarCard() {
         )}
       </div>
     </div>
-  );
+  ) : <></>;
 }
 
 export default WarCard;

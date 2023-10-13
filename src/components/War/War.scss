@@ -21,6 +21,24 @@
         margin: 10px 0;
         color: $green;
       }
+
+      button.negative.hover-animation {
+        margin-top: 20px;
+
+        .label {
+          width: 85px;
+        }
+
+        &:hover:not(:disabled) {
+          .label {
+            left: calc((100% - 110px) / 2);
+          }
+
+          .IconContainer {
+            right: calc((100% - 110px) / 2);
+          }
+        }
+      }
     }
 
     .CurrentWar {
@@ -128,7 +146,7 @@
 
     .Rules {
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       width: 35%;
       margin-top: 5px;
 
@@ -151,7 +169,7 @@
     .Timers {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: flex-end;
       width: 35%;
       gap: 30px;
 

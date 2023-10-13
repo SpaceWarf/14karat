@@ -9,7 +9,7 @@ import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/members";
 import { Intel, IntelUpdate } from "../state/intel";
-import { WarInfo } from "../state/warInfo";
+import { War, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
 
 export interface FirestoreEntity {
@@ -286,30 +286,53 @@ export async function deleteIntel(id: string, user: User | null): Promise<void> 
   });
 }
 
-export async function getWarInfo(): Promise<WarInfo> {
+export async function getWars(): Promise<War[]> {
   const snapshot = await getDocs(warsRef);
-  return {
-    id: snapshot.docs[0].id,
-    ...snapshot.docs[0].data(),
-  } as WarInfo;
+  const wars: War[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      wars.push({ id: doc.id, ...data });
+    }
+  });
+  console.log(wars);
+  return wars;
 }
 
-export function onWarInfoSnapshot(cb: (warInfo: WarInfo) => void): Unsubscribe {
+export function onWarSnapshot(cb: (wars: War[]) => void): Unsubscribe {
   return onSnapshot(warsRef, {}, snapshot => {
-    cb({
-      id: snapshot.docs[0].id,
-      ...snapshot.docs[0].data()
-    } as WarInfo);
+    const wars: War[] = [];
+    snapshot.forEach((doc: DocumentData) => {
+      const data = doc.data();
+      if (!data.deleted) {
+        wars.push({ id: doc.id, ...data });
+      }
+    });
+    console.log(wars);
+    cb(wars);
   });
 }
 
-export async function updateWarInfo(id: string, update: Partial<WarInfo>, user: User | null): Promise<void> {
+export async function updateWarInfo(id: string, update: Partial<War>, user: User | null): Promise<void> {
   const now = new Date().toISOString();
   await updateDoc(doc(db, "wars", id), {
     ...update,
     updatedAt: now,
     updatedBy: user?.email ?? '',
   });
+}
+
+export async function createWarInfo(warInfo: WarUpdate, user: User | null): Promise<War> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(warsRef, {
+    ...warInfo,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...warInfo,
+  };
 }
 
 export async function getWebhookById(id: string): Promise<Webhook> {

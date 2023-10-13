@@ -6,9 +6,9 @@ import {
   getRoles,
   getDriverStrats,
   getNeighbourhoods,
-  getWarInfo,
-  onWarInfoSnapshot,
-  onDriverStratsSnapshot
+  onWarSnapshot,
+  onDriverStratsSnapshot,
+  getWars
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -18,7 +18,7 @@ import { setRoles } from "../redux/reducers/roles";
 import { setDivisions } from "../redux/reducers/divisions";
 import { setDriverStrats } from "../redux/reducers/driverStrats";
 import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
-import { setWarInfo } from "../redux/reducers/warInfo";
+import { setWars } from "../redux/reducers/wars";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -29,21 +29,22 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     roles,
     driverStrats,
     neighbourhoods,
-    warInfo,
+    wars,
   ] = await Promise.all([
     getProfileById(id),
     getDivisions(),
     getRoles(),
     getDriverStrats(),
     getNeighbourhoods(),
-    getWarInfo(),
+    getWars(),
   ]);
+  console.log(wars)
   dispatch(setProfile(profile));
   dispatch(setRoles(roles));
   dispatch(setDivisions(divisions));
   dispatch(setDriverStrats(driverStrats));
   dispatch(setNeighbourhoods(neighbourhoods));
-  dispatch(setWarInfo(warInfo));
+  dispatch(setWars(wars));
 
   if (profile.pfp) {
     const url = await getProfilePictureUrl(profile.pfp);
@@ -52,6 +53,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
 
   onProfileByIdSnapshot(id, profile => dispatch(setProfile(profile)));
   onDriverStratsSnapshot(strats => dispatch(setDriverStrats(strats)));
-  onWarInfoSnapshot(warInfo => dispatch(setWarInfo(warInfo)));
+  onWarSnapshot(wars => dispatch(setWars(wars)));
   loadingSubject.next(false);
 }

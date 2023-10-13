@@ -1,23 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { WarInfo } from "../../state/warInfo";
+import { War } from "../../state/war";
 
 export interface WarInfoState {
-  warInfo: WarInfo;
+  wars: War[];
 }
 
 const initialState: WarInfoState = {
-  warInfo: {} as WarInfo,
+  wars: [],
 };
 
 export const warInfo = createSlice({
-  name: 'WarInfo',
+  name: 'War',
   initialState: initialState,
   reducers: {
-    setWarInfo: (state, action: PayloadAction<WarInfo>) => {
-      state.warInfo = action.payload;
+    setWars: (state, action: PayloadAction<War[]>) => {
+      state.wars = action.payload;
     },
   },
 });
 
-export const { setWarInfo } = warInfo.actions;
+export const { setWars } = warInfo.actions;
 export default warInfo.reducer;

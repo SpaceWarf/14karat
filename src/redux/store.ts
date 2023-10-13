@@ -4,7 +4,7 @@ import divisions from "./reducers/divisions";
 import roles from "./reducers/roles";
 import driverStrats from "./reducers/driverStrats";
 import neighbourhoods from "./reducers/neighbourhoods";
-import warInfo from "./reducers/warInfo";
+import wars from "./reducers/wars";
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === 'RESET') {
@@ -17,7 +17,7 @@ const rootReducer = (state: any, action: AnyAction) => {
     roles: roles,
     driverStrats: driverStrats,
     neighbourhoods: neighbourhoods,
-    warInfo: warInfo,
+    wars: wars,
   })(state, action);
 }
 
