@@ -10,6 +10,10 @@ import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
 import Input from '../Common/Input';
 
+const OUR_TIMER_UP = 'We can slide';
+const THEIR_TIMER_UP = 'They can slide';
+const THREE_HOURS = 10800000;
+
 function War() {
   const { user, isAdmin } = useAuth();
   const { warInfo } = useSelector((state: RootState) => state.warInfo);
@@ -84,13 +88,16 @@ function War() {
 
   const handleSendToDiscord = () => {
     if (webhook) {
+      setLoadingWebhook(true);
       triggerDiscordWebhook({
         url: webhook.url,
         content: `Current Score: **${warInfo.kills || 0} - ${warInfo.deaths || 0}**`
       }).then(() => {
+        setLoadingWebhook(false);
         setWebhookSuccess(true);
         setTimeout(() => setWebhookSuccess(false), 1000);
       }).catch(error => {
+        setLoadingWebhook(false);
         console.error(error);
       });
     }
@@ -99,6 +106,22 @@ function War() {
   const handleGroupUpdate = (group: string) => {
     setGroup(group);
     updateWarInfo(warInfo.id, { group }, user);
+  }
+
+  const getSlideTimer = (timer: string | undefined, upString: string): string => {
+    if (timer) {
+      const now = new Date();
+      const timerStart = new Date(timer);
+      const timerEnd = new Date(timerStart.getTime() + THREE_HOURS);
+
+      if (now.getTime() >= timerEnd.getTime()) {
+        return upString;
+      }
+
+      return getTimeSince(timerEnd, now);
+    }
+
+    return upString;
   }
 
   return (
@@ -204,8 +227,19 @@ function War() {
                 </div>
               </div>
             </div>
-            <div className='Asset'>
-              {warInfo.asset && <img src={warInfo.asset} alt='War Asset' />}
+            <div className='Timers'>
+              <div className='OurTimer'>
+                <h2>Our Timer</h2>
+                <h1 className={getSlideTimer(warInfo.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                  {getSlideTimer(warInfo.ourSlide, OUR_TIMER_UP)}
+                </h1>
+              </div>
+              <div className='TheirTimer'>
+                <h2>Their Timer</h2>
+                <h1 className={getSlideTimer(warInfo.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                  {getSlideTimer(warInfo.theirSlide, THEIR_TIMER_UP)}
+                </h1>
+              </div>
             </div>
           </>
         )}

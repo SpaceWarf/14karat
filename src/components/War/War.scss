@@ -28,7 +28,6 @@
       flex-direction: column;
       align-items: center;
       width: 25%;
-      min-width: 250px;
 
       h1 {
         font-size: 3rem;
@@ -40,13 +39,15 @@
       }
 
       .Controls {
+        min-width: 275px;
+
         .ui.form {
           margin-bottom: 20px;
         }
 
         .Score {
           display: flex;
-          justify-content: space-evenly;
+          justify-content: space-between;
           align-items: center;
           gap: 20px;
 
@@ -147,14 +148,36 @@
       }
     }
 
-    .Asset {
+    .Timers {
       display: flex;
+      flex-direction: column;
       align-items: flex-start;
       width: 35%;
+      gap: 30px;
 
-      img {
-        height: auto;
-        width: 100%;
+      h1 {
+        margin: 0;
+
+        &.red {
+          color: $red;
+        }
+
+        &.green {
+          color: $green;
+        }
+      }
+
+      h2 {
+        font-weight: normal;
+        margin: 0;
+      }
+
+      .OurTimer,
+      .TheirTimer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
       }
     }
   }

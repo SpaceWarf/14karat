@@ -291,7 +291,7 @@ export async function getWarInfo(): Promise<WarInfo> {
   return {
     id: snapshot.docs[0].id,
     ...snapshot.docs[0].data(),
-  };
+  } as WarInfo;
 }
 
 export function onWarInfoSnapshot(cb: (warInfo: WarInfo) => void): Unsubscribe {
