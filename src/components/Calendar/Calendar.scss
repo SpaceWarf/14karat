@@ -1,1 +1,38 @@
-.Calendar {}
+@import 'react-big-calendar/lib/sass/styles';
+
+.Calendar {
+  height: 100%;
+
+  .content {
+    height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+
+    .Actions {
+      margin-bottom: 20px;
+
+      button.positive.hover-animation {
+        width: 300px;
+
+        .label {
+          width: 65px;
+        }
+
+        &:hover:not(:disabled) {
+          .label {
+            left: calc((100% - 90px) / 2);
+          }
+
+          .IconContainer {
+            right: calc((100% - 90px) / 2);
+          }
+        }
+      }
+    }
+
+    .rbc-calendar {
+      flex: 1 1 0;
+    }
+
+  }
+}

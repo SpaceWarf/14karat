@@ -11,6 +11,7 @@ import { Member, MemberUpdate } from "../state/members";
 import { Intel, IntelUpdate } from "../state/intel";
 import { War, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
+import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -31,6 +32,7 @@ const groupsRef = collection(db, "groups");
 const membersRef = collection(db, "members");
 const intelRef = collection(db, "intel");
 const warsRef = collection(db, "wars");
+const eventsRef = collection(db, "events");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -336,4 +338,42 @@ export async function createWarInfo(warInfo: WarUpdate, user: User | null): Prom
 export async function getWebhookById(id: string): Promise<Webhook> {
   const snapshot = await getDoc(doc(db, "webhooks", id));
   return { id: snapshot.id, ...snapshot.data() } as Webhook;
+}
+
+export async function getEvents(): Promise<CalendarEvent[]> {
+  const snapshot = await getDocs(eventsRef);
+  const wars: CalendarEvent[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      wars.push({ id: doc.id, ...data });
+    }
+  });
+  return wars;
+}
+
+export function onEventsSnapshot(cb: (wars: CalendarEvent[]) => void): Unsubscribe {
+  return onSnapshot(eventsRef, {}, snapshot => {
+    const wars: CalendarEvent[] = [];
+    snapshot.forEach((doc: DocumentData) => {
+      const data = doc.data();
+      if (!data.deleted) {
+        wars.push({ id: doc.id, ...data });
+      }
+    });
+    cb(wars);
+  });
+}
+
+export async function createEvent(event: CalendarEventUpdate, user: User | null): Promise<CalendarEvent> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(eventsRef, {
+    ...event,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...event,
+  };
 }
