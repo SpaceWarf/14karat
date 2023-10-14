@@ -13,10 +13,12 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider, renderTimeViewClock } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
+import { RootState } from '../../redux/store';
 
 function War() {
   const { user, isAdmin } = useAuth();
   const war = useSelector(getMostRecentWar);
+  const profile = useSelector((state: RootState) => state.profile);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
@@ -35,10 +37,10 @@ function War() {
       setLoadingWebhook(false);
     }
 
-    if (isAdmin) {
+    if (canEdit()) {
       fetchWebhook();
     }
-  }, [isAdmin]);
+  }, [isAdmin, profile]);
 
   useEffect(() => {
     if (war) {
@@ -56,6 +58,10 @@ function War() {
       }
     }
   }, [war]);
+
+  const canEdit = (): boolean => {
+    return isAdmin || profile.info.roles.includes('enforcer');
+  }
 
   const getTimeString = (): string => {
     return war.endedAt ? getTimeSince(new Date(), new Date(war.endedAt)) : '0 days';
@@ -193,7 +199,7 @@ function War() {
             <h3>Congratulations everybody, we officially made it</h3>
             <h2>{getTimeString()}</h2>
             <h3>since the last war!</h3>
-            {isAdmin && (
+            {canEdit() && (
               <button
                 className='ui button negative hover-animation'
                 disabled={loading}
@@ -211,7 +217,7 @@ function War() {
               <div className='OurTimer'>
                 <div className='Header'>
                   <h2>Our Timer</h2>
-                  {isAdmin && (
+                  {canEdit() && (
                     <button className='ui icon button Collapse' onClick={() => setEditingOurTimer(!editingOurTimer)}>
                       <i className='clock icon' />
                     </button>
@@ -253,7 +259,7 @@ function War() {
               <div className='TheirTimer'>
                 <div className='Header'>
                   <h2>Their Timer</h2>
-                  {isAdmin && (
+                  {canEdit() && (
                     <button className='ui icon button Collapse' onClick={() => setEditingTheirTimer(!editingTheirTimer)}>
                       <i className='clock icon' />
                     </button>
@@ -292,7 +298,7 @@ function War() {
                   </div>
                 )}
               </div>
-              {isAdmin && (
+              {canEdit() && (
                 <div className='DiscordAction'>
                   <button
                     className='ui button positive hover-animation'
@@ -309,7 +315,7 @@ function War() {
             <div className='CurrentWar'>
               <div className='Controls'>
                 <div className='ui form'>
-                  {isAdmin ? (
+                  {canEdit() ? (
                     <Input
                       type="text"
                       name="group"
@@ -324,7 +330,7 @@ function War() {
                 </div>
                 <div className='Score'>
                   <div className='KillControls'>
-                    {isAdmin && (
+                    {canEdit() && (
                       <div className="mini ui vertical buttons">
                         <button
                           className='ui button positive hover-animation'
@@ -341,7 +347,7 @@ function War() {
                   </div>
                   <h1 className={getScoreClass()}>{war.kills} - {war.deaths}</h1>
                   <div className='DeathControls'>
-                    {isAdmin && (
+                    {canEdit() && (
                       <div className="mini ui vertical buttons">
                         <button
                           className='ui button positive hover-animation'
@@ -358,7 +364,7 @@ function War() {
                   </div>
                 </div>
                 <div className='ActionsContainer'>
-                  {isAdmin && (
+                  {canEdit() && (
                     <>
                       <div className='DiscordAction'>
                         <button
