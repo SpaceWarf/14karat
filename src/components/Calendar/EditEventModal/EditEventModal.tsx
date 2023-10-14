@@ -8,7 +8,9 @@ import Dropdown from "../../Common/Dropdown";
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { createEvent, updateEvent } from "../../../utils/firestore";
+import { createEvent, getWebhookById, updateEvent } from "../../../utils/firestore";
+import { Webhook } from "../../../state/webhook";
+import { triggerDiscordWebhook } from "../../../services/functions";
 
 interface EditEventModalProps {
   open: boolean,
@@ -18,17 +20,32 @@ interface EditEventModalProps {
 }
 
 function EditEventModal(props: EditEventModalProps) {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>(props.event.title);
   const [color, setColor] = useState<string>(props.event.color);
   const [start, setStart] = useState<Dayjs>(dayjs(props.event.start));
   const [end, setEnd] = useState<Dayjs>(dayjs(props.event.end));
   const [allDay, setAllDay] = useState<boolean>(props.event.allDay || false);
+  const [webhook, setWebhook] = useState<Webhook>();
+  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
+  const [notification, setNotification] = useState<boolean>(true);
 
   useEffect(() => {
     reset();
   }, [props]);
+
+  useEffect(() => {
+    const fetchWebhook = async () => {
+      setLoadingWebhook(true);
+      setWebhook(await getWebhookById('event-update'));
+      setLoadingWebhook(false);
+    }
+
+    if (isAdmin) {
+      fetchWebhook();
+    }
+  }, [isAdmin]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -51,7 +68,12 @@ function EditEventModal(props: EditEventModalProps) {
       start: start.toDate(),
       end: end.toDate(),
       allDay
-    })
+    });
+
+    if (notification) {
+      sendWebhook();
+    }
+
     handleClose();
   }
 
@@ -69,7 +91,16 @@ function EditEventModal(props: EditEventModalProps) {
   }
 
   const canSave = (): boolean => {
-    return !!title && !!start && !!end && !!color && start.isBefore(end);
+    const hasRequired = !!title
+      && !!start
+      && !!end
+      && !!color
+      && start.isBefore(end);
+    const isEdited = title !== props.event.title
+      || start.toISOString() !== props.event.start.toISOString()
+      || end.toISOString() !== props.event.end.toISOString()
+      || color !== color
+    return hasRequired && isEdited;
   }
 
   const handleUpdateStart = (start: Dayjs) => {
@@ -84,6 +115,41 @@ function EditEventModal(props: EditEventModalProps) {
       setStart(end.subtract(1, 'hour'));
     }
     setEnd(end);
+  }
+
+
+  const sendWebhook = () => {
+    if (!loadingWebhook && webhook) {
+      setLoadingWebhook(true);
+      triggerDiscordWebhook({
+        url: webhook.url,
+        content: `@everyone An event was edited`,
+        embeds: [
+          {
+            type: "rich",
+            title: title,
+            description: "",
+            fields: [
+              {
+                name: 'Starts On',
+                value: `\n<t:${start.toDate().getTime() / 1000}:F>`,
+                inline: true
+              },
+              {
+                name: 'Ends On',
+                value: `\n<t:${end.toDate().getTime() / 1000}:F>`,
+                inline: true
+              }
+            ]
+          }
+        ]
+      }).then(() => {
+        setLoadingWebhook(false);
+      }).catch(error => {
+        setLoadingWebhook(false);
+        console.error(error);
+      });
+    }
   }
 
   return (
@@ -151,7 +217,18 @@ function EditEventModal(props: EditEventModalProps) {
             </LocalizationProvider>
           </div>
           <div className="Row">
-            <Checkbox checked={allDay} label="All Day?" toggle onChange={() => setAllDay(!allDay)} />
+            <Checkbox
+              checked={allDay}
+              label="All Day?"
+              toggle
+              onChange={() => setAllDay(!allDay)}
+            />
+            <Checkbox
+              checked={notification}
+              label="Send Notification?"
+              toggle
+              onChange={() => setNotification(!notification)}
+            />
           </div>
         </div>
       </Modal.Content>

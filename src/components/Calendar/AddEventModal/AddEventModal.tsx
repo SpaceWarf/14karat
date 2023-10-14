@@ -6,9 +6,11 @@ import Input from "../../Common/Input";
 import { EVENT_COLORS } from "../../../state/event";
 import Dropdown from "../../Common/Dropdown";
 import dayjs, { Dayjs } from "dayjs";
-import { LocalizationProvider, DateTimePicker, renderTimeViewClock } from "@mui/x-date-pickers";
+import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { createEvent } from "../../../utils/firestore";
+import { createEvent, getWebhookById } from "../../../utils/firestore";
+import { Webhook } from "../../../state/webhook";
+import { triggerDiscordWebhook } from "../../../services/functions";
 
 interface AddEventModalProps {
   open: boolean,
@@ -18,18 +20,33 @@ interface AddEventModalProps {
 }
 
 function AddEventModal(props: AddEventModalProps) {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [color, setColor] = useState<string>(EVENT_COLORS[2].value);
   const [start, setStart] = useState<Dayjs>(dayjs(props.start));
   const [end, setEnd] = useState<Dayjs>(dayjs(props.end));
   const [allDay, setAllDay] = useState<boolean>(false);
+  const [webhook, setWebhook] = useState<Webhook>();
+  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
+  const [notification, setNotification] = useState<boolean>(true);
 
   useEffect(() => {
     setStart(dayjs(start));
     setEnd(dayjs(end));
   }, [props]);
+
+  useEffect(() => {
+    const fetchWebhook = async () => {
+      setLoadingWebhook(true);
+      setWebhook(await getWebhookById('event-update'));
+      setLoadingWebhook(false);
+    }
+
+    if (isAdmin) {
+      fetchWebhook();
+    }
+  }, [isAdmin]);
 
   const handleAdd = async () => {
     setLoading(true);
@@ -41,12 +58,51 @@ function AddEventModal(props: AddEventModalProps) {
       allDay
     }, user);
     setLoading(false);
+
+    if (notification) {
+      sendWebhook();
+    }
+
     handleClose();
   }
 
   const handleClose = () => {
     clear();
     props.onClose();
+  }
+
+  const sendWebhook = () => {
+    if (!loadingWebhook && webhook) {
+      setLoadingWebhook(true);
+      triggerDiscordWebhook({
+        url: webhook.url,
+        content: `@everyone A new event was created`,
+        embeds: [
+          {
+            type: "rich",
+            title: title,
+            description: "",
+            fields: [
+              {
+                name: 'Starts On',
+                value: `\n<t:${start.toDate().getTime() / 1000}:F>`,
+                inline: true
+              },
+              {
+                name: 'Ends On',
+                value: `\n<t:${end.toDate().getTime() / 1000}:F>`,
+                inline: true
+              }
+            ]
+          }
+        ]
+      }).then(() => {
+        setLoadingWebhook(false);
+      }).catch(error => {
+        setLoadingWebhook(false);
+        console.error(error);
+      });
+    }
   }
 
   const clear = () => {
@@ -105,22 +161,49 @@ function AddEventModal(props: AddEventModalProps) {
           </div>
           <div className="Row">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                label="Event Start *"
-                value={start}
-                onChange={value => handleUpdateStart(dayjs(value))}
-              />
+              {allDay ? (
+                <DatePicker
+                  label="Event Start *"
+                  value={start}
+                  onChange={value => handleUpdateStart(dayjs(value))}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Event Start *"
+                  value={start}
+                  onChange={value => handleUpdateStart(dayjs(value))}
+                />
+              )}
             </LocalizationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                label="Event End *"
-                value={end}
-                onChange={value => handleUpdateEnd(dayjs(value))}
-              />
+              {allDay ? (
+                <DatePicker
+                  label="Event End *"
+                  value={end}
+                  onChange={value => handleUpdateEnd(dayjs(value))}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Event End *"
+                  value={end}
+                  onChange={value => handleUpdateEnd(dayjs(value))}
+                />
+              )}
             </LocalizationProvider>
           </div>
           <div className="Row">
-            <Checkbox checked={allDay} label="All Day?" toggle onChange={() => setAllDay(!allDay)} />
+            <Checkbox
+              checked={allDay}
+              label="All Day?"
+              toggle
+              onChange={() => setAllDay(!allDay)}
+            />
+            <Checkbox
+              checked={notification}
+              label="Send Notification?"
+              toggle
+              onChange={() => setNotification(!notification)}
+            />
           </div>
         </div>
       </Modal.Content>

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import AddEventModal from './AddEventModal/AddEventModal';
-import { CalendarEvent, ReactBigCalendarEvent } from '../../state/event';
+import { ReactBigCalendarEvent } from '../../state/event';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import EditEventModal from './EditEventModal/EditEventModal';
@@ -63,7 +63,7 @@ function EventCalendar() {
         {openEditModal && event && <EditEventModal
           open={openEditModal}
           event={event}
-          onSave={(event: ReactBigCalendarEvent) => setEvent(event)}
+          onSave={setEvent}
           onClose={() => setOpenEditModal(false)}
         />}
         <Calendar

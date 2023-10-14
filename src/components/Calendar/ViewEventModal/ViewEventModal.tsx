@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useAuth } from "../../../contexts/AuthContext";
+import { deleteEvent } from "../../../utils/firestore";
 
 interface ViewEventModalProps {
   open: boolean,
@@ -14,7 +15,12 @@ interface ViewEventModalProps {
 }
 
 function ViewEventModal(props: ViewEventModalProps) {
-  const { isAdmin } = useAuth();
+  const { user, isAdmin } = useAuth();
+
+  const handleDelete = async () => {
+    await deleteEvent(props.event.id, user);
+    props.onClose();
+  }
 
   return (
     <Modal
@@ -28,9 +34,16 @@ function ViewEventModal(props: ViewEventModalProps) {
           <div className="Label" style={{ backgroundColor: props.event.color }} />
           {props.event.title}
         </div>
-        {isAdmin && <button className="ui icon button" onClick={props.onEdit}>
-          <i className="pencil icon"></i>
-        </button>}
+        {isAdmin && (
+          <div className="Actions">
+            <button className="ui icon button" onClick={props.onEdit}>
+              <i className="pencil icon"></i>
+            </button>
+            <button className="ui icon negative button" onClick={handleDelete}>
+              <i className="trash icon"></i>
+            </button>
+          </div>
+        )}
       </Modal.Header>
       <Modal.Content>
         <div className='ui form'>

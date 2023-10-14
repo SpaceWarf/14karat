@@ -386,3 +386,12 @@ export async function updateEvent(id: string, update: CalendarEventUpdate, user:
     updatedBy: user?.email ?? '',
   });
 }
+
+export async function deleteEvent(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "events", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
+}
