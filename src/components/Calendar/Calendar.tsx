@@ -37,6 +37,7 @@ function EventCalendar() {
           onSelectEvent={handleEventSelection}
           startAccessor="start"
           endAccessor="end"
+          views={['month']}
           eventPropGetter={event => {
             const data = events.find(ev => ev.id === event.id);
             const backgroundColor = data && data.color;

@@ -7,9 +7,12 @@
     height: calc(100% - 55px);
     display: flex;
     flex-direction: column;
+    position: relative;
 
     .Actions {
-      margin-bottom: 20px;
+      position: absolute;
+      right: 0;
+      top: -5px;
 
       button.positive.hover-animation {
         width: 300px;
@@ -32,7 +35,13 @@
 
     .rbc-calendar {
       flex: 1 1 0;
-    }
 
+      .rbc-toolbar-label {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-left: -200px;
+        pointer-events: none;
+      }
+    }
   }
 }
