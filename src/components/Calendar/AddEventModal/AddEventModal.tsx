@@ -1,6 +1,6 @@
 import "./AddEventModal.scss";
 import { Checkbox, Modal } from "semantic-ui-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import Input from "../../Common/Input";
 import { EVENT_COLORS } from "../../../state/event";
@@ -10,15 +10,26 @@ import { LocalizationProvider, DateTimePicker, renderTimeViewClock } from "@mui/
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createEvent } from "../../../utils/firestore";
 
-function AddEventModal() {
+interface AddEventModalProps {
+  open: boolean,
+  start: Date,
+  end: Date,
+  onClose: () => void
+}
+
+function AddEventModal(props: AddEventModalProps) {
   const { user } = useAuth();
-  const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
-  const [color, setColor] = useState<string>(EVENT_COLORS[0].value);
-  const [start, setStart] = useState<Dayjs>(dayjs());
-  const [end, setEnd] = useState<Dayjs>(dayjs().add(1, "hour"));
+  const [color, setColor] = useState<string>(EVENT_COLORS[2].value);
+  const [start, setStart] = useState<Dayjs>(dayjs(props.start));
+  const [end, setEnd] = useState<Dayjs>(dayjs(props.end));
   const [allDay, setAllDay] = useState<boolean>(false);
+
+  useEffect(() => {
+    setStart(dayjs(start));
+    setEnd(dayjs(end));
+  }, [props]);
 
   const handleAdd = async () => {
     setLoading(true);
@@ -29,16 +40,20 @@ function AddEventModal() {
       end: end.toISOString(),
       allDay
     }, user);
-    clear();
     setLoading(false);
-    setOpen(false);
+    handleClose();
+  }
+
+  const handleClose = () => {
+    clear();
+    props.onClose();
   }
 
   const clear = () => {
     setTitle('');
     setColor(EVENT_COLORS[0].value);
-    setStart(dayjs());
-    setEnd(dayjs().add(1, 'hour'));
+    setStart(dayjs(props.start));
+    setEnd(dayjs(props.end));
     setAllDay(false);
   }
 
@@ -64,15 +79,8 @@ function AddEventModal() {
     <Modal
       className="AddEventModal Modal"
       size="small"
-      onClose={() => { clear(); setOpen(false); }}
-      onOpen={() => setOpen(true)}
-      open={open}
-      trigger={
-        <button className="ui button positive hover-animation" onClick={() => setOpen(false)}>
-          <p className='label contrast'>Add Event</p>
-          <p className='IconContainer contrast'><i className='add icon'></i></p>
-        </button>
-      }
+      onClose={handleClose}
+      open={props.open}
     >
       <Modal.Header>Add an event</Modal.Header>
       <Modal.Content>
@@ -117,7 +125,7 @@ function AddEventModal() {
         </div>
       </Modal.Content>
       <Modal.Actions>
-        <button className="ui button negative hover-animation" onClick={() => { clear(); setOpen(false); }}>
+        <button className="ui button negative hover-animation" onClick={handleClose}>
           <p className='label contrast'>Cancel</p>
           <p className='IconContainer contrast'><i className='close icon'></i></p>
         </button>
