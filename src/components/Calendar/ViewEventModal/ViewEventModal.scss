@@ -1,0 +1,19 @@
+.ViewEventModal.ui.modal {
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .Title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+
+      .Label {
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}

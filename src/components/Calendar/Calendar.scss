@@ -44,3 +44,23 @@
     }
   }
 }
+
+.AddEventModal,
+.EditEventModal,
+.ViewEventModal {
+  .ui.form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+
+    .Row {
+      display: flex;
+      gap: 15px;
+
+      &>*:not(.toggle) {
+        flex: 1;
+      }
+    }
+  }
+}

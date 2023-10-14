@@ -377,3 +377,12 @@ export async function createEvent(event: CalendarEventUpdate, user: User | null)
     ...event,
   };
 }
+
+export async function updateEvent(id: string, update: CalendarEventUpdate, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "events", id), {
+    ...update,
+    updatedAt: now,
+    updatedBy: user?.email ?? '',
+  });
+}
