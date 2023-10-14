@@ -26,7 +26,6 @@ function Dashboard() {
     <div className="Dashboard">
       <div className='PageHeader'>
         <div className='UserInfo' onClick={() => navigate('/profile')}>
-
           {!profile.pfpUrl && <i className='user circle icon'></i>}
           {profile.pfpUrl && <img src={profile.pfpUrl} alt="Profile" />}
           <div>

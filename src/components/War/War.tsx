@@ -9,6 +9,10 @@ import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
 import Input from '../Common/Input';
 import { getMostRecentWar } from '../../redux/selectors/wars';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider, renderTimeViewClock } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 function War() {
   const { user, isAdmin } = useAuth();
@@ -18,6 +22,10 @@ function War() {
   const [webhook, setWebhook] = useState<Webhook>();
   const [webhookSuccess, setWebhookSuccess] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
+  const [editingOurTimer, setEditingOurTimer] = useState<boolean>(false);
+  const [ourSlide, setOurSlide] = useState<Dayjs>(dayjs());
+  const [editingTheirTimer, setEditingTheirTimer] = useState<boolean>(false);
+  const [theirSlide, setTheirSlide] = useState<Dayjs>(dayjs());
 
   useEffect(() => {
     const fetchWebhook = async () => {
@@ -26,14 +34,27 @@ function War() {
       setLoadingWebhook(false);
     }
 
-    if (war && war.group) {
-      setGroup(war.group);
-    }
-
     if (isAdmin) {
       fetchWebhook();
     }
-  }, [isAdmin, war]);
+  }, [isAdmin]);
+
+  useEffect(() => {
+    if (war) {
+
+      if (war.group) {
+        setGroup(war.group);
+      }
+
+      if (war.ourSlide) {
+        setOurSlide(dayjs(war.ourSlide));
+      }
+
+      if (war.theirSlide) {
+        setTheirSlide(dayjs(war.theirSlide));
+      }
+    }
+  }, [war]);
 
   const getTimeString = (): string => {
     return war.endedAt ? getTimeSince(new Date(), new Date(war.endedAt)) : '0 days';
@@ -115,6 +136,36 @@ function War() {
     updateWarInfo(war.id, { group }, user);
   }
 
+  const handleOurSlideUpdate = () => {
+    setLoading(true);
+    updateWarInfo(war.id, { ourSlide: ourSlide.toDate().toISOString() }, user);
+    setEditingOurTimer(false);
+    setLoading(false);
+  }
+
+  const handleOurSlideClear = () => {
+    setLoading(true);
+    setOurSlide(dayjs());
+    updateWarInfo(war.id, { ourSlide: '' }, user);
+    setEditingOurTimer(false);
+    setLoading(false);
+  }
+
+  const handleTheirSlideUpdate = () => {
+    setLoading(true);
+    updateWarInfo(war.id, { theirSlide: theirSlide.toDate().toISOString() }, user);
+    setEditingTheirTimer(false);
+    setLoading(false);
+  }
+
+  const handleTheirSlideClear = () => {
+    setLoading(true);
+    setTheirSlide(dayjs());
+    updateWarInfo(war.id, { theirSlide: '' }, user);
+    setEditingTheirTimer(false);
+    setLoading(false);
+  }
+
   return (
     <div className="War">
       <Header text='War Info' decorated />
@@ -140,16 +191,88 @@ function War() {
           <>
             <div className='Timers'>
               <div className='OurTimer'>
-                <h2>Our Timer</h2>
-                <h1 className={getSlideTimer(war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
-                  {getSlideTimer(war.ourSlide, OUR_TIMER_UP)}
-                </h1>
+                <div className='Header'>
+                  <h2>Our Timer</h2>
+                  {isAdmin && (
+                    <button className='ui icon button Collapse' onClick={() => setEditingOurTimer(!editingOurTimer)}>
+                      <i className='clock icon' />
+                    </button>
+                  )}
+                </div>
+                {!editingOurTimer && (
+                  <h1 className={getSlideTimer(war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                    {getSlideTimer(war.ourSlide, OUR_TIMER_UP)}
+                  </h1>
+                )}
+                {editingOurTimer && (
+                  <div className='DateTimePickerContainer'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateTimePicker
+                        label="Last Slide Start"
+                        viewRenderers={{
+                          hours: renderTimeViewClock,
+                          minutes: renderTimeViewClock,
+                          seconds: renderTimeViewClock,
+                        }}
+                        openTo="hours"
+                        value={ourSlide}
+                        onChange={value => setOurSlide(dayjs(value))}
+                      />
+                    </LocalizationProvider>
+                    <button
+                      className='ui button positive hover-animation'
+                      disabled={loading}
+                      onClick={handleOurSlideUpdate}
+                    ><i className='check icon' /></button>
+                    <button
+                      className='ui button negative hover-animation'
+                      disabled={loading}
+                      onClick={handleOurSlideClear}
+                    ><i className='trash icon' /></button>
+                  </div>
+                )}
               </div>
               <div className='TheirTimer'>
-                <h2>Their Timer</h2>
-                <h1 className={getSlideTimer(war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
-                  {getSlideTimer(war.theirSlide, THEIR_TIMER_UP)}
-                </h1>
+                <div className='Header'>
+                  <h2>Their Timer</h2>
+                  {isAdmin && (
+                    <button className='ui icon button Collapse' onClick={() => setEditingTheirTimer(!editingTheirTimer)}>
+                      <i className='clock icon' />
+                    </button>
+                  )}
+                </div>
+                {!editingTheirTimer && (
+                  <h1 className={getSlideTimer(war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                    {getSlideTimer(war.theirSlide, THEIR_TIMER_UP)}
+                  </h1>
+                )}
+                {editingTheirTimer && (
+                  <div className='DateTimePickerContainer'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateTimePicker
+                        label="Last Slide Start"
+                        viewRenderers={{
+                          hours: renderTimeViewClock,
+                          minutes: renderTimeViewClock,
+                          seconds: renderTimeViewClock,
+                        }}
+                        openTo="hours"
+                        value={theirSlide}
+                        onChange={value => setTheirSlide(dayjs(value))}
+                      />
+                    </LocalizationProvider>
+                    <button
+                      className='ui button positive hover-animation'
+                      disabled={loading}
+                      onClick={handleTheirSlideUpdate}
+                    ><i className='check icon' /></button>
+                    <button
+                      className='ui button negative hover-animation'
+                      disabled={loading}
+                      onClick={handleTheirSlideClear}
+                    ><i className='trash icon' /></button>
+                  </div>
+                )}
               </div>
             </div>
             <div className='CurrentWar'>
