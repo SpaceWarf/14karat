@@ -7,7 +7,8 @@ exports.triggerDiscordWebhook = functions.https.onRequest((request, response) =>
     axios.post(
       request.body.data.url,
       {
-        content: request.body.data.content
+        content: request.body.data.content,
+        embeds: request.body.data.embeds
       }
     );
     response.status(200).json({ result: 'Function Invoked Successfully.' });
