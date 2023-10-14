@@ -6,10 +6,13 @@ import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker }
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useAuth } from "../../../contexts/AuthContext";
 import { deleteEvent } from "../../../utils/firestore";
+import { Webhook } from "../../../state/webhook";
+import { triggerDiscordWebhook } from "../../../services/functions";
 
 interface ViewEventModalProps {
   open: boolean,
   event: ReactBigCalendarEvent,
+  webhook?: Webhook,
   onEdit: () => void
   onClose: () => void
 }
@@ -20,6 +23,31 @@ function ViewEventModal(props: ViewEventModalProps) {
   const handleDelete = async () => {
     await deleteEvent(props.event.id, user);
     props.onClose();
+  }
+
+  const sendWebhook = () => {
+    if (props.webhook) {
+      triggerDiscordWebhook({
+        url: props.webhook.url,
+        content: `@everyone Event reminder`,
+        embeds: [
+          {
+            type: "rich",
+            title: props.event.title,
+            description: "",
+            fields: [
+              {
+                name: 'Starts In',
+                value: `\n<t:${props.event.start.getTime() / 1000}:R>`,
+                inline: true
+              }
+            ]
+          }
+        ]
+      }).catch(error => {
+        console.error(error);
+      });
+    }
   }
 
   return (
@@ -36,11 +64,14 @@ function ViewEventModal(props: ViewEventModalProps) {
         </div>
         {isAdmin && (
           <div className="Actions">
+            <button className="ui icon button" disabled={!props.webhook} onClick={sendWebhook}>
+              <i className="discord icon" />
+            </button>
             <button className="ui icon button" onClick={props.onEdit}>
-              <i className="pencil icon"></i>
+              <i className="pencil icon" />
             </button>
             <button className="ui icon negative button" onClick={handleDelete}>
-              <i className="trash icon"></i>
+              <i className="trash icon" />
             </button>
           </div>
         )}

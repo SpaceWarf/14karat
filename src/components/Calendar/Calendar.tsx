@@ -6,10 +6,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import AddEventModal from './AddEventModal/AddEventModal';
 import { ReactBigCalendarEvent } from '../../state/event';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import EditEventModal from './EditEventModal/EditEventModal';
 import ViewEventModal from './ViewEventModal/ViewEventModal';
+import { Webhook } from '../../state/webhook';
+import { getWebhookById } from '../../utils/firestore';
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -22,6 +24,20 @@ function EventCalendar() {
   const [openViewModal, setOpenViewModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [event, setEvent] = useState<ReactBigCalendarEvent | null>(null);
+  const [webhook, setWebhook] = useState<Webhook>();
+  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchWebhook = async () => {
+      setLoadingWebhook(true);
+      setWebhook(await getWebhookById('event-update'));
+      setLoadingWebhook(false);
+    }
+
+    if (isAdmin) {
+      fetchWebhook();
+    }
+  }, [isAdmin]);
 
   const getEvents = (): ReactBigCalendarEvent[] => {
     return events.map(event => ({
@@ -52,17 +68,20 @@ function EventCalendar() {
           open={openCreateModal}
           start={slotStart}
           end={slotEnd}
+          webhook={webhook}
           onClose={() => setOpenCreateModal(false)}
         />}
         {openViewModal && event && <ViewEventModal
           open={openViewModal}
           event={event}
+          webhook={webhook}
           onEdit={() => setOpenEditModal(true)}
           onClose={() => setOpenViewModal(false)}
         />}
         {openEditModal && event && <EditEventModal
           open={openEditModal}
           event={event}
+          webhook={webhook}
           onSave={setEvent}
           onClose={() => setOpenEditModal(false)}
         />}

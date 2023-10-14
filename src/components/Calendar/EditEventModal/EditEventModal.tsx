@@ -6,15 +6,16 @@ import Input from "../../Common/Input";
 import { EVENT_COLORS, ReactBigCalendarEvent } from "../../../state/event";
 import Dropdown from "../../Common/Dropdown";
 import dayjs, { Dayjs } from "dayjs";
-import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, DateTimePicker, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { createEvent, getWebhookById, updateEvent } from "../../../utils/firestore";
+import { updateEvent } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 
 interface EditEventModalProps {
   open: boolean,
   event: ReactBigCalendarEvent,
+  webhook?: Webhook,
   onSave: (event: ReactBigCalendarEvent) => void,
   onClose: () => void,
 }
@@ -27,25 +28,11 @@ function EditEventModal(props: EditEventModalProps) {
   const [start, setStart] = useState<Dayjs>(dayjs(props.event.start));
   const [end, setEnd] = useState<Dayjs>(dayjs(props.event.end));
   const [allDay, setAllDay] = useState<boolean>(props.event.allDay || false);
-  const [webhook, setWebhook] = useState<Webhook>();
-  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
   const [notification, setNotification] = useState<boolean>(true);
 
   useEffect(() => {
     reset();
   }, [props]);
-
-  useEffect(() => {
-    const fetchWebhook = async () => {
-      setLoadingWebhook(true);
-      setWebhook(await getWebhookById('event-update'));
-      setLoadingWebhook(false);
-    }
-
-    if (isAdmin) {
-      fetchWebhook();
-    }
-  }, [isAdmin]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -119,10 +106,9 @@ function EditEventModal(props: EditEventModalProps) {
 
 
   const sendWebhook = () => {
-    if (!loadingWebhook && webhook) {
-      setLoadingWebhook(true);
+    if (props.webhook) {
       triggerDiscordWebhook({
-        url: webhook.url,
+        url: props.webhook.url,
         content: `@everyone An event was edited`,
         embeds: [
           {
@@ -143,10 +129,7 @@ function EditEventModal(props: EditEventModalProps) {
             ]
           }
         ]
-      }).then(() => {
-        setLoadingWebhook(false);
       }).catch(error => {
-        setLoadingWebhook(false);
         console.error(error);
       });
     }

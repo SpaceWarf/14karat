@@ -16,6 +16,7 @@ interface AddEventModalProps {
   open: boolean,
   start: Date,
   end: Date,
+  webhook?: Webhook,
   onClose: () => void
 }
 
@@ -27,26 +28,12 @@ function AddEventModal(props: AddEventModalProps) {
   const [start, setStart] = useState<Dayjs>(dayjs(props.start));
   const [end, setEnd] = useState<Dayjs>(dayjs(props.end));
   const [allDay, setAllDay] = useState<boolean>(false);
-  const [webhook, setWebhook] = useState<Webhook>();
-  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
   const [notification, setNotification] = useState<boolean>(true);
 
   useEffect(() => {
     setStart(dayjs(start));
     setEnd(dayjs(end));
   }, [props]);
-
-  useEffect(() => {
-    const fetchWebhook = async () => {
-      setLoadingWebhook(true);
-      setWebhook(await getWebhookById('event-update'));
-      setLoadingWebhook(false);
-    }
-
-    if (isAdmin) {
-      fetchWebhook();
-    }
-  }, [isAdmin]);
 
   const handleAdd = async () => {
     setLoading(true);
@@ -72,10 +59,9 @@ function AddEventModal(props: AddEventModalProps) {
   }
 
   const sendWebhook = () => {
-    if (!loadingWebhook && webhook) {
-      setLoadingWebhook(true);
+    if (props.webhook) {
       triggerDiscordWebhook({
-        url: webhook.url,
+        url: props.webhook.url,
         content: `@everyone A new event was created`,
         embeds: [
           {
@@ -96,10 +82,7 @@ function AddEventModal(props: AddEventModalProps) {
             ]
           }
         ]
-      }).then(() => {
-        setLoadingWebhook(false);
       }).catch(error => {
-        setLoadingWebhook(false);
         console.error(error);
       });
     }
