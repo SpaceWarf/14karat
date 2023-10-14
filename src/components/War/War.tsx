@@ -20,7 +20,8 @@ function War() {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
-  const [webhookSuccess, setWebhookSuccess] = useState<boolean>(false);
+  const [scoreWebhookSuccess, setScoreWebhookSuccess] = useState<boolean>(false);
+  const [timerWebhookSuccess, setTimerWebhookSuccess] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
   const [editingOurTimer, setEditingOurTimer] = useState<boolean>(false);
   const [ourSlide, setOurSlide] = useState<Dayjs>(dayjs());
@@ -114,7 +115,7 @@ function War() {
     setLoading(false);
   }
 
-  const handleSendToDiscord = () => {
+  const handleSendScoreToDiscord = () => {
     if (webhook) {
       setLoadingWebhook(true);
       triggerDiscordWebhook({
@@ -122,8 +123,25 @@ function War() {
         content: `Current Score: **${war.kills || 0} - ${war.deaths || 0}**`
       }).then(() => {
         setLoadingWebhook(false);
-        setWebhookSuccess(true);
-        setTimeout(() => setWebhookSuccess(false), 1000);
+        setScoreWebhookSuccess(true);
+        setTimeout(() => setScoreWebhookSuccess(false), 1000);
+      }).catch(error => {
+        setLoadingWebhook(false);
+        console.error(error);
+      });
+    }
+  }
+
+  const handleSendTimersToDiscord = () => {
+    if (webhook) {
+      setLoadingWebhook(true);
+      triggerDiscordWebhook({
+        url: webhook.url,
+        content: `Our Timer: **${getSlideTimer(war.ourSlide, OUR_TIMER_UP)}**\nTheir Timer: **${getSlideTimer(war.theirSlide, THEIR_TIMER_UP)}**`
+      }).then(() => {
+        setLoadingWebhook(false);
+        setTimerWebhookSuccess(true);
+        setTimeout(() => setTimerWebhookSuccess(false), 1000);
       }).catch(error => {
         setLoadingWebhook(false);
         console.error(error);
@@ -274,6 +292,19 @@ function War() {
                   </div>
                 )}
               </div>
+              {isAdmin && (
+                <div className='DiscordAction'>
+                  <button
+                    className='ui button positive hover-animation'
+                    disabled={loading || loadingWebhook || !webhook}
+                    onClick={handleSendTimersToDiscord}
+                  >
+                    <p className='label contrast'>Send Timer Notification</p>
+                    <p className='IconContainer contrast'><i className='discord icon'></i></p>
+                  </button>
+                  {timerWebhookSuccess && <i className="check circle icon"></i>}
+                </div>
+              )}
             </div>
             <div className='CurrentWar'>
               <div className='Controls'>
@@ -333,12 +364,12 @@ function War() {
                         <button
                           className='ui button positive hover-animation'
                           disabled={loading || loadingWebhook || !webhook}
-                          onClick={handleSendToDiscord}
+                          onClick={handleSendScoreToDiscord}
                         >
-                          <p className='label contrast'>Send to Discord</p>
+                          <p className='label contrast'>Send Score Notification</p>
                           <p className='IconContainer contrast'><i className='discord icon'></i></p>
                         </button>
-                        {webhookSuccess && <i className="check circle icon"></i>}
+                        {scoreWebhookSuccess && <i className="check circle icon"></i>}
                       </div>
                       <button
                         className='ui button negative hover-animation'
