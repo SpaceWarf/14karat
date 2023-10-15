@@ -37,8 +37,13 @@ function ViewEventModal(props: ViewEventModalProps) {
             description: "",
             fields: [
               {
-                name: 'Starts In',
-                value: `\n<t:${props.event.start.getTime() / 1000}:R>`,
+                name: 'Starts On',
+                value: `\n<t:${props.event.start.getTime() / 1000}:F>`,
+                inline: true
+              },
+              {
+                name: 'Ends On',
+                value: `\n<t:${props.event.end.getTime() / 1000}:F>`,
                 inline: true
               }
             ]
