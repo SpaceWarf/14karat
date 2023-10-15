@@ -2,7 +2,7 @@ import "./ViewEventModal.scss";
 import { Modal } from "semantic-ui-react";
 import { ReactBigCalendarEvent } from "../../../state/event";
 import dayjs from "dayjs";
-import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, DateTimePicker, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useAuth } from "../../../contexts/AuthContext";
 import { deleteEvent } from "../../../utils/firestore";

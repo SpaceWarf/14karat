@@ -6,9 +6,9 @@ import Input from "../../Common/Input";
 import { EVENT_COLORS } from "../../../state/event";
 import Dropdown from "../../Common/Dropdown";
 import dayjs, { Dayjs } from "dayjs";
-import { LocalizationProvider, DateTimePicker, renderTimeViewClock, DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, DateTimePicker, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { createEvent, getWebhookById } from "../../../utils/firestore";
+import { createEvent } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 
@@ -21,7 +21,7 @@ interface AddEventModalProps {
 }
 
 function AddEventModal(props: AddEventModalProps) {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [color, setColor] = useState<string>(EVENT_COLORS[2].value);
@@ -31,8 +31,8 @@ function AddEventModal(props: AddEventModalProps) {
   const [notification, setNotification] = useState<boolean>(true);
 
   useEffect(() => {
-    setStart(dayjs(start));
-    setEnd(dayjs(end));
+    setStart(dayjs(props.start));
+    setEnd(dayjs(props.end));
   }, [props]);
 
   const handleAdd = async () => {

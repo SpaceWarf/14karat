@@ -21,7 +21,7 @@ interface EditEventModalProps {
 }
 
 function EditEventModal(props: EditEventModalProps) {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>(props.event.title);
   const [color, setColor] = useState<string>(props.event.color);
@@ -31,7 +31,11 @@ function EditEventModal(props: EditEventModalProps) {
   const [notification, setNotification] = useState<boolean>(true);
 
   useEffect(() => {
-    reset();
+    setTitle(props.event.title);
+    setColor(props.event.color);
+    setStart(dayjs(props.event.start));
+    setEnd(dayjs(props.event.end));
+    setAllDay(props.event.allDay || false);
   }, [props]);
 
   const handleSave = async () => {
@@ -65,16 +69,12 @@ function EditEventModal(props: EditEventModalProps) {
   }
 
   const handleClose = () => {
-    reset();
-    props.onClose();
-  }
-
-  const reset = () => {
     setTitle(props.event.title);
     setColor(props.event.color);
     setStart(dayjs(props.event.start));
     setEnd(dayjs(props.event.end));
     setAllDay(props.event.allDay || false);
+    props.onClose();
   }
 
   const canSave = (): boolean => {
@@ -86,7 +86,7 @@ function EditEventModal(props: EditEventModalProps) {
     const isEdited = title !== props.event.title
       || start.toISOString() !== props.event.start.toISOString()
       || end.toISOString() !== props.event.end.toISOString()
-      || color !== color
+      || color !== props.event.color;
     return hasRequired && isEdited;
   }
 

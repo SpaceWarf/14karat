@@ -25,13 +25,10 @@ function EventCalendar() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [event, setEvent] = useState<ReactBigCalendarEvent | null>(null);
   const [webhook, setWebhook] = useState<Webhook>();
-  const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchWebhook = async () => {
-      setLoadingWebhook(true);
       setWebhook(await getWebhookById('event-update'));
-      setLoadingWebhook(false);
     }
 
     if (isAdmin) {
