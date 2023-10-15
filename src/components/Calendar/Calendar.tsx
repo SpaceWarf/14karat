@@ -53,7 +53,7 @@ function EventCalendar() {
         setSearchParams({});
       }
     }
-  }, [searchParams]);
+  }, [searchParams, events, setSearchParams]);
 
   const getEvents = (): ReactBigCalendarEvent[] => {
     return events.map(event => ({

@@ -9,11 +9,11 @@ import { getWarClipsForWar } from "../../utils/firestore";
 import { WarClip } from "../../state/war";
 import { getMostRecentWar } from "../../redux/selectors/wars";
 
-interface ExpandWarClipModal {
+interface ExpandWarClipModalProps {
   onDelete: (id: string) => void;
 }
 
-function ExpandWarClipModal(props: ExpandWarClipModal) {
+function ExpandWarClipModal(props: ExpandWarClipModalProps) {
   const war = useSelector(getMostRecentWar);
   const [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState<boolean>(false);

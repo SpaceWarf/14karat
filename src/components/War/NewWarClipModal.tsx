@@ -7,6 +7,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
 import { getMostRecentWar } from "../../redux/selectors/wars";
 import Textarea from "../Common/Textarea";
+import { WarClipTag } from "../../state/war";
+import Dropdown, { DropdownOption } from "../Common/Dropdown";
 
 interface NewWarClipModalProps {
   onAdd: () => void
@@ -19,6 +21,7 @@ function NewWarClipModal(props: NewWarClipModalProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [embed, setEmbed] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleAdd = async () => {
     setLoading(true);
@@ -26,12 +29,20 @@ function NewWarClipModal(props: NewWarClipModalProps) {
       war: war.id,
       embed,
       notes,
-      tags: [],
+      tags,
     }, user);
     props.onAdd();
     reset();
     setLoading(false);
     setOpen(false);
+  }
+
+  const getTagsOptions = (): DropdownOption[] => {
+    return Object.values(WarClipTag).map(tag => ({
+      key: tag,
+      text: tag,
+      value: tag,
+    }));
   }
 
   const reset = () => {
@@ -73,6 +84,15 @@ function NewWarClipModal(props: NewWarClipModalProps) {
             To find your video's embed, click on the share button and select "Embed".
             The embed should look something like: &lt;iframe <i>gibberish</i>&gt;&lt;/iframe&gt;.
           </p>
+          <Dropdown
+            placeholder="Tags"
+            disabled={loading}
+            options={getTagsOptions()}
+            value={tags}
+            clearable
+            multiple
+            onChange={(_, { value }) => setTags(value)}
+          />
           <Textarea
             name="notes"
             placeholder="Notes"

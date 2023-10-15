@@ -260,3 +260,13 @@
     }
   }
 }
+
+.NewWarClipModal {
+  .ui.form .field:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .small {
+    margin: 10px 0 0 0;
+  }
+}

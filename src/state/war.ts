@@ -35,3 +35,8 @@ export interface WarClipUpdate {
   notes: string;
   tags: string[];
 }
+
+export enum WarClipTag {
+  OUR_SLIDE = "our slide",
+  THEIR_SLIDE = "their slide",
+}

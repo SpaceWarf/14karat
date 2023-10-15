@@ -16,7 +16,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { RootState } from '../../redux/store';
 import Gallery from '../Common/Gallery';
 import NewWarClipModal from './NewWarClipModal';
-import { WarClip } from '../../state/war';
+import { WarClip, WarClipTag } from '../../state/war';
 import { GalleryItem } from '../../state/gallery';
 import ExpandWarClipModal from './ExpandWarClipModal';
 
@@ -43,7 +43,7 @@ function War() {
       setLoadingWebhook(false);
     }
 
-    if (canEdit()) {
+    if (isAdmin || profile.info.roles.includes('enforcer')) {
       fetchWebhook();
     }
   }, [isAdmin, profile]);
@@ -208,7 +208,7 @@ function War() {
         id: clip.id,
         embed: clip.embed,
         notes: clip.notes,
-        tags: [],
+        tags: clip.tags,
       }));
   }
 
@@ -436,7 +436,7 @@ function War() {
               {canEdit() && <NewWarClipModal onAdd={async () => setClips(await getWarClipsForWar(war.id))} />}
               <Gallery
                 items={getOrderedClips()}
-                tags={[]}
+                tags={Object.values(WarClipTag)}
                 onDelete={handleDeleteClip}
                 expandModal={<ExpandWarClipModal onDelete={handleDeleteClip} />}
               />
