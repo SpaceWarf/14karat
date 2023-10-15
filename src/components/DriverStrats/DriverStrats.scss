@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-top: 20px;
+    margin: 20px 0;
 
     .segments {
       width: 500px;
@@ -20,6 +20,11 @@
           background-color: $gray-pale;
         }
       }
+    }
+
+    img {
+      width: auto;
+      height: 800px;
     }
 
     .button.hover-animation {
