@@ -12,11 +12,13 @@ import EditEventModal from './EditEventModal/EditEventModal';
 import ViewEventModal from './ViewEventModal/ViewEventModal';
 import { Webhook } from '../../state/webhook';
 import { getWebhookById } from '../../utils/firestore';
+import { useSearchParams } from 'react-router-dom';
 
 const localizer = dayjsLocalizer(dayjs);
 
 function EventCalendar() {
   const { isAdmin } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { events } = useSelector((state: RootState) => state.events);
   const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
   const [slotStart, setSlotStart] = useState<Date>(new Date());
@@ -36,6 +38,23 @@ function EventCalendar() {
     }
   }, [isAdmin]);
 
+  useEffect(() => {
+    if (searchParams.has('view')) {
+      const event = events.find(event => event.id === searchParams.get('view'));
+
+      if (event) {
+        setEvent({
+          ...event,
+          start: new Date(event.start),
+          end: new Date(event.end),
+        });
+        setOpenViewModal(true);
+      } else {
+        setSearchParams({});
+      }
+    }
+  }, [searchParams]);
+
   const getEvents = (): ReactBigCalendarEvent[] => {
     return events.map(event => ({
       ...event,
@@ -45,6 +64,7 @@ function EventCalendar() {
   }
 
   const handleEventSelection = (event: ReactBigCalendarEvent) => {
+    setSearchParams({ view: event.id });
     setEvent(event);
     setOpenViewModal(true);
   }
@@ -73,7 +93,7 @@ function EventCalendar() {
           event={event}
           webhook={webhook}
           onEdit={() => setOpenEditModal(true)}
-          onClose={() => setOpenViewModal(false)}
+          onClose={() => { setSearchParams({}); setOpenViewModal(false); }}
         />}
         {openEditModal && event && <EditEventModal
           open={openEditModal}

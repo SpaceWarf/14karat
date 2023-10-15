@@ -28,7 +28,7 @@ function EditEventModal(props: EditEventModalProps) {
   const [start, setStart] = useState<Dayjs>(dayjs(props.event.start));
   const [end, setEnd] = useState<Dayjs>(dayjs(props.event.end));
   const [allDay, setAllDay] = useState<boolean>(props.event.allDay || false);
-  const [notification, setNotification] = useState<boolean>(true);
+  const [notification, setNotification] = useState<boolean>(false);
 
   useEffect(() => {
     setTitle(props.event.title);
@@ -150,7 +150,7 @@ function EditEventModal(props: EditEventModalProps) {
               type="text"
               name="title"
               placeholder="Title *"
-              icon="code"
+              icon="edit outline"
               value={title}
               onChange={setTitle}
               disabled={loading}

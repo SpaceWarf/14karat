@@ -129,7 +129,7 @@ function AddEventModal(props: AddEventModalProps) {
               type="text"
               name="title"
               placeholder="Title *"
-              icon="code"
+              icon="edit outline"
               value={title}
               onChange={setTitle}
               disabled={loading}

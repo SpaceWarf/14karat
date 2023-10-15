@@ -29,3 +29,19 @@ export const getSlideTimer = (timer: string | undefined, upString: string): stri
 
   return upString;
 }
+
+export const getDateString = (date: Date): string => {
+  return date.toLocaleString('default', {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export const getTimeString = (date: Date): string => {
+  return date.toLocaleTimeString('default', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+}
