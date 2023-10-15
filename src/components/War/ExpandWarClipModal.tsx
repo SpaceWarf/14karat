@@ -1,43 +1,51 @@
-import "./DriverStrats.scss";
+import "./War.scss";
 import { Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { DriverStrat } from "../../redux/reducers/driverStrats";
 import Loading from "../Common/Loading";
 import AssetCard from "../Common/AssetCard";
-import { deleteDriverStrat } from "../../utils/firestore";
-import { useAuth } from "../../contexts/AuthContext";
+import { getWarClipsForWar } from "../../utils/firestore";
+import { WarClip } from "../../state/war";
+import { getMostRecentWar } from "../../redux/selectors/wars";
 
-function ExpandStratModal() {
-  const { user } = useAuth();
+interface ExpandWarClipModal {
+  onDelete: (id: string) => void;
+}
+
+function ExpandWarClipModal(props: ExpandWarClipModal) {
+  const war = useSelector(getMostRecentWar);
   const [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState<boolean>(false);
-  const { driverStrats } = useSelector((state: RootState) => state.driverStrats);
-  const [strat, setStrat] = useState<DriverStrat>();
+  const [clip, setClip] = useState<WarClip>();
 
   useEffect(() => {
-    if (searchParams.has('expand')) {
-      const id = searchParams.get('expand');
-      const strat = driverStrats.find(strat => strat.id === id);
-      if (strat) {
-        setStrat(strat);
+    const fetchClip = async (id: string) => {
+      const clips = await getWarClipsForWar(war.id);
+      const clip = clips.find(clip => clip.id === id);
+
+      if (clip) {
+        setClip(clip);
       } else {
         setOpen(false);
       }
+    }
+
+    if (searchParams.has('expand')) {
+      fetchClip(searchParams.get('expand') || '');
     } else {
       setOpen(false);
     }
-  }, [searchParams, driverStrats]);
+  }, [searchParams, war]);
 
   const handleDelete = async (id: string) => {
-    await deleteDriverStrat(id, user);
+    props.onDelete(id);
+    setOpen(false);
   }
 
   return (
     <Modal
-      className="ExpandStratModal ExpandModal Modal"
+      className="ExpandWarClipModal ExpandModal Modal"
       size="large"
       onClose={() => { setSearchParams({}); setOpen(false); }}
       onOpen={() => setOpen(true)}
@@ -49,8 +57,8 @@ function ExpandStratModal() {
       }
     >
       <Modal.Content>
-        {strat ? (
-          <AssetCard item={strat} onDelete={handleDelete} />
+        {clip ? (
+          <AssetCard item={clip} onDelete={handleDelete} />
         ) : (
           <Loading />
         )}
@@ -59,4 +67,4 @@ function ExpandStratModal() {
   );
 }
 
-export default ExpandStratModal;
+export default ExpandWarClipModal;

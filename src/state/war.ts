@@ -26,10 +26,12 @@ export interface WarClip extends FirestoreEntity {
   war: string;
   embed: string;
   notes: string;
+  tags: string[];
 }
 
 export interface WarClipUpdate {
   war: string;
   embed: string;
   notes: string;
+  tags: string[];
 }

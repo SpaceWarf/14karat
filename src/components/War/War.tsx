@@ -3,7 +3,7 @@ import Header from '../Common/Header';
 import { useSelector } from 'react-redux';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../utils/time';
 import { useEffect, useState } from 'react';
-import { createWarInfo, getWarClipsForWar, getWebhookById, updateWarInfo } from '../../utils/firestore';
+import { createWarInfo, deleteWarClip, getWarClipsForWar, getWebhookById, updateWarInfo } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
@@ -18,6 +18,7 @@ import Gallery from '../Common/Gallery';
 import NewWarClipModal from './NewWarClipModal';
 import { WarClip } from '../../state/war';
 import { GalleryItem } from '../../state/gallery';
+import ExpandWarClipModal from './ExpandWarClipModal';
 
 function War() {
   const { user, isAdmin } = useAuth();
@@ -209,6 +210,11 @@ function War() {
         notes: clip.notes,
         tags: [],
       }));
+  }
+
+  const handleDeleteClip = async (id: string) => {
+    await deleteWarClip(id, user);
+    setClips(await getWarClipsForWar(war.id))
   }
 
   return (
@@ -431,6 +437,8 @@ function War() {
               <Gallery
                 items={getOrderedClips()}
                 tags={[]}
+                onDelete={handleDeleteClip}
+                expandModal={<ExpandWarClipModal onDelete={handleDeleteClip} />}
               />
             </div>
           </>

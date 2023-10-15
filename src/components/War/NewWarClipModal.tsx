@@ -26,6 +26,7 @@ function NewWarClipModal(props: NewWarClipModalProps) {
       war: war.id,
       embed,
       notes,
+      tags: [],
     }, user);
     props.onAdd();
     reset();
@@ -35,6 +36,7 @@ function NewWarClipModal(props: NewWarClipModalProps) {
 
   const reset = () => {
     setEmbed('');
+    setNotes('');
   }
 
   const canAdd = () => {

@@ -11,12 +11,12 @@
       .label {
         width: 55px;
       }
-  
+
       &:hover:not(:disabled) {
         .label {
           left: calc((100% - 80px) / 2);
         }
-  
+
         .IconContainer {
           right: calc((100% - 80px) / 2);
         }
@@ -27,14 +27,45 @@
       .label {
         width: 45px;
       }
-  
+
       &:hover:not(:disabled) {
         .label {
           left: calc((100% - 70px) / 2);
         }
-  
+
         .IconContainer {
           right: calc((100% - 70px) / 2);
+        }
+      }
+    }
+  }
+
+  &.ExpandModal {
+    min-width: 1280px;
+    min-height: 720px;
+
+    &>.content {
+      padding: 0;
+      background-color: black;
+
+      .AssetCard {
+        min-width: 1280px;
+        min-height: 720px;
+
+        .EmbedContainer {
+          width: 1280px;
+          height: 720px;
+
+          iframe {
+            width: 1280px;
+            height: 720px;
+          }
+        }
+
+        .Notes {
+          white-space: pre-wrap !important;
+          overflow: visible !important;
+          color: darken($gray-pale, 20%);
         }
       }
     }
