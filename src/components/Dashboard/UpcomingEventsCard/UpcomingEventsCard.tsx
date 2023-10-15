@@ -50,7 +50,7 @@ function UpcomingEventsCard() {
           </div>
         </div>
       );
-    })
+    });
     return components;
   }
 
@@ -86,7 +86,11 @@ function UpcomingEventsCard() {
           onSave={setEvent}
           onClose={() => setOpenEditModal(false)}
         />}
-        {getComponents()}
+        {getComponents().length ? (
+          getComponents()
+        ) : (
+          <p>Nothing to show...</p>
+        )}
       </div>
     </div>
   );
