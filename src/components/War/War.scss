@@ -2,225 +2,258 @@
 
 .War {
   .content {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-    margin-top: 20px;
-
-    .LastWar {
+    .DetailsContainer {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
+      gap: 100px;
       margin-top: 20px;
 
-      h3 {
-        margin: 0;
-      }
-
-      h2 {
-        margin: 10px 0;
-        color: $green;
-      }
-
-      button.negative.hover-animation {
-        margin-top: 20px;
-
-        .label {
-          width: 85px;
-        }
-
-        &:hover:not(:disabled) {
-          .label {
-            left: calc((100% - 110px) / 2);
-          }
-
-          .IconContainer {
-            right: calc((100% - 110px) / 2);
-          }
-        }
-      }
-    }
-
-    .CurrentWar {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 25%;
-
-      h1 {
-        font-size: 3rem;
-      }
-
-      h2 {
-        font-size: 2.5rem;
-        line-height: 2.5rem;
-        text-align: center;
-      }
-
-      .Controls {
-        min-width: 275px;
-
-        .ui.form {
-          margin-bottom: 20px;
-        }
-
-        .Score {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 20px;
-
-          .ui.button {
-            height: 30px;
-          }
-        }
-      }
-
-      .ActionsContainer {
+      .LastWar {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
         margin-top: 20px;
 
+        h3 {
+          margin: 0;
+        }
+
+        h2 {
+          margin: 10px 0;
+          color: $green;
+        }
+
         button.negative.hover-animation {
+          margin-top: 20px;
+
           .label {
-            width: 55px;
+            width: 85px;
           }
 
           &:hover:not(:disabled) {
             .label {
-              left: calc((100% - 80px) / 2);
+              left: calc((100% - 110px) / 2);
             }
 
             .IconContainer {
-              right: calc((100% - 80px) / 2);
+              right: calc((100% - 110px) / 2);
             }
           }
         }
       }
 
-      h1 {
-        margin: 0;
-      }
-
-      h1.green {
-        color: $green;
-      }
-
-      h1.red {
-        color: $red;
-      }
-
-      h1.yellow {
-        color: $yellow;
-      }
-    }
-
-    .Rules {
-      display: flex;
-      justify-content: flex-start;
-      width: 35%;
-      margin-top: 5px;
-
-      h4 {
-        font-size: 1.3rem;
-      }
-
-      ul {
-        padding: 0 0 0 5px;
-        margin: 0;
-
-        li {
-          font-size: 1.1rem;
-          margin-bottom: 5px;
-          list-style-position: inside;
-        }
-      }
-    }
-
-    .Timers {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      width: 35%;
-      gap: 25px;
-
-      h1 {
-        margin: 0;
-
-        &.red {
-          color: $red;
-        }
-
-        &.green {
-          color: $green;
-        }
-      }
-
-      h2 {
-        font-weight: normal;
-        margin: 0;
-      }
-
-      .OurTimer,
-      .TheirTimer {
+      .CurrentWar {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 300px;
+        width: 25%;
 
-        .Header {
-          position: relative;
+        h1 {
+          font-size: 3rem;
+        }
 
-          .button {
-            position: absolute;
-            right: -30px;
-            top: 5px;
+        h2 {
+          font-size: 2.5rem;
+          line-height: 2.5rem;
+          text-align: center;
+        }
+
+        .Controls {
+          min-width: 275px;
+
+          .ui.form {
+            margin-bottom: 20px;
+          }
+
+          .Score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            .ui.button {
+              height: 30px;
+            }
           }
         }
 
-        .DateTimePickerContainer {
+        .ActionsContainer {
           display: flex;
-          align-items: center;
+          flex-direction: column;
           gap: 10px;
-          margin-top: 15px;
-          width: 350px;
+          margin-top: 20px;
 
-          .button {
-            width: 30px;
+          button.negative.hover-animation {
+            .label {
+              width: 55px;
+            }
+
+            &:hover:not(:disabled) {
+              .label {
+                left: calc((100% - 80px) / 2);
+              }
+
+              .IconContainer {
+                right: calc((100% - 80px) / 2);
+              }
+            }
           }
+        }
+
+        h1 {
+          margin: 0;
+        }
+
+        h1.green {
+          color: $green;
+        }
+
+        h1.red {
+          color: $red;
+        }
+
+        h1.yellow {
+          color: $yellow;
+        }
+      }
+
+      .Rules {
+        display: flex;
+        justify-content: flex-start;
+        width: 35%;
+        margin-top: 5px;
+
+        h4 {
+          font-size: 1.3rem;
+        }
+
+        ul {
+          padding: 0 0 0 5px;
+          margin: 0;
+
+          li {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            list-style-position: inside;
+          }
+        }
+      }
+
+      .Timers {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 35%;
+        gap: 25px;
+
+        h1 {
+          margin: 0;
+
+          &.red {
+            color: $red;
+          }
+
+          &.green {
+            color: $green;
+          }
+        }
+
+        h2 {
+          font-weight: normal;
+          margin: 0;
+        }
+
+        .OurTimer,
+        .TheirTimer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 300px;
+
+          .Header {
+            position: relative;
+
+            .button {
+              position: absolute;
+              right: -30px;
+              top: 5px;
+            }
+          }
+
+          .DateTimePickerContainer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            width: 350px;
+
+            .button {
+              width: 30px;
+            }
+          }
+        }
+
+        .DiscordAction {
+          width: 300px;
         }
       }
 
       .DiscordAction {
-        width: 300px;
+        position: relative;
+
+        i.check {
+          position: absolute;
+          right: -30px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: $green;
+          font-size: 1.2rem;
+        }
+
+        button.positive.hover-animation {
+          .label {
+            width: 155px;
+          }
+
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 180px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 180px) / 2);
+            }
+          }
+        }
       }
     }
 
-    .DiscordAction {
+    .GalleryContainer {
       position: relative;
+      margin-top: 50px;
 
-      i.check {
-        position: absolute;
-        right: -30px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: $green;
-        font-size: 1.2rem;
+      .Gallery {
+        margin-top: 20px;
       }
 
-      button.positive.hover-animation {
+      .trigger {
+        position: absolute;
+        right: 0;
+        top: 75px;
+        width: 300px;
+        z-index: 99;
+
         .label {
-          width: 155px;
+          width: 55px;
         }
 
         &:hover:not(:disabled) {
           .label {
-            left: calc((100% - 180px) / 2);
+            left: calc((100% - 80px) / 2);
           }
 
           .IconContainer {
-            right: calc((100% - 180px) / 2);
+            right: calc((100% - 80px) / 2);
           }
         }
       }

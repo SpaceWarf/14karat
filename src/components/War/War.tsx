@@ -3,7 +3,7 @@ import Header from '../Common/Header';
 import { useSelector } from 'react-redux';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../utils/time';
 import { useEffect, useState } from 'react';
-import { createWarInfo, getWebhookById, updateWarInfo } from '../../utils/firestore';
+import { createWarInfo, getWarClipsForWar, getWebhookById, updateWarInfo } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
@@ -14,6 +14,10 @@ import { LocalizationProvider, renderTimeViewClock } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { RootState } from '../../redux/store';
+import Gallery from '../Common/Gallery';
+import NewWarClipModal from './NewWarClipModal';
+import { WarClip } from '../../state/war';
+import { GalleryItem } from '../../state/gallery';
 
 function War() {
   const { user, isAdmin } = useAuth();
@@ -29,6 +33,7 @@ function War() {
   const [ourSlide, setOurSlide] = useState<Dayjs>(dayjs());
   const [editingTheirTimer, setEditingTheirTimer] = useState<boolean>(false);
   const [theirSlide, setTheirSlide] = useState<Dayjs>(dayjs());
+  const [clips, setClips] = useState<WarClip[]>([]);
 
   useEffect(() => {
     const fetchWebhook = async () => {
@@ -43,8 +48,11 @@ function War() {
   }, [isAdmin, profile]);
 
   useEffect(() => {
-    if (war) {
+    const fetchClips = async () => {
+      setClips(await getWarClipsForWar(war.id));
+    }
 
+    if (war) {
       if (war.group) {
         setGroup(war.group);
       }
@@ -56,6 +64,8 @@ function War() {
       if (war.theirSlide) {
         setTheirSlide(dayjs(war.theirSlide));
       }
+
+      fetchClips();
     }
   }, [war]);
 
@@ -190,6 +200,17 @@ function War() {
     setLoading(false);
   }
 
+  const getOrderedClips = (): GalleryItem[] => {
+    return [...clips]
+      .sort((a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime())
+      .map(clip => ({
+        id: clip.id,
+        embed: clip.embed,
+        notes: clip.notes,
+        tags: [],
+      }));
+  }
+
   return (
     <div className="War">
       <Header text='War Info' decorated />
@@ -213,194 +234,204 @@ function War() {
         )}
         {!war.endedAt && (
           <>
-            <div className='Timers'>
-              <div className='OurTimer'>
-                <div className='Header'>
-                  <h2>Our Timer</h2>
-                  {canEdit() && (
-                    <button className='ui icon button Collapse' onClick={() => setEditingOurTimer(!editingOurTimer)}>
-                      <i className='clock icon' />
-                    </button>
-                  )}
-                </div>
-                {!editingOurTimer && (
-                  <h1 className={getSlideTimer(war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
-                    {getSlideTimer(war.ourSlide, OUR_TIMER_UP)}
-                  </h1>
-                )}
-                {editingOurTimer && (
-                  <div className='DateTimePickerContainer'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DateTimePicker
-                        label="Last Slide Start"
-                        viewRenderers={{
-                          hours: renderTimeViewClock,
-                          minutes: renderTimeViewClock,
-                          seconds: renderTimeViewClock,
-                        }}
-                        openTo="hours"
-                        value={ourSlide}
-                        onChange={value => setOurSlide(dayjs(value))}
-                      />
-                    </LocalizationProvider>
-                    <button
-                      className='ui button positive hover-animation'
-                      disabled={loading}
-                      onClick={handleOurSlideUpdate}
-                    ><i className='check icon' /></button>
-                    <button
-                      className='ui button negative hover-animation'
-                      disabled={loading}
-                      onClick={handleOurSlideClear}
-                    ><i className='trash icon' /></button>
-                  </div>
-                )}
-              </div>
-              <div className='TheirTimer'>
-                <div className='Header'>
-                  <h2>Their Timer</h2>
-                  {canEdit() && (
-                    <button className='ui icon button Collapse' onClick={() => setEditingTheirTimer(!editingTheirTimer)}>
-                      <i className='clock icon' />
-                    </button>
-                  )}
-                </div>
-                {!editingTheirTimer && (
-                  <h1 className={getSlideTimer(war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
-                    {getSlideTimer(war.theirSlide, THEIR_TIMER_UP)}
-                  </h1>
-                )}
-                {editingTheirTimer && (
-                  <div className='DateTimePickerContainer'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DateTimePicker
-                        label="Last Slide Start"
-                        viewRenderers={{
-                          hours: renderTimeViewClock,
-                          minutes: renderTimeViewClock,
-                          seconds: renderTimeViewClock,
-                        }}
-                        openTo="hours"
-                        value={theirSlide}
-                        onChange={value => setTheirSlide(dayjs(value))}
-                      />
-                    </LocalizationProvider>
-                    <button
-                      className='ui button positive hover-animation'
-                      disabled={loading}
-                      onClick={handleTheirSlideUpdate}
-                    ><i className='check icon' /></button>
-                    <button
-                      className='ui button negative hover-animation'
-                      disabled={loading}
-                      onClick={handleTheirSlideClear}
-                    ><i className='trash icon' /></button>
-                  </div>
-                )}
-              </div>
-              {canEdit() && (
-                <div className='DiscordAction'>
-                  <button
-                    className='ui button positive hover-animation'
-                    disabled={loading || loadingWebhook || !webhook}
-                    onClick={handleSendTimersToDiscord}
-                  >
-                    <p className='label contrast'>Send Timer Notification</p>
-                    <p className='IconContainer contrast'><i className='discord icon'></i></p>
-                  </button>
-                  {timerWebhookSuccess && <i className="check circle icon"></i>}
-                </div>
-              )}
-            </div>
-            <div className='CurrentWar'>
-              <div className='Controls'>
-                <div className='ui form'>
-                  {canEdit() ? (
-                    <Input
-                      type="text"
-                      name="group"
-                      placeholder="Group"
-                      icon="group"
-                      value={group}
-                      onChange={handleGroupUpdate}
-                    />
-                  ) : (
-                    <h2>{war.group || 'New Group'}</h2>
-                  )}
-                </div>
-                <div className='Score'>
-                  <div className='KillControls'>
+            <div className='DetailsContainer'>
+              <div className='Timers'>
+                <div className='OurTimer'>
+                  <div className='Header'>
+                    <h2>Our Timer</h2>
                     {canEdit() && (
-                      <div className="mini ui vertical buttons">
-                        <button
-                          className='ui button positive hover-animation'
-                          disabled={loading}
-                          onClick={handleAddKill}
-                        ><i className='add icon' /> </button>
-                        <button
-                          className='ui button negative hover-animation'
-                          disabled={loading}
-                          onClick={handleRemoveKill}
-                        ><i className='minus icon' /> </button>
-                      </div>
+                      <button className='ui icon button Collapse' onClick={() => setEditingOurTimer(!editingOurTimer)}>
+                        <i className='clock icon' />
+                      </button>
                     )}
                   </div>
-                  <h1 className={getScoreClass()}>{war.kills} - {war.deaths}</h1>
-                  <div className='DeathControls'>
-                    {canEdit() && (
-                      <div className="mini ui vertical buttons">
-                        <button
-                          className='ui button positive hover-animation'
-                          disabled={loading}
-                          onClick={handleAddDeath}
-                        ><i className='add icon' /> </button>
-                        <button
-                          className='ui button negative hover-animation'
-                          disabled={loading}
-                          onClick={handleRemoveDeath}
-                        ><i className='minus icon' /> </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className='ActionsContainer'>
-                  {canEdit() && (
-                    <>
-                      <div className='DiscordAction'>
-                        <button
-                          className='ui button positive hover-animation'
-                          disabled={loading || loadingWebhook || !webhook}
-                          onClick={handleSendScoreToDiscord}
-                        >
-                          <p className='label contrast'>Send Score Notification</p>
-                          <p className='IconContainer contrast'><i className='discord icon'></i></p>
-                        </button>
-                        {scoreWebhookSuccess && <i className="check circle icon"></i>}
-                      </div>
+                  {!editingOurTimer && (
+                    <h1 className={getSlideTimer(war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                      {getSlideTimer(war.ourSlide, OUR_TIMER_UP)}
+                    </h1>
+                  )}
+                  {editingOurTimer && (
+                    <div className='DateTimePickerContainer'>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateTimePicker
+                          label="Last Slide Start"
+                          viewRenderers={{
+                            hours: renderTimeViewClock,
+                            minutes: renderTimeViewClock,
+                            seconds: renderTimeViewClock,
+                          }}
+                          openTo="hours"
+                          value={ourSlide}
+                          onChange={value => setOurSlide(dayjs(value))}
+                        />
+                      </LocalizationProvider>
+                      <button
+                        className='ui button positive hover-animation'
+                        disabled={loading}
+                        onClick={handleOurSlideUpdate}
+                      ><i className='check icon' /></button>
                       <button
                         className='ui button negative hover-animation'
                         disabled={loading}
-                        onClick={handleEndWar}
-                      >
-                        <p className='label contrast'>End War</p>
-                        <p className='IconContainer contrast'><i className='handshake icon'></i></p>
-                      </button>
-                    </>
+                        onClick={handleOurSlideClear}
+                      ><i className='trash icon' /></button>
+                    </div>
                   )}
+                </div>
+                <div className='TheirTimer'>
+                  <div className='Header'>
+                    <h2>Their Timer</h2>
+                    {canEdit() && (
+                      <button className='ui icon button Collapse' onClick={() => setEditingTheirTimer(!editingTheirTimer)}>
+                        <i className='clock icon' />
+                      </button>
+                    )}
+                  </div>
+                  {!editingTheirTimer && (
+                    <h1 className={getSlideTimer(war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                      {getSlideTimer(war.theirSlide, THEIR_TIMER_UP)}
+                    </h1>
+                  )}
+                  {editingTheirTimer && (
+                    <div className='DateTimePickerContainer'>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateTimePicker
+                          label="Last Slide Start"
+                          viewRenderers={{
+                            hours: renderTimeViewClock,
+                            minutes: renderTimeViewClock,
+                            seconds: renderTimeViewClock,
+                          }}
+                          openTo="hours"
+                          value={theirSlide}
+                          onChange={value => setTheirSlide(dayjs(value))}
+                        />
+                      </LocalizationProvider>
+                      <button
+                        className='ui button positive hover-animation'
+                        disabled={loading}
+                        onClick={handleTheirSlideUpdate}
+                      ><i className='check icon' /></button>
+                      <button
+                        className='ui button negative hover-animation'
+                        disabled={loading}
+                        onClick={handleTheirSlideClear}
+                      ><i className='trash icon' /></button>
+                    </div>
+                  )}
+                </div>
+                {canEdit() && (
+                  <div className='DiscordAction'>
+                    <button
+                      className='ui button positive hover-animation'
+                      disabled={loading || loadingWebhook || !webhook}
+                      onClick={handleSendTimersToDiscord}
+                    >
+                      <p className='label contrast'>Send Timer Notification</p>
+                      <p className='IconContainer contrast'><i className='discord icon'></i></p>
+                    </button>
+                    {timerWebhookSuccess && <i className="check circle icon"></i>}
+                  </div>
+                )}
+              </div>
+              <div className='CurrentWar'>
+                <div className='Controls'>
+                  <div className='ui form'>
+                    {canEdit() ? (
+                      <Input
+                        type="text"
+                        name="group"
+                        placeholder="Group"
+                        icon="group"
+                        value={group}
+                        onChange={handleGroupUpdate}
+                      />
+                    ) : (
+                      <h2>{war.group || 'New Group'}</h2>
+                    )}
+                  </div>
+                  <div className='Score'>
+                    <div className='KillControls'>
+                      {canEdit() && (
+                        <div className="mini ui vertical buttons">
+                          <button
+                            className='ui button positive hover-animation'
+                            disabled={loading}
+                            onClick={handleAddKill}
+                          ><i className='add icon' /> </button>
+                          <button
+                            className='ui button negative hover-animation'
+                            disabled={loading}
+                            onClick={handleRemoveKill}
+                          ><i className='minus icon' /> </button>
+                        </div>
+                      )}
+                    </div>
+                    <h1 className={getScoreClass()}>{war.kills} - {war.deaths}</h1>
+                    <div className='DeathControls'>
+                      {canEdit() && (
+                        <div className="mini ui vertical buttons">
+                          <button
+                            className='ui button positive hover-animation'
+                            disabled={loading}
+                            onClick={handleAddDeath}
+                          ><i className='add icon' /> </button>
+                          <button
+                            className='ui button negative hover-animation'
+                            disabled={loading}
+                            onClick={handleRemoveDeath}
+                          ><i className='minus icon' /> </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className='ActionsContainer'>
+                    {canEdit() && (
+                      <>
+                        <div className='DiscordAction'>
+                          <button
+                            className='ui button positive hover-animation'
+                            disabled={loading || loadingWebhook || !webhook}
+                            onClick={handleSendScoreToDiscord}
+                          >
+                            <p className='label contrast'>Send Score Notification</p>
+                            <p className='IconContainer contrast'><i className='discord icon'></i></p>
+                          </button>
+                          {scoreWebhookSuccess && <i className="check circle icon"></i>}
+                        </div>
+                        <button
+                          className='ui button negative hover-animation'
+                          disabled={loading}
+                          onClick={handleEndWar}
+                        >
+                          <p className='label contrast'>End War</p>
+                          <p className='IconContainer contrast'><i className='handshake icon'></i></p>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className='Rules'>
+                <div>
+                  <h4>Standard War Procedure</h4>
+                  <ul>
+                    <li>No bleets related to the war.</li>
+                    <li>Do not hangout alone at the block.</li>
+                    <li>Always carry a gun & armour.</li>
+                    <li>Do not wear your katana or chain.</li>
+                    <li>Working at businesses is allowed.</li>
+                  </ul>
                 </div>
               </div>
             </div>
-            <div className='Rules'>
-              <div>
-                <h4>Standard War Procedure</h4>
-                <ul>
-                  <li>No bleets related to the war.</li>
-                  <li>Do not hangout alone at the block.</li>
-                  <li>Always carry a gun & armour.</li>
-                  <li>Do not wear your katana or chain.</li>
-                  <li>Working at businesses is allowed.</li>
-                </ul>
-              </div>
+            <div className='GalleryContainer'>
+              <Header text='Gallery' decorated />
+              {canEdit() && <NewWarClipModal onAdd={async () => setClips(await getWarClipsForWar(war.id))} />}
+              <Gallery
+                items={getOrderedClips()}
+                tags={[]}
+              />
             </div>
           </>
         )}

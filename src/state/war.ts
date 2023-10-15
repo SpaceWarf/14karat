@@ -20,3 +20,16 @@ export interface WarUpdate {
   ourSlide?: string;
   theirSlide?: string;
 }
+
+export interface WarClip extends FirestoreEntity {
+  id: string;
+  war: string;
+  embed: string;
+  notes: string;
+}
+
+export interface WarClipUpdate {
+  war: string;
+  embed: string;
+  notes: string;
+}

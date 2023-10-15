@@ -9,7 +9,7 @@ import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/members";
 import { Intel, IntelUpdate } from "../state/intel";
-import { War, WarUpdate } from "../state/war";
+import { War, WarClip, WarClipUpdate, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 
@@ -33,6 +33,7 @@ const membersRef = collection(db, "members");
 const intelRef = collection(db, "intel");
 const warsRef = collection(db, "wars");
 const eventsRef = collection(db, "events");
+const warClipsRef = collection(db, "war-clips");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -390,6 +391,40 @@ export async function updateEvent(id: string, update: CalendarEventUpdate, user:
 export async function deleteEvent(id: string, user: User | null): Promise<void> {
   const now = new Date().toISOString();
   await updateDoc(doc(db, "events", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
+}
+
+export async function getWarClipsForWar(id: string): Promise<WarClip[]> {
+  const snapshot = await getDocs(warClipsRef);
+  const clips: WarClip[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted && data.war === id) {
+      clips.push({ id: doc.id, ...data });
+    }
+  });
+  return clips;
+}
+
+export async function createWarClip(clip: WarClipUpdate, user: User | null): Promise<WarClip> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(warClipsRef, {
+    ...clip,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...clip,
+  };
+}
+
+export async function deleteWarClip(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "war-clips", id), {
     deleted: true,
     deletedAt: now,
     deletedBy: user?.email ?? '',
