@@ -11,7 +11,9 @@ import {
   getWars,
   getEvents,
   onEventsSnapshot,
-  getHacks
+  getHacks,
+  getActiveJobs,
+  onActiveJobsSnapshot
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -24,6 +26,7 @@ import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
+import { setJobs } from "../redux/reducers/jobs";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -37,6 +40,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     wars,
     events,
     hacks,
+    jobs,
   ] = await Promise.all([
     getProfileById(id),
     getDivisions(),
@@ -46,6 +50,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getWars(),
     getEvents(),
     getHacks(),
+    getActiveJobs(),
   ]);
   dispatch(setProfile(profile));
   dispatch(setRoles(roles));
@@ -55,6 +60,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setWars(wars));
   dispatch(setEvents(events));
   dispatch(setHacks(hacks));
+  dispatch(setJobs(jobs));
 
   if (profile.pfp) {
     const url = await getProfilePictureUrl(profile.pfp);
@@ -65,5 +71,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onDriverStratsSnapshot(strats => dispatch(setDriverStrats(strats)));
   onWarSnapshot(wars => dispatch(setWars(wars)));
   onEventsSnapshot(events => dispatch(setEvents(events)));
+  onActiveJobsSnapshot(jobs => dispatch(setJobs(jobs)));
   loadingSubject.next(false);
 }

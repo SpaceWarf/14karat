@@ -138,7 +138,7 @@ function NewStratModal(props: NewStratModalProps) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <button className="ui button positive hover-animation" onClick={() => setOpen(false)}>
+        <button className="ui button positive hover-animation" onClick={() => setOpen(true)}>
           <p className='label contrast'>Add Strat</p>
           <p className='IconContainer contrast'><i className='add icon'></i></p>
         </button>

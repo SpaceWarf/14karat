@@ -14,6 +14,7 @@ import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
 import { Location } from '../state/location';
+import { Job, JobInfo } from "../state/jobs";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -38,6 +39,7 @@ const eventsRef = collection(db, "events");
 const warClipsRef = collection(db, "war-clips");
 const hacksRef = collection(db, "hacks");
 const locationsRef = collection(db, "locations");
+const jobsRef = collection(db, "jobs");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -457,4 +459,34 @@ export async function getLocations(): Promise<Location[]> {
     }
   });
   return locations;
+}
+
+export async function getActiveJobs(): Promise<Job[]> {
+  const snapshot = await getDocs(jobsRef);
+  const jobs: Job[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted && !data.completed) {
+      jobs.push({ id: doc.id, ...data });
+    }
+  });
+  return jobs;
+}
+
+export function onActiveJobsSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
+  return onSnapshot(jobsRef, {}, snapshot => {
+    const jobs: Job[] = [];
+    snapshot.forEach((doc: DocumentData) => {
+      const data = doc.data();
+      if (!data.deleted && !data.completed) {
+        jobs.push({ id: doc.id, ...data });
+      }
+    });
+    cb(jobs);
+  });
+}
+
+export async function getJobInfoById(id: string): Promise<JobInfo> {
+  const snapshot = await getDoc(doc(db, "job-info", id));
+  return { id: snapshot.id, ...snapshot.data() } as JobInfo;
 }
