@@ -1,6 +1,6 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { createMember, deleteMember, getMembersForGroup, updateMember } from "../../utils/firestore";
+import { createMember, deleteMember, getGroups, getMembersForGroup, updateMember } from "../../utils/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
@@ -8,6 +8,8 @@ import Textarea from "../Common/Textarea";
 import { useAuth } from "../../contexts/AuthContext";
 import { Member, MemberUpdate } from "../../state/members";
 import { Checkbox } from "semantic-ui-react";
+import Dropdown, { DropdownOption } from "../Common/Dropdown";
+import { Group } from "../../state/groups";
 
 const MemberInformation = () => {
   const { groupId, memberId } = useParams();
@@ -15,6 +17,7 @@ const MemberInformation = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
+  const [groups, setGroups] = useState<Group[]>([]);
 
   const [member, setMember] = useState<Member>();
   const [name, setName] = useState<string>("");
@@ -24,6 +27,20 @@ const MemberInformation = () => {
   const [notes, setNotes] = useState<string>("");
   const [leader, setLeader] = useState<boolean>(false);
   const [dead, setDead] = useState<boolean>(false);
+  const [group, setGroup] = useState<string | undefined>(groupId);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setLoading(true);
+      setGroups(await getGroups());
+      setLoading(false);
+    }
+    fetchGroups();
+  }, []);
+
+  useEffect(() => {
+    setGroup(groupId);
+  }, [groupId]);
 
   useEffect(() => {
     const fetchMember = async (groupId: string, memberId: string) => {
@@ -60,6 +77,7 @@ const MemberInformation = () => {
       setNotes(member.notes);
       setLeader(member.leader);
       setDead(member.dead);
+      setGroup(member.group);
     }
   }
 
@@ -72,20 +90,21 @@ const MemberInformation = () => {
       || notes !== member.notes
       || leader !== member.leader
       || dead !== member.dead
+      || group !== member.group
     );
     return memberId === "new" || isEdited;
   }
 
   const canSave = (): boolean => {
-    return !!name
+    return !!name && !!group;
   }
 
   const handleSave = async () => {
-    if (groupId) {
+    if (group) {
       setSaving(true);
       const update: MemberUpdate = {
         name,
-        group: groupId,
+        group,
         position,
         phone,
         identifiers,
@@ -99,9 +118,14 @@ const MemberInformation = () => {
         navigate(`/groups/${groupId}/members/${createdMember.id}`);
       } else if (member && canSave()) {
         await updateMember(member.id, update, user);
+
+        if (group !== member.group) {
+          navigate(`/groups/${groupId}?active=1`);
+        }
+
         setMember({
           id: member.id,
-          group: member.group,
+          group,
           name,
           position,
           phone,
@@ -125,6 +149,15 @@ const MemberInformation = () => {
     }
   }
 
+  const getGroupsDropdownOptions = (): DropdownOption[] => {
+    return groups
+      .map(group => ({
+        key: group.id,
+        text: group.name,
+        value: group.id,
+      }));
+  }
+
   return (
     loading ? (
       <Loading />
@@ -143,6 +176,19 @@ const MemberInformation = () => {
               </div>
             </div>
             <div className="ui form">
+              <div className="Row">
+                <Dropdown
+                  placeholder='Group'
+                  disabled={saving}
+                  options={getGroupsDropdownOptions()}
+                  value={group || ''}
+                  onChange={(_, { value }) => setGroup(value)}
+                />
+                <div className="field-container">
+                  <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />
+                  <Checkbox checked={dead} label="Dead?" toggle onChange={() => setDead(!dead)} />
+                </div>
+              </div>
               <div className="Row">
                 <Input
                   type="text"
@@ -192,10 +238,10 @@ const MemberInformation = () => {
                   disabled={saving}
                 />
               </div>
-              <div className='Row large'>
+              {/* <div className='Row large'>
                 <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />
                 <Checkbox checked={dead} label="Dead?" toggle onChange={() => setDead(!dead)} />
-              </div>
+              </div> */}
               <div className="Row">
                 <button
                   className='ui button negative hover-animation'

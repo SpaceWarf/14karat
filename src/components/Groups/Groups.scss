@@ -55,6 +55,13 @@
         flex: 1 1 0;
       }
 
+      .field-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex: 1 1 0;
+      }
+
       .checkbox {
         margin-bottom: 20px !important;
       }
