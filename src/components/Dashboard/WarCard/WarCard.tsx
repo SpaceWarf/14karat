@@ -36,8 +36,9 @@ function WarCard() {
         </div>
         {war.endedAt && (
           <div className='LastWar'>
+            <h3>We officially made it</h3>
             <h2>{getTimeString()}</h2>
-            <h3>Since Last War</h3>
+            <h3>since the last war!</h3>
           </div>
         )}
         {!war.endedAt && (

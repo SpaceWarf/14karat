@@ -222,20 +222,22 @@ function War() {
       <Header text='War Info' decorated />
       {war && <div className='content'>
         {war.endedAt && (
-          <div className='LastWar'>
-            <h3>Congratulations everybody, we officially made it</h3>
-            <h2>{getTimeString()}</h2>
-            <h3>since the last war!</h3>
-            {canEdit() && (
-              <button
-                className='ui button negative hover-animation'
-                disabled={loading}
-                onClick={handleDeclareWar}
-              >
-                <p className='label contrast'>Declare War</p>
-                <p className='IconContainer contrast'><i className='bomb icon'></i></p>
-              </button>
-            )}
+          <div className='DetailsContainer'>
+            <div className='LastWar'>
+              <h3>Congratulations everybody, we officially made it</h3>
+              <h2>{getTimeString()}</h2>
+              <h3>since the last war!</h3>
+              {canEdit() && (
+                <button
+                  className='ui button negative hover-animation'
+                  disabled={loading}
+                  onClick={handleDeclareWar}
+                >
+                  <p className='label contrast'>Declare War</p>
+                  <p className='IconContainer contrast'><i className='bomb icon'></i></p>
+                </button>
+              )}
+            </div>
           </div>
         )}
         {!war.endedAt && (
