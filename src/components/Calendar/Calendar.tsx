@@ -18,6 +18,7 @@ const localizer = dayjsLocalizer(dayjs);
 
 function EventCalendar() {
   const { isAdmin } = useAuth();
+  const profile = useSelector((state: RootState) => state.profile);
   const [searchParams, setSearchParams] = useSearchParams();
   const { events } = useSelector((state: RootState) => state.events);
   const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
@@ -33,10 +34,10 @@ function EventCalendar() {
       setWebhook(await getWebhookById('event-update'));
     }
 
-    if (isAdmin) {
+    if (isAdmin || profile.info.roles.includes('ceremonies-emissary')) {
       fetchWebhook();
     }
-  }, [isAdmin]);
+  }, [isAdmin, profile]);
 
   useEffect(() => {
     if (searchParams.has('view')) {
@@ -70,7 +71,7 @@ function EventCalendar() {
   }
 
   const handleSelectSlot = (event: any) => {
-    if (isAdmin) {
+    if (isAdmin || profile.info.roles.includes('ceremonies-emissary')) {
       setSlotStart(event.start);
       setSlotEnd(event.end);
       setOpenCreateModal(true);
