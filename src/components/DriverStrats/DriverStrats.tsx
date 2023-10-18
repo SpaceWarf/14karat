@@ -23,7 +23,13 @@ function DriverStrats() {
       <div className="content">
         <img src={map} alt="Map" />
         <div>
-          <NewStratModal neighbourhood={neighbourhoods.length ? neighbourhoods[0].id : ""} />
+          <div className="Actions">
+            <button className="ui button hover-animation" onClick={() => navigate('/driver-strats/all')}>
+              <p className='label contrast'>View All</p>
+              <p className='IconContainer contrast'><i className='eye icon'></i></p>
+            </button>
+            <NewStratModal neighbourhood={neighbourhoods.length ? neighbourhoods[0].id : ""} />
+          </div>
           <Segment.Group>
             {[...neighbourhoods]
               .sort((a, b) => a.name.localeCompare(b.name))

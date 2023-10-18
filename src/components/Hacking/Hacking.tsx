@@ -12,7 +12,9 @@ function Hacking() {
       <Header text='Hacking' decorated />
       <div className='content'>
         {hacks.map(hack => (
-          <HackCard hack={hack} />
+          <div>
+            <HackCard hack={hack} />
+          </div>
         ))}
       </div>
     </div>

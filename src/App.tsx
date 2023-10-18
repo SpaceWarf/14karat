@@ -16,6 +16,7 @@ import MemberDetails from './components/Groups/MemberDetails';
 import Calendar from './components/Calendar/Calendar';
 import War from './components/War/War';
 import Hacking from './components/Hacking/Hacking';
+import DriverStratGallery from './components/DriverStrats/DriverStratGallery';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
             <Route path='/driver-strats' element={<DriverStrats />} />
+            <Route path='/driver-strats/all' element={<DriverStratGallery />} />
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             <Route path='/stash-search' element={<StashSearch />} />
             <Route path='/roster' element={<Roster />} />
