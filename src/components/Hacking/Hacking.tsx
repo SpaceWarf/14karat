@@ -11,7 +11,7 @@ function Hacking() {
     <div className="Hacking">
       <Header text='Hacking' decorated />
       <div className='content'>
-        {hacks.map(hack => (
+        {[...hacks].sort((a, b) => a.order - b.order).map(hack => (
           <div>
             <HackCard hack={hack} />
           </div>

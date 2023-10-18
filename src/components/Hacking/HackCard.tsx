@@ -7,7 +7,7 @@ interface WarCardProps {
 
 function HackCard(props: WarCardProps) {
   return (
-    <div className={props.hack.url ? "HackCard ui card attached external" : "HackCard ui card attached external"}>
+    <div className="HackCard ui card attached external">
       <div className="content">
         <div className='header'>
           <p><i className='terminal icon' /> {props.hack.name}</p>
