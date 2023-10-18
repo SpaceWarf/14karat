@@ -238,10 +238,6 @@ const MemberInformation = () => {
                   disabled={saving}
                 />
               </div>
-              {/* <div className='Row large'>
-                <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />
-                <Checkbox checked={dead} label="Dead?" toggle onChange={() => setDead(!dead)} />
-              </div> */}
               <div className="Row">
                 <button
                   className='ui button negative hover-animation'

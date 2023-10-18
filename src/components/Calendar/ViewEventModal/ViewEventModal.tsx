@@ -8,6 +8,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { deleteEvent } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
+import Textarea from "../../Common/Textarea";
 
 interface ViewEventModalProps {
   open: boolean,
@@ -115,6 +116,21 @@ function ViewEventModal(props: ViewEventModalProps) {
               )}
             </LocalizationProvider>
           </div>
+          <div className="Row">
+            <div>
+              <Textarea
+                name="notes"
+                placeholder="Notes"
+                value={props.event.notes || ''}
+                disabled
+              />
+            </div>
+            {props.event.poster && <img className="Poster" src={props.event.poster} alt="Poster" />}
+          </div>
+          {props.event.poster && (
+            <div className="Row PosterRow">
+            </div>
+          )}
         </div>
       </Modal.Content>
     </Modal>

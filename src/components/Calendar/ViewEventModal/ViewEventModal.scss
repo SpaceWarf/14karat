@@ -21,4 +21,11 @@
       gap: 5px;
     }
   }
+
+  .Poster {
+    display: block;
+    max-width: calc(50% - 10px);
+    width: auto;
+    height: auto;
+  }
 }

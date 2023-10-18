@@ -11,6 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createEvent } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
+import Textarea from "../../Common/Textarea";
 
 interface AddEventModalProps {
   open: boolean,
@@ -29,6 +30,8 @@ function AddEventModal(props: AddEventModalProps) {
   const [end, setEnd] = useState<Dayjs>(dayjs(props.end));
   const [allDay, setAllDay] = useState<boolean>(false);
   const [notification, setNotification] = useState<boolean>(true);
+  const [poster, setPoster] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
 
   useEffect(() => {
     setStart(dayjs(props.start));
@@ -42,7 +45,9 @@ function AddEventModal(props: AddEventModalProps) {
       color,
       start: start.toISOString(),
       end: end.toISOString(),
-      allDay
+      allDay,
+      poster,
+      notes,
     }, user);
     setLoading(false);
 
@@ -94,6 +99,8 @@ function AddEventModal(props: AddEventModalProps) {
     setStart(dayjs(props.start));
     setEnd(dayjs(props.end));
     setAllDay(false);
+    setPoster('');
+    setNotes('');
   }
 
   const canAdd = (): boolean => {
@@ -134,6 +141,63 @@ function AddEventModal(props: AddEventModalProps) {
               onChange={setTitle}
               disabled={loading}
             />
+            <div className="field-container">
+              <Checkbox
+                checked={allDay}
+                label="All Day?"
+                toggle
+                onChange={() => setAllDay(!allDay)}
+              />
+              <Checkbox
+                checked={notification}
+                label="Send Notification?"
+                toggle
+                onChange={() => setNotification(!notification)}
+              />
+            </div>
+          </div>
+          <div className="Row">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {allDay ? (
+                <DatePicker
+                  label="Event Start *"
+                  value={start}
+                  onChange={value => handleUpdateStart(dayjs(value))}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Event Start *"
+                  value={start}
+                  onChange={value => handleUpdateStart(dayjs(value))}
+                />
+              )}
+            </LocalizationProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {allDay ? (
+                <DatePicker
+                  label="Event End *"
+                  value={end}
+                  onChange={value => handleUpdateEnd(dayjs(value))}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Event End *"
+                  value={end}
+                  onChange={value => handleUpdateEnd(dayjs(value))}
+                />
+              )}
+            </LocalizationProvider>
+          </div>
+          <div className="Row">
+            <Input
+              type="text"
+              name="poster"
+              placeholder="Poster URL"
+              icon="picture outline"
+              value={poster}
+              onChange={setPoster}
+              disabled={loading}
+            />
             <Dropdown
               placeholder="Color *"
               disabled={loading}
@@ -143,49 +207,12 @@ function AddEventModal(props: AddEventModalProps) {
             />
           </div>
           <div className="Row">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {allDay ? (
-                <DatePicker
-                  label="Event Start *"
-                  value={start}
-                  onChange={value => handleUpdateStart(dayjs(value))}
-                />
-              ) : (
-                <DateTimePicker
-                  label="Event Start *"
-                  value={start}
-                  onChange={value => handleUpdateStart(dayjs(value))}
-                />
-              )}
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {allDay ? (
-                <DatePicker
-                  label="Event End *"
-                  value={end}
-                  onChange={value => handleUpdateEnd(dayjs(value))}
-                />
-              ) : (
-                <DateTimePicker
-                  label="Event End *"
-                  value={end}
-                  onChange={value => handleUpdateEnd(dayjs(value))}
-                />
-              )}
-            </LocalizationProvider>
-          </div>
-          <div className="Row">
-            <Checkbox
-              checked={allDay}
-              label="All Day?"
-              toggle
-              onChange={() => setAllDay(!allDay)}
-            />
-            <Checkbox
-              checked={notification}
-              label="Send Notification?"
-              toggle
-              onChange={() => setNotification(!notification)}
+            <Textarea
+              name="notes"
+              placeholder="Notes"
+              value={notes}
+              onChange={setNotes}
+              disabled={loading}
             />
           </div>
         </div>

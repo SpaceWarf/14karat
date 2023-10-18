@@ -11,6 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { updateEvent } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
+import Textarea from "../../Common/Textarea";
 
 interface EditEventModalProps {
   open: boolean,
@@ -29,6 +30,8 @@ function EditEventModal(props: EditEventModalProps) {
   const [end, setEnd] = useState<Dayjs>(dayjs(props.event.end));
   const [allDay, setAllDay] = useState<boolean>(props.event.allDay || false);
   const [notification, setNotification] = useState<boolean>(false);
+  const [poster, setPoster] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
 
   useEffect(() => {
     setTitle(props.event.title);
@@ -36,6 +39,8 @@ function EditEventModal(props: EditEventModalProps) {
     setStart(dayjs(props.event.start));
     setEnd(dayjs(props.event.end));
     setAllDay(props.event.allDay || false);
+    setPoster(props.event.poster || '');
+    setNotes(props.event.notes || '');
   }, [props]);
 
   const handleSave = async () => {
@@ -47,7 +52,9 @@ function EditEventModal(props: EditEventModalProps) {
         color,
         start: start.toISOString(),
         end: end.toISOString(),
-        allDay
+        allDay,
+        poster,
+        notes,
       },
       user
     );
@@ -58,7 +65,9 @@ function EditEventModal(props: EditEventModalProps) {
       color,
       start: start.toDate(),
       end: end.toDate(),
-      allDay
+      allDay,
+      poster,
+      notes,
     });
 
     if (notification) {
@@ -74,6 +83,8 @@ function EditEventModal(props: EditEventModalProps) {
     setStart(dayjs(props.event.start));
     setEnd(dayjs(props.event.end));
     setAllDay(props.event.allDay || false);
+    setPoster(props.event.poster || '');
+    setNotes(props.event.notes || '');
     props.onClose();
   }
 
@@ -86,7 +97,9 @@ function EditEventModal(props: EditEventModalProps) {
     const isEdited = title !== props.event.title
       || start.toISOString() !== props.event.start.toISOString()
       || end.toISOString() !== props.event.end.toISOString()
-      || color !== props.event.color;
+      || color !== props.event.color
+      || poster !== props.event.poster
+      || notes !== props.event.notes;
     return hasRequired && isEdited;
   }
 
@@ -155,6 +168,67 @@ function EditEventModal(props: EditEventModalProps) {
               onChange={setTitle}
               disabled={loading}
             />
+            <div className="field-container">
+              <Checkbox
+                checked={allDay}
+                label="All Day?"
+                toggle
+                onChange={() => setAllDay(!allDay)}
+              />
+              <Checkbox
+                checked={notification}
+                label="Send Notification?"
+                toggle
+                onChange={() => setNotification(!notification)}
+              />
+            </div>
+          </div>
+          <div className="Row">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {allDay ? (
+                <DatePicker
+                  label="Event Start *"
+                  value={start}
+                  disabled={loading}
+                  onChange={value => handleUpdateStart(dayjs(value))}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Event Start *"
+                  value={start}
+                  disabled={loading}
+                  onChange={value => handleUpdateStart(dayjs(value))}
+                />
+              )}
+            </LocalizationProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {allDay ? (
+                <DatePicker
+                  label="Event End *"
+                  value={end}
+                  disabled={loading}
+                  onChange={value => handleUpdateEnd(dayjs(value))}
+                />
+              ) : (
+                <DateTimePicker
+                  label="Event End *"
+                  value={end}
+                  disabled={loading}
+                  onChange={value => handleUpdateEnd(dayjs(value))}
+                />
+              )}
+            </LocalizationProvider>
+          </div>
+          <div className="Row">
+            <Input
+              type="text"
+              name="poster"
+              placeholder="Poster URL"
+              icon="picture outline"
+              value={poster}
+              onChange={setPoster}
+              disabled={loading}
+            />
             <Dropdown
               placeholder="Color *"
               disabled={loading}
@@ -164,53 +238,12 @@ function EditEventModal(props: EditEventModalProps) {
             />
           </div>
           <div className="Row">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {allDay ? (
-                <DatePicker
-                  label="Event Start *"
-                  value={start}
-                  disabled={loading}
-                  onChange={value => handleUpdateStart(dayjs(value))}
-                />
-              ) : (
-                <DateTimePicker
-                  label="Event Start *"
-                  value={start}
-                  disabled={loading}
-                  onChange={value => handleUpdateStart(dayjs(value))}
-                />
-              )}
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {allDay ? (
-                <DatePicker
-                  label="Event End *"
-                  value={end}
-                  disabled={loading}
-                  onChange={value => handleUpdateEnd(dayjs(value))}
-                />
-              ) : (
-                <DateTimePicker
-                  label="Event End *"
-                  value={end}
-                  disabled={loading}
-                  onChange={value => handleUpdateEnd(dayjs(value))}
-                />
-              )}
-            </LocalizationProvider>
-          </div>
-          <div className="Row">
-            <Checkbox
-              checked={allDay}
-              label="All Day?"
-              toggle
-              onChange={() => setAllDay(!allDay)}
-            />
-            <Checkbox
-              checked={notification}
-              label="Send Notification?"
-              toggle
-              onChange={() => setNotification(!notification)}
+            <Textarea
+              name="notes"
+              placeholder="Notes"
+              value={notes}
+              onChange={setNotes}
+              disabled={loading}
             />
           </div>
         </div>

@@ -8,6 +8,8 @@ export interface CalendarEvent extends FirestoreEntity {
   end: string;
   allDay?: boolean;
   color: string;
+  poster?: string;
+  notes?: string;
 }
 
 export interface ReactBigCalendarEvent {
@@ -17,6 +19,8 @@ export interface ReactBigCalendarEvent {
   end: Date;
   allDay?: boolean;
   color: string;
+  poster?: string;
+  notes?: string;
 }
 
 export interface CalendarEventUpdate {
@@ -25,6 +29,8 @@ export interface CalendarEventUpdate {
   end: string;
   allDay?: boolean;
   color: string;
+  poster?: string;
+  notes?: string;
 }
 
 export const EVENT_COLORS: DropdownOption[] = [

@@ -4,7 +4,7 @@ interface TextareaProps {
   name: string;
   placeholder: string;
   value: string;
-  onChange: (e: string) => void;
+  onChange?: (e: string) => void;
   disabled?: boolean;
   readonly?: boolean;
   onBlur?: () => void;
@@ -26,7 +26,9 @@ function Textarea({
   const [showCopyLabel, setShowCopyLabel] = useState(false);
 
   function handleChange(e: ChangeEvent<HTMLTextAreaElement>) {
-    onChange(e.target.value);
+    if (onChange) {
+      onChange(e.target.value);
+    }
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {

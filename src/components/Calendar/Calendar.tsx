@@ -93,7 +93,7 @@ function EventCalendar() {
           open={openViewModal}
           event={event}
           webhook={webhook}
-          onEdit={() => setOpenEditModal(true)}
+          onEdit={() => { setOpenViewModal(false); setOpenEditModal(true); }}
           onClose={() => { setSearchParams({}); setOpenViewModal(false); }}
         />}
         {openEditModal && event && <EditEventModal
@@ -101,7 +101,7 @@ function EventCalendar() {
           event={event}
           webhook={webhook}
           onSave={setEvent}
-          onClose={() => setOpenEditModal(false)}
+          onClose={() => { setOpenViewModal(true); setOpenEditModal(false); }}
         />}
         <Calendar
           localizer={localizer}
