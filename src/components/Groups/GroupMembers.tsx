@@ -1,7 +1,7 @@
 import "./Groups.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Member } from "../../state/members";
+import { Member } from "../../state/member";
 import { getMembersForGroup } from "../../utils/firestore";
 import Loading from "../Common/Loading";
 import MemberCard from "./MemberCard";

@@ -6,7 +6,7 @@ import Loading from "../Common/Loading";
 import Input from "../Common/Input";
 import Textarea from "../Common/Textarea";
 import { useAuth } from "../../contexts/AuthContext";
-import { Member, MemberUpdate } from "../../state/members";
+import { Member, MemberUpdate } from "../../state/member";
 import { Checkbox } from "semantic-ui-react";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { Group } from "../../state/groups";

@@ -6,6 +6,7 @@ import driverStrats from "./reducers/driverStrats";
 import neighbourhoods from "./reducers/neighbourhoods";
 import wars from "./reducers/wars";
 import events from "./reducers/events";
+import hacks from "./reducers/hacks";
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === 'RESET') {
@@ -20,6 +21,7 @@ const rootReducer = (state: any, action: AnyAction) => {
     neighbourhoods: neighbourhoods,
     wars: wars,
     events: events,
+    hacks: hacks,
   })(state, action);
 }
 

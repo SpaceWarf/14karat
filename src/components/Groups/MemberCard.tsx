@@ -1,5 +1,5 @@
 import "./Groups.scss";
-import { Member } from "../../state/members";
+import { Member } from "../../state/member";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface MemberCardProps {

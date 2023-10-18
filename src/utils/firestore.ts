@@ -7,11 +7,12 @@ import { Role } from "../redux/reducers/roles";
 import { DriverStrat, DriverStratUpdate } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
-import { Member, MemberUpdate } from "../state/members";
+import { Member, MemberUpdate } from "../state/member";
 import { Intel, IntelUpdate } from "../state/intel";
 import { War, WarClip, WarClipUpdate, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
+import { Hack } from "../state/hack";
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -34,6 +35,7 @@ const intelRef = collection(db, "intel");
 const warsRef = collection(db, "wars");
 const eventsRef = collection(db, "events");
 const warClipsRef = collection(db, "war-clips");
+const hacksRef = collection(db, "hacks");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -429,4 +431,16 @@ export async function deleteWarClip(id: string, user: User | null): Promise<void
     deletedAt: now,
     deletedBy: user?.email ?? '',
   });
+}
+
+export async function getHacks(): Promise<Hack[]> {
+  const snapshot = await getDocs(hacksRef);
+  const hacks: Hack[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      hacks.push({ id: doc.id, ...data });
+    }
+  });
+  return hacks;
 }
