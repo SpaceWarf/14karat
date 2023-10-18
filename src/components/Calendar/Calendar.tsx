@@ -113,8 +113,9 @@ function EventCalendar() {
           views={['month', 'week', 'day']}
           eventPropGetter={event => {
             const data = events.find(ev => ev.id === event.id);
+            const isPast = dayjs(data?.end).isBefore(dayjs());
             const backgroundColor = data && data.color;
-            return { style: { backgroundColor } };
+            return { style: { backgroundColor, opacity: isPast ? 0.5 : 1 } };
           }}
           selectable
         />
