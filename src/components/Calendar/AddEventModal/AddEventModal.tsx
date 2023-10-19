@@ -32,6 +32,7 @@ function AddEventModal(props: AddEventModalProps) {
   const [notification, setNotification] = useState<boolean>(true);
   const [poster, setPoster] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
+  const [dateError, setDateError] = useState<boolean>(false);
 
   useEffect(() => {
     setStart(dayjs(props.start));
@@ -108,17 +109,21 @@ function AddEventModal(props: AddEventModalProps) {
   }
 
   const handleUpdateStart = (start: Dayjs) => {
-    if (end.isBefore(start)) {
-      setEnd(start.add(1, 'hour'));
-    }
+    setDateError(false);
     setStart(start);
+
+    if (end.isBefore(start) || end.isSame(start)) {
+      setDateError(true);
+    }
   }
 
   const handleUpdateEnd = (end: Dayjs) => {
-    if (end.isBefore(start)) {
-      setStart(end.subtract(1, 'hour'));
-    }
+    setDateError(false);
     setEnd(end);
+
+    if (end.isBefore(start) || end.isSame(start)) {
+      setDateError(true);
+    }
   }
 
   return (
@@ -162,7 +167,7 @@ function AddEventModal(props: AddEventModalProps) {
                 <DatePicker
                   label="Event Start *"
                   value={start}
-                  onChange={value => handleUpdateStart(dayjs(value))}
+                  onChange={value => setStart(dayjs(value))}
                 />
               ) : (
                 <DateTimePicker
@@ -216,6 +221,9 @@ function AddEventModal(props: AddEventModalProps) {
             />
           </div>
         </div>
+        {dateError && (
+          <p className="error">Error: The event's end date must be after its start date.</p>
+        )}
       </Modal.Content>
       <Modal.Actions>
         <button className="ui button negative hover-animation" onClick={handleClose}>
