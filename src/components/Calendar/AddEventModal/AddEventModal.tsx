@@ -112,7 +112,7 @@ function AddEventModal(props: AddEventModalProps) {
     setDateError(false);
     setStart(start);
 
-    if (end.isBefore(start) || end.isSame(start)) {
+    if (!start.isBefore(end)) {
       setDateError(true);
     }
   }
@@ -121,7 +121,7 @@ function AddEventModal(props: AddEventModalProps) {
     setDateError(false);
     setEnd(end);
 
-    if (end.isBefore(start) || end.isSame(start)) {
+    if (!start.isBefore(end)) {
       setDateError(true);
     }
   }
