@@ -1,0 +1,24 @@
+@import "../../../assets/scss/index";
+
+.Taxes {
+  &>.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1500px;
+      margin-bottom: 10px;
+    }
+
+    iframe {
+      height: 700px;
+      width: 100%;
+      max-width: 1500px;
+      margin-top: 20px;
+    }
+  }
+}
