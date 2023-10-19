@@ -48,7 +48,7 @@ function InformationCenter() {
                 <i className='external alternate icon' />
               </button>
             </div>
-            <div className='Notes'><p>A tracker for weekly taxes to be paid by all chained members</p></div>
+            <div className='Notes'><p>A tracker for weekly taxes to be paid by all chained members.</p></div>
           </div>
         </div>
       </div>
