@@ -36,6 +36,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         <SidebarItem name='Hacking' icon='terminal book' path='/hacking' onClick={() => navigate('/hacking')} />
         <SidebarItem name='Stash Search' icon='search' path='/stash-search' onClick={() => navigate('/stash-search')} />
         <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
+        <SidebarItem name='Information Center' icon='info alternate' path='/information-center' onClick={() => navigate('/information-center')} />
         {isAdmin && (
           <div className='AdminRoutes'>
             <div className='Divider' />

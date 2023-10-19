@@ -17,6 +17,8 @@ import Calendar from './components/Calendar/Calendar';
 import War from './components/War/War';
 import Hacking from './components/Hacking/Hacking';
 import DriverStratGallery from './components/DriverStrats/DriverStratGallery';
+import InformationCenter from './components/InformationCenter/InformationCenter';
+import Hierarchy from './components/InformationCenter/Hierarchy/Hierarchy';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<War />} />
             <Route path='/hacking' element={<Hacking />} />
+            <Route path='/information-center' element={<InformationCenter />} />
+            <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />

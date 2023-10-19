@@ -19,7 +19,7 @@ function SidebarItem({ name, icon, image, path, onClick, children }: SidebarItem
   }
 
   function isActive() {
-    return path ? window.location.href.split('/')[3] === path.split('/')[1] : false;
+    return path ? window.location.href.split(/[\/?]/)[3] === path.split('/')[1] : false;
   }
 
   return (

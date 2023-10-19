@@ -1,0 +1,18 @@
+@import "../../assets/scss/index";
+
+.InformationCenter {
+  &>.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+
+    .InformationCenterCard {
+      .Notes p {
+        margin-top: 10px;
+        color: darken($gray-pale, 20%);
+        text-align: left;
+      }
+    }
+  }
+}
