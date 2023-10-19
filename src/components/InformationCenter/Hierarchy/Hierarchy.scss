@@ -1,41 +1,52 @@
 @import "../../../assets/scss/index";
 
 .Hierarchy {
-  .ImageContainer {
-    display: flex;
-    justify-content: center;
-
-    img {
-      width: auto;
-      height: auto;
-      max-height: 400px;
-    }
-  }
-
-  .TextContainer {
+  &>.content {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .Division {
+    .actions {
+      width: 100%;
       max-width: 1000px;
-      padding: 30px 0 20px 0;
+    }
 
-      &:not(:last-child) {
-        border-bottom: 1px solid black;
+    .ImageContainer {
+      display: flex;
+      justify-content: center;
+
+      img {
+        width: auto;
+        height: auto;
+        max-height: 400px;
       }
+    }
 
-      h1 {
-        text-align: center;
-        margin-bottom: 10px;
-      }
+    .TextContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-      h2 {
-        margin-bottom: 5px;
-      }
+      .Division {
+        max-width: 1000px;
+        padding: 30px 0 20px 0;
 
-      .Role {
-        margin-bottom: 20px;
+        &:not(:last-child) {
+          border-bottom: 1px solid black;
+        }
+
+        h1 {
+          text-align: center;
+          margin-bottom: 10px;
+        }
+
+        h2 {
+          margin-bottom: 5px;
+        }
+
+        .Role {
+          margin-bottom: 20px;
+        }
       }
     }
   }

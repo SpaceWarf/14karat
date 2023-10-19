@@ -19,6 +19,7 @@ import Hacking from './components/Hacking/Hacking';
 import DriverStratGallery from './components/DriverStrats/DriverStratGallery';
 import InformationCenter from './components/InformationCenter/InformationCenter';
 import Hierarchy from './components/InformationCenter/Hierarchy/Hierarchy';
+import Rules from './components/InformationCenter/Rules/Rules';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path='/hacking' element={<Hacking />} />
             <Route path='/information-center' element={<InformationCenter />} />
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
+            <Route path='/information-center/rules' element={<Rules />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
