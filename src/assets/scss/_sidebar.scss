@@ -146,15 +146,6 @@
       &:hover {
         width: $sidebar-width !important;
 
-        .Header {
-          height: 135px;
-          padding: 0 10px 0 10px;
-
-          .Logo {
-            width: 100px !important;
-          }
-        }
-
         .SidebarItem {
           justify-content: space-between;
 
@@ -202,15 +193,6 @@
 
       &:hover {
         width: $sidebar-width !important;
-
-        .Header {
-          height: 135px;
-          padding: 0 10px 0 10px;
-
-          .Logo {
-            width: 100px !important;
-          }
-        }
 
         .SidebarItem {
           justify-content: space-between !important;
