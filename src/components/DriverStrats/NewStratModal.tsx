@@ -39,7 +39,7 @@ function NewStratModal(props: NewStratModalProps) {
   }, [isAdmin]);
 
   useEffect(() => {
-    setSelectedNeighbourhood(props.neighbourhood);
+    setSelectedNeighbourhood(props.neighbourhood || (neighbourhoods[0]?.id ?? ''));
   }, [props.neighbourhood])
 
   const handleAdd = async () => {
