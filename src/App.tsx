@@ -21,6 +21,7 @@ import InformationCenter from './components/InformationCenter/InformationCenter'
 import Hierarchy from './components/InformationCenter/Hierarchy/Hierarchy';
 import Rules from './components/InformationCenter/Rules/Rules';
 import Taxes from './components/InformationCenter/Taxes/Taxes';
+import LocationsOfInterest from './components/InformationCenter/LocationsOfInterest/LocationsOfInterest';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route path='/information-center/rules' element={<Rules />} />
             <Route path='/information-center/taxes' element={<Taxes />} />
+            <Route path='/information-center/locations' element={<LocationsOfInterest />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />

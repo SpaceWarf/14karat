@@ -7,6 +7,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { AuthProvider } from './contexts/AuthContext';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

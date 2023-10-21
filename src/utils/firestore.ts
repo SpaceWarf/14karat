@@ -13,6 +13,7 @@ import { War, WarClip, WarClipUpdate, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
+import { Location } from '../state/location';
 
 export interface FirestoreEntity {
   createdAt?: string;
@@ -36,6 +37,7 @@ const warsRef = collection(db, "wars");
 const eventsRef = collection(db, "events");
 const warClipsRef = collection(db, "war-clips");
 const hacksRef = collection(db, "hacks");
+const locationsRef = collection(db, "locations");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -443,4 +445,16 @@ export async function getHacks(): Promise<Hack[]> {
     }
   });
   return hacks;
+}
+
+export async function getLocations(): Promise<Location[]> {
+  const snapshot = await getDocs(locationsRef);
+  const locations: Location[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      locations.push({ id: doc.id, ...data });
+    }
+  });
+  return locations;
 }

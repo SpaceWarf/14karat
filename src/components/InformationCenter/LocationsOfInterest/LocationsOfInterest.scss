@@ -1,0 +1,41 @@
+@import "../../../assets/scss/index";
+
+.LocationsOfInterest {
+  &>.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .Locations {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 20px;
+
+      .Title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+        margin: 20px 0 10px -30px;
+
+        h2 {
+          margin: 0;
+        }
+      }
+
+      .Description {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
