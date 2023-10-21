@@ -90,8 +90,26 @@
 }
 
 .NewStratModal {
-  .ui.form .field:not(:first-child) {
-    margin-top: 20px;
+  .ui.form {
+    .Row {
+      display: flex;
+      gap: 15px;
+
+      &>*:not(.toggle) {
+        flex: 1;
+      }
+
+      .field-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex: 1 1 0;
+      }
+    }
+
+    .field:not(:first-child) {
+      margin-top: 20px;
+    }
   }
 
   .small {

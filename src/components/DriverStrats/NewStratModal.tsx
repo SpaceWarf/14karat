@@ -1,28 +1,42 @@
 import "./DriverStrats.scss";
-import { Modal } from "semantic-ui-react";
+import { Checkbox, Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Input from "../Common/Input";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { createDriverStrat } from "../../utils/firestore";
+import { createDriverStrat, getWebhookById } from "../../utils/firestore";
 import { DriverStratTag } from "../../redux/reducers/driverStrats";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
+import { Webhook } from "../../state/webhook";
+import { triggerDiscordWebhook } from "../../services/functions";
 
 interface NewStratModalProps {
   neighbourhood: string;
 }
 
 function NewStratModal(props: NewStratModalProps) {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [embed, setEmbed] = useState<string>("");
   const [selectedNeighbourhood, setSelectedNeighbourhood] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [tags, setTags] = useState<string[]>([]);
+  const [webhook, setWebhook] = useState<Webhook>();
+  const [notification, setNotification] = useState<boolean>(false);
   const neighbourhoods = useSelector((state: RootState) => state.neighbourhoods.neighbourhoods);
+
+  useEffect(() => {
+    const fetchWebhook = async () => {
+      setWebhook(await getWebhookById('strats-update'));
+    }
+
+    if (isAdmin) {
+      fetchWebhook();
+    }
+  }, [isAdmin]);
 
   useEffect(() => {
     setSelectedNeighbourhood(props.neighbourhood);
@@ -36,6 +50,11 @@ function NewStratModal(props: NewStratModalProps) {
       notes,
       tags,
     }, user);
+
+    if (notification) {
+      sendWebhook();
+    }
+
     setLoading(false);
     setOpen(false);
   }
@@ -57,7 +76,58 @@ function NewStratModal(props: NewStratModalProps) {
   }
 
   const canAdd = () => {
-    return selectedNeighbourhood !== "" && embed !== "";
+    return webhook && selectedNeighbourhood !== "" && embed !== "";
+  }
+
+  const sendWebhook = () => {
+    if (webhook) {
+      const hood = neighbourhoods.find(neighbourhood => neighbourhood.id === selectedNeighbourhood);
+      const regex = /src=["']([^\s]+)['"]/
+      const match = regex.exec(embed);
+      let url = match ? match[1] : '';
+
+      if (url && hood) {
+        triggerDiscordWebhook({
+          url: webhook.url,
+          content: `A new strat was added!\n${url}`,
+          embeds: []
+        }).then(() => {
+          setTimeout(() => {
+            triggerDiscordWebhook({
+              url: webhook.url,
+              content: '',
+              embeds: [
+                {
+                  type: "rich",
+                  title: "",
+                  description: "",
+                  fields: [
+                    {
+                      name: 'Neighbourhood',
+                      value: hood.name,
+                      inline: true,
+                    },
+                    {
+                      name: 'Tags',
+                      value: tags.join(', '),
+                      inline: true,
+                    },
+                    {
+                      name: 'Notes',
+                      value: notes,
+                    }
+                  ]
+                }
+              ]
+            }).catch(error => {
+              console.error(error);
+            });
+          }, 1000);
+        }).catch(error => {
+          console.error(error);
+        });
+      }
+    }
   }
 
   return (
@@ -77,13 +147,23 @@ function NewStratModal(props: NewStratModalProps) {
       <Modal.Header>Add a new strat</Modal.Header>
       <Modal.Content>
         <div className='ui form'>
-          <Dropdown
-            placeholder="Neighbourhood *"
-            disabled={loading}
-            options={getNeighbouhoodOptions()}
-            value={selectedNeighbourhood}
-            onChange={(_, { value }) => setSelectedNeighbourhood(value)}
-          />
+          <div className="Row">
+            <Dropdown
+              placeholder="Neighbourhood *"
+              disabled={loading}
+              options={getNeighbouhoodOptions()}
+              value={selectedNeighbourhood}
+              onChange={(_, { value }) => setSelectedNeighbourhood(value)}
+            />
+            <div className="field-container">
+              <Checkbox
+                checked={notification}
+                label="Send Notification?"
+                toggle
+                onChange={() => setNotification(!notification)}
+              />
+            </div>
+          </div>
           <Input
             type="text"
             name="name"

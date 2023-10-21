@@ -32,7 +32,7 @@ function LocationsOfInterest() {
         element.scrollIntoView();
       }
     }
-  }, [window.location, loading]);
+  }, [loading]);
 
   const handleCopyLink = (id: string) => {
     window.location.hash = id;
@@ -81,7 +81,7 @@ function LocationsOfInterest() {
                   <h2 id={location.id}>{i + 1}. {location.name}</h2>
                 </div>
                 <span className='Description'>{location.description}</span>
-                <Carousel showThumbs={false}>
+                <Carousel showThumbs={false} infiniteLoop>
                   {location.assets.map(asset => (
                     <img src={asset} alt={asset} />
                   ))}
