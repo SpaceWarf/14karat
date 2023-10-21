@@ -40,7 +40,7 @@ function NewStratModal(props: NewStratModalProps) {
 
   useEffect(() => {
     setSelectedNeighbourhood(props.neighbourhood || (neighbourhoods[0]?.id ?? ''));
-  }, [props.neighbourhood])
+  }, [props.neighbourhood, neighbourhoods])
 
   const handleAdd = async () => {
     setLoading(true);
