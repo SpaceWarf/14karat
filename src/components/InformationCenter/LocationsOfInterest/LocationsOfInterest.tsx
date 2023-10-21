@@ -50,11 +50,28 @@ function LocationsOfInterest() {
           <Loading />
         ) : (
           <div className='Locations'>
-            <TransformWrapper initialPositionY={-725}>
-              <TransformComponent>
-                <img src='https://imgur.com/wgVpzHA.png' alt='Map' />
-              </TransformComponent>
-            </TransformWrapper>
+            <div className='Map'>
+              <TransformWrapper initialPositionY={-720}>
+                {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                  <>
+                    <div className="tools">
+                      <button className="ui button" onClick={() => zoomIn()}>
+                        <p className='IconContainer contrast'><i className='add icon'></i></p>
+                      </button>
+                      <button className="ui button" onClick={() => zoomOut()}>
+                        <p className='IconContainer contrast'><i className='minus icon'></i></p>
+                      </button>
+                      <button className="ui button" onClick={() => resetTransform()}>
+                        <p className='IconContainer contrast'><i className='repeat icon'></i></p>
+                      </button>
+                    </div>
+                    <TransformComponent>
+                      <img src='https://imgur.com/wgVpzHA.png' alt='Map' />
+                    </TransformComponent>
+                  </>
+                )}
+              </TransformWrapper>
+            </div>
             {locations.map((location, i) => (
               <>
                 <div className='Title'>

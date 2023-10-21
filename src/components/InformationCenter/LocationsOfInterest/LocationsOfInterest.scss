@@ -21,9 +21,34 @@
       max-width: 1000px;
       margin-bottom: 20px;
 
-      .react-transform-wrapper {
-        height: 750px;
+      .Map {
         margin-top: 20px;
+        position: relative;
+
+        .react-transform-wrapper {
+          background-color: $gray-pale;
+          height: 750px;
+        }
+
+        .tools {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          gap: 5px;
+          right: 10px;
+          bottom: 10px;
+          z-index: 99;
+
+          .button {
+            width: 40px;
+            height: 40px;
+            padding: 10px;
+
+            &:focus {
+              background-color: $primary-colour-dark;
+            }
+          }
+        }
       }
 
       .Title {
