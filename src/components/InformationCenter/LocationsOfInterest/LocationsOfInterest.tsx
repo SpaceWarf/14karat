@@ -6,6 +6,7 @@ import Loading from '../../Common/Loading';
 import { getLocations } from '../../../utils/firestore';
 import { Location } from '../../../state/location';
 import { Carousel } from 'react-responsive-carousel';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 function LocationsOfInterest() {
   const navigate = useNavigate();
@@ -49,6 +50,11 @@ function LocationsOfInterest() {
           <Loading />
         ) : (
           <div className='Locations'>
+            <TransformWrapper initialPositionY={-725}>
+              <TransformComponent>
+                <img src='https://imgur.com/wgVpzHA.png' alt='Map' />
+              </TransformComponent>
+            </TransformWrapper>
             {locations.map((location, i) => (
               <>
                 <div className='Title'>
