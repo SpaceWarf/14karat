@@ -14,9 +14,10 @@ import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
 import { Location } from '../state/location';
-import { Job, JobInfo } from "../state/jobs";
+import { Card, Gear, Job, JobInfo, Usb } from "../state/jobs";
 
 export interface FirestoreEntity {
+  id: string;
   createdAt?: string;
   createdBy?: string;
   updatedAt?: string;
@@ -40,6 +41,10 @@ const warClipsRef = collection(db, "war-clips");
 const hacksRef = collection(db, "hacks");
 const locationsRef = collection(db, "locations");
 const jobsRef = collection(db, "jobs");
+const jobInfoRef = collection(db, "job-info");
+const gearRef = collection(db, "gear");
+const cardsRef = collection(db, "cards");
+const usbsRef = collection(db, "usbs");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -489,4 +494,52 @@ export function onActiveJobsSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
 export async function getJobInfoById(id: string): Promise<JobInfo> {
   const snapshot = await getDoc(doc(db, "job-info", id));
   return { id: snapshot.id, ...snapshot.data() } as JobInfo;
+}
+
+export async function getJobInfos(): Promise<JobInfo[]> {
+  const snapshot = await getDocs(jobInfoRef);
+  const jobs: JobInfo[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      jobs.push({ id: doc.id, ...data });
+    }
+  });
+  return jobs;
+}
+
+export async function getGear(): Promise<Gear[]> {
+  const snapshot = await getDocs(gearRef);
+  const gear: Gear[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      gear.push({ id: doc.id, ...data });
+    }
+  });
+  return gear;
+}
+
+export async function getCards(): Promise<Card[]> {
+  const snapshot = await getDocs(cardsRef);
+  const cards: Card[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      cards.push({ id: doc.id, ...data });
+    }
+  });
+  return cards;
+}
+
+export async function getUsbs(): Promise<Usb[]> {
+  const snapshot = await getDocs(usbsRef);
+  const usbs: Usb[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      usbs.push({ id: doc.id, ...data });
+    }
+  });
+  return usbs;
 }

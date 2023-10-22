@@ -24,6 +24,7 @@ import Taxes from './components/InformationCenter/Taxes/Taxes';
 import LocationsOfInterest from './components/InformationCenter/LocationsOfInterest/LocationsOfInterest';
 import JobListing from './components/Jobs/JobListing';
 import JobEditor from './components/Jobs/JobEditor';
+import Jobs from './components/InformationCenter/Jobs/Jobs';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path='/information-center/rules' element={<Rules />} />
             <Route path='/information-center/taxes' element={<Taxes />} />
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
+            <Route path='/information-center/jobs' element={<Jobs />} />
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/editor/:id' element={<JobEditor />} />
             <Route element={<AdminRoute />}>

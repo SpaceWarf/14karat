@@ -11,7 +11,7 @@ import CreateJobModal from "./CreateJobModal";
 
 function JobListing() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { jobs } = useSelector((state: RootState) => state.jobs);
+  const jobs = useSelector((state: RootState) => state.jobs.active);
   const [job, setJob] = useState<Job>();
   const [openViewModal, setOpenViewModal] = useState<boolean>(false);
 
@@ -30,7 +30,7 @@ function JobListing() {
         setSearchParams({});
       }
     }
-  }, [jobs, searchParams]);
+  }, [jobs, searchParams, setSearchParams]);
 
   const handleSelectJob = (job: Job) => {
     setSearchParams({ view: job.id });
