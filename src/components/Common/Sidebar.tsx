@@ -37,6 +37,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         <div className="Nav">
           <SidebarItem name='Dashboard' icon='chart bar' path='/' onClick={() => navigate('/')} />
           <SidebarItem name='Calendar' icon='calendar alternate' path='/calendar' onClick={() => navigate('/calendar')} />
+          <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} />
           <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
           <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
           <SidebarItem name='Hacking' icon='terminal book' path='/hacking' onClick={() => navigate('/hacking')} />

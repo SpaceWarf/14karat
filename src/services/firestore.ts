@@ -11,7 +11,13 @@ import {
   getWars,
   getEvents,
   onEventsSnapshot,
-  getHacks
+  getHacks,
+  getActiveJobs,
+  onActiveJobsSnapshot,
+  getJobInfos,
+  getGear,
+  getCards,
+  getUsbs
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -24,6 +30,7 @@ import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
+import { setActiveJobs, setCards, setGear, setJobInfos, setUsbs } from "../redux/reducers/jobs";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -37,6 +44,11 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     wars,
     events,
     hacks,
+    activeJobs,
+    jobInfos,
+    gear,
+    cards,
+    usbs,
   ] = await Promise.all([
     getProfileById(id),
     getDivisions(),
@@ -46,6 +58,11 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getWars(),
     getEvents(),
     getHacks(),
+    getActiveJobs(),
+    getJobInfos(),
+    getGear(),
+    getCards(),
+    getUsbs(),
   ]);
   dispatch(setProfile(profile));
   dispatch(setRoles(roles));
@@ -55,6 +72,11 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setWars(wars));
   dispatch(setEvents(events));
   dispatch(setHacks(hacks));
+  dispatch(setActiveJobs(activeJobs));
+  dispatch(setJobInfos(jobInfos));
+  dispatch(setGear(gear));
+  dispatch(setCards(cards));
+  dispatch(setUsbs(usbs));
 
   if (profile.pfp) {
     const url = await getProfilePictureUrl(profile.pfp);
@@ -65,5 +87,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onDriverStratsSnapshot(strats => dispatch(setDriverStrats(strats)));
   onWarSnapshot(wars => dispatch(setWars(wars)));
   onEventsSnapshot(events => dispatch(setEvents(events)));
+  onActiveJobsSnapshot(jobs => dispatch(setActiveJobs(jobs)));
   loadingSubject.next(false);
 }

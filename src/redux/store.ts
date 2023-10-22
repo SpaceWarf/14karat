@@ -7,6 +7,7 @@ import neighbourhoods from "./reducers/neighbourhoods";
 import wars from "./reducers/wars";
 import events from "./reducers/events";
 import hacks from "./reducers/hacks";
+import jobs from "./reducers/jobs";
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === 'RESET') {
@@ -22,6 +23,7 @@ const rootReducer = (state: any, action: AnyAction) => {
     wars: wars,
     events: events,
     hacks: hacks,
+    jobs: jobs,
   })(state, action);
 }
 
