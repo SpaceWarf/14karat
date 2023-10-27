@@ -1,6 +1,5 @@
 import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { ProfileInfo } from "../redux/reducers/profile";
 import { Unsubscribe, User } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
@@ -15,6 +14,7 @@ import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
 import { Location } from '../state/location';
 import { Card, Gear, Job, JobInfo, Usb } from "../state/jobs";
+import { ProfileInfo } from "../state/profile";
 
 export interface FirestoreEntity {
   id: string;
