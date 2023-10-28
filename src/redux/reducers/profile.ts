@@ -19,6 +19,7 @@ const initialState: ProfileState = {
     division: '',
     roles: [],
     discord: '',
+    ssn: '',
   },
   pfpUrl: '',
 };
