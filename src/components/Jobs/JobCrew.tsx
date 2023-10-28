@@ -56,29 +56,31 @@ function JobCrew(props: JobCrewProps) {
       <div className='header'>
         <p><i className='group icon' /> Crew</p>
       </div>
-      {Object.keys(props.job.crew)
-        .sort((a, b) => a.localeCompare(b))
-        .map((role) => (
-          <>
-            <div className="ListHeader">
-              <h4>{CrewRoleMap[role]}</h4>
+      <div className="CrewRoles">
+        {Object.keys(props.job.crew)
+          .sort((a, b) => a.localeCompare(b))
+          .map((role) => (
+            <div className="CrewRole">
+              <div className="ListHeader">
+                <h4>{CrewRoleMap[role]}</h4>
+              </div>
+              <div className="CrewSelector">
+                {props.job.crew[role].map((member, i) => (
+                  <Dropdown
+                    key={`${member}-${i}`}
+                    placeholder="Empty Spot"
+                    disabled={props.loading || editing}
+                    options={getMemberDropdownOptions(role)}
+                    value={member}
+                    onChange={value => handleUpdateMember(role, value, i)}
+                    clearable
+                    noLabel
+                  />
+                ))}
+              </div>
             </div>
-            <div className="CrewSelector">
-              {props.job.crew[role].map((member, i) => (
-                <Dropdown
-                  key={`${member}-${i}`}
-                  placeholder="Empty Spot"
-                  disabled={props.loading || editing}
-                  options={getMemberDropdownOptions(role)}
-                  value={member}
-                  onChange={value => handleUpdateMember(role, value, i)}
-                  clearable
-                  noLabel
-                />
-              ))}
-            </div>
-          </>
-        ))}
+          ))}
+      </div>
     </div>
   )
 }

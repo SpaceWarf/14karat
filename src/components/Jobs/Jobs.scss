@@ -2,26 +2,54 @@
 
 .JobListing {
   .content {
+    &>.Actions {
+      display: flex;
+      margin-top: 20px;
+
+      button.positive.hover-animation {
+        width: 350px;
+
+        .label {
+          width: 85px;
+        }
+
+        &:hover:not(:disabled) {
+          .label {
+            left: calc((100% - 110px) / 2);
+          }
+
+          .IconContainer {
+            right: calc((100% - 110px) / 2);
+          }
+        }
+      }
+    }
+
     .JobsContainer {
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
       gap: 20px;
       margin: 20px 0;
 
       .JobCard {
-        width: calc(50% - 20px);
-        min-width: 625px;
+        width: calc(50% - 10px);
+        min-width: 725px;
+
+        &>.content:not(.extra) {
+          display: flex;
+          flex-direction: column;
+        }
 
         .Details {
+          flex: 1 1 0;
           display: flex;
           justify-content: stretch;
           align-items: stretch;
           gap: 20px;
           margin-top: 20px;
 
-          .JobCardSection {
+          .Section {
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -36,14 +64,12 @@
           }
 
           .seperator {
-            width: 1px;
-            background-color: $gray-pale;
+            border-right: 1px solid $gray-pale;
           }
         }
 
         .extra.content {
           display: flex;
-          gap: 10px;
 
           button.hover-animation {
             .label {
@@ -62,6 +88,8 @@
           }
 
           button.positive.hover-animation {
+            margin-left: 10px;
+
             .label {
               width: 65px;
             }
@@ -76,23 +104,6 @@
               }
             }
           }
-        }
-      }
-
-      .AddJobCard {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        width: calc(33% - 20px);
-        height: 300px;
-        font-size: 2rem;
-
-        i {
-          color: $green;
-          font-size: 4rem;
-          line-height: 4rem;
         }
       }
     }
@@ -190,13 +201,23 @@
     margin-bottom: 10px;
   }
 
-  .CrewSelector {
+  .CrewRoles {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 
-    .field.dropdown {
-      flex-basis: calc(50% - 5px);
+    .CrewRole {
+      width: calc(50% - 5px);
+
+      .CrewSelector {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .field.dropdown {
+          flex-basis: 100%;
+        }
+      }
     }
   }
 }

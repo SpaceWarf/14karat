@@ -73,5 +73,11 @@ export const CrewRoleMap: { [key: string]: string } = {
   "hostages-top": "Hostages - Top",
   "hostages-side": "Hostages - Side",
   "hostages-front": "Hostages - Front",
+  "hostages-back": "Hostages - Back",
   "hostages": "Hostages",
+  "driller": "Drillers",
+  "jewelry": "Jewelry",
+  "cleaner": "Cleaners",
+  "shooter": "Shooters",
+  "crates": "Crates",
 }

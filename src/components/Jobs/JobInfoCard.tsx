@@ -156,7 +156,7 @@ function JobInfoCard(props: JobInfoCardProps) {
             </div>
             <div className='Field'>
               <p className='Label'>Hostages</p>
-              <p className='Value'>At least {props.info.hostages}</p>
+              <p className='Value'>{props.info.hostages ? `At least ${props.info.hostages}` : "None"}</p>
             </div>
           </div>
           <div className='Row'>

@@ -1,6 +1,6 @@
 import "./Jobs.scss";
 import { CrewRoleMap, Job } from "../../state/jobs";
-import { deleteActiveJob, getProfiles, getWebhookById, onProfilesSnapshot, updateActiveJob } from "../../utils/firestore";
+import { deleteActiveJob, deleteRadio, getProfiles, getWebhookById, onProfilesSnapshot, updateActiveJob } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
@@ -48,11 +48,15 @@ function JobCard(props: JobCardProps) {
     deleteActiveJob(props.job.id, user);
   }
 
-  const handleComplete = () => {
-    updateActiveJob(props.job.id, {
+  const handleComplete = async () => {
+    await updateActiveJob(props.job.id, {
       ...props.job,
       completed: true,
     }, user);
+
+    if (radio) {
+      await deleteRadio(radio.id, user);
+    }
   }
 
   const sendWebhook = () => {
@@ -104,7 +108,7 @@ function JobCard(props: JobCardProps) {
           )}
         </div>
         <div className="Details">
-          <div className="JobCardSection">
+          <div className="Section">
             <JobCrew
               job={props.job}
               members={members}
@@ -112,7 +116,7 @@ function JobCard(props: JobCardProps) {
             />
           </div>
           <div className="seperator" />
-          <div className="JobCardSection">
+          <div className="Section">
             <JobChecklist job={props.job} />
             <JobRadio job={props.job} />
           </div>

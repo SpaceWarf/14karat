@@ -618,3 +618,12 @@ export async function updateRadio(id: string, update: RadioUpdate, user: User | 
     updatedBy: user?.email ?? '',
   });
 }
+
+export async function deleteRadio(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "radios", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
+}
