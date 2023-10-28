@@ -12,6 +12,7 @@
 
       .JobCard {
         width: calc(50% - 20px);
+        min-width: 625px;
 
         .Details {
           display: flex;
@@ -23,11 +24,6 @@
           .seperator {
             width: 1px;
             background-color: $gray-pale;
-          }
-
-          .JobChecklist,
-          .JobCrew {
-            flex: 1 1 0;
           }
         }
 
@@ -138,6 +134,8 @@
 }
 
 .JobChecklist {
+  width: 40%;
+
   .CheckLine {
     display: flex;
     justify-content: space-between;
@@ -153,6 +151,8 @@
 }
 
 .JobCrew {
+  width: 60%;
+
   .ListHeader {
     margin-bottom: 10px;
   }
@@ -162,7 +162,7 @@
     flex-wrap: wrap;
     gap: 10px;
 
-    .dropdown {
+    .field.dropdown {
       flex-basis: calc(50% - 5px);
     }
   }

@@ -10,7 +10,6 @@ import { isValidPhone } from '../../utils/phone';
 import { deleteProfilePicture, getProfilePictureUrl, uploadProfilePicture } from '../../utils/storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { SyntheticEvent } from 'react';
 import { isEqual } from 'lodash';
 import Dropdown, { DropdownOption } from './Dropdown';
 import { ProfileInfo } from '../../state/profile';

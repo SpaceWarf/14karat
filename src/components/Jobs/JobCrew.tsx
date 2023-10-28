@@ -1,34 +1,23 @@
-import { useEffect, useState } from "react";
-import { Job } from "../../state/jobs";
+import { useState } from "react";
+import { CrewRoleMap, Job } from "../../state/jobs";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
-import { getProfiles, onProfilesSnapshot, updateActiveJob } from "../../utils/firestore";
+import { updateActiveJob } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { ProfileInfo } from "../../state/profile";
 
 interface JobCrewProps {
   job: Job;
+  members: ProfileInfo[];
+  loading: boolean;
 }
 
 function JobCrew(props: JobCrewProps) {
   const { user } = useAuth();
-  const [members, setMembers] = useState([] as ProfileInfo[]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [editing, setEditing] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      setLoading(true);
-      const profiles = await getProfiles();
-      setMembers(profiles);
-      onProfilesSnapshot((profiles: ProfileInfo[]) => setMembers(profiles));
-      setLoading(false);
-    }
-    fetchProfiles();
-  }, []);
 
   const getMemberDropdownOptions = (role: string): DropdownOption[] => {
     return [
-      ...members
+      ...props.members
         .filter(member => member.roles.includes(role))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(member => ({
@@ -37,7 +26,7 @@ function JobCrew(props: JobCrewProps) {
           value: member.id,
           description: role,
         })),
-      ...members
+      ...props.members
         .filter(member => !member.roles.includes(role))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(member => ({
@@ -62,45 +51,34 @@ function JobCrew(props: JobCrewProps) {
     setEditing(false);
   }
 
-  const getRoleName = (role: string): string => {
-    switch (role) {
-      case "hacker":
-        return "Hackers";
-      case "driver":
-        return "Drivers";
-      case "hostages":
-        return "Hostages";
-      default:
-        return "Other";
-    }
-  }
-
   return (
     <div className='JobCrew'>
       <div className='header'>
         <p><i className='group icon' /> Crew</p>
       </div>
-      {Object.keys(props.job.crew).map((role) => (
-        <>
-          <div className="ListHeader">
-            <h4>{getRoleName(role)}</h4>
-          </div>
-          <div className="CrewSelector">
-            {props.job.crew[role].map((member, i) => (
-              <Dropdown
-                key={`${member}-${i}`}
-                placeholder="Empty Spot"
-                disabled={loading || editing}
-                options={getMemberDropdownOptions(role)}
-                value={member}
-                onChange={value => handleUpdateMember(role, value, i)}
-                clearable
-                noLabel
-              />
-            ))}
-          </div>
-        </>
-      ))}
+      {Object.keys(props.job.crew)
+        .sort((a, b) => a.localeCompare(b))
+        .map((role) => (
+          <>
+            <div className="ListHeader">
+              <h4>{CrewRoleMap[role]}</h4>
+            </div>
+            <div className="CrewSelector">
+              {props.job.crew[role].map((member, i) => (
+                <Dropdown
+                  key={`${member}-${i}`}
+                  placeholder="Empty Spot"
+                  disabled={props.loading || editing}
+                  options={getMemberDropdownOptions(role)}
+                  value={member}
+                  onChange={value => handleUpdateMember(role, value, i)}
+                  clearable
+                  noLabel
+                />
+              ))}
+            </div>
+          </>
+        ))}
     </div>
   )
 }

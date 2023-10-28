@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { Dropdown } from "semantic-ui-react";
 
 export interface DropdownOption {

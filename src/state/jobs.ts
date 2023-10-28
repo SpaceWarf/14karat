@@ -66,3 +66,12 @@ export interface Usb extends FirestoreEntity {
   name: string;
   url: string;
 }
+
+export const CrewRoleMap: { [key: string]: string } = {
+  "hacker": "Hackers",
+  "driver": "Drivers",
+  "hostages-top": "Hostages - Top",
+  "hostages-side": "Hostages - Side",
+  "hostages-front": "Hostages - Front",
+  "hostages": "Hostages",
+}

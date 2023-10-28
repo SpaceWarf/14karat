@@ -22,7 +22,7 @@ function JobListing() {
           }
           <div
             className='AddJobCard ui link card attached'
-            onClick={() => navigate('/jobs/editor/new')}
+            onClick={() => navigate('/jobs/new')}
           >
             Start a Job
             <i className="add icon" />
