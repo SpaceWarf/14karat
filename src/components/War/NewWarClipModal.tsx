@@ -91,7 +91,7 @@ function NewWarClipModal(props: NewWarClipModalProps) {
             value={tags}
             clearable
             multiple
-            onChange={(_, { value }) => setTags(value)}
+            onChange={value => setTags(value)}
           />
           <Textarea
             name="notes"

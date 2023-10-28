@@ -153,7 +153,7 @@ function NewStratModal(props: NewStratModalProps) {
               disabled={loading}
               options={getNeighbouhoodOptions()}
               value={selectedNeighbourhood}
-              onChange={(_, { value }) => setSelectedNeighbourhood(value)}
+              onChange={value => setSelectedNeighbourhood(value)}
             />
             <div className="field-container">
               <Checkbox
@@ -184,7 +184,7 @@ function NewStratModal(props: NewStratModalProps) {
             value={tags}
             clearable
             multiple
-            onChange={(_, { value }) => setTags(value)}
+            onChange={value => setTags(value)}
           />
           <Textarea
             name="notes"

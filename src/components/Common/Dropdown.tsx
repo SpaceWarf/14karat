@@ -5,6 +5,7 @@ export interface DropdownOption {
   key: string;
   text: string;
   value: any;
+  description?: string;
 }
 
 interface DropdownProps {
@@ -15,7 +16,8 @@ interface DropdownProps {
   options: DropdownOption[],
   value: string | string[],
   clearable?: boolean,
-  onChange: (e: SyntheticEvent, data: any) => void;
+  noLabel?: boolean,
+  onChange: (value: any) => void;
 }
 
 function CustomDropdown({
@@ -26,6 +28,7 @@ function CustomDropdown({
   options,
   value,
   clearable,
+  noLabel,
   onChange,
 }: DropdownProps) {
   const [showCopyLabel, setShowCopyLabel] = useState(false);
@@ -59,7 +62,9 @@ function CustomDropdown({
       className={`dropdown field ${disabled ? 'disabled' : ''} ${readonly ? 'readonly' : ''}`}
       onClick={handleClick}
     >
-      <p className={`field-label ${value.length ? 'resized' : ''}`}>{placeholder}</p>
+      {(!value.length || !noLabel) && (
+        <p className={`field-label ${value.length ? 'resized' : ''}`}>{placeholder}</p>
+      )}
       <Dropdown
         fluid
         selection
@@ -69,7 +74,7 @@ function CustomDropdown({
         disabled={disabled || readonly}
         options={options}
         value={value}
-        onChange={onChange}
+        onChange={(_, { value }) => onChange(value)}
       />
       {showCopyLabel &&
         <div className="ui left pointing green basic label CopyLabel">

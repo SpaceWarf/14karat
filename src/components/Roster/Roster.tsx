@@ -1,7 +1,6 @@
 import "./Roster.scss";
 import { useEffect, useState } from "react";
 import { getProfiles, onProfilesSnapshot } from "../../utils/firestore";
-import { ProfileInfo } from "../../redux/reducers/profile";
 import ProfileCard from "../Common/ProfileCard";
 import Loading from "../Common/Loading";
 import Header from "../Common/Header";
@@ -10,6 +9,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Division } from "../../redux/reducers/divisions";
+import { ProfileInfo } from "../../state/profile";
 
 function Roster() {
   const { isAdmin } = useAuth();

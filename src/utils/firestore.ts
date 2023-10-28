@@ -1,6 +1,5 @@
 import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { ProfileInfo } from "../redux/reducers/profile";
 import { Unsubscribe, User } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
 import { Role } from "../redux/reducers/roles";
@@ -14,7 +13,8 @@ import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
 import { Location } from '../state/location';
-import { Card, Gear, Job, JobInfo, Usb } from "../state/jobs";
+import { Card, Gear, Job, JobInfo, JobUpdate, Usb } from "../state/jobs";
+import { ProfileInfo } from "../state/profile";
 
 export interface FirestoreEntity {
   id: string;
@@ -491,9 +491,35 @@ export function onActiveJobsSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
   });
 }
 
-export async function getJobInfoById(id: string): Promise<JobInfo> {
-  const snapshot = await getDoc(doc(db, "job-info", id));
-  return { id: snapshot.id, ...snapshot.data() } as JobInfo;
+export async function createActiveJob(job: JobUpdate, user: User | null): Promise<Job> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(jobsRef, {
+    ...job,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...job,
+  };
+}
+
+export async function updateActiveJob(id: string, update: JobUpdate, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "jobs", id), {
+    ...update,
+    updatedAt: now,
+    updatedBy: user?.email ?? '',
+  });
+}
+
+export async function deleteActiveJob(id: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "jobs", id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.email ?? '',
+  });
 }
 
 export async function getJobInfos(): Promise<JobInfo[]> {

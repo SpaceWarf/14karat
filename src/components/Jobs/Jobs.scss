@@ -1,27 +1,169 @@
 @import "../../assets/scss/index";
 
 .JobListing {
-  .Actions {
+  .content {
+    .JobsContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px 0;
+
+      .JobCard {
+        width: calc(50% - 20px);
+
+        .Details {
+          display: flex;
+          justify-content: stretch;
+          align-items: stretch;
+          gap: 20px;
+          margin-top: 20px;
+
+          .seperator {
+            width: 1px;
+            background-color: $gray-pale;
+          }
+
+          .JobChecklist,
+          .JobCrew {
+            flex: 1 1 0;
+          }
+        }
+
+        .extra.content {
+          display: flex;
+          gap: 10px;
+
+          button.hover-animation {
+            .label {
+              width: 120px;
+            }
+
+            &:hover:not(:disabled) {
+              .label {
+                left: calc((100% - 145px) / 2);
+              }
+
+              .IconContainer {
+                right: calc((100% - 145px) / 2);
+              }
+            }
+          }
+
+          button.positive.hover-animation {
+            .label {
+              width: 65px;
+            }
+
+            &:hover:not(:disabled) {
+              .label {
+                left: calc((100% - 90px) / 2);
+              }
+
+              .IconContainer {
+                right: calc((100% - 90px) / 2);
+              }
+            }
+          }
+        }
+      }
+
+      .AddJobCard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        width: calc(33% - 20px);
+        height: 300px;
+        font-size: 2rem;
+
+        i {
+          color: $green;
+          font-size: 4rem;
+          line-height: 4rem;
+        }
+      }
+    }
+  }
+}
+
+.JobPicker {
+  .ExistingJob {
+    margin-top: 20px;
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .JobInfoContainer {
     display: flex;
-    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
     margin: 20px 0;
+  }
+}
 
-    button.positive.hover-animation {
-      width: 300px;
+.JobCrew,
+.JobChecklist {
+  .header {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
 
-      .label {
-        width: 75px;
+.JobChecklist,
+.JobCrew {
+  text-align: left !important;
+
+  .ListHeader {
+    display: flex;
+    align-items: center;
+    margin: 10px 0 5px 0;
+
+    h4 {
+      margin: 0;
+    }
+
+    i {
+      font-size: 1.3rem;
+      line-height: 1.3rem;
+      color: $green;
+      transform: translateX(7px);
+    }
+  }
+}
+
+.JobChecklist {
+  .CheckLine {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    &.checked {
+      p {
+        color: $gray-pale;
       }
+    }
+  }
 
-      &:hover:not(:disabled) {
-        .label {
-          left: calc((100% - 100px) / 2);
-        }
+}
 
-        .IconContainer {
-          right: calc((100% - 100px) / 2);
-        }
-      }
+.JobCrew {
+  .ListHeader {
+    margin-bottom: 10px;
+  }
+
+  .CrewSelector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .dropdown {
+      flex-basis: calc(50% - 5px);
     }
   }
 }

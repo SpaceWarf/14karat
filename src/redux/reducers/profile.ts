@@ -1,22 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FirestoreEntity } from "../../utils/firestore";
+import { ProfileInfo } from "../../state/profile";
 
 export interface ProfileState {
   info: ProfileInfo;
   pfpUrl: string;
-}
-
-export interface ProfileInfo extends FirestoreEntity {
-  id: string;
-  name: string;
-  phone: string;
-  bleeter: string;
-  email: string;
-  bank: string;
-  admin: boolean;
-  pfp: string;
-  division: string;
-  roles: string[];
 }
 
 const initialState: ProfileState = {
@@ -31,6 +18,7 @@ const initialState: ProfileState = {
     pfp: '',
     division: '',
     roles: [],
+    discord: '',
   },
   pfpUrl: '',
 };

@@ -1,46 +1,67 @@
 import "./Jobs.scss";
-import { Job, JobInfo } from "../../state/jobs";
-import { useEffect, useState } from "react";
-import { getJobInfoById } from "../../utils/firestore";
-import Loading from "../Common/Loading";
+import { Job } from "../../state/jobs";
+import { deleteActiveJob, updateActiveJob } from "../../utils/firestore";
+import JobChecklistCard from "./JobChecklist";
+import { useAuth } from "../../contexts/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import JobCrew from "./JobCrew";
 
 interface JobCardProps {
   job: Job;
-  onSelect: (job: Job) => void;
 }
 
 function JobCard(props: JobCardProps) {
-  const [jobInfo, setJobInfo] = useState<JobInfo>();
+  const { user, isAdmin } = useAuth();
+  const jobInfos = useSelector((state: RootState) => state.jobs.info)
 
-  useEffect(() => {
-    const fetchJobInfo = async () => {
-      setJobInfo(await getJobInfoById(props.job.job));
-    }
+  const handleDelete = () => {
+    deleteActiveJob(props.job.id, user);
+  }
 
-    if (props.job) {
-      fetchJobInfo();
-    }
-  }, [props.job]);
+  const handleComplete = () => {
+    updateActiveJob(props.job.id, {
+      ...props.job,
+      completed: true,
+    }, user);
+  }
+
+  const handleSendDiscordNotification = () => {
+    console.log("discord notification")
+  }
+
+  const getJobInfo = () => {
+    return jobInfos.find(info => info.id === props.job.job);
+  }
 
   return (
-    <div
-      className='JobCard ui link card attached'
-      onClick={() => props.onSelect(props.job)}
-    >
+    <div className='JobCard ui card attached external'>
       <div className="content">
-        {jobInfo ? (
-          <>
-            <div className="header">
-              {jobInfo.name}
+        <div className='header'>
+          <p><i className={`${getJobInfo()?.icon ?? 'dollar'} icon`} /> {getJobInfo()?.name ?? 'Job Info'}</p>
+          {isAdmin && (
+            <div className="Actions">
+              <button className="ui icon negative button" onClick={handleDelete}>
+                <i className="trash icon" />
+              </button>
             </div>
-            <div className="Details">
-              {/* roles */}
-              {/* checklist */}
-            </div>
-          </>
-        ) : (
-          <Loading />
-        )}
+          )}
+        </div>
+        <div className="Details">
+          <JobCrew job={props.job} />
+          <div className="seperator" />
+          <JobChecklistCard job={props.job} />
+        </div>
+      </div>
+      <div className="extra content">
+        <button className="ui button hover-animation" onClick={handleSendDiscordNotification}>
+          <p className='label contrast'>Send Notification</p>
+          <p className='IconContainer contrast'><i className='discord icon'></i></p>
+        </button>
+        <button className="ui button positive hover-animation" onClick={handleComplete}>
+          <p className='label contrast'>Complete</p>
+          <p className='IconContainer contrast'><i className='check icon'></i></p>
+        </button>
       </div>
     </div>
   );

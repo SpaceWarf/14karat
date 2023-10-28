@@ -234,7 +234,7 @@ function EditEventModal(props: EditEventModalProps) {
               disabled={loading}
               options={EVENT_COLORS}
               value={color}
-              onChange={(_, { value }) => setColor(value)}
+              onChange={value => setColor(value)}
             />
           </div>
           <div className="Row">

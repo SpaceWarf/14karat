@@ -40,6 +40,11 @@
     &.multiple .ui.label {
       margin-top: 5px;
     }
+
+    .menu .header {
+      justify-content: flex-start !important;
+      gap: 20px;
+    }
   }
 
   &.input i {

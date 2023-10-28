@@ -2,8 +2,10 @@ import { FirestoreEntity } from "../utils/firestore";
 
 export interface Job extends FirestoreEntity {
   job: string;
-  roles: Map<string, string[]>;
-  checklist: Map<string, boolean>;
+  crew: { [key: string]: string[] };
+  gearChecklist: Checklist;
+  cardsChecklist: Checklist;
+  usbsChecklist: Checklist;
   radio: string;
   notes: string;
   completed: boolean;
@@ -11,11 +13,20 @@ export interface Job extends FirestoreEntity {
 
 export interface JobUpdate {
   job: string;
-  roles: Map<string, string[]>;
-  checklist: Map<string, boolean>;
+  crew: { [key: string]: string[] };
+  gearChecklist: Checklist;
+  cardsChecklist: Checklist;
+  usbsChecklist: Checklist;
   radio: string;
   notes: string;
   completed: boolean;
+}
+
+export interface Checklist {
+  [key: string]: {
+    quantity: number,
+    checked: boolean,
+  }
 }
 
 export interface JobInfo extends FirestoreEntity {
@@ -25,9 +36,10 @@ export interface JobInfo extends FirestoreEntity {
   squadMin: number;
   hostages: number;
   payout: number;
-  gear: Map<string, number>;
-  cards: Map<string, number>;
-  usbs: Map<string, number>;
+  crew: { [key: string]: number };
+  gear: { [key: string]: number };
+  cards: { [key: string]: number };
+  usbs: { [key: string]: number };
   hacks: string[];
   order: number;
   colour: string;

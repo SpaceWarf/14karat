@@ -1,7 +1,7 @@
 import ProfilePlaceholder from '../../assets/images/profile-placeholder.png';
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useAuth } from '../../contexts/AuthContext';
-import { ProfileInfo, setPfpUrl } from '../../redux/reducers/profile';
+import { setPfpUrl } from '../../redux/reducers/profile';
 import { isValidEmail } from '../../utils/email';
 import { updateProfileInfo } from '../../utils/firestore';
 import Header from './Header';
@@ -13,6 +13,7 @@ import { RootState } from '../../redux/store';
 import { SyntheticEvent } from 'react';
 import { isEqual } from 'lodash';
 import Dropdown, { DropdownOption } from './Dropdown';
+import { ProfileInfo } from '../../state/profile';
 
 interface ProfileCardProps {
   profile: ProfileInfo;
@@ -152,7 +153,8 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
       bank,
       division,
       roles: profileRoles,
-      pfp: profile.pfp
+      pfp: profile.pfp,
+      discord: profile.discord
     };
 
     setLoading(true);
@@ -209,12 +211,12 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
       }));
   }
 
-  function handleChangeDivision(e: SyntheticEvent, { value }: any) {
+  function handleChangeDivision(value: any) {
     setProfileRoles([]);
     setDivision(value);
   }
 
-  function handleChangeRole(e: SyntheticEvent, { value }: any) {
+  function handleChangeRole(value: any) {
     setProfileRoles(value);
   }
 

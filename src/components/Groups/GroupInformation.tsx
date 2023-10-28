@@ -190,7 +190,7 @@ const GroupInformation = () => {
                   options={getColoursDropdownOptions()}
                   value={cardColour}
                   clearable
-                  onChange={(_, { value }) => setColour(value)}
+                  onChange={value => setColour(value)}
                 />
                 <Input
                   type="text"
@@ -219,7 +219,7 @@ const GroupInformation = () => {
                   value={allies}
                   clearable
                   multiple
-                  onChange={(_, { value }) => setAllies(value)}
+                  onChange={value => setAllies(value)}
                 />
                 <Dropdown
                   placeholder='Enemies'
@@ -228,7 +228,7 @@ const GroupInformation = () => {
                   value={enemies}
                   clearable
                   multiple
-                  onChange={(_, { value }) => setEnemies(value)}
+                  onChange={value => setEnemies(value)}
                 />
               </div>
               <div className='Row large'>

@@ -90,7 +90,7 @@ function NewIntelModal(props: NewStratModalProps) {
             disabled={loading}
             options={getTypeOptions()}
             value={type}
-            onChange={(_, { value }) => setType(value)}
+            onChange={value => setType(value)}
           />
           {type === IntelType.IMAGE && (
             <Input
@@ -127,7 +127,7 @@ function NewIntelModal(props: NewStratModalProps) {
             value={tags}
             clearable
             multiple
-            onChange={(_, { value }) => setTags(value)}
+            onChange={value => setTags(value)}
           />
           <Textarea
             name="notes"

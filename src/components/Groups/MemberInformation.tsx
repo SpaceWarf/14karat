@@ -182,7 +182,7 @@ const MemberInformation = () => {
                   disabled={saving}
                   options={getGroupsDropdownOptions()}
                   value={group || ''}
-                  onChange={(_, { value }) => setGroup(value)}
+                  onChange={value => setGroup(value)}
                 />
                 <div className="field-container">
                   <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />

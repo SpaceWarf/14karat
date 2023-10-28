@@ -23,7 +23,7 @@ import Rules from './components/InformationCenter/Rules/Rules';
 import Taxes from './components/InformationCenter/Taxes/Taxes';
 import LocationsOfInterest from './components/InformationCenter/LocationsOfInterest/LocationsOfInterest';
 import JobListing from './components/Jobs/JobListing';
-import JobEditor from './components/Jobs/JobEditor';
+import JobPicker from './components/Jobs/JobPicker';
 import Jobs from './components/InformationCenter/Jobs/Jobs';
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
             <Route path='/information-center/jobs' element={<Jobs />} />
             <Route path='/jobs' element={<JobListing />} />
-            <Route path='/jobs/editor/:id' element={<JobEditor />} />
+            <Route path='/jobs/new' element={<JobPicker />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
