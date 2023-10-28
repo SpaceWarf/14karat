@@ -26,9 +26,7 @@ function Jobs() {
         </div>
         <div className='JobContainer'>
           {[...jobs].sort((a, b) => a.order - b.order).map(job => (
-            <div>
-              <JobInfoCard info={job} showActionButton />
-            </div>
+            <JobInfoCard info={job} showActionButton />
           ))}
         </div>
       </div>

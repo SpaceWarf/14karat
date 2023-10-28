@@ -4,9 +4,11 @@
   .content {
     &>.Actions {
       display: flex;
+      justify-content: flex-end;
+      gap: 10px;
       margin-top: 20px;
 
-      button.positive.hover-animation {
+      button.hover-animation {
         width: 350px;
 
         .label {

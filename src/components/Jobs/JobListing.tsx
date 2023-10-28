@@ -14,6 +14,10 @@ function JobListing() {
       <div className="content">
         <Header text='Active Jobs' decorated />
         <div className="Actions">
+          <button className="ui button hover-animation" onClick={() => navigate('/information-center/jobs')}>
+            <p className='label contrast'>View job info</p>
+            <p className='IconContainer contrast'><i className='info circle icon'></i></p>
+          </button>
           <button className="ui button positive hover-animation" onClick={() => navigate('/jobs/new')}>
             <p className='label contrast'>Create a job</p>
             <p className='IconContainer contrast'><i className='add icon'></i></p>
