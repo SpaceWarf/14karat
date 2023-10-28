@@ -15,6 +15,7 @@ import { Hack } from "../state/hack";
 import { Location } from '../state/location';
 import { Card, Gear, Job, JobInfo, JobUpdate, Usb } from "../state/jobs";
 import { ProfileInfo } from "../state/profile";
+import { Radio, RadioUpdate } from "../state/radio";
 
 export interface FirestoreEntity {
   id: string;
@@ -45,6 +46,7 @@ const jobInfoRef = collection(db, "job-info");
 const gearRef = collection(db, "gear");
 const cardsRef = collection(db, "cards");
 const usbsRef = collection(db, "usbs");
+const radiosRef = collection(db, "radios");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -568,4 +570,51 @@ export async function getUsbs(): Promise<Usb[]> {
     }
   });
   return usbs;
+}
+
+export async function getRadios(): Promise<Radio[]> {
+  const snapshot = await getDocs(radiosRef);
+  const radios: Radio[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted && !data.completed) {
+      radios.push({ id: doc.id, ...data });
+    }
+  });
+  return radios;
+}
+
+export function onRadiosSnapshot(cb: (radios: Radio[]) => void): Unsubscribe {
+  return onSnapshot(radiosRef, {}, snapshot => {
+    const radios: Radio[] = [];
+    snapshot.forEach((doc: DocumentData) => {
+      const data = doc.data();
+      if (!data.deleted && !data.completed) {
+        radios.push({ id: doc.id, ...data });
+      }
+    });
+    cb(radios);
+  });
+}
+
+export async function createRadio(radio: RadioUpdate, user: User | null): Promise<Radio> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(radiosRef, {
+    ...radio,
+    createdAt: now,
+    createdBy: user?.email ?? '',
+  });
+  return {
+    id: doc.id,
+    ...radio,
+  };
+}
+
+export async function updateRadio(id: string, update: RadioUpdate, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, "radios", id), {
+    ...update,
+    updatedAt: now,
+    updatedBy: user?.email ?? '',
+  });
 }

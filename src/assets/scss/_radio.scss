@@ -1,0 +1,13 @@
+.RadioChannel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  .ChannelLabel {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    font-weight: 600;
+    margin: 0 !important;
+  }
+}

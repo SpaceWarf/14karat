@@ -8,6 +8,7 @@ import wars from "./reducers/wars";
 import events from "./reducers/events";
 import hacks from "./reducers/hacks";
 import jobs from "./reducers/jobs";
+import radios from "./reducers/radios";
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === 'RESET') {
@@ -24,6 +25,7 @@ const rootReducer = (state: any, action: AnyAction) => {
     events: events,
     hacks: hacks,
     jobs: jobs,
+    radios: radios,
   })(state, action);
 }
 

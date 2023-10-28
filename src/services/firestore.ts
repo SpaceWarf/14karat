@@ -17,7 +17,9 @@ import {
   getJobInfos,
   getGear,
   getCards,
-  getUsbs
+  getUsbs,
+  getRadios,
+  onRadiosSnapshot
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -31,6 +33,7 @@ import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
 import { setActiveJobs, setCards, setGear, setJobInfos, setUsbs } from "../redux/reducers/jobs";
+import { setRadios } from "../redux/reducers/radios";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -49,6 +52,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     gear,
     cards,
     usbs,
+    radios
   ] = await Promise.all([
     getProfileById(id),
     getDivisions(),
@@ -63,6 +67,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getGear(),
     getCards(),
     getUsbs(),
+    getRadios(),
   ]);
   dispatch(setProfile(profile));
   dispatch(setRoles(roles));
@@ -77,6 +82,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setGear(gear));
   dispatch(setCards(cards));
   dispatch(setUsbs(usbs));
+  dispatch(setRadios(radios))
 
   if (profile.pfp) {
     const url = await getProfilePictureUrl(profile.pfp);
@@ -88,5 +94,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onWarSnapshot(wars => dispatch(setWars(wars)));
   onEventsSnapshot(events => dispatch(setEvents(events)));
   onActiveJobsSnapshot(jobs => dispatch(setActiveJobs(jobs)));
+  onRadiosSnapshot(radios => dispatch(setRadios(radios)));
   loadingSubject.next(false);
 }

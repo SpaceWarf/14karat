@@ -1,7 +1,7 @@
 import "./Jobs.scss";
 import { CrewRoleMap, Job } from "../../state/jobs";
 import { deleteActiveJob, getProfiles, getWebhookById, onProfilesSnapshot, updateActiveJob } from "../../utils/firestore";
-import JobChecklistCard from "./JobChecklist";
+import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { Webhook } from "../../state/webhook";
 import { triggerDiscordWebhook } from "../../services/functions";
 import { ProfileInfo } from "../../state/profile";
+import JobRadio from "./JobRadio";
+import { getRadioForJob } from "../../redux/selectors/radios";
 
 interface JobCardProps {
   job: Job;
@@ -21,6 +23,7 @@ function JobCard(props: JobCardProps) {
   const [webhook, setWebhook] = useState<Webhook>();
   const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState<boolean>(false);
+  const radio = useSelector((state: RootState) => getRadioForJob(state, props.job.id));
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -56,7 +59,7 @@ function JobCard(props: JobCardProps) {
     if (webhook) {
       triggerDiscordWebhook({
         url: webhook.url,
-        content: `**__${getJobInfo()?.name} job details__**\n${getCrewAsString()}`,
+        content: `**__${getJobInfo()?.name} job details__**\n${getCrewAsString()}\n${getRadioString()}`,
       }).catch(error => {
         console.error(error);
       });
@@ -73,6 +76,10 @@ function JobCard(props: JobCardProps) {
           .join(" ");
         return `${str}**${CrewRoleMap[role]}**: ${members}\n`
       }, "");
+  }
+
+  const getRadioString = () => {
+    return radio ? `**Radio Channel:** ${radio.channel}` : ""
   }
 
   const getProfileInfo = (id: string): ProfileInfo | undefined => {
@@ -97,13 +104,18 @@ function JobCard(props: JobCardProps) {
           )}
         </div>
         <div className="Details">
-          <JobCrew
-            job={props.job}
-            members={members}
-            loading={loading}
-          />
+          <div className="JobCardSection">
+            <JobCrew
+              job={props.job}
+              members={members}
+              loading={loading}
+            />
+          </div>
           <div className="seperator" />
-          <JobChecklistCard job={props.job} />
+          <div className="JobCardSection">
+            <JobChecklist job={props.job} />
+            <JobRadio job={props.job} />
+          </div>
         </div>
       </div>
       <div className="extra content">
