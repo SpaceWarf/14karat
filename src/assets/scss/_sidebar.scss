@@ -51,6 +51,10 @@
         background-color: $sidebar-background-colour-light;
         font-weight: bold;
         color: $primary-colour;
+
+        .SidebarItemDetail {
+          color: $primary-colour;
+        }
       }
 
       img {
@@ -62,6 +66,10 @@
       .Label {
         display: flex;
         align-items: center;
+      }
+
+      .SidebarItemDetail {
+        color: $text-colour-contrast;
       }
     }
 
@@ -137,6 +145,10 @@
         span {
           display: none;
         }
+
+        .SidebarItemDetail {
+          display: none;
+        }
       }
 
       .button.Collapse {
@@ -157,6 +169,10 @@
           }
 
           span {
+            display: initial;
+          }
+
+          .SidebarItemDetail {
             display: initial;
           }
         }
@@ -190,6 +206,10 @@
         span {
           display: none;
         }
+
+        .SidebarItemDetail {
+          display: none;
+        }
       }
 
       &:hover {
@@ -205,6 +225,10 @@
           }
 
           span {
+            display: initial;
+          }
+
+          .SidebarItemDetail {
             display: initial;
           }
         }

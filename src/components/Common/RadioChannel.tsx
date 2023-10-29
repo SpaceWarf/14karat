@@ -7,6 +7,8 @@ import profile from "../../redux/reducers/profile";
 import { Webhook } from "../../state/webhook";
 import { Job } from "../../state/jobs";
 import { triggerDiscordWebhook } from "../../services/functions";
+import { useSelector } from "react-redux";
+import { getAllUsedChannels } from "../../redux/selectors/radios";
 
 interface RadioChannelProps {
   radio: Radio;
@@ -17,6 +19,7 @@ function RadioChannel(props: RadioChannelProps) {
   const { user, isAdmin } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
+  const allUsedChannels = useSelector(getAllUsedChannels);
 
   useEffect(() => {
     const fetchWebhook = async () => {
@@ -54,7 +57,7 @@ function RadioChannel(props: RadioChannelProps) {
       setLoading(true);
       await updateRadio(props.radio.id, {
         ...props.radio,
-        channel: generateRadioChannel([]),
+        channel: generateRadioChannel(allUsedChannels),
       }, user);
       setLoading(false);
     }
@@ -65,11 +68,11 @@ function RadioChannel(props: RadioChannelProps) {
       setLoading(true);
 
       if (props.radio.main) {
-        const newMain = generateRadioChannel([])
+        const newMain = generateRadioChannel(allUsedChannels)
         sendWebhook(newMain);
         await createRadio({
           channel: newMain,
-          main: false,
+          main: true,
           burned: false,
           job: props.job?.id ?? "",
         }, user);
@@ -91,9 +94,9 @@ function RadioChannel(props: RadioChannelProps) {
       <p className="ChannelLabel">{props.radio.channel}</p>
       {!props.radio.burned && (
         <div>
-          <button className="ui icon button" disabled={loading} onClick={() => handleRerollChannel()}>
+          {/* <button className="ui icon button" disabled={loading} onClick={() => handleRerollChannel()}>
             <i className="refresh icon" />
-          </button>
+          </button> */}
           <button className="ui icon negative button" disabled={loading} onClick={() => handleBurnChannel()}>
             <i className="fire icon" />
           </button>
