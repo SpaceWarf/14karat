@@ -51,7 +51,7 @@ function Filters(props: FiltersProps) {
         {props.tags.length > 0 && (
           <div className="Tags">
             {props.tags.sort((a, b) => a.localeCompare(b)).map(tag => (
-              <div className={`ui label ${tags.includes(tag) ? 'selected' : ''}`} onClick={() => handleTagsUpdate(tag)}>
+              <div className={`ui label ${tags.includes(tag) ? 'selected pale' : ''}`} onClick={() => handleTagsUpdate(tag)}>
                 {tag}
               </div>
             ))}

@@ -123,8 +123,8 @@ function JobCard(props: JobCardProps) {
       </div>
       <div className="extra content">
         <button className="ui button hover-animation" onClick={sendWebhook}>
-          <p className='label contrast'>Send Notification</p>
-          <p className='IconContainer contrast'><i className='discord icon'></i></p>
+          <p className='label pale'>Send Notification</p>
+          <p className='IconContainer pale'><i className='discord icon'></i></p>
         </button>
         <button className="ui button positive hover-animation" onClick={handleComplete}>
           <p className='label contrast'>Complete</p>

@@ -38,6 +38,10 @@ p {
     color: $text-colour-contrast;
   }
 
+  &.pale {
+    color: rgba(black, 0.75) !important;
+  }
+
   &.small {
     font-size: 0.9rem;
     color: darken($gray-pale, 10%);

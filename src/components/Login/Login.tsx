@@ -86,8 +86,8 @@ function Login() {
                   onSubmit={handleSubmit}
                 />
                 <button className="ui button hover-animation" disabled={loading || !canSubmit()} onClick={handleSubmit}>
-                  <p className='label contrast'>Log In</p>
-                  <p className='IconContainer contrast'><i className='arrow right icon'></i></p>
+                  <p className='label pale'>Log In</p>
+                  <p className='IconContainer pale'><i className='arrow right icon'></i></p>
                 </button>
               </div>
               {loginError &&

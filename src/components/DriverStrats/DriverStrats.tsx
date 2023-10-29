@@ -25,8 +25,8 @@ function DriverStrats() {
         <div>
           <div className="Actions">
             <button className="ui button hover-animation" onClick={() => navigate('/driver-strats/all')}>
-              <p className='label contrast'>View All</p>
-              <p className='IconContainer contrast'><i className='eye icon'></i></p>
+              <p className='label pale'>View All</p>
+              <p className='IconContainer pale'><i className='eye icon'></i></p>
             </button>
             <NewStratModal neighbourhood={neighbourhoods.length ? neighbourhoods[0].id : ""} />
           </div>
