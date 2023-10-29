@@ -19,7 +19,6 @@ interface JobCardProps {
 
 function JobCard(props: JobCardProps) {
   const { user, isAdmin } = useAuth();
-  const jobInfos = useSelector((state: RootState) => state.jobs.info)
   const [webhook, setWebhook] = useState<Webhook>();
   const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -63,7 +62,7 @@ function JobCard(props: JobCardProps) {
     if (webhook) {
       triggerDiscordWebhook({
         url: webhook.url,
-        content: `**__${getJobInfo()?.name} job details__**\n${getCrewAsString()}\n${getRadioString()}`,
+        content: `**__${props.job.name} job details__**\n${getCrewAsString()}\n${getRadioString()}`,
       }).catch(error => {
         console.error(error);
       });
@@ -90,15 +89,11 @@ function JobCard(props: JobCardProps) {
     return members.find(member => member.id === id);
   }
 
-  const getJobInfo = () => {
-    return jobInfos.find(info => info.id === props.job.job);
-  }
-
   return (
     <div className='JobCard ui card attached external'>
       <div className="content">
         <div className='header'>
-          <p><i className={`${getJobInfo()?.icon ?? 'dollar'} icon`} /> {getJobInfo()?.name ?? 'Job Info'}</p>
+          <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index > 0 ? props.job.index : ""}</p>
           {isAdmin && (
             <div className="Actions">
               <button className="ui icon negative button" onClick={handleDelete}>

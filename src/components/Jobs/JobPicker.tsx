@@ -20,9 +20,7 @@ function JobPicker() {
             </div>
             <div className="JobInfoContainer">
               {[...jobInfos].sort((a, b) => a.order - b.order).map(info => (
-                <div>
-                  <JobInfoCard info={info} />
-                </div>
+                <JobInfoCard info={info} />
               ))}
             </div>
           </div>

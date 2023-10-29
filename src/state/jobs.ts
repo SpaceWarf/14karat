@@ -9,6 +9,9 @@ export interface Job extends FirestoreEntity {
   radio: string;
   notes: string;
   completed: boolean;
+  name: string;
+  index: number;
+  icon: string;
 }
 
 export interface JobUpdate {
@@ -20,6 +23,9 @@ export interface JobUpdate {
   radio: string;
   notes: string;
   completed: boolean;
+  name: string;
+  index: number;
+  icon: string;
 }
 
 export interface Checklist {

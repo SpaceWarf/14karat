@@ -6,6 +6,7 @@ import { generateRadioChannel } from "../../utils/radio";
 import profile from "../../redux/reducers/profile";
 import { Webhook } from "../../state/webhook";
 import { Job } from "../../state/jobs";
+import { triggerDiscordWebhook } from "../../services/functions";
 
 interface RadioChannelProps {
   radio: Radio;
@@ -19,13 +20,34 @@ function RadioChannel(props: RadioChannelProps) {
 
   useEffect(() => {
     const fetchWebhook = async () => {
-      setWebhook(await getWebhookById('event-update'));
+      setWebhook(await getWebhookById('radio-update'));
     }
 
-    if (isAdmin) {
-      fetchWebhook();
-    }
+    fetchWebhook();
   }, [isAdmin, profile]);
+
+  const sendWebhook = (newChannel?: string) => {
+    if (webhook) {
+      triggerDiscordWebhook({
+        url: webhook.url,
+        content: getWebhookString(newChannel),
+      }).catch(error => {
+        console.error(error);
+      });
+    }
+  }
+
+  const getWebhookString = (newChannel?: string) => {
+    if (props.radio.main) {
+      return `@here burn main ~~${props.radio.channel}~~!\nNEW MAIN - ${newChannel}`;
+    }
+
+    if (props.job) {
+      return `@here burn ${props.job.name} ${props.job.index} radio ~~${props.radio.channel}~~`;
+    }
+
+    return `@here burn radio ~~${props.radio.channel}~~`
+  }
 
   const handleRerollChannel = async () => {
     if (props.radio) {
@@ -38,16 +60,21 @@ function RadioChannel(props: RadioChannelProps) {
     }
   }
 
-  const handleBurnChannel = async (create = false) => {
+  const handleBurnChannel = async () => {
     if (props.radio) {
       setLoading(true);
-      if (create) {
+
+      if (props.radio.main) {
+        const newMain = generateRadioChannel([])
+        sendWebhook(newMain);
         await createRadio({
-          channel: generateRadioChannel([]),
+          channel: newMain,
           main: false,
           burned: false,
           job: props.job?.id ?? "",
         }, user);
+      } else {
+        sendWebhook();
       }
 
       await updateRadio(props.radio.id, {

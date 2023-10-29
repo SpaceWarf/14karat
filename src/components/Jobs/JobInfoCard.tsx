@@ -20,6 +20,7 @@ function JobInfoCard(props: JobInfoCardProps) {
   const cards = useSelector((state: RootState) => state.jobs.cards);
   const usbs = useSelector((state: RootState) => state.jobs.usbs);
   const { hacks } = useSelector((state: RootState) => state.hacks);
+  const { active } = useSelector((state: RootState) => state.jobs);
 
   const getGearList = (gearMap: { [key: string]: number }): ReactElement[] => {
     const components: ReactElement[] = [];
@@ -101,6 +102,10 @@ function JobInfoCard(props: JobInfoCardProps) {
 
   const handleCreateJob = async (actionButton: boolean) => {
     if (actionButton || !props.showActionButton) {
+      const indexes = active
+        .filter(job => job.job === props.info.id)
+        .map(job => job.index);
+
       await createActiveJob({
         job: props.info.id,
         crew: Object.keys(props.info.crew).reduce((obj, key) => ({
@@ -131,6 +136,9 @@ function JobInfoCard(props: JobInfoCardProps) {
         radio: '',
         notes: '',
         completed: false,
+        name: props.info.name,
+        index: indexes.length ? Math.max(...indexes) + 1 : 1,
+        icon: props.info.icon,
       }, user);
       navigate("/jobs");
     }
