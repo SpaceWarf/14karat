@@ -1,0 +1,33 @@
+@import "../../../assets/scss/index";
+
+.JobsCard.ui.card {
+  width: 100%;
+
+  .JobsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .JobSectionHeader {
+      margin: 5px 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .JobListing {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .JobLabel,
+      .RadioLabel {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      .JobLabel {
+        margin-left: 5px;
+      }
+    }
+  }
+}

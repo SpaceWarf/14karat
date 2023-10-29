@@ -1,10 +1,12 @@
+import './Dashboard.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import './Dashboard.scss';
 import { useNavigate } from 'react-router-dom';
 import RecentStratCard from './RecentStratCard/RecentStratCard';
 import UpcomingEventsCard from './UpcomingEventsCard/UpcomingEventsCard';
 import WarCard from './WarCard/WarCard';
+import RadiosCard from './RadiosCard/RadiosCard';
+import JobsCard from './JobsCard/JobsCard';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -35,9 +37,15 @@ function Dashboard() {
         </div>
       </div>
       <div className='content'>
-        <div className='Row'><RecentStratCard /></div>
-        <div className='Row'><WarCard /></div>
-        <div className='Row'><UpcomingEventsCard /></div>
+        <div className='Col'><RecentStratCard /></div>
+        <div className='Col'>
+          <RadiosCard />
+          {/* <JobsCard /> */}
+        </div>
+        <div className='Col'>
+          <UpcomingEventsCard />
+          <WarCard />
+        </div>
       </div>
     </div>
   );

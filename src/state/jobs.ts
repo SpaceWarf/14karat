@@ -6,7 +6,6 @@ export interface Job extends FirestoreEntity {
   gearChecklist: Checklist;
   cardsChecklist: Checklist;
   usbsChecklist: Checklist;
-  radio: string;
   notes: string;
   completed: boolean;
   name: string;
@@ -20,7 +19,6 @@ export interface JobUpdate {
   gearChecklist: Checklist;
   cardsChecklist: Checklist;
   usbsChecklist: Checklist;
-  radio: string;
   notes: string;
   completed: boolean;
   name: string;

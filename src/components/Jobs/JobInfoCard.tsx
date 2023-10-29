@@ -133,7 +133,6 @@ function JobInfoCard(props: JobInfoCardProps) {
             quantity: props.info.usbs[key]
           },
         }), {}),
-        radio: '',
         notes: '',
         completed: false,
         name: props.info.name,
