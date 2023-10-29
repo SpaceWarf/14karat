@@ -10,7 +10,7 @@ function InformationCenter() {
       <Header text='Information Center' decorated />
       <div className='content'>
         <div
-          className="HierarchyCard InformationCenterCard ui card attached link external"
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/hierarchy')}
         >
           <div className="content">
@@ -24,7 +24,7 @@ function InformationCenter() {
           </div>
         </div>
         <div
-          className="RulesCard InformationCenterCard ui card attached link external"
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/rules')}
         >
           <div className="content">
@@ -38,7 +38,7 @@ function InformationCenter() {
           </div>
         </div>
         <div
-          className="JobsCard InformationCenterCard ui card attached link external"
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/jobs')}
         >
           <div className="content">
@@ -52,7 +52,7 @@ function InformationCenter() {
           </div>
         </div>
         <div
-          className="LocationsCard InformationCenterCard ui card attached link external"
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/locations')}
         >
           <div className="content">
@@ -66,7 +66,7 @@ function InformationCenter() {
           </div>
         </div>
         <div
-          className="HackingCard InformationCenterCard ui card attached link external"
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/hacking')}
         >
           <div className="content">
@@ -80,7 +80,7 @@ function InformationCenter() {
           </div>
         </div>
         <div
-          className="TaxesCard InformationCenterCard ui card attached link external"
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/taxes')}
         >
           <div className="content">

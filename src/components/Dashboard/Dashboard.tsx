@@ -6,7 +6,8 @@ import RecentStratCard from './RecentStratCard/RecentStratCard';
 import UpcomingEventsCard from './UpcomingEventsCard/UpcomingEventsCard';
 import WarCard from './WarCard/WarCard';
 import RadiosCard from './RadiosCard/RadiosCard';
-import JobsCard from './JobsCard/JobsCard';
+import OtherJobsCard from './JobsCard/OtherJobsCard';
+import MyJobCard from './JobsCard/MyJobCard';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -40,7 +41,8 @@ function Dashboard() {
         <div className='Col'><RecentStratCard /></div>
         <div className='Col'>
           <RadiosCard />
-          {/* <JobsCard /> */}
+          {/* <MyJobCard />
+          <OtherJobsCard /> */}
         </div>
         <div className='Col'>
           <UpcomingEventsCard />
