@@ -44,7 +44,7 @@ function App() {
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<War />} />
-            <Route path='/hacking' element={<Hacking />} />
+            <Route path='/information-center/hacking' element={<Hacking />} />
             <Route path='/information-center' element={<InformationCenter />} />
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route path='/information-center/rules' element={<Rules />} />

@@ -38,6 +38,20 @@ function InformationCenter() {
           </div>
         </div>
         <div
+          className="JobsCard InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/jobs')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='dollar sign icon' /> Job Information</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/jobs')}>
+                <i className='external alternate icon' />
+              </button>
+            </div>
+            <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
+          </div>
+        </div>
+        <div
           className="LocationsCard InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/locations')}
         >
@@ -52,6 +66,20 @@ function InformationCenter() {
           </div>
         </div>
         <div
+          className="HackingCard InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/hacking')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='code sign icon' /> Hacking</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/taxes')}>
+                <i className='external alternate icon' />
+              </button>
+            </div>
+            <div className='Notes'><p>A list of all hacking minigames with practice links.</p></div>
+          </div>
+        </div>
+        <div
           className="TaxesCard InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/taxes')}
         >
@@ -63,20 +91,6 @@ function InformationCenter() {
               </button>
             </div>
             <div className='Notes'><p>A tracker for weekly taxes to be paid by all chained members.</p></div>
-          </div>
-        </div>
-        <div
-          className="JobsCard InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/jobs')}
-        >
-          <div className="content">
-            <div className='header'>
-              <p><i className='dollar sign icon' /> Job Information</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/jobs')}>
-                <i className='external alternate icon' />
-              </button>
-            </div>
-            <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
           </div>
         </div>
       </div>
