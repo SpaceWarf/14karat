@@ -11,3 +11,33 @@
     margin: 0 !important;
   }
 }
+
+.RadioCard.ui.card {
+  min-height: 110px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    .Labels {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  &.burned {
+    .content {
+      background-color: rgba($red, 0.25) !important;
+
+      .ChannelLabel {
+        color: $red;
+      }
+
+      .BurnedLabel {
+        color: $red;
+      }
+    }
+  }
+}

@@ -25,6 +25,7 @@ import LocationsOfInterest from './components/InformationCenter/LocationsOfInter
 import JobListing from './components/Jobs/JobListing';
 import JobPicker from './components/Jobs/JobPicker';
 import Jobs from './components/InformationCenter/Jobs/Jobs';
+import Radios from './components/Radios/Radios';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path='/information-center/jobs' element={<Jobs />} />
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/new' element={<JobPicker />} />
+            <Route path='/radios' element={<Radios />} />
             <Route element={<AdminRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />

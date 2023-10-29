@@ -43,8 +43,12 @@ function JobCard(props: JobCardProps) {
     fetchWebhook();
   }, [isAdmin]);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     deleteActiveJob(props.job.id, user);
+
+    if (radio) {
+      await deleteRadio(radio.id, user);
+    }
   }
 
   const handleComplete = async () => {
