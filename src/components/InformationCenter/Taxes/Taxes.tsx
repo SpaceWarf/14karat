@@ -13,12 +13,12 @@ function Taxes() {
           <p className="back-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
           <p
             className="back-button"
-            onClick={() => window.open('https://docs.google.com/spreadsheets/d/13iZet36FT24-QUfG8mLhqtAdYd5H4FA3rJ_ued-lr0Q/edit#gid=0', "_blank")}
+            onClick={() => window.open('https://docs.google.com/spreadsheets/d/1Gq2TP76pW3XvalJalwUOV9B6Oz_1gDmNbH4pl5RvxIU/edit#gid=0', "_blank")}
           >
             External Document <i className='external icon' />
           </p>
         </div>
-        <iframe src="https://docs.google.com/spreadsheets/d/13iZet36FT24-QUfG8mLhqtAdYd5H4FA3rJ_ued-lr0Q/edit?rm=minimal#gid=0" title="Taxes Spreadsheet"></iframe>
+        <iframe src="https://docs.google.com/spreadsheets/d/1Gq2TP76pW3XvalJalwUOV9B6Oz_1gDmNbH4pl5RvxIU/edit?rm=minimal#gid=0" title="Taxes Spreadsheet"></iframe>
       </div>
     </div>
   );
