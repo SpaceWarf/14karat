@@ -11,17 +11,11 @@ function Rules() {
       <div className='content'>
         <div className="actions">
           <p className="back-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
-          <p
-            className="back-button"
-            onClick={() => window.open('https://docs.google.com/document/d/1Yx-bJg8Zei07zSnjkg4j4MzDEn2bzGltCpYkWLfj0Ew/', "_blank")}
-          >
-            External Document <i className='external icon' />
-          </p>
         </div>
         <div className='RulesContainer'>
           <p>
             These rules and guidelines are to be followed by all members from leadership down to the newest member.
-            Compliance to these guidelines are to be Enforced by the enforcers and Officers with no question.
+            Compliance to these guidelines are to be enforced by the enforcers and Officers with no question.
           </p>
           <ol>
             <li>

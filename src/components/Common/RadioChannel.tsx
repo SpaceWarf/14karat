@@ -93,7 +93,7 @@ function RadioChannel(props: RadioChannelProps) {
     <div className='RadioChannel'>
       <p className="ChannelLabel">{props.radio.channel}</p>
       {!props.radio.burned && (
-        <div>
+        <div className="ChannelActions">
           {/* <button className="ui icon button" disabled={loading} onClick={() => handleRerollChannel()}>
             <i className="refresh icon" />
           </button> */}

@@ -39,7 +39,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         <div className="Nav">
           <SidebarItem name='Dashboard' icon='chart bar' path='/' onClick={() => navigate('/')} />
           <SidebarItem name='Calendar' icon='calendar alternate' path='/calendar' onClick={() => navigate('/calendar')} />
-          <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} />
+          {/* <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} /> */}
           <SidebarItem name='Radios' icon='microphone circle' path='/radios' onClick={() => navigate('/radios')}>
             {mainRadio && <p className='SidebarItemDetail'>{mainRadio.channel}</p>}
           </SidebarItem>

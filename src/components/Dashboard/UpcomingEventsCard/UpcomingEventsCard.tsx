@@ -89,7 +89,7 @@ function UpcomingEventsCard() {
         {getComponents().length ? (
           getComponents()
         ) : (
-          <p>Nothing to show...</p>
+          <p className='NothingLabel'>Nothing to show...</p>
         )}
       </div>
     </div>

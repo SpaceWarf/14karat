@@ -8,6 +8,7 @@ import WarCard from './WarCard/WarCard';
 import RadiosCard from './RadiosCard/RadiosCard';
 import OtherJobsCard from './JobsCard/OtherJobsCard';
 import MyJobCard from './JobsCard/MyJobCard';
+import banner from '../../assets/images/banner.png';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -36,6 +37,7 @@ function Dashboard() {
             <h4 className='Division'>{getRoles().join(', ')}</h4>
           </div>
         </div>
+        <img className='BannerDecorator' src={banner} alt='Chery Blossom Branch' />
       </div>
       <div className='content'>
         <div className='Col'><RecentStratCard /></div>

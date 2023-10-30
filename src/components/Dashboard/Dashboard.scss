@@ -4,11 +4,13 @@
   .PageHeader {
     display: flex;
     align-items: flex-start;
+    position: relative;
     width: calc(100% + 40px);
     height: $dashboard-header-height;
     padding: 20px;
     margin: -20px 0 0 -20px;
     background-color: black;
+    overflow: hidden;
 
     .UserInfo {
       display: flex;
@@ -30,6 +32,16 @@
       h4 {
         margin: 0;
       }
+    }
+
+    img.BannerDecorator {
+      position: absolute;
+      right: -110px;
+      bottom: -25px;
+      height: calc($dashboard-header-height + 50px);
+      width: auto;
+      transform: scaleX(-1);
+      rotate: 50deg;
     }
   }
 

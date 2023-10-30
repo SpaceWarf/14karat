@@ -37,12 +37,12 @@ button.ui.button {
     background-color: transparent !important;
     font-size: 1.2rem;
     padding: 0;
-    color: $primary-colour !important;
+    color: $primary-colour-dark !important;
     width: 25px;
     height: 25px;
 
     &:hover {
-      color: $primary-colour-dark !important;
+      color: $primary-colour-darker !important;
     }
 
     &.negative {
