@@ -4,16 +4,11 @@
   align-items: center;
 
   .HeaderDecoration {
-    width: 135px;
+    width: 100px;
     height: auto;
 
     &.right {
-      margin-left: 10px;
       transform: scaleX(-1);
-    }
-
-    &.left {
-      margin-right: 10px;
     }
   }
 

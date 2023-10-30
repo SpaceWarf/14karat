@@ -14,5 +14,5 @@ code {
 
 @font-face {
   font-family: 'CustomFont';
-  src: local('CustomFont'), url(./assets/fonts/Besom-Handwritten-Brush-Font.ttf) format('truetype');
+  src: local('CustomFont'), url(./assets/fonts/Besom-extended.otf) format('opentype');
 }

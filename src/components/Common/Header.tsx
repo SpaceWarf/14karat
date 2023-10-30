@@ -1,4 +1,4 @@
-import headerDecoration from '../../assets/images/header-decoration-2.png';
+import headerDecoration from '../../assets/images/header-decoration.png';
 
 interface HeaderProps {
   text: string;
