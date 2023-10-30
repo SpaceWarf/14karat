@@ -6,8 +6,8 @@ import RecentStratCard from './RecentStratCard/RecentStratCard';
 import UpcomingEventsCard from './UpcomingEventsCard/UpcomingEventsCard';
 import WarCard from './WarCard/WarCard';
 import RadiosCard from './RadiosCard/RadiosCard';
-import OtherJobsCard from './JobsCard/OtherJobsCard';
-import MyJobCard from './JobsCard/MyJobCard';
+// import OtherJobsCard from './JobsCard/OtherJobsCard';
+// import MyJobCard from './JobsCard/MyJobCard';
 import banner from '../../assets/images/banner.png';
 
 function Dashboard() {

@@ -89,7 +89,7 @@ export async function updateProfileInfo(id: string, profile: ProfileInfo, user: 
   await updateDoc(doc(db, "profiles", id), {
     ...update,
     updatedAt: now,
-    updatedBy: user?.email ?? "",
+    updatedBy: user?.uid ?? "",
   });
 }
 
@@ -144,7 +144,7 @@ export async function createDriverStrat(strat: DriverStratUpdate, user: User | n
   const doc = await addDoc(driverStratsRef, {
     ...strat,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -158,7 +158,7 @@ export async function deleteDriverStrat(id: string, user: User | null): Promise<
   await updateDoc(doc(db, "driver-strats", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -187,7 +187,7 @@ export async function updateGroup(id: string, group: GroupUpdate, user: User | n
   await updateDoc(doc(db, "groups", id), {
     ...group,
     updatedAt: now,
-    updatedBy: user?.email ?? '',
+    updatedBy: user?.uid ?? '',
   });
 }
 
@@ -196,7 +196,7 @@ export async function createGroup(group: GroupUpdate, user: User | null): Promis
   const doc = await addDoc(groupsRef, {
     ...group,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -209,7 +209,7 @@ export async function deleteGroup(id: string, user: User | null): Promise<void> 
   await updateDoc(doc(db, "groups", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -230,7 +230,7 @@ export async function updateMember(id: string, member: MemberUpdate, user: User 
   await updateDoc(doc(db, "members", id), {
     ...member,
     updatedAt: now,
-    updatedBy: user?.email ?? '',
+    updatedBy: user?.uid ?? '',
   });
 }
 
@@ -239,7 +239,7 @@ export async function createMember(member: MemberUpdate, user: User | null): Pro
   const doc = await addDoc(membersRef, {
     ...member,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -252,7 +252,7 @@ export async function deleteMember(id: string, user: User | null): Promise<void>
   await updateDoc(doc(db, "members", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -285,7 +285,7 @@ export async function createIntel(intel: IntelUpdate, user: User | null): Promis
   const doc = await addDoc(intelRef, {
     ...intel,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -298,7 +298,7 @@ export async function deleteIntel(id: string, user: User | null): Promise<void> 
   await updateDoc(doc(db, "intel", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -332,7 +332,7 @@ export async function updateWarInfo(id: string, update: Partial<War>, user: User
   await updateDoc(doc(db, "wars", id), {
     ...update,
     updatedAt: now,
-    updatedBy: user?.email ?? '',
+    updatedBy: user?.uid ?? '',
   });
 }
 
@@ -341,7 +341,7 @@ export async function createWarInfo(warInfo: WarUpdate, user: User | null): Prom
   const doc = await addDoc(warsRef, {
     ...warInfo,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -384,7 +384,7 @@ export async function createEvent(event: CalendarEventUpdate, user: User | null)
   const doc = await addDoc(eventsRef, {
     ...event,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -397,7 +397,7 @@ export async function updateEvent(id: string, update: CalendarEventUpdate, user:
   await updateDoc(doc(db, "events", id), {
     ...update,
     updatedAt: now,
-    updatedBy: user?.email ?? '',
+    updatedBy: user?.uid ?? '',
   });
 }
 
@@ -406,7 +406,7 @@ export async function deleteEvent(id: string, user: User | null): Promise<void> 
   await updateDoc(doc(db, "events", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -427,7 +427,7 @@ export async function createWarClip(clip: WarClipUpdate, user: User | null): Pro
   const doc = await addDoc(warClipsRef, {
     ...clip,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -440,7 +440,7 @@ export async function deleteWarClip(id: string, user: User | null): Promise<void
   await updateDoc(doc(db, "war-clips", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -498,7 +498,7 @@ export async function createActiveJob(job: JobUpdate, user: User | null): Promis
   const doc = await addDoc(jobsRef, {
     ...job,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -511,7 +511,7 @@ export async function updateActiveJob(id: string, update: JobUpdate, user: User 
   await updateDoc(doc(db, "jobs", id), {
     ...update,
     updatedAt: now,
-    updatedBy: user?.email ?? '',
+    updatedBy: user?.uid ?? '',
   });
 }
 
@@ -520,7 +520,7 @@ export async function deleteActiveJob(id: string, user: User | null): Promise<vo
   await updateDoc(doc(db, "jobs", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }
 
@@ -602,7 +602,7 @@ export async function createRadio(radio: RadioUpdate, user: User | null): Promis
   const doc = await addDoc(radiosRef, {
     ...radio,
     createdAt: now,
-    createdBy: user?.email ?? '',
+    createdBy: user?.uid ?? '',
   });
   return {
     id: doc.id,
@@ -615,7 +615,7 @@ export async function updateRadio(id: string, update: RadioUpdate, user: User | 
   await updateDoc(doc(db, "radios", id), {
     ...update,
     updatedAt: now,
-    updatedBy: user?.email ?? '',
+    updatedBy: user?.uid ?? '',
   });
 }
 
@@ -624,6 +624,6 @@ export async function deleteRadio(id: string, user: User | null): Promise<void> 
   await updateDoc(doc(db, "radios", id), {
     deleted: true,
     deletedAt: now,
-    deletedBy: user?.email ?? '',
+    deletedBy: user?.uid ?? '',
   });
 }

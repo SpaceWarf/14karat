@@ -15,7 +15,7 @@ import GroupDetails from './components/Groups/GroupDetails';
 import MemberDetails from './components/Groups/MemberDetails';
 import Calendar from './components/Calendar/Calendar';
 import War from './components/War/War';
-import Hacking from './components/Hacking/Hacking';
+import Hacking from './components/InformationCenter/Hacking/Hacking';
 import DriverStratGallery from './components/DriverStrats/DriverStratGallery';
 import InformationCenter from './components/InformationCenter/InformationCenter';
 import Hierarchy from './components/InformationCenter/Hierarchy/Hierarchy';
@@ -24,7 +24,7 @@ import Taxes from './components/InformationCenter/Taxes/Taxes';
 import LocationsOfInterest from './components/InformationCenter/LocationsOfInterest/LocationsOfInterest';
 import JobListing from './components/Jobs/JobListing';
 import JobPicker from './components/Jobs/JobPicker';
-import Jobs from './components/InformationCenter/Jobs/Jobs';
+// import Jobs from './components/InformationCenter/Jobs/Jobs';
 import Radios from './components/Radios/Radios';
 
 function App() {
@@ -50,7 +50,7 @@ function App() {
             <Route path='/information-center/rules' element={<Rules />} />
             <Route path='/information-center/taxes' element={<Taxes />} />
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
-            <Route path='/information-center/jobs' element={<Jobs />} />
+            {/* <Route path='/information-center/jobs' element={<Jobs />} /> */}
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/new' element={<JobPicker />} />
             <Route path='/radios' element={<Radios />} />

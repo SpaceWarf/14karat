@@ -1,7 +1,7 @@
-@import "../../assets/scss/index";
+@import "../../../assets/scss/index";
 
 .Hacking {
-  &>.content {
+  &>.content .Hacks {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

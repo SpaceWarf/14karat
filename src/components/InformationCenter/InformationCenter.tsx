@@ -37,7 +37,7 @@ function InformationCenter() {
             <div className='Notes'><p>A list of the rules to be respected by all gang members.</p></div>
           </div>
         </div>
-        <div
+        {/* <div
           className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/jobs')}
         >
@@ -50,7 +50,7 @@ function InformationCenter() {
             </div>
             <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
           </div>
-        </div>
+        </div> */}
         <div
           className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/locations')}

@@ -1,5 +1,5 @@
 import './Hacking.scss';
-import { Hack } from '../../state/hack';
+import { Hack } from '../../../state/hack';
 
 interface WarCardProps {
   hack: Hack;
