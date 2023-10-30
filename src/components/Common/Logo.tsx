@@ -2,6 +2,7 @@ import logo from '../../assets/images/logo.png';
 import logoAlt1 from '../../assets/images/logo-alt-1.png';
 import logoAlt2 from '../../assets/images/logo-alt-2.png';
 import logoAlt3 from '../../assets/images/logo-alt-3.png';
+import logoAlt4 from '../../assets/images/logo-alt-4.png';
 import { useEffect, useState } from 'react';
 
 interface LogoProps {
@@ -14,7 +15,7 @@ function Logo({ interactive, onClick }: LogoProps) {
 
   useEffect(() => {
     if (Math.random() >= 0.9) {
-      const alts = [logoAlt1, logoAlt2, logoAlt3];
+      const alts = [logoAlt1, logoAlt2, logoAlt3, logoAlt4];
       setRdmLogo(alts[Math.floor(Math.random() * alts.length)])
     }
   }, []);
