@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CrewRoleMap, Job } from "../../state/jobs";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { updateActiveJob } from "../../utils/firestore";

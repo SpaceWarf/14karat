@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Radio } from "../../state/radio";
 import { generateRadioChannel } from "../../utils/radio";
-import profile from "../../redux/reducers/profile";
 import { Webhook } from "../../state/webhook";
 import { Job } from "../../state/jobs";
 import { triggerDiscordWebhook } from "../../services/functions";
@@ -27,7 +26,7 @@ function RadioChannel(props: RadioChannelProps) {
     }
 
     fetchWebhook();
-  }, [isAdmin, profile]);
+  }, [isAdmin]);
 
   const sendWebhook = (newChannel?: string) => {
     if (webhook) {
@@ -52,16 +51,16 @@ function RadioChannel(props: RadioChannelProps) {
     return `@here burn radio ~~${props.radio.channel}~~`
   }
 
-  const handleRerollChannel = async () => {
-    if (props.radio) {
-      setLoading(true);
-      await updateRadio(props.radio.id, {
-        ...props.radio,
-        channel: generateRadioChannel(allUsedChannels),
-      }, user);
-      setLoading(false);
-    }
-  }
+  // const handleRerollChannel = async () => {
+  //   if (props.radio) {
+  //     setLoading(true);
+  //     await updateRadio(props.radio.id, {
+  //       ...props.radio,
+  //       channel: generateRadioChannel(allUsedChannels),
+  //     }, user);
+  //     setLoading(false);
+  //   }
+  // }
 
   const handleBurnChannel = async () => {
     if (props.radio) {

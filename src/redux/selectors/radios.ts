@@ -19,7 +19,7 @@ export const getActiveRadios = (state: RootState): Radio[] => {
 
 export const getRecentlyBurnedRadios = (state: RootState): Radio[] => {
   return state.radios.radios
-    .filter(radio => radio.burned && new Date(radio.burnTime || "").getTime() - new Date().getTime() < 3600000)
+    .filter(radio => radio.burned && new Date().getTime() - new Date(radio.burnTime || "").getTime() < 3600000)
     .sort((a, b) => new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime());
 }
 

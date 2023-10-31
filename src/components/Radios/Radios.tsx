@@ -2,11 +2,11 @@ import './Radios.scss';
 import { useSelector } from 'react-redux';
 import RadioCard from '../Common/RadioCard';
 import Header from '../Common/Header';
-import { getActiveRadios, getMainRadio, getRecentlyBurnedRadios } from '../../redux/selectors/radios';
+import { getMainRadio, getRecentlyBurnedRadios } from '../../redux/selectors/radios';
 
 function Radios() {
   const mainRadio = useSelector(getMainRadio);
-  const activeRadios = useSelector(getActiveRadios);
+  // const activeRadios = useSelector(getActiveRadios);
   const burnedRadios = useSelector(getRecentlyBurnedRadios);
 
   return (
