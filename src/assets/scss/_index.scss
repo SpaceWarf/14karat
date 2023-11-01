@@ -35,3 +35,11 @@
         margin: 5px 10px 0 0 !important;
     }
 }
+
+a {
+    color: $primary-colour-dark !important;
+
+    &:hover {
+        color: $primary-colour-darker !important;
+    }
+}

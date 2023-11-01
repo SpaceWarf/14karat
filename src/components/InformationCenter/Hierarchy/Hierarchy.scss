@@ -18,7 +18,7 @@
       img {
         width: auto;
         height: auto;
-        max-height: 400px;
+        max-height: 500px;
       }
     }
 
@@ -46,6 +46,10 @@
 
         .Role {
           margin-bottom: 20px;
+
+          p {
+            text-align: justify;
+          }
         }
       }
     }
