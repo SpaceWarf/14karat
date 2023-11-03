@@ -10,7 +10,8 @@ function Lore() {
     <div className="Lore">
       <Header text='Spirits & Guardians' decorated />
       <div className="actions">
-        <p className="back-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
+        <p className="hyperlink-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
+        <p className="hyperlink-button" onClick={() => window.open('/public/lore', "_blank")}> Public Lore Page <i className='external icon' /></p>
       </div>
       <div className='content'>
         <LoreMenu />

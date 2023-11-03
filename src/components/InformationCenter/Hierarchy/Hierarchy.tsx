@@ -11,7 +11,7 @@ function Hierarchy() {
       <Header text='Gang Hierarchy' decorated />
       <div className='content'>
         <div className="actions">
-          <p className="back-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
+          <p className="hyperlink-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
         </div>
         <div className='ImageContainer'>
           <img src={hierarchy} alt='Hierarchy' />

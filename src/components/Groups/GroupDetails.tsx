@@ -49,7 +49,7 @@ function GroupDetails() {
       <Header text='Group Details' decorated />
       <div className="content">
         <div className="actions">
-          <p className="back-button" onClick={() => navigate('/groups')}><i className='arrow left icon' />back</p>
+          <p className="hyperlink-button" onClick={() => navigate('/groups')}><i className='arrow left icon' />back</p>
         </div>
         <Tab
           menu={{ secondary: true, pointing: true }}

@@ -59,7 +59,6 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         <div className="Footer">
           <div className='Divider' />
           <SidebarItem name='Profile' icon='user circle' image={pfpUrl} path='/profile' onClick={() => navigate('/profile')} />
-          <SidebarItem name='Public Lore Page' icon='external circle' onClick={() => window.open('/public/lore', '_blank')} />
           <SidebarItem name='Log Out' icon='sign-out' onClick={handleLogout} />
         </div>
       </div>

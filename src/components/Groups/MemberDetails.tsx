@@ -44,7 +44,7 @@ function MemberDetails() {
       <Header text='Member Details' decorated />
       <div className="content">
         <div className="actions">
-          <p className="back-button" onClick={() => navigate(`/groups/${groupId}?active=1`)}><i className='arrow left icon' />back</p>
+          <p className="hyperlink-button" onClick={() => navigate(`/groups/${groupId}?active=1`)}><i className='arrow left icon' />back</p>
         </div>
         <Tab
           menu={{ secondary: true, pointing: true }}
