@@ -43,7 +43,7 @@ function InformationCenter() {
         >
           <div className="content">
             <div className='header'>
-              <p><i className='snapchat ghost icon' /> Lore</p>
+              <p><i className='book icon' /> Gang Lore</p>
               <button className="ui icon button" onClick={() => navigate('/information-center/lore')}>
                 <i className='external alternate icon' />
               </button>

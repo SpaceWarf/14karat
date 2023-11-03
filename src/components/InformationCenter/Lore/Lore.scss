@@ -15,21 +15,5 @@
 
   .content {
     max-width: 1000px;
-
-    .ui.menu {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-
-      .item {
-        display: flex;
-        justify-content: center;
-        width: 100px;
-      }
-
-      &::after {
-        display: none;
-      }
-    }
   }
 }
