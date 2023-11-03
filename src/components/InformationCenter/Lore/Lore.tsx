@@ -1,17 +1,19 @@
-import './SpiritsAndGuardians.scss';
+import './Lore.scss';
 import Header from '../../Common/Header';
 import { Menu } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import GuardiansListing from '../../SpiritsAndGuardiansListing/GuardiansListing';
-import SpiritsListing from '../../SpiritsAndGuardiansListing/SpiritsListing';
+import GuardiansListing from '../../Lore/GuardiansListing';
+import SpiritsListing from '../../Lore/SpiritsListing';
+import CeremoniesListing from '../../Lore/CeremoniesListing';
 
 enum Tab {
   SPIRITS = "Spirits",
   GUARDIANS = "Guardians",
+  CEREMONIES = "Ceremonies",
 }
 
-function SpiritsAndGuardians() {
+function Lore() {
   const navigate = useNavigate();
   const [active, setActive] = useState<string>(Tab.SPIRITS);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,7 +28,7 @@ function SpiritsAndGuardians() {
   }, [searchParams, setSearchParams]);
 
   return (
-    <div className="SpiritsAndGuardians">
+    <div className="Lore">
       <Header text='Spirits & Guardians' decorated />
       <div className="actions">
         <p className="back-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
@@ -43,13 +45,20 @@ function SpiritsAndGuardians() {
             active={active === Tab.GUARDIANS}
             onClick={(_, { name }) => name && setSearchParams({ active: name })}
           />
+          <Menu.Item
+            name={Tab.CEREMONIES}
+            active={active === Tab.CEREMONIES}
+            onClick={(_, { name }) => name && setSearchParams({ active: name })}
+            disabled
+          />
         </Menu>
         {active === Tab.SPIRITS && <SpiritsListing />}
         {active === Tab.GUARDIANS && <GuardiansListing />}
+        {active === Tab.CEREMONIES && <CeremoniesListing />}
       </div>
     </div>
   );
 }
 
 
-export default SpiritsAndGuardians;
+export default Lore;

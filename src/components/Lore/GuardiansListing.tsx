@@ -1,4 +1,4 @@
-import './SpiritsAndGuardiansListing.scss';
+import './Lore.scss';
 import Header from '../Common/Header';
 import komainu from '../../assets/images/spirits/komainu.jpg';
 import kitsune from '../../assets/images/spirits/kitsune.jpg';

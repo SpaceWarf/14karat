@@ -1,9 +1,11 @@
 .GuardiansListing,
-.SpiritsListing {
+.SpiritsListing,
+.CeremoniesListing {
   margin-bottom: 20px;
 
   .Guardian,
-  .Spirit {
+  .Spirit,
+  .Ceremony {
     .Description {
       display: flex;
       align-items: center;

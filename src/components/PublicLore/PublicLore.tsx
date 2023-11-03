@@ -3,11 +3,11 @@ import { Menu } from 'semantic-ui-react';
 import Logo from '../Common/Logo';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import GuardiansListing from '../SpiritsAndGuardiansListing/GuardiansListing';
-import SpiritsListing from '../SpiritsAndGuardiansListing/SpiritsListing';
+import GuardiansListing from '../Lore/GuardiansListing';
+import SpiritsListing from '../Lore/SpiritsListing';
+import CeremoniesListing from '../Lore/CeremoniesListing';
 
 enum Tab {
-  LORE = "Lore",
   SPIRITS = "Spirits",
   GUARDIANS = "Guardians",
   CEREMONIES = "Ceremonies"
@@ -35,12 +35,6 @@ function PublicLore() {
         <div>
           <Menu pointing secondary>
             <Menu.Item
-              name={Tab.LORE}
-              active={active === Tab.LORE}
-              onClick={(_, { name }) => name && setSearchParams({ active: name })}
-              disabled
-            />
-            <Menu.Item
               name={Tab.SPIRITS}
               active={active === Tab.SPIRITS}
               onClick={(_, { name }) => name && setSearchParams({ active: name })}
@@ -57,18 +51,9 @@ function PublicLore() {
               disabled
             />
           </Menu>
-          {active === Tab.LORE && (
-            <div className='Section'>
-              TODO
-            </div>
-          )}
           {active === Tab.SPIRITS && <SpiritsListing />}
           {active === Tab.GUARDIANS && <GuardiansListing />}
-          {active === Tab.CEREMONIES && (
-            <div className='Section'>
-              TODO
-            </div>
-          )}
+          {active === Tab.CEREMONIES && <CeremoniesListing />}
         </div>
       </div>
     </div>

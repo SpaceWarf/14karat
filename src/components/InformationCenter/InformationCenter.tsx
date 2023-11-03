@@ -39,16 +39,16 @@ function InformationCenter() {
         </div>
         <div
           className="InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/spirits-and-guardians')}
+          onClick={() => navigate('/information-center/lore')}
         >
           <div className="content">
             <div className='header'>
-              <p><i className='snapchat ghost icon' /> Spirits & Guardians</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/spirits-and-guardians')}>
+              <p><i className='snapchat ghost icon' /> Lore</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/lore')}>
                 <i className='external alternate icon' />
               </button>
             </div>
-            <div className='Notes'><p>A list with descriptions of all the spirits and guardians associated with our lore.</p></div>
+            <div className='Notes'><p>A breakdown of our lore, including our spirits, guardians, and ceremonies.</p></div>
           </div>
         </div>
         <div

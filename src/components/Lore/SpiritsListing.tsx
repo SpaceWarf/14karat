@@ -1,4 +1,4 @@
-import './SpiritsAndGuardiansListing.scss';
+import './Lore.scss';
 import Header from '../Common/Header';
 import ikiryou from '../../assets/images/spirits/ikiryou.jpg';
 import onryou from '../../assets/images/spirits/onryou.jpg';
