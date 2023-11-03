@@ -37,7 +37,7 @@ function InformationCenter() {
             <div className='Notes'><p>A list of the rules to be respected by all gang members.</p></div>
           </div>
         </div>
-        {/* <div
+        <div
           className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/jobs')}
         >
@@ -49,20 +49,6 @@ function InformationCenter() {
               </button>
             </div>
             <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
-          </div>
-        </div> */}
-        <div
-          className="InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/locations')}
-        >
-          <div className="content">
-            <div className='header'>
-              <p><i className='map marker alternate icon' /> Locations of Interest</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/locations')}>
-                <i className='external alternate icon' />
-              </button>
-            </div>
-            <div className='Notes'><p>A list of discreet locations that can be used for operations.</p></div>
           </div>
         </div>
         <div
@@ -77,6 +63,20 @@ function InformationCenter() {
               </button>
             </div>
             <div className='Notes'><p>A list of all hacking minigames with practice links.</p></div>
+          </div>
+        </div>
+        <div
+          className="InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/locations')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='map marker alternate icon' /> Locations of Interest</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/locations')}>
+                <i className='external alternate icon' />
+              </button>
+            </div>
+            <div className='Notes'><p>A list of discreet locations that can be used for operations.</p></div>
           </div>
         </div>
         <div

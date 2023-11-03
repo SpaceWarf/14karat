@@ -37,7 +37,7 @@ function Hierarchy() {
             </div>
           </div>
           <div className='Division'>
-            <h1>Wakagashira (Head)</h1>
+            <h1>Wakagashira (Heads)</h1>
             <div className='Role'>
               <p>
                 Wakagashira are high-ranking members who are second-in-command to the Oyabun. This role involves significant authority and responsibility, as they

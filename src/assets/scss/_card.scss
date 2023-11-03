@@ -42,18 +42,18 @@
       }
     }
 
-    button.positive.hover-animation {
+    button.hover-animation {
       .label {
-        width: 75px;
+        width: 125px;
       }
 
       &:hover:not(:disabled) {
         .label {
-          left: calc((100% - 100px) / 2);
+          left: calc((100% - 150px) / 2);
         }
 
         .IconContainer {
-          right: calc((100% - 100px) / 2);
+          right: calc((100% - 150px) / 2);
         }
       }
     }

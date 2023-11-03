@@ -24,7 +24,7 @@ import Taxes from './components/InformationCenter/Taxes/Taxes';
 import LocationsOfInterest from './components/InformationCenter/LocationsOfInterest/LocationsOfInterest';
 import JobListing from './components/Jobs/JobListing';
 import JobPicker from './components/Jobs/JobPicker';
-// import Jobs from './components/InformationCenter/Jobs/Jobs';
+import Jobs from './components/InformationCenter/Jobs/Jobs';
 import Radios from './components/Radios/Radios';
 
 function App() {
@@ -50,7 +50,7 @@ function App() {
             <Route path='/information-center/rules' element={<Rules />} />
             <Route path='/information-center/taxes' element={<Taxes />} />
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
-            {/* <Route path='/information-center/jobs' element={<Jobs />} /> */}
+            <Route path='/information-center/jobs' element={<Jobs />} />
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/new' element={<JobPicker />} />
             <Route path='/radios' element={<Radios />} />

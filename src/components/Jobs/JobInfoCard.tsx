@@ -178,28 +178,6 @@ function JobInfoCard(props: JobInfoCardProps) {
               )}
             </div>
             <div className='Field'>
-              <p className='Label'>Cards</p>
-              {Object.keys(props.info.cards).length ? (
-                <ul className='Value'>
-                  {getCardList(props.info.cards)}
-                </ul>
-              ) : (
-                <p className='Value'>-</p>
-              )}
-            </div>
-          </div>
-          <div className='Row'>
-            <div className='Field'>
-              <p className='Label'>Usbs</p>
-              {Object.keys(props.info.usbs).length ? (
-                <ul className='Value'>
-                  {getUsbsList(props.info.usbs)}
-                </ul>
-              ) : (
-                <p className='Value'>-</p>
-              )}
-            </div>
-            <div className='Field'>
               <p className='Label'>Hacks</p>
               {props.info.hacks.length ? (
                 <ul className='Value'>
@@ -210,13 +188,35 @@ function JobInfoCard(props: JobInfoCardProps) {
               )}
             </div>
           </div>
+          <div className='Row'>
+            <div className='Field'>
+              <p className='Label'>Cards</p>
+              {Object.keys(props.info.cards).length ? (
+                <ul className='Value'>
+                  {getCardList(props.info.cards)}
+                </ul>
+              ) : (
+                <p className='Value'>-</p>
+              )}
+            </div>
+            <div className='Field'>
+              <p className='Label'>Usbs</p>
+              {Object.keys(props.info.usbs).length ? (
+                <ul className='Value'>
+                  {getUsbsList(props.info.usbs)}
+                </ul>
+              ) : (
+                <p className='Value'>-</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       {props.showActionButton && (
         <div className='extra content'>
-          <button className="ui button positive hover-animation" onClick={() => handleCreateJob(true)}>
-            <p className='label contrast'>Create Job</p>
-            <p className='IconContainer contrast'><i className='add icon'></i></p>
+          <button className="ui button hover-animation" disabled>
+            <p className='label'>View Guide - TODO</p>
+            <p className='IconContainer'><i className='eye icon'></i></p>
           </button>
         </div>
       )}

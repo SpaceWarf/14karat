@@ -2,11 +2,11 @@ import './Radios.scss';
 import { useSelector } from 'react-redux';
 import RadioCard from '../Common/RadioCard';
 import Header from '../Common/Header';
-import { getMainRadio, getRecentlyBurnedRadios } from '../../redux/selectors/radios';
+import { getActiveRadios, getMainRadio, getRecentlyBurnedRadios } from '../../redux/selectors/radios';
 
 function Radios() {
   const mainRadio = useSelector(getMainRadio);
-  // const activeRadios = useSelector(getActiveRadios);
+  const activeRadios = useSelector(getActiveRadios);
   const burnedRadios = useSelector(getRecentlyBurnedRadios);
 
   return (
@@ -16,7 +16,7 @@ function Radios() {
         <div className='Listing'>
           {mainRadio && <RadioCard radio={mainRadio} />}
         </div>
-        {/* <Header text='Active Radios' decorated />
+        <Header text='Active Radios' decorated />
         <div className='Listing'>
           {activeRadios.length === 0 && (
             <p>No active radios to show...</p>
@@ -24,7 +24,7 @@ function Radios() {
           {activeRadios.map(radio => (
             <RadioCard radio={radio} />
           ))}
-        </div> */}
+        </div>
         <Header text='Recently Burned Radios' decorated />
         <div className='Listing'>
           {burnedRadios.length === 0 && (
