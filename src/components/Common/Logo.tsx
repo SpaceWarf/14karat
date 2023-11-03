@@ -3,19 +3,20 @@ import { useEffect, useState } from 'react';
 
 interface LogoProps {
   interactive?: boolean;
+  randomize?: boolean;
   onClick?: () => void;
 }
 
-function Logo({ interactive, onClick }: LogoProps) {
+function Logo({ interactive, randomize, onClick }: LogoProps) {
   const [rdmLogo, setRdmLogo] = useState<string>(logo);
 
   useEffect(() => {
-    if (Math.random() >= 0.01) {
+    if (randomize && Math.random() >= 0.01) {
       const context = require.context("../../assets/images/alternate-logos", false, /.*\.png$/);
       const images = context.keys().map((key) => context(key));
       setRdmLogo(images[Math.floor(Math.random() * images.length)]);
     }
-  }, []);
+  }, [randomize]);
 
   return (
     interactive ? (

@@ -26,6 +26,8 @@ import JobListing from './components/Jobs/JobListing';
 import JobPicker from './components/Jobs/JobPicker';
 import Jobs from './components/InformationCenter/Jobs/Jobs';
 import Radios from './components/Radios/Radios';
+import PublicLore from './components/PublicLore/PublicLore';
+import SpiritsAndGuardians from './components/InformationCenter/SpiritsAndGuardians/SpiritsAndGuardians';
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/notfound' element={<NotFound />} />
+          <Route path='/public/lore' element={<PublicLore />} />
           <Route element={<ProtectedRoute><PageLayout /></ProtectedRoute>}>
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
@@ -51,6 +54,7 @@ function App() {
             <Route path='/information-center/taxes' element={<Taxes />} />
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
             <Route path='/information-center/jobs' element={<Jobs />} />
+            <Route path='/information-center/spirits-and-guardians' element={<SpiritsAndGuardians />} />
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/new' element={<JobPicker />} />
             <Route path='/radios' element={<Radios />} />

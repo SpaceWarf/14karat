@@ -33,6 +33,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         <div className="Header">
           <Logo
             interactive
+            randomize
             onClick={() => navigate('/')}
           />
         </div>
