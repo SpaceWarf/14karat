@@ -29,7 +29,7 @@ function Hierarchy() {
                 as maintain order and discipline within the family. Loyalty, respect, and adherence to the Oyabun's directives are paramount in the hierarchy.
               </p>
               <p>
-                The Oyabuns are under the protection of <a href='/information-center/spirits-and-guardians#komainu' target='_blank' rel="noreferrer">Koma inu (狛犬)</a>,
+                The Oyabuns are under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#komainu' target='_blank' rel="noreferrer">Koma inu (狛犬)</a>,
                 a twin pair of mythical lions with the power to repel evil. Koma inu are a symbol of yin and yang, with one lion being typically depicted with its
                 mouth open, symbolizing courage and strength, and the other lion depicted with its mouth closed, symbolizing wisdom and prudence.
               </p>
@@ -57,7 +57,7 @@ function Hierarchy() {
                 family stay one step ahead of their adversaries and maintain their operations.
               </p>
               <p>
-                Intelligence Heads are under the protection of <a href='/information-center/spirits-and-guardians#kitsune/' target='_blank' rel="noreferrer">Kitsune (狐)</a>,
+                Intelligence Heads are under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#kitsune' target='_blank' rel="noreferrer">Kitsune (狐)</a>,
                 intelligent fox spirits known for their ageless wisdom. Kitsune are depicted with multiple tails, the number of tails representing their age and wisdom.
               </p>
             </div>
@@ -70,7 +70,7 @@ function Hierarchy() {
                 their decision-making.
               </p>
               <p>
-                Operation Heads are under the protection of <a href='/information-center/spirits-and-guardians#yatagarasu/' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>,
+                Operation Heads are under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#yatagarasu' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>,
                 a three legged crow spirit tasked with navigation and guidance, and with steering groups towards the right path.
               </p>
             </div>
@@ -82,7 +82,7 @@ function Hierarchy() {
                 promotions, blood oaths, and other important events.
               </p>
               <p>
-                Ceremonies Heads are under the protection of <a href='/information-center/spirits-and-guardians#houou/' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
+                Ceremonies Heads are under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
                 a phoenix spirit with immense cultural significance that symbolizes beauty, change, and harmony.
               </p>
             </div>
@@ -97,7 +97,7 @@ function Hierarchy() {
                 laws.
               </p>
               <p>
-                Enforcement Heads are under the protection of <a href='/information-center/spirits-and-guardians#byakko/' target='_blank' rel="noreferrer">Byakko (白虎)</a>,
+                Enforcement Heads are under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#byakko' target='_blank' rel="noreferrer">Byakko (白虎)</a>,
                 a powerful white tiger spirit that offers defense against evil forces, and symbolizes valor and protection.
               </p>
             </div>
@@ -111,7 +111,7 @@ function Hierarchy() {
                 high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Intelligence Leads are also under the protection of the <a href='/information-center/spirits-and-guardians#kitsune/' target='_blank' rel="noreferrer">Kitsune (狐)</a>.
+                Intelligence Leads are also under the protection of the <a href='/information-center/spirits-and-guardians?active=Guardians#kitsune' target='_blank' rel="noreferrer">Kitsune (狐)</a>.
               </p>
             </div>
             <div className='Role'>
@@ -121,7 +121,7 @@ function Hierarchy() {
                 high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Operations Leads are also under the protection of <a href='/information-center/spirits-and-guardians#yatagarasu/' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>.
+                Operations Leads are also under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#yatagarasu' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>.
               </p>
             </div>
             <div className='Role'>
@@ -131,7 +131,7 @@ function Hierarchy() {
                 high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Ceremonies Leads are also under the protection of <a href='/information-center/spirits-and-guardians#houou/' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>.
+                Ceremonies Leads are also under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>.
               </p>
             </div>
             <div className='Role'>
@@ -141,7 +141,7 @@ function Hierarchy() {
                 in high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Enforcement Leads are also under the protection of <a href='/information-center/spirits-and-guardians#byakko/' target='_blank' rel="noreferrer">Byakko (白虎)</a>.
+                Enforcement Leads are also under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#byakko' target='_blank' rel="noreferrer">Byakko (白虎)</a>.
               </p>
             </div>
           </div>
@@ -154,7 +154,7 @@ function Hierarchy() {
                 collection, acts of violence, etc. While they hold relatively low positions in the hierarchy, Kobun are essential for operations.
               </p>
               <p>
-                Kobun are under the protection of <a href='/information-center/spirits-and-guardians#inugami/' target='_blank' rel="noreferrer">Inugami (犬神)</a>,
+                Kobun are under the protection of <a href='/information-center/spirits-and-guardians?active=Guardians#inugami' target='_blank' rel="noreferrer">Inugami (犬神)</a>,
                 a dog spirit said to bring protection and good fortune, but also capable of bringing vengeance and destruction.
               </p>
             </div>
@@ -170,7 +170,7 @@ function Hierarchy() {
               </p>
               <p>
                 Shatei are not under the protection of any spirit as they are not blooded in members of the family. They are referred to
-                as <a href='/information-center/spirits-and-guardians#ikiryou/' target='_blank' rel="noreferrer">Ikiryō (生霊)</a>, or living spirits, as their
+                as <a href='/information-center/spirits-and-guardians?active=Spirits#ikiryou' target='_blank' rel="noreferrer">Ikiryō (生霊)</a>, or living spirits, as their
                 connection between their body and spirit is still alive. That connection is severed as part of the blood-in process.
               </p>
             </div>
@@ -195,14 +195,14 @@ function Hierarchy() {
             <div className='Role'>
               <h2>Raijū (Onryō)</h2>
               <p>
-                <a href='/information-center/spirits-and-guardians#raijuu/' target='_blank' rel="noreferrer">Raijū (雷獣)</a> are highly skilled and trusted members of
+                <a href='/information-center/spirits-and-guardians?active=Guardians#raijuu' target='_blank' rel="noreferrer">Raijū (雷獣)</a> are highly skilled and trusted members of
                 the organization who excel in various aspects of enforcement, and are known for their proficiency in physical combat, weapons handling, and tactics.
                 These individuals are often handpicked for their exceptional abilities and dedication to the family. Raijū are called upon for missions that require
                 precision, stealth, and decisiveness. They are highly respected within the organization, and they command a level of fear and admiration among their
                 peers and rivals. It is believed that whenever lightning strikes, it is because a Raijū was sent to exact revenge.
               </p>
               <p>
-                Raijū are also referred to as <a href='/information-center/spirits-and-guardians#onryou/' target='_blank' rel="noreferrer">Onryō (怨霊)</a>, or
+                Raijū are also referred to as <a href='/information-center/spirits-and-guardians?active=Spirits#onryou' target='_blank' rel="noreferrer">Onryō (怨霊)</a>, or
                 vengeful spirits, and are associated with intense emotions such as anger, hatred, and a desire for revenge. They are used as a weapon to achieve
                 revenge on those who have wronged the family.
               </p>
@@ -214,7 +214,7 @@ function Hierarchy() {
                 on managing the internal affairs, logistics, finances, and record-keeping of the organization.
               </p>
               <p>
-                Administrators are also referred to as <a href='/information-center/spirits-and-guardians#kyourinrin/' target='_blank' rel="noreferrer">Kyōrinrin (経凛々)</a>,
+                Administrators are also referred to as <a href='/information-center/spirits-and-guardians?active=Guardians#kyourinrin' target='_blank' rel="noreferrer">Kyōrinrin (経凛々)</a>,
                 a spirit of knowledge formed from ancient scrolls, books, and scriptures.
               </p>
             </div>
@@ -226,7 +226,7 @@ function Hierarchy() {
                 persons serve the role of owning and managing stash houses so they are not known to legal observers.
               </p>
               <p>
-                Clean persons are also referred to as <a href='/information-center/spirits-and-guardians#ryuuguuwarashi/' target='_blank' rel="noreferrer">Ryūgū warashi (竜宮童子)</a>,
+                Clean persons are also referred to as <a href='/information-center/spirits-and-guardians?active=Guardians#ryuuguuwarashi' target='_blank' rel="noreferrer">Ryūgū warashi (竜宮童子)</a>,
                 or child from the dragon palace, which are child spirits that bring countless riches to their parents. Overtime, as they become less and less clean, they are
                 forced by their parents to bathe, or they are kicked out of the house, prompting the family to lose all the riches brought to them by the Ryūgū warashi.
               </p>
@@ -235,7 +235,7 @@ function Hierarchy() {
               <h2>Dead Spirits (Shiryō)</h2>
               <p>
                 If a blooded-in member ever decides to leave the family, they will go through a blood-out ritual where their body is killed and their spirit
-                released. Blooded-out members are known as <a href='/information-center/spirits-and-guardians#shiryou/' target='_blank' rel="noreferrer">Shiryō (死霊)</a>,
+                released. Blooded-out members are known as <a href='/information-center/spirits-and-guardians?active=Spirits#shiryou' target='_blank' rel="noreferrer">Shiryō (死霊)</a>,
                 or dead spirits, and are never to be welcomed back in the organization.
               </p>
             </div>

@@ -13,7 +13,7 @@ enum Tab {
 
 function SpiritsAndGuardians() {
   const navigate = useNavigate();
-  const [active, setActive] = useState<string>(Tab.GUARDIANS);
+  const [active, setActive] = useState<string>(Tab.SPIRITS);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {

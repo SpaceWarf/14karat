@@ -14,7 +14,7 @@ enum Tab {
 }
 
 function PublicLore() {
-  const [active, setActive] = useState<string>(Tab.GUARDIANS);
+  const [active, setActive] = useState<string>(Tab.SPIRITS);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
