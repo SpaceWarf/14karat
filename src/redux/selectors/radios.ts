@@ -14,13 +14,13 @@ export const getMainRadio = (state: RootState): Radio | undefined => {
 export const getActiveRadios = (state: RootState): Radio[] => {
   return state.radios.radios
     .filter(radio => !radio.main && !radio.burned)
-    .sort((a, b) => new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime());
+    .sort((a, b) => new Date(a.createdAt || "").getTime() - new Date(b.createdAt || "").getTime());
 }
 
 export const getRecentlyBurnedRadios = (state: RootState): Radio[] => {
   return state.radios.radios
     .filter(radio => radio.burned && new Date().getTime() - new Date(radio.burnTime || "").getTime() < 3600000)
-    .sort((a, b) => new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime());
+    .sort((a, b) => new Date(a.createdAt || "").getTime() - new Date(b.createdAt || "").getTime());
 }
 
 export const getAllUsedChannels = (state: RootState): string[] => {

@@ -97,7 +97,7 @@ function JobCard(props: JobCardProps) {
     <div className='JobCard ui card attached external'>
       <div className="content">
         <div className='header'>
-          <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index > 0 ? props.job.index : ""}</p>
+          <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
           {isAdmin && (
             <div className="Actions">
               <button className="ui icon negative button" onClick={handleDelete}>

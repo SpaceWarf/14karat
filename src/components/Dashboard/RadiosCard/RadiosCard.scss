@@ -5,5 +5,35 @@
 
   .Listing {
     padding: 20px 0;
+
+    .RadioLabel {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    &.ActiveListing {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 50px;
+
+      .ChannelLabel {
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+
+      .ChannelActions {
+        right: calc(50% - 70px);
+      }
+
+      .fire.icon {
+        font-size: 1rem;
+      }
+
+      .RadioLabel {
+        font-size: 0.85rem;
+      }
+    }
   }
 }
