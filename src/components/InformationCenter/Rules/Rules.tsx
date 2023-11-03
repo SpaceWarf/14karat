@@ -7,7 +7,7 @@ function Rules() {
 
   return (
     <div className="Rules">
-      <Header text='Gang Rules' decorated />
+      <Header text='Rules' decorated />
       <div className='content'>
         <div className="actions">
           <p className="hyperlink-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>

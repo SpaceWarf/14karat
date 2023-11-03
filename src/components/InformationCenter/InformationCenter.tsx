@@ -15,7 +15,7 @@ function InformationCenter() {
         >
           <div className="content">
             <div className='header'>
-              <p><i className='sitemap icon' /> Gang Hierarchy</p>
+              <p><i className='sitemap icon' /> Hierarchy</p>
               <button className="ui icon button" onClick={() => navigate('/information-center/hierarchy')}>
                 <i className='external alternate icon' />
               </button>
@@ -29,7 +29,7 @@ function InformationCenter() {
         >
           <div className="content">
             <div className='header'>
-              <p><i className='numbered list icon' /> Gang Rules</p>
+              <p><i className='numbered list icon' /> Rules</p>
               <button className="ui icon button" onClick={() => navigate('/information-center/rules')}>
                 <i className='external alternate icon' />
               </button>
@@ -43,7 +43,7 @@ function InformationCenter() {
         >
           <div className="content">
             <div className='header'>
-              <p><i className='book icon' /> Gang Lore</p>
+              <p><i className='book icon' /> Lore</p>
               <button className="ui icon button" onClick={() => navigate('/information-center/lore')}>
                 <i className='external alternate icon' />
               </button>

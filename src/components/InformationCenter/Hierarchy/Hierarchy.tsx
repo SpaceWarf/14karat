@@ -8,7 +8,7 @@ function Hierarchy() {
 
   return (
     <div className="Hierarchy">
-      <Header text='Gang Hierarchy' decorated />
+      <Header text='Hierarchy' decorated />
       <div className='content'>
         <div className="actions">
           <p className="hyperlink-button" onClick={() => navigate('/information-center')}><i className='arrow left icon' /> back</p>
