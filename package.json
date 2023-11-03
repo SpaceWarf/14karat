@@ -63,6 +63,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-big-calendar": "^1.8.0"
+    "@types/react-big-calendar": "^1.8.0",
+    "@types/webpack-env": "^1.18.3"
   }
 }
