@@ -34,7 +34,7 @@ function EventCalendar() {
       setWebhook(await getWebhookById('event-update'));
     }
 
-    if (isAdmin || profile.info.roles.includes('ceremonies-emissary')) {
+    if (isAdmin || profile.info.roles.includes('ceremonies-lead')) {
       fetchWebhook();
     }
   }, [isAdmin, profile]);
