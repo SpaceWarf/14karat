@@ -42,7 +42,6 @@ function LoreMenu() {
           name={Tab.CEREMONIES}
           active={active === Tab.CEREMONIES}
           onClick={(_, { name }) => name && setSearchParams({ active: name })}
-          disabled
         />
       </Menu>
       {active === Tab.SPIRITS && <SpiritsListing />}

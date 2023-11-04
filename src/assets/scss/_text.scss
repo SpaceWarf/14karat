@@ -47,3 +47,12 @@ p {
     color: darken($gray-pale, 10%);
   }
 }
+
+.quote {
+  margin: 0 100px;
+}
+
+.poem {
+  display: flex;
+  justify-content: center;
+}
