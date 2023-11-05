@@ -16,6 +16,7 @@ import { Location } from '../state/location';
 import { Card, Gear, Job, JobInfo, JobUpdate, Usb } from "../state/jobs";
 import { ProfileInfo } from "../state/profile";
 import { Radio, RadioUpdate } from "../state/radio";
+import { Quote } from "../state/quotes";
 
 export interface FirestoreEntity {
   id: string;
@@ -47,6 +48,7 @@ const gearRef = collection(db, "gear");
 const cardsRef = collection(db, "cards");
 const usbsRef = collection(db, "usbs");
 const radiosRef = collection(db, "radios");
+const quotesRef = collection(db, "quotes");
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);
@@ -626,4 +628,16 @@ export async function deleteRadio(id: string, user: User | null): Promise<void> 
     deletedAt: now,
     deletedBy: user?.uid ?? '',
   });
+}
+
+export async function getQuotes(): Promise<Quote[]> {
+  const snapshot = await getDocs(quotesRef);
+  const quotes: Quote[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    const data = doc.data();
+    if (!data.deleted) {
+      quotes.push({ id: doc.id, ...data });
+    }
+  });
+  return quotes;
 }

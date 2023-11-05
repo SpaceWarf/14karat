@@ -19,7 +19,8 @@ import {
   getCards,
   getUsbs,
   getRadios,
-  onRadiosSnapshot
+  onRadiosSnapshot,
+  getQuotes
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -34,6 +35,7 @@ import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
 import { setActiveJobs, setCards, setGear, setJobInfos, setUsbs } from "../redux/reducers/jobs";
 import { setRadios } from "../redux/reducers/radios";
+import { setQuotes } from "../redux/reducers/quotes";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -52,7 +54,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     gear,
     cards,
     usbs,
-    radios
+    radios,
+    quotes,
   ] = await Promise.all([
     getProfileById(id),
     getDivisions(),
@@ -68,6 +71,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getCards(),
     getUsbs(),
     getRadios(),
+    getQuotes(),
   ]);
   dispatch(setProfile(profile));
   dispatch(setRoles(roles));
@@ -82,7 +86,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setGear(gear));
   dispatch(setCards(cards));
   dispatch(setUsbs(usbs));
-  dispatch(setRadios(radios))
+  dispatch(setRadios(radios));
+  dispatch(setQuotes(quotes));
 
   if (profile.pfp) {
     const url = await getProfilePictureUrl(profile.pfp);
