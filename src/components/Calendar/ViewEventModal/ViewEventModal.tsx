@@ -71,7 +71,7 @@ function ViewEventModal(props: ViewEventModalProps) {
           <div className="Label" style={{ backgroundColor: props.event.color }} />
           {props.event.title}
         </div>
-        {(isAdmin || profile.info.roles.includes('ceremonies-emissary')) && (
+        {(isAdmin || profile.info.roles.includes('ceremonies-lead')) && (
           <div className="Actions">
             <button className="ui icon button" disabled={!props.webhook} onClick={sendWebhook}>
               <i className="discord icon" />

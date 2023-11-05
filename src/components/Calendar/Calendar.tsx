@@ -71,7 +71,7 @@ function EventCalendar() {
   }
 
   const handleSelectSlot = (event: any) => {
-    if (isAdmin || profile.info.roles.includes('ceremonies-emissary')) {
+    if (isAdmin || profile.info.roles.includes('ceremonies-lead')) {
       setSlotStart(event.start);
       setSlotEnd(event.end);
       setOpenCreateModal(true);
