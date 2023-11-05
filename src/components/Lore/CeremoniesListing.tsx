@@ -76,14 +76,19 @@ function CeremoniesListing() {
           </p>
         </div>
       </div>
-      {/* <div className='Ceremony'>
+      <div className='Ceremony'>
         <Header id="senbiki-okami" element={<p>Senbiki ōkami (<span className='Kanji'>千疋狼</span>)</p>} decorated />
         <div className='Description'>
           <p>
-            TODO
+            <a href='https://yokai.com/senbikiookami/' target='_blank' rel="noreferrer">Senbiki ōkami (千疋狼)</a> is the ceremony or event by which the Raijū are sent out
+            to hunt. Called down by a bolt of lightning, they form a pack and converge on their target to achieve the kill. The legends around Senbiki ōkami usually fit
+            a specific pattern as follows: a traveler is chased by wolves on the road at night, and the only escape available is to climb high up into a nearby tree.
+            However, the wolves start to climb on to each other's backs, forming a living ladder. In this way, they are able to reach even the highest branches of the
+            trees. However, the wolf ladder is one wolf too short to reach the traveler. The wolves call for their leader to complete the ladder and catch their prey.
+            This illustrates the necessity of the Raijū to work together and follow the lead of the head of the pack to achieve their objectives.
           </p>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
