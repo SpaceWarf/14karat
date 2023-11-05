@@ -9,6 +9,7 @@ import RadiosCard from './RadiosCard/RadiosCard';
 // import OtherJobsCard from './JobsCard/OtherJobsCard';
 // import MyJobCard from './JobsCard/MyJobCard';
 import banner from '../../assets/images/banner.png';
+import QuoteCard from './QuoteCard/QuoteCard';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -49,6 +50,7 @@ function Dashboard() {
         <div className='Col'>
           <UpcomingEventsCard />
           <WarCard />
+          <QuoteCard />
         </div>
       </div>
     </div>

@@ -1,0 +1,20 @@
+@import "../../../assets/scss/index";
+
+.QuoteCard.ui.card {
+  width: 100%;
+
+  .QuoteContainer {
+    margin-top: 10px;
+
+    .Quote {
+      font-size: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .By {
+      font-size: 1.2rem;
+      text-align: right;
+      padding: 0 75px;
+    }
+  }
+}
