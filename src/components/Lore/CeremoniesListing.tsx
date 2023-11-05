@@ -21,9 +21,10 @@ function CeremoniesListing() {
         <Header id="bloodin" element={<p>Blood-in</p>} decorated />
         <div className='Description'>
           <p>
-            The blood-in ceremony is the ritual in which an newcomer becomes a full-fledged member of the family. The ceremony takes place at the blood altar
-            where all past blood-in ceremonies have taken place. The family will gather at the altar with the newcomer, and invite them to walk up
-            the steps next to the Oyabun. The Oyabun then prompts the newcomer to hold their hand over the blade of the katana before reciting the blood rite:
+            The blood-in ceremony is the ritual in which an newcomer becomes a full-fledged member of the family. The goal of the ceremony is to sever the connection
+            between the newcomer's body and spirit, and bind their spirit to the family. The ceremony takes place at the blood altar where all past blood-in ceremonies
+            have taken place. The family will gather at the altar with the newcomer, and invite them to walk up the steps next to the Oyabun. The Oyabun then prompts
+            the newcomer to hold their hand over the blade of the katana before reciting the blood rite:
           </p>
           <div className='poem'>
             <p>
@@ -57,14 +58,24 @@ function CeremoniesListing() {
           </p>
         </div>
       </div>
-      {/* <div className='Ceremony'>
+      <div className='Ceremony'>
         <Header id="bloodout" element={<p>Blood-out</p>} decorated />
         <div className='Description'>
           <p>
-            TODO
+            The blood-out ceremony is the ritual in which a fully fledged member gets removed from the family, either by their decision, or because of a decision from
+            the leaders. The goal of the ceremony is to release the spirit from its bond to the family, and kill its original body. If the blooded-out member has not
+            previously handed their chain and sword in, demand it from them at this point. Then, the member in charge of the blood-out will recite the rite:
+          </p>
+          <p className='quote'>
+            "MEMBER'S NAME, your bond to this family has been revoked. Once Yokai, you are now Shiryō. Your spirit is not welcome within this family, from now on, and
+            forever. Your guardian is your protector no more. Do not seek our aid, for it will not be granted. As your body dies, so with it does any memories of your
+            time with us. Expect dire consequences if they do not; what is dead may never live again."
+          </p>
+          <p>
+            The member in charge would then thrust their blade into the blooded-out member, and lay their body to the ground before leaving.
           </p>
         </div>
-      </div> */}
+      </div>
       {/* <div className='Ceremony'>
         <Header id="senbiki-okami" element={<p>Senbiki ōkami (<span className='Kanji'>千疋狼</span>)</p>} decorated />
         <div className='Description'>
