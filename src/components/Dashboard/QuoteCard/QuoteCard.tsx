@@ -15,7 +15,7 @@ function QuoteCard() {
     const weekNumber = Math.ceil(days / 7);
 
     setQuoteOfTheWeek(quotes[(quotes.length - 1) % weekNumber])
-  });
+  }, [quotes]);
 
   return (
     <div className="QuoteCard ui card attached external">
