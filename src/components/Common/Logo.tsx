@@ -10,13 +10,13 @@ interface LogoProps {
 function Logo({ interactive, randomize, onClick }: LogoProps) {
   const [rdmLogo, setRdmLogo] = useState<string>(logo);
 
-  useEffect(() => {
-    if (randomize && Math.random() >= 0.9) {
-      const context = require.context("../../assets/images/alternate-logos", false, /.*\.png$/);
-      const images = context.keys().map((key) => context(key));
-      setRdmLogo(images[Math.floor(Math.random() * images.length)]);
-    }
-  }, [randomize]);
+  // useEffect(() => {
+  //   if (randomize && Math.random() >= 0.9) {
+  //     const context = require.context("../../assets/images/alternate-logos", false, /.*\.png$/);
+  //     const images = context.keys().map((key) => context(key));
+  //     setRdmLogo(images[Math.floor(Math.random() * images.length)]);
+  //   }
+  // }, [randomize]);
 
   return (
     interactive ? (
