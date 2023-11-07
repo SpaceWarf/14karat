@@ -81,6 +81,20 @@ function InformationCenter() {
         </div>
         <div
           className="InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/assets')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='image icon' /> Assets</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/assets')}>
+                <i className='external alternate icon' />
+              </button>
+            </div>
+            <div className='Notes'><p>A list of all gang assets including logos and sprays.</p></div>
+          </div>
+        </div>
+        <div
+          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/locations')}
         >
           <div className="content">

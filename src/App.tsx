@@ -28,6 +28,7 @@ import Jobs from './components/InformationCenter/Jobs/Jobs';
 import Radios from './components/Radios/Radios';
 import PublicLore from './components/PublicLore/PublicLore';
 import Lore from './components/InformationCenter/Lore/Lore';
+import Assets from './components/InformationCenter/Assets/Assets';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
             <Route path='/information-center/jobs' element={<Jobs />} />
             <Route path='/information-center/lore' element={<Lore />} />
+            <Route path='/information-center/assets' element={<Assets />} />
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/new' element={<JobPicker />} />
             <Route path='/radios' element={<Radios />} />
