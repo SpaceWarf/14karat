@@ -41,7 +41,7 @@ export interface JobInfo extends FirestoreEntity {
   hostages: number;
   payout: number;
   crew: { [key: string]: number };
-  gear: { [key: string]: number };
+  gear: { [key: string]: string };
   cards: { [key: string]: number };
   usbs: { [key: string]: number };
   hacks: string[];
@@ -87,4 +87,5 @@ export const CrewRoleMap: { [key: string]: string } = {
   "shooter": "Shooters",
   "crates": "Crates",
   "robber": "Robbers",
+  "cook": "Cooks",
 }

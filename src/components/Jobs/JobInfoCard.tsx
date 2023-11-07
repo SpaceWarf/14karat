@@ -20,7 +20,7 @@ function JobInfoCard(props: JobInfoCardProps) {
   const { hacks } = useSelector((state: RootState) => state.hacks);
   const { active } = useSelector((state: RootState) => state.jobs);
 
-  const getGearList = (gearMap: { [key: string]: number }): ReactElement[] => {
+  const getGearList = (gearMap: { [key: string]: string }): ReactElement[] => {
     const components: ReactElement[] = [];
 
     for (const [key, value] of Object.entries(gearMap)) {
@@ -28,7 +28,7 @@ function JobInfoCard(props: JobInfoCardProps) {
 
       if (gearData) {
         components.push(
-          <li>{gearData.name} x {value}</li>
+          <li>{value} {gearData.name}</li>
         )
       }
     }
@@ -103,7 +103,7 @@ function JobInfoCard(props: JobInfoCardProps) {
       <div className="content">
         <div className="header">
           <p><i className={`${props.info.icon} icon`} /> {props.info.name}</p>
-          <p>{isNaN(props.info.payout) ? props.info.payout : `~${currencyFormat(props.info.payout)}`}</p>
+          <p>{!props.info.payout || isNaN(props.info.payout) ? props.info.payout : `~${currencyFormat(props.info.payout)}`}</p>
         </div>
         <div className="Details ui form">
           <div className='Row'>
