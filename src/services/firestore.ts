@@ -16,8 +16,6 @@ import {
   onActiveJobsSnapshot,
   getJobInfos,
   getGear,
-  getCards,
-  getUsbs,
   getRadios,
   onRadiosSnapshot,
   getQuotes
@@ -33,7 +31,7 @@ import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
-import { setActiveJobs, setCards, setGear, setJobInfos, setUsbs } from "../redux/reducers/jobs";
+import { setActiveJobs, setGear, setJobInfos } from "../redux/reducers/jobs";
 import { setRadios } from "../redux/reducers/radios";
 import { setQuotes } from "../redux/reducers/quotes";
 
@@ -52,8 +50,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     activeJobs,
     jobInfos,
     gear,
-    cards,
-    usbs,
     radios,
     quotes,
   ] = await Promise.all([
@@ -68,8 +64,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getActiveJobs(),
     getJobInfos(),
     getGear(),
-    getCards(),
-    getUsbs(),
     getRadios(),
     getQuotes(),
   ]);
@@ -84,8 +78,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setActiveJobs(activeJobs));
   dispatch(setJobInfos(jobInfos));
   dispatch(setGear(gear));
-  dispatch(setCards(cards));
-  dispatch(setUsbs(usbs));
   dispatch(setRadios(radios));
   dispatch(setQuotes(quotes));
 

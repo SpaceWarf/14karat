@@ -17,8 +17,6 @@ function JobInfoCard(props: JobInfoCardProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const gear = useSelector((state: RootState) => state.jobs.gear);
-  const cards = useSelector((state: RootState) => state.jobs.cards);
-  const usbs = useSelector((state: RootState) => state.jobs.usbs);
   const { hacks } = useSelector((state: RootState) => state.hacks);
   const { active } = useSelector((state: RootState) => state.jobs);
 
@@ -31,52 +29,6 @@ function JobInfoCard(props: JobInfoCardProps) {
       if (gearData) {
         components.push(
           <li>{gearData.name} x {value}</li>
-        )
-      }
-    }
-
-    return components;
-  }
-
-  const getCardList = (cardMap: { [key: string]: number }): ReactElement[] => {
-    const components: ReactElement[] = [];
-
-    for (const [key, value] of Object.entries(cardMap)) {
-      switch (key) {
-        case "any-bank":
-          components.push(<li>Any Bank Card x {value}</li>);
-          break;
-        case "all-bank":
-          components.push(<li>All Bank Cards (6 total)</li>);
-          break;
-        case "any-security":
-          components.push(<li>Any Security Card x {value}</li>);
-          break;
-        case "any-humane":
-          components.push(<li>Any Humane Card x {value}</li>);
-          break;
-        default:
-          const cardData = cards.find(data => data.id === key);
-          if (cardData) {
-            components.push(
-              <li>{cardData.name} x {value}</li>
-            )
-          }
-      }
-    }
-
-    return components;
-  }
-
-  const getUsbsList = (usbMap: { [key: string]: number }): ReactElement[] => {
-    const components: ReactElement[] = [];
-
-    for (const [key, value] of Object.entries(usbMap)) {
-      const usbData = usbs.find(u => u.id === key);
-
-      if (usbData) {
-        components.push(
-          <li>{usbData.name} x {value}</li>
         )
       }
     }
@@ -182,28 +134,6 @@ function JobInfoCard(props: JobInfoCardProps) {
               {props.info.hacks.length ? (
                 <ul className='Value'>
                   {getHacksList(props.info.hacks)}
-                </ul>
-              ) : (
-                <p className='Value'>-</p>
-              )}
-            </div>
-          </div>
-          <div className='Row'>
-            <div className='Field'>
-              <p className='Label'>Cards</p>
-              {Object.keys(props.info.cards).length ? (
-                <ul className='Value'>
-                  {getCardList(props.info.cards)}
-                </ul>
-              ) : (
-                <p className='Value'>-</p>
-              )}
-            </div>
-            <div className='Field'>
-              <p className='Label'>Usbs</p>
-              {Object.keys(props.info.usbs).length ? (
-                <ul className='Value'>
-                  {getUsbsList(props.info.usbs)}
                 </ul>
               ) : (
                 <p className='Value'>-</p>

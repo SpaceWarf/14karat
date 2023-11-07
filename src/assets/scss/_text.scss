@@ -14,10 +14,11 @@
 
   .ui.header {
     font-family: CustomFont !important;
-    font-size: 3rem !important;
+    font-size: 2.2rem !important;
     font-weight: 100;
     color: $text-colour !important;
     margin: 0;
+    padding: 20px 0 10px 0;
 
     &.contrast {
       color: $text-colour-contrast !important;
