@@ -86,4 +86,5 @@ export const CrewRoleMap: { [key: string]: string } = {
   "cleaner": "Cleaners",
   "shooter": "Shooters",
   "crates": "Crates",
+  "robber": "Robbers",
 }
