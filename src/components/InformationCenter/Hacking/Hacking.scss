@@ -1,44 +1,49 @@
 @import "../../../assets/scss/index";
 
 .Hacking {
-  &>.content .Hacks {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
+  &>.content {
+    max-width: 1300px;
+    margin: 0 auto;
 
-    .HackCard {
-      width: 446px;
+    .Hacks {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
 
-      .Preview {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
+      .HackCard {
+        width: 446px;
 
-        .EmbedContainer {
-          background-color: black;
-          width: 426px;
-          height: 240px;
+        .Preview {
+          display: flex;
+          justify-content: center;
+          margin-top: 10px;
 
-          iframe {
+          .EmbedContainer {
+            background-color: black;
             width: 426px;
             height: 240px;
-          }
 
-          img {
-            max-width: 426px;
-            max-height: 240px;
+            iframe {
+              width: 426px;
+              height: 240px;
+            }
+
+            img {
+              max-width: 426px;
+              max-height: 240px;
+            }
           }
         }
-      }
 
-      .Notes {
-        white-space: pre-wrap;
-        overflow: visible;
-        color: darken($gray-pale, 20%);
-        text-align: left;
-        margin-top: 5px;
+        .Notes {
+          white-space: pre-wrap;
+          overflow: visible;
+          color: darken($gray-pale, 20%);
+          text-align: left;
+          margin-top: 5px;
+        }
       }
     }
   }

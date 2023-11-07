@@ -21,7 +21,7 @@ function Assets() {
     }
 
     fetchAssets();
-  }, [])
+  }, []);
 
   function handleClickItem(index: number) {
     const url = assets[index].url;
