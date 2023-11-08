@@ -31,36 +31,6 @@ function JobChecklist(props: JobChecklistProps) {
     setEditing(false);
   }
 
-  const handleCheckCardItem = async (id: string, checked: boolean) => {
-    setEditing(true);
-    await updateActiveJob(props.job.id, {
-      ...props.job,
-      cardsChecklist: {
-        ...props.job.cardsChecklist,
-        [id]: {
-          ...props.job.cardsChecklist[id],
-          checked,
-        },
-      }
-    }, user);
-    setEditing(false);
-  }
-
-  const handleCheckUsbItem = async (id: string, checked: boolean) => {
-    setEditing(true);
-    await updateActiveJob(props.job.id, {
-      ...props.job,
-      usbsChecklist: {
-        ...props.job.usbsChecklist,
-        [id]: {
-          ...props.job.usbsChecklist[id],
-          checked,
-        },
-      }
-    }, user);
-    setEditing(false);
-  }
-
   const getItemName = (id: string): string => {
     switch (id) {
       case "any-bank":
@@ -92,47 +62,11 @@ function JobChecklist(props: JobChecklistProps) {
           </div>
           {Object.keys(props.job.gearChecklist).map(id => (
             <div className={`CheckLine ${props.job.gearChecklist[id].checked ? 'checked' : ''}`}>
-              <p>{getItemName(id)} x {props.job.gearChecklist[id].quantity}</p>
+              <p>{props.job.gearChecklist[id].quantity} {getItemName(id)}</p>
               <Checkbox
                 checked={props.job.gearChecklist[id].checked}
                 disabled={editing}
                 onChange={() => handleCheckGearItem(id, !props.job.gearChecklist[id].checked)}
-              />
-            </div>
-          ))}
-        </>
-      )}
-      {Object.keys(props.job.cardsChecklist).length > 0 && (
-        <>
-          <div className="ListHeader">
-            <h4>Cards</h4>
-            {isAllChecked(props.job.cardsChecklist) && <i className='check icon' />}
-          </div>
-          {Object.keys(props.job.cardsChecklist).map(id => (
-            <div className={`CheckLine ${props.job.cardsChecklist[id].checked ? 'checked' : ''}`}>
-              <p>{getItemName(id)} x {props.job.cardsChecklist[id].quantity}</p>
-              <Checkbox
-                checked={props.job.cardsChecklist[id].checked}
-                disabled={editing}
-                onChange={() => handleCheckCardItem(id, !props.job.cardsChecklist[id].checked)}
-              />
-            </div>
-          ))}
-        </>
-      )}
-      {Object.keys(props.job.usbsChecklist).length > 0 && (
-        <>
-          <div className="ListHeader">
-            <h4>Usbs</h4>
-            {isAllChecked(props.job.usbsChecklist) && <i className='check icon' />}
-          </div>
-          {Object.keys(props.job.usbsChecklist).map(id => (
-            <div className={`CheckLine ${props.job.usbsChecklist[id].checked ? 'checked' : ''}`}>
-              <p>{getItemName(id)} x {props.job.usbsChecklist[id].quantity}</p>
-              <Checkbox
-                checked={props.job.usbsChecklist[id].checked}
-                disabled={editing}
-                onChange={() => handleCheckUsbItem(id, !props.job.usbsChecklist[id].checked)}
               />
             </div>
           ))}

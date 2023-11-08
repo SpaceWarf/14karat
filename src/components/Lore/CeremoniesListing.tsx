@@ -68,8 +68,8 @@ function CeremoniesListing() {
           </p>
           <p className='quote'>
             "MEMBER'S NAME, your bond to this family has been revoked. Once Yokai, you are now Shiryō. Your spirit is not welcome within this family, from now on, and
-            forever. Your guardian is your protector no more. Do not seek our aid, for it will not be granted. As your body dies, so with it does any memories of your
-            time with us. Expect dire consequences if they do not; what is dead may never live again."
+            forever. Your guardian is your protector no more. Do not seek our aid, for it will not be granted. As your body dies, so with it any memories of your
+            time with us. Expect dire consequences if they do not, for what is dead may never live again."
           </p>
           <p>
             The member in charge would then thrust their blade into the blooded-out member, and lay their body to the ground before leaving.
