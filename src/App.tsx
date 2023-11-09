@@ -29,6 +29,7 @@ import Radios from './components/Radios/Radios';
 import PublicLore from './components/PublicLore/PublicLore';
 import Lore from './components/InformationCenter/Lore/Lore';
 import Assets from './components/InformationCenter/Assets/Assets';
+import WordleHackPractice from './components/InformationCenter/Hacking/WordleHackPractice';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<War />} />
             <Route path='/information-center/hacking' element={<Hacking />} />
+            <Route path='/information-center/hacking/wordle' element={<WordleHackPractice />} />
             <Route path='/information-center' element={<InformationCenter />} />
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route path='/information-center/rules' element={<Rules />} />
