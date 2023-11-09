@@ -57,6 +57,7 @@ function WordleHackPractice() {
   const [failure, setFailure] = useState<boolean>(false);
   const [infiniteTimer, setInfiniteTimer] = useState<boolean>(false);
   const [infiniteAttempts, setInfiniteAttempts] = useState<boolean>(false);
+  const [viewSolution, setViewSolution] = useState<boolean>(true);
 
   useEffect(() => {
     const initialGrid: WordleCell[][] = [];
@@ -112,6 +113,7 @@ function WordleHackPractice() {
     if (form) {
       setSuccess(false);
       setFailure(false);
+      setViewSolution(false);
       const update = cloneDeep(form);
       update.clickIndex = 0;
       update.previousGrids = [];
@@ -126,6 +128,7 @@ function WordleHackPractice() {
     if (form) {
       setSuccess(false);
       setFailure(false);
+      setViewSolution(false);
       const update = cloneDeep(form);
       const answer = generateAnswer();
       update.answer = cloneDeep(answer);
@@ -247,10 +250,18 @@ function WordleHackPractice() {
               </button>
             )}
             {started && (
-              <button className="ui button negative hover-animation" onClick={handleReset}>
-                <p className='label contrast'>Reset</p>
-                <p className='IconContainer contrast'><i className='refresh icon'></i></p>
-              </button>
+              <>
+                <Checkbox
+                  checked={viewSolution}
+                  label="View Solution?"
+                  toggle
+                  onChange={() => setViewSolution(!viewSolution)}
+                />
+                <button className="ui button negative hover-animation" onClick={handleReset}>
+                  <p className='label contrast'>Reset</p>
+                  <p className='IconContainer contrast'><i className='refresh icon'></i></p>
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -288,6 +299,7 @@ function WordleHackPractice() {
                 answer={form.answer}
                 onSelectCell={handleSelectCell}
                 editable
+                viewIndex={viewSolution}
               />
             )}
           </div>
@@ -301,6 +313,7 @@ interface WordleGridComponentProps {
   grid: WordleGrid,
   answer?: WordleGrid,
   editable?: boolean,
+  viewIndex?: boolean,
   onSelectCell?: (rowIndex: number, cellIndex: number) => void,
 }
 
@@ -328,13 +341,16 @@ function WordleGridComponent(props: WordleGridComponentProps) {
       {props.grid.map((row, rowIndex) => {
         return (
           <div key={`row-${rowIndex}`} className='WordleRow'>
-            {row.map((cell, cellIndex) => (
-              <div
-                key={`row-${rowIndex}-cell-${cellIndex}`}
-                className={getCellClasses(cell, props.answer ? props.answer[rowIndex][cellIndex] : { selected: false, index: -1 })}
-                onClick={() => props.onSelectCell && props.onSelectCell(rowIndex, cellIndex)}
-              ></div>
-            ))}
+            {row.map((cell, cellIndex) => {
+              const answerCell: WordleCell = props.answer ? props.answer[rowIndex][cellIndex] : { selected: false, index: -1 };
+              return (
+                <div
+                  key={`row-${rowIndex}-cell-${cellIndex}`}
+                  className={getCellClasses(cell, props.answer ? props.answer[rowIndex][cellIndex] : { selected: false, index: -1 })}
+                  onClick={() => props.onSelectCell && props.onSelectCell(rowIndex, cellIndex)}
+                >{props.viewIndex && answerCell.index >= 0 ? answerCell.index + 1 : ''}</div>
+              )
+            })}
           </div>
         )
       })}
