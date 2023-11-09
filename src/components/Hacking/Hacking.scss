@@ -61,15 +61,25 @@
       width: 700px;
       margin: 20px 0;
 
-      .button,
-      .field.dropdown {
-        width: 250px;
+
+      .Settings {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .field.dropdown {
+          width: 150px;
+        }
       }
 
       .Buttons {
         display: flex;
         justify-content: flex-end;
         gap: 10px;
+
+        .button {
+          width: 150px;
+        }
       }
     }
 

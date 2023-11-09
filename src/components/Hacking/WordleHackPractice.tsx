@@ -3,6 +3,7 @@ import Header from '../Common/Header';
 import Dropdown, { DropdownOption } from '../Common/Dropdown';
 import { useEffect, useState } from 'react';
 import { cloneDeep, isEqual } from 'lodash';
+import { Checkbox } from 'semantic-ui-react';
 
 interface WordleCell {
   selected: boolean,
@@ -54,6 +55,8 @@ function WordleHackPractice() {
   const [form, setForm] = useState<WordleForm>();
   const [success, setSuccess] = useState<boolean>(false);
   const [failure, setFailure] = useState<boolean>(false);
+  const [infiniteTimer, setInfiniteTimer] = useState<boolean>(false);
+  const [infiniteAttempts, setInfiniteAttempts] = useState<boolean>(false);
 
   useEffect(() => {
     const initialGrid: WordleCell[][] = [];
@@ -86,7 +89,7 @@ function WordleHackPractice() {
   }, [started, countdown, pinCount]);
 
   useEffect(() => {
-    if (form && started && timer > 0) {
+    if (form && started && !infiniteTimer && timer > 0) {
       setTimeout(() => {
         const newTimer = timer - 1;
         setTimer(Math.max(0, newTimer));
@@ -103,7 +106,7 @@ function WordleHackPractice() {
     } else {
       setTimer(0);
     }
-  }, [form, started, timer]);
+  }, [form, started, infiniteTimer, timer]);
 
   const handleReset = () => {
     if (form) {
@@ -190,11 +193,13 @@ function WordleHackPractice() {
           setStarted(false);
           setSuccess(true);
         } else {
-          if (attempts === 1) {
-            setStarted(false);
-            setFailure(true);
-          } else {
-            setAttempts(attempts - 1);
+          if (!infiniteAttempts) {
+            if (attempts === 1) {
+              setStarted(false);
+              setFailure(true);
+            } else {
+              setAttempts(attempts - 1);
+            }
           }
         }
       }
@@ -211,13 +216,29 @@ function WordleHackPractice() {
       <Header text='Wordle Hack Practice' decorated />
       <div className='content'>
         <div className='Actions'>
-          <Dropdown
-            placeholder="Pin Count"
-            disabled={started}
-            options={PIN_COUNTS}
-            value={pinCount}
-            onChange={value => setPinCount(value)}
-          />
+          <div className='Settings'>
+            <Dropdown
+              placeholder="Pin Count"
+              disabled={started}
+              options={PIN_COUNTS}
+              value={pinCount}
+              onChange={value => setPinCount(value)}
+            />
+            <Checkbox
+              checked={infiniteTimer}
+              label="∞ Timer?"
+              toggle
+              disabled={started}
+              onChange={() => setInfiniteTimer(!infiniteTimer)}
+            />
+            <Checkbox
+              checked={infiniteAttempts}
+              label="∞ Attempts?"
+              toggle
+              disabled={started}
+              onChange={() => setInfiniteAttempts(!infiniteAttempts)}
+            />
+          </div>
           <div className='Buttons'>
             {!started && (
               <button className="ui button positive hover-animation" onClick={handleStart}>
