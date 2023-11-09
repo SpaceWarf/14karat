@@ -49,6 +49,7 @@ function ExpandHackModal() {
               embed: hack.embed,
               notes: `${hack.name}${hack.notes ? ` - ${hack.notes}` : ''}`,
               tags: [],
+              externalUrl: hack.url,
             }}
           />
         ) : (

@@ -1,0 +1,28 @@
+@import "../../../assets/scss/index";
+
+.NewFeatureCard.ui.card {
+  width: 100%;
+
+  .FeatureContainer {
+    &>p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    button.hover-animation {
+      .label {
+        width: 105px;
+      }
+
+      &:hover:not(:disabled) {
+        .label {
+          left: calc((100% - 130px) / 2);
+        }
+
+        .IconContainer {
+          right: calc((100% - 130px) / 2);
+        }
+      }
+    }
+  }
+}

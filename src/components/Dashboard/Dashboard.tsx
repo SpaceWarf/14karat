@@ -10,6 +10,7 @@ import RadiosCard from './RadiosCard/RadiosCard';
 // import MyJobCard from './JobsCard/MyJobCard';
 import banner from '../../assets/images/banner.png';
 import QuoteCard from './QuoteCard/QuoteCard';
+import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
 
 function Dashboard() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -44,6 +45,7 @@ function Dashboard() {
         <div className='Col'><RecentStratCard /></div>
         <div className='Col'>
           <RadiosCard />
+          <NewFeatureCard />
           {/* <MyJobCard />
           <OtherJobsCard /> */}
         </div>
