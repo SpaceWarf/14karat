@@ -31,6 +31,12 @@ function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
     }, 1000);
   }
 
+  const onOpenExternalUrl = (item: GalleryItem) => {
+    if (item.externalUrl) {
+      window.open(item.externalUrl, '_blank');
+    }
+  }
+
   return (
     <div className="AssetCard ui card external">
       <div className="image">
@@ -55,6 +61,11 @@ function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
           ) : (
             <button className="ui icon button" onClick={() => onCopy(item)}>
               <i className="linkify icon" />
+            </button>
+          )}
+          {item.externalUrl && (
+            <button className="ui icon button" onClick={() => onOpenExternalUrl(item)}>
+              <i className="external icon" />
             </button>
           )}
           {isAdmin && onDelete && <button className="ui icon negative button" onClick={() => onDelete(item.id)}>

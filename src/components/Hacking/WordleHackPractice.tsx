@@ -1,6 +1,6 @@
 import './Hacking.scss';
-import Header from '../../Common/Header';
-import Dropdown, { DropdownOption } from '../../Common/Dropdown';
+import Header from '../Common/Header';
+import Dropdown, { DropdownOption } from '../Common/Dropdown';
 import { useEffect, useState } from 'react';
 import { cloneDeep, isEqual } from 'lodash';
 

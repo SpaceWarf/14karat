@@ -3,10 +3,10 @@ import { Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { RootState } from "../../../redux/store";
-import AssetCard from "../../Common/AssetCard";
-import Loading from "../../Common/Loading";
-import { Hack } from "../../../state/hack";
+import { RootState } from "../../redux/store";
+import AssetCard from "../Common/AssetCard";
+import Loading from "../Common/Loading";
+import { Hack } from "../../state/hack";
 
 function ExpandHackModal() {
   const [searchParams, setSearchParams] = useSearchParams();

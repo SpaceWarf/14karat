@@ -4,4 +4,5 @@ export interface GalleryItem {
   embed?: string;
   notes: string;
   tags: string[];
+  externalUrl?: string;
 }

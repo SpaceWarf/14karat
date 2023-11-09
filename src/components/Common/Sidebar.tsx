@@ -45,6 +45,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
             {mainRadio && <p className='SidebarItemDetail'>{mainRadio.channel}</p>}
           </SidebarItem>
           <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
+          <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
           <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
           <SidebarItem name='Stash Search' icon='search' path='/stash-search' onClick={() => navigate('/stash-search')} />
           <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
