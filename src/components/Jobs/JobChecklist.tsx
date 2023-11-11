@@ -60,7 +60,7 @@ function JobChecklist(props: JobChecklistProps) {
             <h4>Gear</h4>
             {isAllChecked(props.job.gearChecklist) && <i className='check icon' />}
           </div>
-          {Object.keys(props.job.gearChecklist).map(id => (
+          {Object.keys(props.job.gearChecklist).sort((a, b) => a.localeCompare(b)).map(id => (
             <div className={`CheckLine ${props.job.gearChecklist[id].checked ? 'checked' : ''}`}>
               <p>{props.job.gearChecklist[id].quantity} {getItemName(id)}</p>
               <Checkbox
