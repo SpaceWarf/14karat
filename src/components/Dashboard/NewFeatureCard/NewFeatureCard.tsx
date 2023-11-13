@@ -11,9 +11,9 @@ function NewFeatureCard() {
           <p><i className='exclamation icon' /> New Feature Available</p>
         </div>
         <div className='FeatureContainer'>
-          <p>Try out the new Wordle hack practice minigame! Available under the Hacking tab.</p>
-          <button className="ui button hover-animation" onClick={() => navigate('/hacking/wordle')}>
-            <p className='label'>Go To Minigame</p>
+          <p>Try out the new hack practice page! Available under the Hacking tab.</p>
+          <button className="ui button hover-animation" onClick={() => navigate('/hacking/practice')}>
+            <p className='label'>Go Practice</p>
             <p className='IconContainer'><i className='code icon'></i></p>
           </button>
         </div>

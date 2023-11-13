@@ -1,5 +1,4 @@
-import './Hacking.scss';
-import Header from '../Common/Header';
+import './HackingPractice.scss';
 import { useEffect, useState } from 'react';
 import { Checkbox } from 'semantic-ui-react';
 import { cloneDeep } from 'lodash';
@@ -169,7 +168,6 @@ function CircleSwapHackPractice() {
 
   return (
     <div className="CircleSwapHackPractice HackPractice">
-      <Header text='Circle Swap Hack Practice' decorated />
       <div className='content'>
         <div className='Actions'>
           <div className='Settings'>

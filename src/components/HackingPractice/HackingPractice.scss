@@ -1,0 +1,247 @@
+@import "../../assets/scss/index";
+
+.HackingPractice {
+  &>.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &>.Actions {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0 5px 0;
+      width: 1000px;
+
+      .field.dropdown {
+        width: 250px;
+      }
+    }
+  }
+}
+
+.HackPractice {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    .Actions {
+      display: flex;
+      justify-content: space-between;
+      width: 700px;
+      margin: 20px 0;
+
+      .Settings {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+
+        .field.dropdown {
+          width: 150px;
+        }
+      }
+
+      .Buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+
+        .button {
+          width: 150px;
+        }
+      }
+    }
+
+    .Hack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      position: relative;
+      width: 700px;
+      height: 700px;
+      background-color: #222832;
+      border-radius: 10px;
+      box-shadow: 0 0 10px black;
+      padding: 20px;
+
+      .StartTimer {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        backdrop-filter: blur(2px);
+
+        p {
+          margin: 0;
+          font-size: 6rem;
+          z-index: 99;
+        }
+
+        .Countdown {
+          color: white;
+        }
+
+        .SuccessLabel {
+          color: #007f00;
+        }
+
+        .FailureLabel {
+          color: $red;
+        }
+      }
+
+      .Info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+
+        p {
+          color: $red;
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+.WordleHackPractice {
+  .content .Actions {
+    width: 800px;
+  }
+
+  .CurrentGrid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex: 1 1 0;
+    padding-bottom: 50px;
+  }
+
+  .PreviousGrids {
+    display: flex;
+    gap: 20px;
+    height: 200px;
+    overflow-x: scroll;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .WordleGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .WordleRow {
+      display: flex;
+      gap: 10px;
+
+      .WordleCell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border: 2px solid #636973;
+        border-radius: 50%;
+        color: white;
+
+        &.selected {
+          border: none;
+          background-color: #3f4556;
+        }
+      }
+    }
+
+    &.editable {
+      gap: 10px;
+
+      .WordleRow {
+        gap: 10px;
+
+        .WordleCell {
+          width: 50px;
+          height: 50px;
+          cursor: pointer;
+
+          &.selected {
+            cursor: default;
+          }
+        }
+      }
+    }
+
+    &:not(.editable) {
+      gap: 5px;
+
+      .WordleRow {
+        gap: 5px;
+
+        .WordleCell {
+          width: 30px;
+          height: 30px;
+
+          &.correct-selection:not(.correct-index) {
+            background-color: #ffff00;
+          }
+
+          &.correct-selection.correct-index {
+            background-color: #007f00;
+          }
+        }
+      }
+    }
+  }
+}
+
+.CircleSwapHackPractice {
+  .content .Actions .Settings {
+    .field.dropdown {
+      width: 200px;
+    }
+  }
+
+  .Grid {
+    position: relative;
+    height: 100%;
+    margin: 0 auto;
+
+    .Circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition:
+        top 0.3s ease 0s,
+        left 0.3s ease 0s,
+        background-color 0.3s ease 0s;
+      cursor: pointer;
+
+      &.Answer {
+        background-color: red !important;
+      }
+
+      &.disabled {
+        cursor: default;
+      }
+
+      i {
+        font-size: 2rem;
+        line-height: 2rem;
+        margin: 0;
+      }
+    }
+  }
+}

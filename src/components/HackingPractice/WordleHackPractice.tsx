@@ -1,5 +1,4 @@
-import './Hacking.scss';
-import Header from '../Common/Header';
+import './HackingPractice.scss';
 import Dropdown, { DropdownOption } from '../Common/Dropdown';
 import { useEffect, useState } from 'react';
 import { cloneDeep, isEqual } from 'lodash';
@@ -202,7 +201,6 @@ function WordleHackPractice() {
 
   return (
     <div className="WordleHackPractice HackPractice">
-      <Header text='Wordle Hack Practice' decorated />
       <div className='content'>
         <div className='Actions'>
           <div className='Settings'>
