@@ -12,7 +12,7 @@ import { Division } from "../../redux/reducers/divisions";
 import { ProfileInfo } from "../../state/profile";
 
 function Roster() {
-  const { isAdmin } = useAuth();
+  const { access } = useAuth();
   const { divisions } = useSelector((state: RootState) => state.divisions);
   const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ function Roster() {
                   <ProfileCard
                     key={member.id}
                     profile={member}
-                    editable={isAdmin}
+                    editable={access.headAccess}
                     nameAsTitle
                   />
                 ))}

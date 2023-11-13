@@ -97,11 +97,6 @@ export async function updateProfileInfo(id: string, profile: ProfileInfo, user: 
   });
 }
 
-export async function getIsAdmin(id: string): Promise<boolean> {
-  const snapshot = await getDoc(doc(db, "profiles", id));
-  return snapshot.data()?.admin;
-}
-
 export async function getDivisions(): Promise<Division[]> {
   const snapshot = await getDocs(divisionRef);
   const divisions: Division[] = [];

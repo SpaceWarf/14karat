@@ -45,24 +45,28 @@ function App() {
             <Route path='/driver-strats' element={<DriverStrats />} />
             <Route path='/driver-strats/all' element={<DriverStratGallery />} />
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
-            <Route path='/stash-search' element={<StashSearch />} />
+            {/* <Route path='/stash-search' element={<StashSearch />} /> */}
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<War />} />
-            <Route path='/hacking' element={<Hacking />} />
-            <Route path='/hacking/practice' element={<HackingPractice />} />
             <Route path='/information-center' element={<InformationCenter />} />
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route path='/information-center/rules' element={<Rules />} />
             <Route path='/information-center/taxes' element={<Taxes />} />
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
-            <Route path='/information-center/jobs' element={<Jobs />} />
             <Route path='/information-center/lore' element={<Lore />} />
             <Route path='/information-center/assets' element={<Assets />} />
-            <Route path='/jobs' element={<JobListing />} />
-            <Route path='/jobs/new' element={<JobPicker />} />
             <Route path='/radios' element={<Radios />} />
-            <Route element={<AdminRoute />}>
+
+            <Route element={<ChainedRoute />}>
+              <Route path='/hacking' element={<Hacking />} />
+              <Route path='/hacking/practice' element={<HackingPractice />} />
+              <Route path='/information-center/jobs' element={<Jobs />} />
+              <Route path='/jobs' element={<JobListing />} />
+              <Route path='/jobs/new' element={<JobPicker />} />
+            </Route>
+
+            <Route element={<HeadRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
               <Route path='/groups/:groupId/members/:memberId' element={<MemberDetails />} />
@@ -82,9 +86,21 @@ function ProtectedRoute({ children }) {
 };
 
 //@ts-ignore
-function AdminRoute() {
-  const { isAdmin } = useAuth();
-  return isAdmin ? <Outlet /> : <Navigate to="/" replace />;
+function HeadRoute() {
+  const { access } = useAuth();
+  return access.headAccess ? <Outlet /> : <Navigate to="/" replace />;
+};
+
+//@ts-ignore
+function ChainedRoute() {
+  const { access } = useAuth();
+  return access.chainedAccess ? <Outlet /> : <Navigate to="/" replace />;
+};
+
+//@ts-ignore
+function MemberRoute() {
+  const { access } = useAuth();
+  return access.memberAccess ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default App;

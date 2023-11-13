@@ -10,7 +10,7 @@ interface GalleryProps {
 }
 
 function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
-  const { isAdmin } = useAuth();
+  const { access } = useAuth();
   const [_, setSearchParams] = useSearchParams();
   const [copying, setCopying] = useState<boolean>(false);
 
@@ -68,7 +68,7 @@ function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
               <i className="external icon" />
             </button>
           )}
-          {isAdmin && onDelete && <button className="ui icon negative button" onClick={() => onDelete(item.id)}>
+          {access.headAccess && onDelete && <button className="ui icon negative button" onClick={() => onDelete(item.id)}>
             <i className="trash icon"></i>
           </button>}
         </div>

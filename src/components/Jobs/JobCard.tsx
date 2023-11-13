@@ -18,7 +18,7 @@ interface JobCardProps {
 }
 
 function JobCard(props: JobCardProps) {
-  const { user, isAdmin } = useAuth();
+  const { user, access } = useAuth();
   const [webhook, setWebhook] = useState<Webhook>();
   const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,7 +41,7 @@ function JobCard(props: JobCardProps) {
     }
 
     fetchWebhook();
-  }, [isAdmin]);
+  }, []);
 
   const handleDelete = async () => {
     deleteActiveJob(props.job.id, user);
@@ -98,7 +98,7 @@ function JobCard(props: JobCardProps) {
       <div className="content">
         <div className='header'>
           <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
-          {isAdmin && (
+          {access.headAccess && (
             <div className="Actions">
               <button className="ui icon negative button" onClick={handleDelete}>
                 <i className="trash icon" />

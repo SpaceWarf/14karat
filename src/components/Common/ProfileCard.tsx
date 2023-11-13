@@ -20,7 +20,7 @@ interface ProfileCardProps {
 }
 
 function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
-  const { user, isAdmin } = useAuth();
+  const { user, access } = useAuth();
   const dispatch = useDispatch();
   const pfpUrlFromStore = useSelector((state: RootState) => state.profile.pfpUrl);
   const { roles } = useSelector((state: RootState) => state.roles);
@@ -301,7 +301,7 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
               <Dropdown
                 placeholder='Division'
                 disabled={loading}
-                readonly={!isAdmin}
+                readonly={!access.headAccess}
                 options={getDivisionDropdownOptions()}
                 value={division}
                 onChange={handleChangeDivision}
@@ -312,7 +312,7 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
                 placeholder='Roles'
                 multiple
                 disabled={loading || !division}
-                readonly={!isAdmin}
+                readonly={!access.headAccess}
                 options={getRolesDropdownOptions()}
                 value={profileRoles}
                 clearable

@@ -11,11 +11,13 @@ import RadiosCard from './RadiosCard/RadiosCard';
 import banner from '../../assets/images/banner.png';
 import QuoteCard from './QuoteCard/QuoteCard';
 import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Dashboard() {
+  const navigate = useNavigate();
+  const { access } = useAuth();
   const profile = useSelector((state: RootState) => state.profile);
   const { roles } = useSelector((state: RootState) => state.roles);
-  const navigate = useNavigate();
 
   const getRoles = (): string[] => {
     const foundRoles: string[] = [];
@@ -45,7 +47,7 @@ function Dashboard() {
         <div className='Col'><RecentStratCard /></div>
         <div className='Col'>
           <RadiosCard />
-          <NewFeatureCard />
+          {access.chainedAccess && <NewFeatureCard />}
           {/* <MyJobCard />
           <OtherJobsCard /> */}
         </div>

@@ -8,16 +8,32 @@ import {
   signOut,
   onAuthStateChanged
 } from "firebase/auth";
-import { getIsAdmin } from '../utils/firestore';
+import { getDivisions, getProfileById } from '../utils/firestore';
 import { useDispatch } from 'react-redux';
 
 interface AuthContextProps {
   user: User | null;
-  isAdmin: boolean;
+  access: Access;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   setNewPassword: (currentPassword: string, newPassword: string) => Promise<void>;
 }
+
+export interface Access {
+  bossAccess: boolean,
+  headAccess: boolean,
+  leadAccess: boolean,
+  chainedAccess: boolean,
+  memberAccess: boolean,
+}
+
+const DEFAULT_ACCESS = {
+  bossAccess: false,
+  headAccess: false,
+  leadAccess: false,
+  chainedAccess: false,
+  memberAccess: false,
+};
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -25,7 +41,7 @@ export function useAuth() {
 
 export const AuthContext = createContext<AuthContextProps>({
   user: null,
-  isAdmin: false,
+  access: DEFAULT_ACCESS,
   login: () => Promise.resolve(undefined),
   logout: () => Promise.resolve(undefined),
   setNewPassword: () => Promise.resolve(undefined),
@@ -35,7 +51,7 @@ export const AuthContext = createContext<AuthContextProps>({
 export function AuthProvider({ children }) {
   const dispatch = useDispatch();
   const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [access, setAccess] = useState<Access>(DEFAULT_ACCESS);
   const [loading, setLoading] = useState(true);
 
   async function login(email: string, password: string): Promise<void> {
@@ -57,12 +73,41 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      async function checkIfAdmin(): Promise<boolean> {
-        return user ? await getIsAdmin(user.uid) :  false;
+      async function getAccess(): Promise<Access> {
+        if (user) {
+          const profile = await getProfileById(user.uid);
+
+          if (profile.admin) {
+            return {
+              bossAccess: true,
+              headAccess: true,
+              leadAccess: true,
+              chainedAccess: true,
+              memberAccess: true,
+            }
+          }
+
+          const divisions = await getDivisions();
+          const profileDivision = divisions.find(division => division.id === profile.division);
+          const boss = divisions.find(division => division.id === 'oyabun');
+          const head = divisions.find(division => division.id === 'wakagashira');
+          const lead = divisions.find(division => division.id === 'shateigashira');
+          const operative = divisions.find(division => division.id === 'kobun');
+          const recruit = divisions.find(division => division.id === 'shatei');
+
+          return {
+            bossAccess: boss && profileDivision ? boss.hierarchy >= profileDivision.hierarchy : false,
+            headAccess: head && profileDivision ? head.hierarchy >= profileDivision.hierarchy : false,
+            leadAccess: lead && profileDivision ? lead.hierarchy >= profileDivision.hierarchy : false,
+            chainedAccess: operative && profileDivision ? operative.hierarchy >= profileDivision.hierarchy : false,
+            memberAccess: recruit && profileDivision ? recruit.hierarchy >= profileDivision.hierarchy : false,
+          };
+        }
+        return DEFAULT_ACCESS;
       }
 
       setUser(user);
-      setIsAdmin(await checkIfAdmin());
+      setAccess(await getAccess());
       setLoading(false);
     });
     return () => {
@@ -71,8 +116,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, login, logout, setNewPassword }}>
-      { !loading && children }
+    <AuthContext.Provider value={{ user, access, login, logout, setNewPassword }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

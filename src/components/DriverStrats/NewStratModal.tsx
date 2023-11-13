@@ -17,7 +17,7 @@ interface NewStratModalProps {
 }
 
 function NewStratModal(props: NewStratModalProps) {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [embed, setEmbed] = useState<string>("");
@@ -33,10 +33,8 @@ function NewStratModal(props: NewStratModalProps) {
       setWebhook(await getWebhookById('strats-update'));
     }
 
-    if (isAdmin) {
-      fetchWebhook();
-    }
-  }, [isAdmin]);
+    fetchWebhook();
+  }, []);
 
   useEffect(() => {
     setSelectedNeighbourhood(props.neighbourhood || (neighbourhoods[0]?.id ?? ''));

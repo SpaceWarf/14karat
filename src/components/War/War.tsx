@@ -21,7 +21,7 @@ import { GalleryItem } from '../../state/gallery';
 import ExpandWarClipModal from './ExpandWarClipModal';
 
 function War() {
-  const { user, isAdmin } = useAuth();
+  const { user, access } = useAuth();
   const war = useSelector(getMostRecentWar);
   const profile = useSelector((state: RootState) => state.profile);
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,10 +43,10 @@ function War() {
       setLoadingWebhook(false);
     }
 
-    if (isAdmin || profile.info.roles.includes('enforcer')) {
+    if (access.leadAccess) {
       fetchWebhook();
     }
-  }, [isAdmin, profile]);
+  }, [access, profile]);
 
   useEffect(() => {
     const fetchClips = async () => {
@@ -71,7 +71,7 @@ function War() {
   }, [war]);
 
   const canEdit = (): boolean => {
-    return isAdmin || profile.info.roles.includes('enforcer');
+    return access.leadAccess;
   }
 
   const getTimeString = (): string => {

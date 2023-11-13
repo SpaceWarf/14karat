@@ -15,7 +15,7 @@ interface RadioChannelProps {
 }
 
 function RadioChannel(props: RadioChannelProps) {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
   const allUsedChannels = useSelector(getAllUsedChannels);
@@ -26,7 +26,7 @@ function RadioChannel(props: RadioChannelProps) {
     }
 
     fetchWebhook();
-  }, [isAdmin]);
+  }, []);
 
   const sendWebhook = (newChannel?: string) => {
     if (webhook) {

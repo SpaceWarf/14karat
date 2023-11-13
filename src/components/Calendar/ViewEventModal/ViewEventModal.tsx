@@ -9,8 +9,6 @@ import { deleteEvent } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 interface ViewEventModalProps {
   open: boolean,
@@ -21,8 +19,7 @@ interface ViewEventModalProps {
 }
 
 function ViewEventModal(props: ViewEventModalProps) {
-  const { user, isAdmin } = useAuth();
-  const profile = useSelector((state: RootState) => state.profile);
+  const { user, access } = useAuth();
 
   const handleDelete = async () => {
     await deleteEvent(props.event.id, user);
@@ -71,7 +68,7 @@ function ViewEventModal(props: ViewEventModalProps) {
           <div className="Label" style={{ backgroundColor: props.event.color }} />
           {props.event.title}
         </div>
-        {(isAdmin || profile.info.roles.includes('ceremonies-lead')) && (
+        {access.leadAccess && (
           <div className="Actions">
             <button className="ui icon button" disabled={!props.webhook} onClick={sendWebhook}>
               <i className="discord icon" />

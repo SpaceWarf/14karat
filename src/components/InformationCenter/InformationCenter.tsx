@@ -1,9 +1,11 @@
 import './InformationCenter.scss';
 import Header from '../Common/Header';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 function InformationCenter() {
   const navigate = useNavigate();
+  const { access } = useAuth();
 
   return (
     <div className="InformationCenter">
@@ -51,20 +53,22 @@ function InformationCenter() {
             <div className='Notes'><p>A breakdown of our lore, including our spirits, guardians, and ceremonies.</p></div>
           </div>
         </div>
-        <div
-          className="InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/jobs')}
-        >
-          <div className="content">
-            <div className='header'>
-              <p><i className='dollar sign icon' /> Job Information</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/jobs')}>
-                <i className='external alternate icon' />
-              </button>
+        {access.chainedAccess && (
+          <div
+            className="InformationCenterCard ui card attached link external"
+            onClick={() => navigate('/information-center/jobs')}
+          >
+            <div className="content">
+              <div className='header'>
+                <p><i className='dollar sign icon' /> Job Information</p>
+                <button className="ui icon button" onClick={() => navigate('/information-center/jobs')}>
+                  <i className='external alternate icon' />
+                </button>
+              </div>
+              <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
             </div>
-            <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
           </div>
-        </div>
+        )}
         <div
           className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/assets')}
@@ -93,20 +97,22 @@ function InformationCenter() {
             <div className='Notes'><p>A list of discreet locations that can be used for operations.</p></div>
           </div>
         </div>
-        <div
-          className="InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/taxes')}
-        >
-          <div className="content">
-            <div className='header'>
-              <p><i className='dollar sign icon' /> Taxes</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/taxes')}>
-                <i className='external alternate icon' />
-              </button>
+        {access.chainedAccess && (
+          <div
+            className="InformationCenterCard ui card attached link external"
+            onClick={() => navigate('/information-center/taxes')}
+          >
+            <div className="content">
+              <div className='header'>
+                <p><i className='dollar sign icon' /> Taxes</p>
+                <button className="ui icon button" onClick={() => navigate('/information-center/taxes')}>
+                  <i className='external alternate icon' />
+                </button>
+              </div>
+              <div className='Notes'><p>A tracker for weekly taxes to be paid by all chained members.</p></div>
             </div>
-            <div className='Notes'><p>A tracker for weekly taxes to be paid by all chained members.</p></div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

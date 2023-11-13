@@ -12,7 +12,7 @@ import EditEventModal from '../../Calendar/EditEventModal/EditEventModal';
 import { getTimeString } from '../../../utils/time';
 
 function UpcomingEventsCard() {
-  const { isAdmin } = useAuth();
+  const { access } = useAuth();
   const navigate = useNavigate();
   const eventMap = useSelector(getEventsDateMap);
   const [openViewModal, setOpenViewModal] = useState<boolean>(false);
@@ -25,10 +25,10 @@ function UpcomingEventsCard() {
       setWebhook(await getWebhookById('event-update'));
     }
 
-    if (isAdmin) {
+    if (access.headAccess) {
       fetchWebhook();
     }
-  }, [isAdmin]);
+  }, [access]);
 
   const getComponents = (): ReactElement[] => {
     const components: ReactElement[] = [];
