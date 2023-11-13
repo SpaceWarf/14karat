@@ -6,12 +6,11 @@ import RecentStratCard from './RecentStratCard/RecentStratCard';
 import UpcomingEventsCard from './UpcomingEventsCard/UpcomingEventsCard';
 import WarCard from './WarCard/WarCard';
 import RadiosCard from './RadiosCard/RadiosCard';
-// import OtherJobsCard from './JobsCard/OtherJobsCard';
-// import MyJobCard from './JobsCard/MyJobCard';
 import banner from '../../assets/images/banner.png';
 import QuoteCard from './QuoteCard/QuoteCard';
 import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
 import { useAuth } from '../../contexts/AuthContext';
+import JobsCard from './JobsCard/JobsCard';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -47,19 +46,17 @@ function Dashboard() {
         <div className='Col'><RecentStratCard /></div>
         <div className='Col'>
           <RadiosCard />
-          {access.chainedAccess && <NewFeatureCard />}
-          {/* <MyJobCard />
-          <OtherJobsCard /> */}
+          <JobsCard />
         </div>
         <div className='Col'>
           <UpcomingEventsCard />
           <WarCard />
           <QuoteCard />
+          {access.chainedAccess && <NewFeatureCard />}
         </div>
       </div>
     </div>
   );
 }
-
 
 export default Dashboard;

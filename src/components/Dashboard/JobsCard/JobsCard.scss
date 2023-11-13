@@ -16,7 +16,7 @@
 
     .JobListing {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       width: 100%;
       margin-top: 10px;
       padding: 0 25px;
@@ -25,6 +25,22 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+
+        i.star {
+          color: $primary-colour;
+        }
+      }
+
+      .Crew {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding-left: 20px;
+
+        p {
+          flex-basis: 50%;
+          text-align: start;
+        }
       }
 
       .JobLabel,

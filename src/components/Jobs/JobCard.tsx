@@ -66,7 +66,7 @@ function JobCard(props: JobCardProps) {
     if (webhook) {
       triggerDiscordWebhook({
         url: webhook.url,
-        content: `**__${props.job.name} job details__**\n${getCrewAsString()}\n${getRadioString()}`,
+        content: `**__${props.job.name} ${props.job.index} job details__**\n${getCrewAsString()}\n${getRadioString()}`,
       }).catch(error => {
         console.error(error);
       });
