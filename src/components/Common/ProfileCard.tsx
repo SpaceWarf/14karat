@@ -5,7 +5,6 @@ import { setPfpUrl } from '../../redux/reducers/profile';
 import { updateProfileInfo } from '../../utils/firestore';
 import Header from './Header';
 import Input from './Input';
-import { isValidPhone } from '../../utils/phone';
 import { deleteProfilePicture, getProfilePictureUrl, uploadProfilePicture } from '../../utils/storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -77,16 +76,6 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
   function validateNotEmpty(value: string, errorSetter: Dispatch<SetStateAction<boolean>>) {
     if (editable) {
       errorSetter(!value.length);
-    }
-  }
-
-  function validatePhone() {
-    if (editable) {
-      if (phone.length && isValidPhone(phone)) {
-        setPhoneError(false);
-      } else {
-        setPhoneError(true);
-      }
     }
   }
 
@@ -269,7 +258,6 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
                 icon="phone"
                 value={phone}
                 onChange={e => setValue(e, setPhone, setPhoneError, true)}
-                onBlur={validatePhone}
                 disabled={loading}
                 readonly={!editable}
                 error={phoneError}

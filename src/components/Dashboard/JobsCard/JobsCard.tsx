@@ -30,7 +30,7 @@ function JobsCard() {
     <div className="JobsCard ui card attached external">
       <div className="content">
         <div className='header'>
-          <p><i className='dollar alternate icon' /> Jobs</p>
+          <p><i className='dollar alternate icon' /> Active Jobs</p>
           {access.chainedAccess && (
             <button className="ui icon button" onClick={() => navigate('/jobs')}>
               <i className='external alternate icon' />
