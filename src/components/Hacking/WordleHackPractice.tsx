@@ -4,6 +4,7 @@ import Dropdown, { DropdownOption } from '../Common/Dropdown';
 import { useEffect, useState } from 'react';
 import { cloneDeep, isEqual } from 'lodash';
 import { Checkbox } from 'semantic-ui-react';
+import { Position, getRandomPosition, isPositionChosen } from '../../utils/grid';
 
 interface WordleCell {
   selected: boolean,
@@ -18,11 +19,6 @@ interface WordleForm {
   currentGrid: WordleGrid,
   previousGrids: WordleGrid[],
   answer?: WordleGrid,
-}
-
-interface CellPosition {
-  rowIndex: number,
-  cellIndex: number,
 }
 
 const PIN_COUNTS: DropdownOption[] = [
@@ -144,18 +140,18 @@ function WordleHackPractice() {
 
   const generateAnswer = (): WordleGrid => {
     if (form) {
-      const cells: CellPosition[] = [];
+      const cells: Position[] = [];
       const answer = cloneDeep(form.initialGrid);
 
       for (let i = 0; i < Number(pinCount); i++) {
         let cell;
 
         do {
-          cell = getRandomCell();
-        } while (!isCellChosen(cell, cells));
+          cell = getRandomPosition(GRID_WIDTH, GRID_HEIGHT);
+        } while (!isPositionChosen(cell, cells));
 
         cells.push(cell);
-        answer[cell.rowIndex][cell.cellIndex] = {
+        answer[cell.y][cell.x] = {
           selected: true,
           index: i,
         }
@@ -164,16 +160,6 @@ function WordleHackPractice() {
       return answer;
     }
     return [];
-  }
-
-  const getRandomCell = (): CellPosition => {
-    const cellIndex = Math.floor(Math.random() * GRID_WIDTH);
-    const rowIndex = Math.floor(Math.random() * GRID_HEIGHT);
-    return { rowIndex, cellIndex };
-  };
-
-  const isCellChosen = (cell: CellPosition, cells: CellPosition[]): boolean => {
-    return cells.every(chosenCell => chosenCell.cellIndex !== cell.cellIndex || chosenCell.rowIndex !== cell.rowIndex);
   }
 
   const handleSelectCell = (rowIndex: number, cellIndex: number) => {
@@ -215,7 +201,7 @@ function WordleHackPractice() {
   }
 
   return (
-    <div className="WordleHackPractice">
+    <div className="WordleHackPractice HackPractice">
       <Header text='Wordle Hack Practice' decorated />
       <div className='content'>
         <div className='Actions'>
