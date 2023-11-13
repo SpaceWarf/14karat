@@ -14,7 +14,7 @@ function QuoteCard() {
     const days = Math.floor((now.getTime() - yearStart.getTime()) / (24 * 60 * 60 * 1000));
     const weekNumber = Math.ceil(days / 7);
 
-    setQuoteOfTheWeek(quotes[(quotes.length - 1) % weekNumber])
+    setQuoteOfTheWeek(quotes[weekNumber % quotes.length])
   }, [quotes]);
 
   return (

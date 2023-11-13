@@ -3,18 +3,29 @@
 .QuoteCard.ui.card {
   width: 100%;
 
-  .QuoteContainer {
-    margin-top: 10px;
+  &>.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .Quote {
-      font-size: 1.5rem;
-      margin-bottom: 0;
+    &>.header {
+      width: 100%;
     }
 
-    .By {
-      font-size: 1.2rem;
-      text-align: right;
-      padding: 0 75px;
+    .QuoteContainer {
+      width: fit-content;
+      margin-top: 10px;
+
+      .Quote {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+      }
+
+      .By {
+        font-size: 1.2rem;
+        text-align: right;
+        padding-right: 20px;
+      }
     }
   }
 }
