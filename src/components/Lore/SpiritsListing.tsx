@@ -21,7 +21,7 @@ function SpiritsListing() {
   return (
     <div className="SpiritsListing">
       <div className='Spirit'>
-        <Header id="ikiryou" element={<p>Ikiryō (<span className='Kanji'>生霊</span>)</p>} decorated />
+        <Header id="ikiryou" element={<p>Ikiryo (<span className='Kanji'>生霊</span>)</p>} decorated />
         <div className='Description'>
           <img src={ikiryou} alt='Ikiryō' />
           <p>
@@ -38,7 +38,7 @@ function SpiritsListing() {
         </div>
       </div>
       <div className='Spirit'>
-        <Header id="shiryou" element={<p>Shiryō (<span className='Kanji'>死霊</span>)</p>} decorated />
+        <Header id="shiryou" element={<p>Shiryo (<span className='Kanji'>死霊</span>)</p>} decorated />
         <div className='Description'>
           <p>
             <a href='https://yokai.com/shiryou/' target='_blank' rel="noreferrer">Shiryō (死霊)</a>, or Dead Spirit, are the spirits of the deceased that have not found peace in the
@@ -53,7 +53,7 @@ function SpiritsListing() {
         </div>
       </div>
       <div className='Spirit'>
-        <Header id="onryou" element={<p>Onryō (<span className='Kanji'>怨霊</span>)</p>} decorated />
+        <Header id="onryou" element={<p>Onryo (<span className='Kanji'>怨霊</span>)</p>} decorated />
         <div className='Description'>
           <img src={onryou} alt='Onryō' />
           <p>

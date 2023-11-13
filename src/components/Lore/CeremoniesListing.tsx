@@ -77,7 +77,7 @@ function CeremoniesListing() {
         </div>
       </div>
       <div className='Ceremony'>
-        <Header id="senbiki-okami" element={<p>Senbiki ōkami (<span className='Kanji'>千疋狼</span>)</p>} decorated />
+        <Header id="senbiki-okami" element={<p>Senbiki okami (<span className='Kanji'>千疋狼</span>)</p>} decorated />
         <div className='Description'>
           <p>
             <a href='https://yokai.com/senbikiookami/' target='_blank' rel="noreferrer">Senbiki ōkami (千疋狼)</a> is the ceremony or event by which the Raijū are sent out

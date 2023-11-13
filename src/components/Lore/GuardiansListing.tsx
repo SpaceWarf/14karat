@@ -65,7 +65,7 @@ function GuardiansListing() {
         </div>
       </div>
       <div className='Guardian'>
-        <Header id="houou" element={<p>Hōō (<span className='Kanji'>鳳凰</span>)</p>} decorated />
+        <Header id="houou" element={<p>Hoo (<span className='Kanji'>鳳凰</span>)</p>} decorated />
         <div className='Description'>
           <p>
             <a href='https://yokai.com/houou/' target='_blank' rel="noreferrer">Hōō (鳳凰)</a> are majestic phoenix spirits with colourful plumage, typically portrayed with brilliant
@@ -101,7 +101,7 @@ function GuardiansListing() {
         </div>
       </div>
       <div className='Guardian'>
-        <Header id="raijuu" element={<p>Raijū (<span className='Kanji'>雷獣</span>)</p>} decorated />
+        <Header id="raijuu" element={<p>Raiju (<span className='Kanji'>雷獣</span>)</p>} decorated />
         <div className='Description'>
           <img src={raiju} alt='Raijū' />
           <p>
@@ -112,7 +112,7 @@ function GuardiansListing() {
         </div>
       </div>
       <div className='Guardian'>
-        <Header id="kyourinrin" element={<p>Kyōrinrin (<span className='Kanji'>経凛々</span>)</p>} decorated />
+        <Header id="kyourinrin" element={<p>Kyorinrin (<span className='Kanji'>経凛々</span>)</p>} decorated />
         <div className='Description'>
           <p>
             <a href='https://yokai.com/kyourinrin/' target='_blank' rel="noreferrer">Kyōrinrin (経凛々)</a> are spirits of knowledge formed from ancient scrolls, books, and scriptures which have been left
@@ -123,7 +123,7 @@ function GuardiansListing() {
         </div>
       </div>
       <div className='Guardian'>
-        <Header id="ryuuguuwarashi" element={<p>Ryūgū warashi (<span className='Kanji'>竜宮童子</span>)</p>} decorated />
+        <Header id="ryuuguuwarashi" element={<p>Ryugu warashi (<span className='Kanji'>竜宮童子</span>)</p>} decorated />
         <div className='Description'>
           <img src={ryuuguuwarashi} alt='Ryūgū warashi' />
           <p>
