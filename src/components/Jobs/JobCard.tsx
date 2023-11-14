@@ -19,7 +19,8 @@ interface JobCardProps {
 
 function JobCard(props: JobCardProps) {
   const { user, access } = useAuth();
-  const [webhook, setWebhook] = useState<Webhook>();
+  const [jobWebhook, setJobWebhook] = useState<Webhook>();
+  const [radioWebhook, setRadioWebhook] = useState<Webhook>();
   const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState<boolean>(false);
   const radio = useSelector((state: RootState) => getRadioForJob(state, props.job.id));
@@ -36,11 +37,12 @@ function JobCard(props: JobCardProps) {
   }, []);
 
   useEffect(() => {
-    const fetchWebhook = async () => {
-      setWebhook(await getWebhookById('job-update'));
+    const fetchWebhooks = async () => {
+      setJobWebhook(await getWebhookById('job-update'));
+      setRadioWebhook(await getWebhookById('radio-update'));
     }
 
-    fetchWebhook();
+    fetchWebhooks();
   }, []);
 
   const handleDelete = async () => {
@@ -63,14 +65,34 @@ function JobCard(props: JobCardProps) {
   }
 
   const sendWebhook = () => {
-    if (webhook) {
+    if (jobWebhook) {
       triggerDiscordWebhook({
-        url: webhook.url,
+        url: jobWebhook.url,
         content: `**__${props.job.name} ${props.job.index} job details__**\n${getCrewAsString()}\n${getRadioString()}`,
       }).catch(error => {
         console.error(error);
       });
     }
+
+    if (radioWebhook && radio) {
+      triggerDiscordWebhook({
+        url: radioWebhook.url,
+        content: `${getMembersAsString()} ${props.job.name} ${props.job.index} radio channel - **${radio.channel}**`,
+      }).catch(error => {
+        console.error(error);
+      });
+    }
+  }
+
+  const getMembersAsString = (): string => {
+    return Object.values(props.job.crew)
+      .reduce((str, members) => {
+        const membersStr = members
+          .filter(member => getProfileInfo(member))
+          .map(member => `<@${getProfileInfo(member)?.discord}>`)
+          .join(" ");
+        return `${str} ${membersStr}`
+      }, "");
   }
 
   const getCrewAsString = () => {
