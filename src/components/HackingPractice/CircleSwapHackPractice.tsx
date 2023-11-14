@@ -50,6 +50,39 @@ function CircleSwapHackPractice() {
   const [viewSolution, setViewSolution] = useState<boolean>(true);
 
   useEffect(() => {
+    const getRandomizedCircles = (): Circle[] => {
+      const positions: Position[] = [];
+
+      for (let i = 0; i < circles.length; i++) {
+        let position;
+
+        do {
+          position = getRandomPosition(GRID_WIDTH, GRID_HEIGHT);
+        } while (!isPositionChosen(position, positions));
+        positions.push(position);
+      }
+
+      return circles.map((circle, i) => ({
+        ...circle,
+        position: positions[i],
+        colour: getRandomColour(),
+      }));
+    }
+
+    const startSwaps = () => {
+      let swapCount = 0;
+      setShowInitialCircle(false);
+      const interval = setInterval(() => {
+        setCircles(getRandomizedCircles());
+        swapCount++;
+
+        if (swapCount === Number(swaps)) {
+          clearInterval(interval);
+          setSwapping(false);
+        }
+      }, 350);
+    }
+
     if (started && countdown > 0) {
       setTimeout(() => {
         const newCountdown = countdown - 1;
@@ -66,7 +99,7 @@ function CircleSwapHackPractice() {
     } else {
       setCountdown(0);
     }
-  }, [started, countdown]);
+  }, [started, countdown, swaps, circles]);
 
   useEffect(() => {
     if (started && !infiniteTimer && timer > 0) {
@@ -105,39 +138,6 @@ function CircleSwapHackPractice() {
     setCircles(initialCircles);
     setCountdown(3);
     setStarted(true);
-  }
-
-  const startSwaps = () => {
-    let swapCount = 0;
-    setShowInitialCircle(false);
-    const interval = setInterval(() => {
-      setCircles(getRandomizedCircles());
-      swapCount++;
-
-      if (swapCount === Number(swaps)) {
-        clearInterval(interval);
-        setSwapping(false);
-      }
-    }, 350);
-  }
-
-  const getRandomizedCircles = (): Circle[] => {
-    const positions: Position[] = [];
-
-    for (let i = 0; i < circles.length; i++) {
-      let position;
-
-      do {
-        position = getRandomPosition(GRID_WIDTH, GRID_HEIGHT);
-      } while (!isPositionChosen(position, positions));
-      positions.push(position);
-    }
-
-    return circles.map((circle, i) => ({
-      ...circle,
-      position: positions[i],
-      colour: getRandomColour(),
-    }));
   }
 
   const getCircleClass = (circle: Circle): string => {

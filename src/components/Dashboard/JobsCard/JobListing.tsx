@@ -28,7 +28,7 @@ function JobListing(props: JobListingProps) {
     const ids = Object.values(props.job.crew)
       .reduce((arr, members) => [...arr, ...members], [])
       .filter(member => member);
-    return ids.map(id => members.find(member => member.id === id)?.name ?? id);
+    return [...new Set(ids)].map(id => members.find(member => member.id === id)?.name ?? id);
   }
 
   return (
