@@ -30,6 +30,7 @@ import PublicLore from './components/PublicLore/PublicLore';
 import Lore from './components/InformationCenter/Lore/Lore';
 import Assets from './components/InformationCenter/Assets/Assets';
 import HackingPractice from './components/HackingPractice/HackingPractice';
+import VangieGuide from './components/Jobs/Guides/VangieGuide';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
               <Route path='/hacking' element={<Hacking />} />
               <Route path='/hacking/practice' element={<HackingPractice />} />
               <Route path='/information-center/jobs' element={<Jobs />} />
+              <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/jobs' element={<JobListing />} />
               <Route path='/jobs/new' element={<JobPicker />} />
             </Route>

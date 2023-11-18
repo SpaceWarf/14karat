@@ -11,16 +11,16 @@
 
     button.hover-animation {
       .label {
-        width: 85px;
+        width: 75px;
       }
 
       &:hover:not(:disabled) {
         .label {
-          left: calc((100% - 110px) / 2);
+          left: calc((100% - 100px) / 2);
         }
 
         .IconContainer {
-          right: calc((100% - 110px) / 2);
+          right: calc((100% - 100px) / 2);
         }
       }
     }

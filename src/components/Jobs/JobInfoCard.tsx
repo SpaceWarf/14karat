@@ -103,7 +103,7 @@ function JobInfoCard(props: JobInfoCardProps) {
       <div className="content">
         <div className="header">
           <p><i className={`${props.info.icon} icon`} /> {props.info.name}</p>
-          <p>{!props.info.payout || isNaN(props.info.payout) ? props.info.payout : `~${currencyFormat(props.info.payout)}`}</p>
+          <p>{!props.info.payout || isNaN(props.info.payout) ? props.info.payout : `~${currencyFormat(Number(props.info.payout))}`}</p>
         </div>
         <div className="Details ui form">
           <div className='Row'>
@@ -144,10 +144,17 @@ function JobInfoCard(props: JobInfoCardProps) {
       </div>
       {props.showActionButton && (
         <div className='extra content'>
-          <button className="ui button hover-animation" disabled>
-            <p className='label'>View Guide - TODO</p>
-            <p className='IconContainer'><i className='eye icon'></i></p>
-          </button>
+          {["vangelico"].includes(props.info.id) ? (
+            <button className="ui button hover-animation" onClick={() => navigate(`/information-center/jobs/${props.info.id}`)}>
+              <p className='label'>View Guide</p>
+              <p className='IconContainer'><i className='eye icon'></i></p>
+            </button>
+          ) : (
+            <button className="ui button hover-animation" disabled>
+              <p className='label'>View Guide</p>
+              <p className='IconContainer'><i className='eye icon'></i></p>
+            </button>
+          )}
         </div>
       )}
     </div>
