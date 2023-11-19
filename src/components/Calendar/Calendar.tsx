@@ -11,7 +11,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import EditEventModal from './EditEventModal/EditEventModal';
 import ViewEventModal from './ViewEventModal/ViewEventModal';
 import { Webhook } from '../../state/webhook';
-import { getWebhookById } from '../../utils/firestore';
+import { DatabaseTable, getItemById } from '../../utils/firestore';
 import { useSearchParams } from 'react-router-dom';
 
 const localizer = dayjsLocalizer(dayjs);
@@ -31,7 +31,7 @@ function EventCalendar() {
 
   useEffect(() => {
     const fetchWebhook = async () => {
-      setWebhook(await getWebhookById('event-update'));
+      setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'event-update'));
     }
 
     if (access.leadAccess) {

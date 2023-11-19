@@ -3,8 +3,7 @@ import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
 import { Intel } from "../state/intel";
-import { War, WarClip, WarClipUpdate, WarUpdate } from "../state/war";
-import { Webhook } from "../state/webhook";
+import { WarClip, WarClipUpdate } from "../state/war";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
 import { Location } from '../state/location';
@@ -50,9 +49,9 @@ export enum DatabaseTable {
   ASSETS = "assets",
   INVENTORY = "inventory",
   STASHES = "stashes",
+  WEBHOOK = "webhooks",
 }
 
-const warsRef = collection(db, "wars");
 const eventsRef = collection(db, "events");
 const warClipsRef = collection(db, "war-clips");
 const hacksRef = collection(db, "hacks");
@@ -197,58 +196,6 @@ export async function getIntelForMember(id: string): Promise<Intel[]> {
     }
   });
   return intel;
-}
-
-export async function getWars(): Promise<War[]> {
-  const snapshot = await getDocs(warsRef);
-  const wars: War[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      wars.push({ id: doc.id, ...data });
-    }
-  });
-  return wars;
-}
-
-export function onWarSnapshot(cb: (wars: War[]) => void): Unsubscribe {
-  return onSnapshot(warsRef, {}, snapshot => {
-    const wars: War[] = [];
-    snapshot.forEach((doc: DocumentData) => {
-      const data = doc.data();
-      if (!data.deleted) {
-        wars.push({ id: doc.id, ...data });
-      }
-    });
-    cb(wars);
-  });
-}
-
-export async function updateWarInfo(id: string, update: Partial<War>, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "wars", id), {
-    ...update,
-    updatedAt: now,
-    updatedBy: user?.uid ?? '',
-  });
-}
-
-export async function createWarInfo(warInfo: WarUpdate, user: User | null): Promise<War> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(warsRef, {
-    ...warInfo,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...warInfo,
-  };
-}
-
-export async function getWebhookById(id: string): Promise<Webhook> {
-  const snapshot = await getDoc(doc(db, "webhooks", id));
-  return { id: snapshot.id, ...snapshot.data() } as Webhook;
 }
 
 export async function getEvents(): Promise<CalendarEvent[]> {

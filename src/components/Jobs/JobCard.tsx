@@ -1,6 +1,6 @@
 import "./Jobs.scss";
 import { CrewRoleMap, Job } from "../../state/jobs";
-import { DatabaseTable, deleteActiveJob, deleteRadio, getItems, getWebhookById, onItemsSnapshot, updateActiveJob } from "../../utils/firestore";
+import { DatabaseTable, deleteActiveJob, deleteRadio, getItemById, getItems, onItemsSnapshot, updateActiveJob } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
@@ -37,8 +37,8 @@ function JobCard(props: JobCardProps) {
 
   useEffect(() => {
     const fetchWebhooks = async () => {
-      setJobWebhook(await getWebhookById('job-update'));
-      setRadioWebhook(await getWebhookById('radio-update'));
+      setJobWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'job-update'));
+      setRadioWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'radio-update'));
     }
 
     fetchWebhooks();

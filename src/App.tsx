@@ -13,7 +13,7 @@ import GroupListing from './components/Groups/GroupListing';
 import GroupDetails from './components/Groups/GroupDetails';
 import MemberDetails from './components/Groups/MemberDetails';
 import Calendar from './components/Calendar/Calendar';
-import War from './components/War/War';
+import WarInfo from './components/War/War';
 import Hacking from './components/Hacking/Hacking';
 import DriverStratGallery from './components/DriverStrats/DriverStratGallery';
 import InformationCenter from './components/InformationCenter/InformationCenter';
@@ -48,7 +48,7 @@ function App() {
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
-            <Route path='/war' element={<War />} />
+            <Route path='/war' element={<WarInfo />} />
             <Route path='/information-center' element={<InformationCenter />} />
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route path='/information-center/rules' element={<Rules />} />

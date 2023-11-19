@@ -3,7 +3,7 @@ import Header from '../Common/Header';
 import { useSelector } from 'react-redux';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../utils/time';
 import { useEffect, useState } from 'react';
-import { createWarInfo, deleteWarClip, getWarClipsForWar, getWebhookById, updateWarInfo } from '../../utils/firestore';
+import { DatabaseTable, createItem, deleteWarClip, getItemById, getWarClipsForWar, updateItem } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
@@ -16,11 +16,11 @@ import dayjs, { Dayjs } from 'dayjs';
 import { RootState } from '../../redux/store';
 import Gallery from '../Common/Gallery';
 import NewWarClipModal from './NewWarClipModal';
-import { WarClip, WarClipTag } from '../../state/war';
+import { War, WarClip, WarClipTag, WarUpdate } from '../../state/war';
 import { GalleryItem } from '../../state/gallery';
 import ExpandWarClipModal from './ExpandWarClipModal';
 
-function War() {
+function WarInfo() {
   const { user, access } = useAuth();
   const war = useSelector(getMostRecentWar);
   const profile = useSelector((state: RootState) => state.profile);
@@ -39,7 +39,7 @@ function War() {
   useEffect(() => {
     const fetchWebhook = async () => {
       setLoadingWebhook(true);
-      setWebhook(await getWebhookById('score-update'));
+      setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'score-update'));
       setLoadingWebhook(false);
     }
 
@@ -93,42 +93,71 @@ function War() {
 
   const handleAddKill = () => {
     setLoading(true);
-    updateWarInfo(war.id, { kills: war.kills ? war.kills + 1 : 1 }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, kills: war.kills ? war.kills + 1 : 1 },
+      user
+    );
     setLoading(false);
   }
 
   const handleRemoveKill = () => {
     setLoading(true);
-    updateWarInfo(war.id, { kills: war.kills ? war.kills - 1 : 0 }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, kills: war.kills ? war.kills - 1 : 0 },
+      user
+    );
     setLoading(false);
   }
 
   const handleAddDeath = () => {
     setLoading(true);
-    updateWarInfo(war.id, { deaths: war.deaths ? war.deaths + 1 : 1 }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, deaths: war.deaths ? war.deaths + 1 : 1 },
+      user
+    );
     setLoading(false);
   }
 
   const handleRemoveDeath = () => {
     setLoading(true);
-    updateWarInfo(war.id, { deaths: war.deaths ? war.deaths - 1 : 0 }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, deaths: war.deaths ? war.deaths - 1 : 0 },
+      user
+    );
     setLoading(false);
   }
 
   const handleEndWar = () => {
     setLoading(true);
     setGroup('');
-    updateWarInfo(war.id, { endedAt: new Date().toISOString() }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, endedAt: new Date().toISOString() },
+      user
+    );
     setLoading(false);
   }
 
   const handleDeclareWar = () => {
     setLoading(true);
-    createWarInfo({
-      group: 'New War',
-      kills: 0,
-      deaths: 0,
-    }, user);
+    createItem<WarUpdate, War>(
+      DatabaseTable.WARS,
+      {
+        group: 'New War',
+        kills: 0,
+        deaths: 0,
+      },
+      user
+    );
     setLoading(false);
   }
 
@@ -168,12 +197,22 @@ function War() {
 
   const handleGroupUpdate = (group: string) => {
     setGroup(group);
-    updateWarInfo(war.id, { group }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, group },
+      user
+    );
   }
 
   const handleOurSlideUpdate = () => {
     setLoading(true);
-    updateWarInfo(war.id, { ourSlide: ourSlide.toDate().toISOString() }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, ourSlide: ourSlide.toDate().toISOString() },
+      user
+    );
     setEditingOurTimer(false);
     setLoading(false);
   }
@@ -181,14 +220,24 @@ function War() {
   const handleOurSlideClear = () => {
     setLoading(true);
     setOurSlide(dayjs());
-    updateWarInfo(war.id, { ourSlide: '' }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, ourSlide: '' },
+      user
+    );
     setEditingOurTimer(false);
     setLoading(false);
   }
 
   const handleTheirSlideUpdate = () => {
     setLoading(true);
-    updateWarInfo(war.id, { theirSlide: theirSlide.toDate().toISOString() }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, theirSlide: theirSlide.toDate().toISOString() },
+      user
+    );
     setEditingTheirTimer(false);
     setLoading(false);
   }
@@ -196,7 +245,12 @@ function War() {
   const handleTheirSlideClear = () => {
     setLoading(true);
     setTheirSlide(dayjs());
-    updateWarInfo(war.id, { theirSlide: '' }, user);
+    updateItem<WarUpdate>(
+      DatabaseTable.WARS,
+      war.id,
+      { ...war, theirSlide: '' },
+      user
+    );
     setEditingTheirTimer(false);
     setLoading(false);
   }
@@ -451,4 +505,4 @@ function War() {
 }
 
 
-export default War;
+export default WarInfo;

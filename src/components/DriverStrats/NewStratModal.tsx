@@ -5,7 +5,7 @@ import Input from "../Common/Input";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { DatabaseTable, createItem, getWebhookById } from "../../utils/firestore";
+import { DatabaseTable, createItem, getItemById } from "../../utils/firestore";
 import { DriverStrat, DriverStratTag, DriverStratUpdate } from "../../redux/reducers/driverStrats";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
@@ -30,7 +30,7 @@ function NewStratModal(props: NewStratModalProps) {
 
   useEffect(() => {
     const fetchWebhook = async () => {
-      setWebhook(await getWebhookById('strats-update'));
+      setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'strats-update'));
     }
 
     fetchWebhook();

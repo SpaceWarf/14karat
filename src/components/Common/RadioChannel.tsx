@@ -1,4 +1,4 @@
-import { createRadio, getWebhookById, updateRadio } from "../../utils/firestore";
+import { DatabaseTable, createRadio, getItemById, updateRadio } from "../../utils/firestore";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Radio } from "../../state/radio";
@@ -22,7 +22,7 @@ function RadioChannel(props: RadioChannelProps) {
 
   useEffect(() => {
     const fetchWebhook = async () => {
-      setWebhook(await getWebhookById('radio-update'));
+      setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'radio-update'));
     }
 
     fetchWebhook();

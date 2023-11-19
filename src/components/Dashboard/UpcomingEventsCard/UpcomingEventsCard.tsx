@@ -6,7 +6,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { CalendarEvent, ReactBigCalendarEvent } from '../../../state/event';
 import ViewEventModal from '../../Calendar/ViewEventModal/ViewEventModal';
 import { Webhook } from '../../../state/webhook';
-import { getWebhookById } from '../../../utils/firestore';
+import { DatabaseTable, getItemById } from '../../../utils/firestore';
 import { useAuth } from '../../../contexts/AuthContext';
 import EditEventModal from '../../Calendar/EditEventModal/EditEventModal';
 import { getTimeString } from '../../../utils/time';
@@ -22,7 +22,7 @@ function UpcomingEventsCard() {
 
   useEffect(() => {
     const fetchWebhook = async () => {
-      setWebhook(await getWebhookById('event-update'));
+      setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'event-update'));
     }
 
     if (access.headAccess) {
