@@ -2,7 +2,7 @@ import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, upd
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
-import { Intel, IntelUpdate } from "../state/intel";
+import { Intel } from "../state/intel";
 import { War, WarClip, WarClipUpdate, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
 import { CalendarEvent, CalendarEventUpdate } from "../state/event";
@@ -52,7 +52,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
 }
 
-const intelRef = collection(db, "intel");
 const warsRef = collection(db, "wars");
 const eventsRef = collection(db, "events");
 const warClipsRef = collection(db, "war-clips");
@@ -198,28 +197,6 @@ export async function getIntelForMember(id: string): Promise<Intel[]> {
     }
   });
   return intel;
-}
-
-export async function createIntel(intel: IntelUpdate, user: User | null): Promise<Intel> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(intelRef, {
-    ...intel,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...intel,
-  }
-}
-
-export async function deleteIntel(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "intel", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
 }
 
 export async function getWars(): Promise<War[]> {

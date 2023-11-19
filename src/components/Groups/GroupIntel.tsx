@@ -1,7 +1,7 @@
 import "./Groups.scss";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { deleteIntel, getIntelForGroup } from "../../utils/firestore";
+import { DatabaseTable, deleteItem, getIntelForGroup } from "../../utils/firestore";
 import { Intel, IntelTag } from "../../state/intel";
 import Gallery from "../Common/Gallery";
 import { GalleryItem } from "../../state/gallery";
@@ -38,7 +38,7 @@ function GroupIntel() {
   }
 
   const handleDelete = async (id: string) => {
-    await deleteIntel(id, user);
+    await deleteItem(DatabaseTable.INTEL, id, user);
 
     if (groupId) {
       setIntel(await getIntelForGroup(groupId));

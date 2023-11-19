@@ -3,10 +3,10 @@ import { Modal } from "semantic-ui-react";
 import { useState } from "react";
 import Input from "../Common/Input";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
-import { createIntel } from "../../utils/firestore";
+import { DatabaseTable, createItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
-import { IntelTag, IntelType } from "../../state/intel";
+import { Intel, IntelTag, IntelType, IntelUpdate } from "../../state/intel";
 
 interface NewStratModalProps {
   groupId: string;
@@ -42,14 +42,18 @@ function NewIntelModal(props: NewStratModalProps) {
 
   const handleAdd = async () => {
     setLoading(true);
-    await createIntel({
-      group: props.memberId ? '' : props.groupId,
-      member: props.memberId ? props.memberId : '',
-      url,
-      embed,
-      notes,
-      tags,
-    }, user);
+    await createItem<IntelUpdate, Intel>(
+      DatabaseTable.INTEL,
+      {
+        group: props.memberId ? '' : props.groupId,
+        member: props.memberId ? props.memberId : '',
+        url,
+        embed,
+        notes,
+        tags,
+      },
+      user
+    );
     props.onAdd();
     reset();
     setLoading(false);
