@@ -5,7 +5,7 @@ import { InventoryCategory, InventoryItem, InventoryTags } from "../../state/inv
 import { Stash } from "../../state/stash";
 import Loading from "../Common/Loading";
 import InventoryItemRow from "./InventoryItemRow";
-import { DatabaseTable, getItems } from "../../utils/firestore";
+import { DatabaseTable, getItems, onItemsSnapshot } from "../../utils/firestore";
 import Filters from "../Common/Filters";
 
 function Inventory() {
@@ -21,6 +21,11 @@ function Inventory() {
       setLoading(true);
       setInventory(await getItems<InventoryItem>(DatabaseTable.INVENTORY));
       setStashes(await getItems<Stash>(DatabaseTable.STASHES));
+
+      onItemsSnapshot<InventoryItem>(DatabaseTable.INVENTORY, inventory => {
+        setInventory(inventory);
+      });
+
       setLoading(false);
     }
     fetchData();
