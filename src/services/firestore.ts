@@ -1,6 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getNeighbourhoods,
   onWarSnapshot,
   getWars,
   getEvents,
@@ -26,7 +25,7 @@ import { getProfilePictureUrl } from "../utils/storage";
 import { Role, setRoles } from "../redux/reducers/roles";
 import { Division, setDivisions } from "../redux/reducers/divisions";
 import { DriverStrat, setDriverStrats } from "../redux/reducers/driverStrats";
-import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
+import { Neighbourhood, setNeighbourhoods } from "../redux/reducers/neighbourhoods";
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
@@ -57,7 +56,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<Division>(DatabaseTable.DIVISIONS),
     getItems<Role>(DatabaseTable.ROLES),
     getItems<DriverStrat>(DatabaseTable.DRIVER_STRATS),
-    getNeighbourhoods(),
+    getItems<Neighbourhood>(DatabaseTable.NEIGHBOURHOODS),
     getWars(),
     getEvents(),
     getHacks(),

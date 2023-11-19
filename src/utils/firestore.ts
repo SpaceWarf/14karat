@@ -1,7 +1,6 @@
 import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
-import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/member";
 import { Intel, IntelUpdate } from "../state/intel";
@@ -54,7 +53,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
 }
 
-const neighbourhoodsRef = collection(db, "neighbourhoods");
 const groupsRef = collection(db, "groups");
 const membersRef = collection(db, "members");
 const intelRef = collection(db, "intel");
@@ -167,15 +165,6 @@ export async function getStats() {
     const name = profiles.find(profile => profile.id === key)?.name ?? key;
     console.log(`${name} has completed ${value} jobs in the last two weeks`)
   });
-}
-
-export async function getNeighbourhoods(): Promise<Neighbourhood[]> {
-  const snapshot = await getDocs(neighbourhoodsRef);
-  const neighbourhoods: Neighbourhood[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    neighbourhoods.push({ id: doc.id, ...doc.data() });
-  });
-  return neighbourhoods;
 }
 
 export async function getGroups(): Promise<Group[]> {
