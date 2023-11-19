@@ -4,7 +4,7 @@ import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
 import { Intel } from "../state/intel";
 import { WarClip } from "../state/war";
-import { Card, Gear, Job, Usb } from "../state/jobs";
+import { Job } from "../state/jobs";
 import { ProfileInfo } from "../state/profile";
 import { Radio, RadioUpdate } from "../state/radio";
 import { Quote } from "../state/quotes";
@@ -49,9 +49,6 @@ export enum DatabaseTable {
   WEBHOOK = "webhooks",
 }
 
-const gearRef = collection(db, "gear");
-const cardsRef = collection(db, "cards");
-const usbsRef = collection(db, "usbs");
 const radiosRef = collection(db, "radios");
 const quotesRef = collection(db, "quotes");
 const assetsRef = collection(db, "assets");
@@ -182,42 +179,6 @@ export function onActiveJobSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
   return onItemsSnapshot<Job>(DatabaseTable.JOBS, items => {
     cb(items.filter(item => !item.completed));
   })
-}
-
-export async function getGear(): Promise<Gear[]> {
-  const snapshot = await getDocs(gearRef);
-  const gear: Gear[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      gear.push({ id: doc.id, ...data });
-    }
-  });
-  return gear;
-}
-
-export async function getCards(): Promise<Card[]> {
-  const snapshot = await getDocs(cardsRef);
-  const cards: Card[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      cards.push({ id: doc.id, ...data });
-    }
-  });
-  return cards;
-}
-
-export async function getUsbs(): Promise<Usb[]> {
-  const snapshot = await getDocs(usbsRef);
-  const usbs: Usb[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      usbs.push({ id: doc.id, ...data });
-    }
-  });
-  return usbs;
 }
 
 export async function getRadios(): Promise<Radio[]> {

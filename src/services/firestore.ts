@@ -1,6 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getGear,
   getRadios,
   onRadiosSnapshot,
   getQuotes,
@@ -30,6 +29,7 @@ import { ProfileInfo } from "../state/profile";
 import { War } from "../state/war";
 import { CalendarEvent } from "../state/event";
 import { Hack } from "../state/hack";
+import { Gear } from "../state/jobs";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -57,7 +57,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<CalendarEvent>(DatabaseTable.EVENTS),
     getItems<Hack>(DatabaseTable.HACKS),
     getActiveJobs(),
-    getGear(),
+    getItems<Gear>(DatabaseTable.GEAR),
     getRadios(),
     getQuotes(),
   ]);
