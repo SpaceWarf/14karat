@@ -112,37 +112,6 @@ export async function deleteItem(table: string, id: string, user: User | null): 
   });
 }
 
-export async function getStats() {
-  const jobs = await getItems<Job>(DatabaseTable.JOBS);
-  const profiles = await getItems<ProfileInfo>(DatabaseTable.PROFILES);
-  const dateFilter = dayjs().subtract(14, "days").toDate();
-
-  let stats = jobs.reduce((map, job) => {
-    if (job.createdAt && new Date(job.createdAt).getTime() < dateFilter.getTime()) {
-      return map;
-    }
-
-    const crew = [...new Set(Object.values(job.crew).reduce((crew, role) => [...crew, ...role]))].filter(member => member);
-
-    crew.forEach(member => {
-      if (map.has(member)) {
-        map.set(member, map.get(member) + 1);
-      } else {
-        map.set(member, 1);
-      }
-    });
-
-    return map;
-  }, new Map());
-
-  console.log("-------------------------------------------------------------")
-  stats = new Map([...stats.entries()].sort((a, b) => b[1] - a[1]));
-  stats.forEach((value: boolean, key: string) => {
-    const name = profiles.find(profile => profile.id === key)?.name ?? key;
-    console.log(`${name} has completed ${value} jobs in the last two weeks`)
-  });
-}
-
 export async function getMembersForGroup(id: string): Promise<Member[]> {
   const items = await getItems<Member>(DatabaseTable.MEMBERS);
   return items.filter(item => item.group === id);
@@ -172,4 +141,36 @@ export function onActiveJobSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
   return onItemsSnapshot<Job>(DatabaseTable.JOBS, items => {
     cb(items.filter(item => !item.completed));
   })
+}
+
+// Debug function to get stats in the console
+export async function getStats() {
+  const jobs = await getItems<Job>(DatabaseTable.JOBS);
+  const profiles = await getItems<ProfileInfo>(DatabaseTable.PROFILES);
+  const dateFilter = dayjs().subtract(14, "days").toDate();
+
+  let stats = jobs.reduce((map, job) => {
+    if (job.createdAt && new Date(job.createdAt).getTime() < dateFilter.getTime()) {
+      return map;
+    }
+
+    const crew = [...new Set(Object.values(job.crew).reduce((crew, role) => [...crew, ...role]))].filter(member => member);
+
+    crew.forEach(member => {
+      if (map.has(member)) {
+        map.set(member, map.get(member) + 1);
+      } else {
+        map.set(member, 1);
+      }
+    });
+
+    return map;
+  }, new Map());
+
+  console.log("-------------------------------------------------------------")
+  stats = new Map([...stats.entries()].sort((a, b) => b[1] - a[1]));
+  stats.forEach((value: boolean, key: string) => {
+    const name = profiles.find(profile => profile.id === key)?.name ?? key;
+    console.log(`${name} has completed ${value} jobs in the last two weeks`)
+  });
 }
