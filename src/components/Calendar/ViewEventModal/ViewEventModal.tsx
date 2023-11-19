@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { LocalizationProvider, DateTimePicker, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useAuth } from "../../../contexts/AuthContext";
-import { deleteEvent } from "../../../utils/firestore";
+import { DatabaseTable, deleteItem } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
@@ -22,7 +22,7 @@ function ViewEventModal(props: ViewEventModalProps) {
   const { user, access } = useAuth();
 
   const handleDelete = async () => {
-    await deleteEvent(props.event.id, user);
+    await deleteItem(DatabaseTable.EVENTS, props.event.id, user);
     props.onClose();
   }
 

@@ -1,7 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getEvents,
-  onEventsSnapshot,
   getHacks,
   getActiveJobs,
   onActiveJobsSnapshot,
@@ -32,6 +30,7 @@ import { setRadios } from "../redux/reducers/radios";
 import { setQuotes } from "../redux/reducers/quotes";
 import { ProfileInfo } from "../state/profile";
 import { War } from "../state/war";
+import { CalendarEvent } from "../state/event";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -57,7 +56,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<DriverStrat>(DatabaseTable.DRIVER_STRATS),
     getItems<Neighbourhood>(DatabaseTable.NEIGHBOURHOODS),
     getItems<War>(DatabaseTable.WARS),
-    getEvents(),
+    getItems<CalendarEvent>(DatabaseTable.EVENTS),
     getHacks(),
     getActiveJobs(),
     getJobInfos(),
@@ -87,7 +86,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onItemByIdSnapshot<ProfileInfo>(DatabaseTable.PROFILES, id, profile => dispatch(setProfile(profile)));
   onItemsSnapshot<DriverStrat>(DatabaseTable.DRIVER_STRATS, strats => dispatch(setDriverStrats(strats)));
   onItemsSnapshot<War>(DatabaseTable.WARS, wars => dispatch(setWars(wars)));
-  onEventsSnapshot(events => dispatch(setEvents(events)));
+  onItemsSnapshot<CalendarEvent>(DatabaseTable.EVENTS, events => dispatch(setEvents(events)));
   onActiveJobsSnapshot(jobs => dispatch(setActiveJobs(jobs)));
   onRadiosSnapshot(radios => dispatch(setRadios(radios)));
   loadingSubject.next(false);

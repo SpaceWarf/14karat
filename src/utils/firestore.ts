@@ -4,7 +4,6 @@ import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
 import { Intel } from "../state/intel";
 import { WarClip, WarClipUpdate } from "../state/war";
-import { CalendarEvent, CalendarEventUpdate } from "../state/event";
 import { Hack } from "../state/hack";
 import { Location } from '../state/location';
 import { Card, Gear, Job, JobInfo, JobUpdate, Usb } from "../state/jobs";
@@ -52,7 +51,6 @@ export enum DatabaseTable {
   WEBHOOK = "webhooks",
 }
 
-const eventsRef = collection(db, "events");
 const warClipsRef = collection(db, "war-clips");
 const hacksRef = collection(db, "hacks");
 const locationsRef = collection(db, "locations");
@@ -196,62 +194,6 @@ export async function getIntelForMember(id: string): Promise<Intel[]> {
     }
   });
   return intel;
-}
-
-export async function getEvents(): Promise<CalendarEvent[]> {
-  const snapshot = await getDocs(eventsRef);
-  const wars: CalendarEvent[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      wars.push({ id: doc.id, ...data });
-    }
-  });
-  return wars;
-}
-
-export function onEventsSnapshot(cb: (wars: CalendarEvent[]) => void): Unsubscribe {
-  return onSnapshot(eventsRef, {}, snapshot => {
-    const wars: CalendarEvent[] = [];
-    snapshot.forEach((doc: DocumentData) => {
-      const data = doc.data();
-      if (!data.deleted) {
-        wars.push({ id: doc.id, ...data });
-      }
-    });
-    cb(wars);
-  });
-}
-
-export async function createEvent(event: CalendarEventUpdate, user: User | null): Promise<CalendarEvent> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(eventsRef, {
-    ...event,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...event,
-  };
-}
-
-export async function updateEvent(id: string, update: CalendarEventUpdate, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "events", id), {
-    ...update,
-    updatedAt: now,
-    updatedBy: user?.uid ?? '',
-  });
-}
-
-export async function deleteEvent(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "events", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
 }
 
 export async function getWarClipsForWar(id: string): Promise<WarClip[]> {

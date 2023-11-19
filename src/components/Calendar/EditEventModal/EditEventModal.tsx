@@ -3,12 +3,12 @@ import { Checkbox, Modal } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import Input from "../../Common/Input";
-import { EVENT_COLORS, ReactBigCalendarEvent } from "../../../state/event";
+import { CalendarEventUpdate, EVENT_COLORS, ReactBigCalendarEvent } from "../../../state/event";
 import Dropdown from "../../Common/Dropdown";
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider, DateTimePicker, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { updateEvent } from "../../../utils/firestore";
+import { DatabaseTable, updateItem } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
@@ -45,7 +45,8 @@ function EditEventModal(props: EditEventModalProps) {
 
   const handleSave = async () => {
     setLoading(true);
-    await updateEvent(
+    await updateItem<CalendarEventUpdate>(
+      DatabaseTable.EVENTS,
       props.event.id,
       {
         title,

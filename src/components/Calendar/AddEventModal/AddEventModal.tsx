@@ -8,7 +8,7 @@ import Dropdown from "../../Common/Dropdown";
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider, DateTimePicker, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { createEvent } from "../../../utils/firestore";
+import { DatabaseTable, createItem } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
@@ -41,15 +41,19 @@ function AddEventModal(props: AddEventModalProps) {
 
   const handleAdd = async () => {
     setLoading(true);
-    await createEvent({
-      title,
-      color,
-      start: start.toISOString(),
-      end: end.toISOString(),
-      allDay,
-      poster,
-      notes,
-    }, user);
+    await createItem(
+      DatabaseTable.EVENTS,
+      {
+        title,
+        color,
+        start: start.toISOString(),
+        end: end.toISOString(),
+        allDay,
+        poster,
+        notes,
+      },
+      user
+    );
     setLoading(false);
 
     if (notification) {
