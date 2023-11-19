@@ -1,4 +1,4 @@
-import { CollectionReference, DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
@@ -57,7 +57,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
 }
 
-const profilesRef = collection(db, "profiles");
 const rolesRef = collection(db, "roles");
 const divisionRef = collection(db, "divisions");
 const driverStratsRef = collection(db, "driver-strats");
@@ -90,6 +89,11 @@ export async function getItems<T>(table: DatabaseTable): Promise<T[]> {
   return items;
 }
 
+export async function getItemById<T>(table: DatabaseTable, id: string): Promise<T> {
+  const snapshot = await getDoc(doc(db, table, id));
+  return { id: snapshot.id, ...snapshot.data() } as T;
+}
+
 export function onItemsSnapshot<T>(table: string, cb: (items: T[]) => void): Unsubscribe {
   return onSnapshot(collection(db, table), {}, snapshot => {
     const items: T[] = [];
@@ -99,6 +103,12 @@ export function onItemsSnapshot<T>(table: string, cb: (items: T[]) => void): Uns
       }
     });
     cb(items);
+  });
+}
+
+export function onItemByIdSnapshot<T>(table: DatabaseTable, id: string, cb: (profile: T) => void): Unsubscribe {
+  return onSnapshot(doc(db, table, id), {}, snapshot => {
+    cb({ id: snapshot.id, ...snapshot.data() } as T);
   });
 }
 
@@ -116,7 +126,7 @@ export async function createItem<T, U>(table: string, item: T, user: User | null
   } as U;
 }
 
-export async function updateItem<T>(id: string, table: string, update: T, user: User | null): Promise<void> {
+export async function updateItem<T>(table: string, id: string, update: T, user: User | null): Promise<void> {
   const now = new Date().toISOString();
   await updateDoc(doc(db, table, id), {
     ...update,
@@ -125,7 +135,7 @@ export async function updateItem<T>(id: string, table: string, update: T, user: 
   });
 }
 
-export async function deleteItem(id: string, table: string, user: User | null): Promise<void> {
+export async function deleteItem(table: string, id: string, user: User | null): Promise<void> {
   const now = new Date().toISOString();
   await updateDoc(doc(db, table, id), {
     deleted: true,
@@ -162,51 +172,6 @@ export async function getStats() {
   stats.forEach((value: boolean, key: string) => {
     const name = profiles.find(profile => profile.id === key)?.name ?? key;
     console.log(`${name} has completed ${value} jobs in the last two weeks`)
-  });
-}
-
-export async function getProfiles(): Promise<ProfileInfo[]> {
-  const snapshot = await getDocs(profilesRef);
-  const profiles: ProfileInfo[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    if (!doc.data().deleted) {
-      profiles.push({ id: doc.id, ...doc.data() });
-    }
-  });
-  return profiles;
-}
-
-export function onProfilesSnapshot(cb: (profile: ProfileInfo[]) => void): Unsubscribe {
-  return onSnapshot(profilesRef, {}, snapshot => {
-    const profiles: ProfileInfo[] = [];
-    snapshot.forEach((doc: DocumentData) => {
-      if (!doc.data().deleted) {
-        profiles.push({ id: doc.id, ...doc.data() });
-      }
-    });
-    cb(profiles);
-  });
-}
-
-export async function getProfileById(id: string): Promise<ProfileInfo> {
-  const snapshot = await getDoc(doc(db, "profiles", id));
-  return { id: snapshot.id, ...snapshot.data() } as ProfileInfo;
-}
-
-export function onProfileByIdSnapshot(id: string, cb: (profile: ProfileInfo) => void): Unsubscribe {
-  return onSnapshot(doc(db, "profiles", id), {}, snapshot => {
-    cb({ id: snapshot.id, ...snapshot.data() } as ProfileInfo);
-  });
-}
-
-export async function updateProfileInfo(id: string, profile: ProfileInfo, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  const update: Partial<ProfileInfo> = { ...profile };
-  delete update.id;
-  await updateDoc(doc(db, "profiles", id), {
-    ...update,
-    updatedAt: now,
-    updatedBy: user?.uid ?? "",
   });
 }
 

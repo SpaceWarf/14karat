@@ -1,7 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getProfileById,
-  onProfileByIdSnapshot,
   getDivisions,
   getRoles,
   getDriverStrats,
@@ -18,7 +16,10 @@ import {
   getGear,
   getRadios,
   onRadiosSnapshot,
-  getQuotes
+  getQuotes,
+  getItemById,
+  DatabaseTable,
+  onItemByIdSnapshot
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -34,6 +35,7 @@ import { setHacks } from "../redux/reducers/hacks";
 import { setActiveJobs, setGear, setJobInfos } from "../redux/reducers/jobs";
 import { setRadios } from "../redux/reducers/radios";
 import { setQuotes } from "../redux/reducers/quotes";
+import { ProfileInfo } from "../state/profile";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -53,7 +55,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     radios,
     quotes,
   ] = await Promise.all([
-    getProfileById(id),
+    getItemById<ProfileInfo>(DatabaseTable.PROFILES, id),
     getDivisions(),
     getRoles(),
     getDriverStrats(),
@@ -86,7 +88,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     dispatch(setPfpUrl(url));
   }
 
-  onProfileByIdSnapshot(id, profile => dispatch(setProfile(profile)));
+  onItemByIdSnapshot<ProfileInfo>(DatabaseTable.PROFILES, id, profile => dispatch(setProfile(profile)));
   onDriverStratsSnapshot(strats => dispatch(setDriverStrats(strats)));
   onWarSnapshot(wars => dispatch(setWars(wars)));
   onEventsSnapshot(events => dispatch(setEvents(events)));

@@ -4,7 +4,7 @@ import { RootState } from "../../../redux/store";
 import { Job } from "../../../state/jobs";
 import { useState, useEffect } from "react";
 import { ProfileInfo } from "../../../state/profile";
-import { getProfiles, onProfilesSnapshot } from "../../../utils/firestore";
+import { DatabaseTable, getItems, onItemsSnapshot } from "../../../utils/firestore";
 
 interface JobListingProps {
   job: Job;
@@ -17,9 +17,8 @@ function JobListing(props: JobListingProps) {
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const profiles = await getProfiles();
-      setMembers(profiles);
-      onProfilesSnapshot((profiles: ProfileInfo[]) => setMembers(profiles));
+      setMembers(await getItems<ProfileInfo>(DatabaseTable.PROFILES));
+      onItemsSnapshot<ProfileInfo>(DatabaseTable.PROFILES, profiles => setMembers(profiles));
     }
     fetchProfiles();
   }, []);

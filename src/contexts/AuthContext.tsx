@@ -8,8 +8,9 @@ import {
   signOut,
   onAuthStateChanged
 } from "firebase/auth";
-import { getDivisions, getProfileById } from '../utils/firestore';
+import { DatabaseTable, getDivisions, getItemById } from '../utils/firestore';
 import { useDispatch } from 'react-redux';
+import { ProfileInfo } from '../state/profile';
 
 interface AuthContextProps {
   user: User | null;
@@ -75,7 +76,7 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       async function getAccess(): Promise<Access> {
         if (user) {
-          const profile = await getProfileById(user.uid);
+          const profile = await getItemById<ProfileInfo>(DatabaseTable.PROFILES, user.uid);
 
           if (profile.admin) {
             return {

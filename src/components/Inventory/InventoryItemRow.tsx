@@ -1,7 +1,6 @@
 import "./Inventory.scss";
 import { InventoryItem } from "../../state/inventory";
 import { Stash } from "../../state/stash";
-import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { DatabaseTable, updateItem } from "../../utils/firestore";
 

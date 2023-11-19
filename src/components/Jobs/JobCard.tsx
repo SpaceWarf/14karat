@@ -1,6 +1,6 @@
 import "./Jobs.scss";
 import { CrewRoleMap, Job } from "../../state/jobs";
-import { deleteActiveJob, deleteRadio, getProfiles, getWebhookById, onProfilesSnapshot, updateActiveJob } from "../../utils/firestore";
+import { DatabaseTable, deleteActiveJob, deleteRadio, getItems, getWebhookById, onItemsSnapshot, updateActiveJob } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
@@ -28,9 +28,8 @@ function JobCard(props: JobCardProps) {
   useEffect(() => {
     const fetchProfiles = async () => {
       setLoading(true);
-      const profiles = await getProfiles();
-      setMembers(profiles);
-      onProfilesSnapshot((profiles: ProfileInfo[]) => setMembers(profiles));
+      setMembers(await getItems<ProfileInfo>(DatabaseTable.PROFILES));
+      onItemsSnapshot<ProfileInfo>(DatabaseTable.PROFILES, profiles => setMembers(profiles));
       setLoading(false);
     }
     fetchProfiles();

@@ -1,6 +1,6 @@
 import "./Roster.scss";
 import { useEffect, useState } from "react";
-import { getProfiles, onProfilesSnapshot } from "../../utils/firestore";
+import { DatabaseTable, getItems, onItemsSnapshot } from "../../utils/firestore";
 import ProfileCard from "../Common/ProfileCard";
 import Loading from "../Common/Loading";
 import Header from "../Common/Header";
@@ -20,9 +20,8 @@ function Roster() {
   useEffect(() => {
     const fetchProfiles = async () => {
       setLoading(true);
-      const profiles = await getProfiles();
-      setMembers(profiles);
-      onProfilesSnapshot((profiles: ProfileInfo[]) => setMembers(profiles));
+      setMembers(await getItems<ProfileInfo>(DatabaseTable.PROFILES));
+      onItemsSnapshot<ProfileInfo>(DatabaseTable.PROFILES, profiles => setMembers(profiles));
       setLoading(false);
     }
     fetchProfiles();

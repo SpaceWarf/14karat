@@ -2,7 +2,7 @@ import ProfilePlaceholder from '../../assets/images/profile-placeholder.png';
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useAuth } from '../../contexts/AuthContext';
 import { setPfpUrl } from '../../redux/reducers/profile';
-import { updateProfileInfo } from '../../utils/firestore';
+import { DatabaseTable, updateItem } from '../../utils/firestore';
 import Header from './Header';
 import Input from './Input';
 import { deleteProfilePicture, getProfilePictureUrl, uploadProfilePicture } from '../../utils/storage';
@@ -153,7 +153,7 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
       dispatch(setPfpUrl(await getProfilePictureUrl(filename)));
     }
 
-    updateProfileInfo(profile.id, updatedProfile, user);
+    updateItem<ProfileInfo>(DatabaseTable.PROFILES, profile.id, updatedProfile, user);
     setLoading(false);
     setShowSuccessMessage(true);
     setTimeout(() => setShowSuccessMessage(false), 5000);
