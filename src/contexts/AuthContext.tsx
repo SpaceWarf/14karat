@@ -8,9 +8,10 @@ import {
   signOut,
   onAuthStateChanged
 } from "firebase/auth";
-import { DatabaseTable, getDivisions, getItemById } from '../utils/firestore';
+import { DatabaseTable, getItemById, getItems } from '../utils/firestore';
 import { useDispatch } from 'react-redux';
 import { ProfileInfo } from '../state/profile';
+import { Division } from '../redux/reducers/divisions';
 
 interface AuthContextProps {
   user: User | null;
@@ -88,7 +89,7 @@ export function AuthProvider({ children }) {
             }
           }
 
-          const divisions = await getDivisions();
+          const divisions = await getItems<Division>(DatabaseTable.DIVISIONS);
           const profileDivision = divisions.find(division => division.id === profile.division);
           const boss = divisions.find(division => division.id === 'oyabun');
           const head = divisions.find(division => division.id === 'wakagashira');

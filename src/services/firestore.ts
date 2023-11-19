@@ -1,7 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getDivisions,
-  getRoles,
   getDriverStrats,
   getNeighbourhoods,
   onWarSnapshot,
@@ -19,14 +17,15 @@ import {
   getQuotes,
   getItemById,
   DatabaseTable,
-  onItemByIdSnapshot
+  onItemByIdSnapshot,
+  getItems
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
 import { setPfpUrl, setProfile } from "../redux/reducers/profile";
 import { getProfilePictureUrl } from "../utils/storage";
-import { setRoles } from "../redux/reducers/roles";
-import { setDivisions } from "../redux/reducers/divisions";
+import { Role, setRoles } from "../redux/reducers/roles";
+import { Division, setDivisions } from "../redux/reducers/divisions";
 import { setDriverStrats } from "../redux/reducers/driverStrats";
 import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
 import { setWars } from "../redux/reducers/wars";
@@ -56,8 +55,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     quotes,
   ] = await Promise.all([
     getItemById<ProfileInfo>(DatabaseTable.PROFILES, id),
-    getDivisions(),
-    getRoles(),
+    getItems<Division>(DatabaseTable.DIVISIONS),
+    getItems<Role>(DatabaseTable.ROLES),
     getDriverStrats(),
     getNeighbourhoods(),
     getWars(),

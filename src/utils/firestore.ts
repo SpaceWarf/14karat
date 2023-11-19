@@ -1,8 +1,6 @@
 import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
-import { Division } from "../redux/reducers/divisions";
-import { Role } from "../redux/reducers/roles";
 import { DriverStrat, DriverStratUpdate } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
@@ -57,8 +55,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
 }
 
-const rolesRef = collection(db, "roles");
-const divisionRef = collection(db, "divisions");
 const driverStratsRef = collection(db, "driver-strats");
 const neighbourhoodsRef = collection(db, "neighbourhoods");
 const groupsRef = collection(db, "groups");
@@ -173,24 +169,6 @@ export async function getStats() {
     const name = profiles.find(profile => profile.id === key)?.name ?? key;
     console.log(`${name} has completed ${value} jobs in the last two weeks`)
   });
-}
-
-export async function getDivisions(): Promise<Division[]> {
-  const snapshot = await getDocs(divisionRef);
-  const divisions: Division[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    divisions.push({ id: doc.id, ...doc.data() });
-  });
-  return divisions;
-}
-
-export async function getRoles(): Promise<Role[]> {
-  const snapshot = await getDocs(rolesRef);
-  const roles: Role[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    roles.push({ id: doc.id, ...doc.data() });
-  });
-  return roles;
 }
 
 export async function getDriverStrats(): Promise<DriverStrat[]> {
