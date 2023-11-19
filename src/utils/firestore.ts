@@ -6,9 +6,6 @@ import { Intel } from "../state/intel";
 import { WarClip } from "../state/war";
 import { Job } from "../state/jobs";
 import { ProfileInfo } from "../state/profile";
-import { Radio, RadioUpdate } from "../state/radio";
-import { Quote } from "../state/quotes";
-import { Asset } from "../state/asset";
 import dayjs from "dayjs";
 
 export interface FirestoreEntity {
@@ -48,10 +45,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
   WEBHOOK = "webhooks",
 }
-
-const radiosRef = collection(db, "radios");
-const quotesRef = collection(db, "quotes");
-const assetsRef = collection(db, "assets");
 
 export async function getItems<T>(table: DatabaseTable): Promise<T[]> {
   const snapshot = await getDocs(collection(db, table));
@@ -122,7 +115,7 @@ export async function deleteItem(table: string, id: string, user: User | null): 
 export async function getStats() {
   const jobs = await getItems<Job>(DatabaseTable.JOBS);
   const profiles = await getItems<ProfileInfo>(DatabaseTable.PROFILES);
-  const dateFilter = dayjs().subtract(7, "days").toDate();
+  const dateFilter = dayjs().subtract(14, "days").toDate();
 
   let stats = jobs.reduce((map, job) => {
     if (job.createdAt && new Date(job.createdAt).getTime() < dateFilter.getTime()) {
@@ -179,27 +172,4 @@ export function onActiveJobSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
   return onItemsSnapshot<Job>(DatabaseTable.JOBS, items => {
     cb(items.filter(item => !item.completed));
   })
-}
-
-export async function getQuotes(): Promise<Quote[]> {
-  const snapshot = await getDocs(quotesRef);
-  const quotes: Quote[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      quotes.push({ id: doc.id, ...data });
-    }
-  });
-  return quotes;
-}
-
-export async function getAssets(): Promise<Asset[]> {
-  const snapshot = await getDocs(assetsRef);
-  const assets: Asset[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    if (!doc.data().deleted) {
-      assets.push({ id: doc.id, ...doc.data() });
-    }
-  });
-  return assets;
 }

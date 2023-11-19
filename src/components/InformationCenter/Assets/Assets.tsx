@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import { Asset } from '../../../state/asset';
 import { useEffect, useState } from 'react';
-import { getAssets } from '../../../utils/firestore';
+import { DatabaseTable, getItems } from '../../../utils/firestore';
 import Loading from '../../Common/Loading';
 
 function Assets() {
@@ -16,7 +16,7 @@ function Assets() {
   useEffect(() => {
     const fetchAssets = async () => {
       setLoading(true);
-      setAssets(await getAssets());
+      setAssets(await getItems<Asset>(DatabaseTable.ASSETS));
       setLoading(false);
     }
 
