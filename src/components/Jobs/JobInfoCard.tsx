@@ -1,8 +1,8 @@
 import "./Jobs.scss";
-import { JobInfo } from "../../state/jobs";
+import { Job, JobInfo, JobUpdate } from "../../state/jobs";
 import { ReactElement } from "react";
 import { currencyFormat } from "../../utils/currency";
-import { createActiveJob } from "../../utils/firestore";
+import { DatabaseTable, createItem } from "../../utils/firestore";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { RootState } from "../../redux/store";
@@ -58,39 +58,43 @@ function JobInfoCard(props: JobInfoCardProps) {
         .filter(job => job.job === props.info.id)
         .map(job => job.index);
 
-      await createActiveJob({
-        job: props.info.id,
-        crew: Object.keys(props.info.crew).reduce((obj, key) => ({
-          ...obj,
-          [key]: new Array(props.info.crew[key]).fill("")
-        }), {}),
-        gearChecklist: Object.keys(props.info.gear).reduce((obj, key) => ({
-          ...obj,
-          [key]: {
-            checked: false,
-            quantity: props.info.gear[key]
-          },
-        }), {}),
-        cardsChecklist: Object.keys(props.info.cards).reduce((obj, key) => ({
-          ...obj,
-          [key]: {
-            checked: false,
-            quantity: props.info.cards[key]
-          },
-        }), {}),
-        usbsChecklist: Object.keys(props.info.usbs).reduce((obj, key) => ({
-          ...obj,
-          [key]: {
-            checked: false,
-            quantity: props.info.usbs[key]
-          },
-        }), {}),
-        notes: '',
-        completed: false,
-        name: props.info.name,
-        index: indexes.length ? Math.max(...indexes) + 1 : 1,
-        icon: props.info.icon,
-      }, user);
+      await createItem<JobUpdate, Job>(
+        DatabaseTable.JOBS,
+        {
+          job: props.info.id,
+          crew: Object.keys(props.info.crew).reduce((obj, key) => ({
+            ...obj,
+            [key]: new Array(props.info.crew[key]).fill("")
+          }), {}),
+          gearChecklist: Object.keys(props.info.gear).reduce((obj, key) => ({
+            ...obj,
+            [key]: {
+              checked: false,
+              quantity: props.info.gear[key]
+            },
+          }), {}),
+          cardsChecklist: Object.keys(props.info.cards).reduce((obj, key) => ({
+            ...obj,
+            [key]: {
+              checked: false,
+              quantity: props.info.cards[key]
+            },
+          }), {}),
+          usbsChecklist: Object.keys(props.info.usbs).reduce((obj, key) => ({
+            ...obj,
+            [key]: {
+              checked: false,
+              quantity: props.info.usbs[key]
+            },
+          }), {}),
+          notes: '',
+          completed: false,
+          name: props.info.name,
+          index: indexes.length ? Math.max(...indexes) + 1 : 1,
+          icon: props.info.icon,
+        },
+        user
+      );
       navigate("/jobs");
     }
   }

@@ -1,9 +1,9 @@
 import "./Jobs.scss";
-import { Checklist, Job } from "../../state/jobs";
+import { Checklist, Job, JobUpdate } from "../../state/jobs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Checkbox } from "semantic-ui-react";
-import { updateActiveJob } from "../../utils/firestore";
+import { DatabaseTable, updateItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 
@@ -18,16 +18,21 @@ function JobChecklist(props: JobChecklistProps) {
 
   const handleCheckGearItem = async (id: string, checked: boolean) => {
     setEditing(true);
-    await updateActiveJob(props.job.id, {
-      ...props.job,
-      gearChecklist: {
-        ...props.job.gearChecklist,
-        [id]: {
-          ...props.job.gearChecklist[id],
-          checked,
-        },
-      }
-    }, user);
+    await updateItem<JobUpdate>(
+      DatabaseTable.JOBS,
+      props.job.id,
+      {
+        ...props.job,
+        gearChecklist: {
+          ...props.job.gearChecklist,
+          [id]: {
+            ...props.job.gearChecklist[id],
+            checked,
+          },
+        }
+      },
+      user
+    );
     setEditing(false);
   }
 

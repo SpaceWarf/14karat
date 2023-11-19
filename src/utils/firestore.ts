@@ -3,10 +3,8 @@ import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
 import { Intel } from "../state/intel";
-import { WarClip, WarClipUpdate } from "../state/war";
-import { Hack } from "../state/hack";
-import { Location } from '../state/location';
-import { Card, Gear, Job, JobInfo, JobUpdate, Usb } from "../state/jobs";
+import { WarClip } from "../state/war";
+import { Card, Gear, Job, Usb } from "../state/jobs";
 import { ProfileInfo } from "../state/profile";
 import { Radio, RadioUpdate } from "../state/radio";
 import { Quote } from "../state/quotes";
@@ -51,11 +49,6 @@ export enum DatabaseTable {
   WEBHOOK = "webhooks",
 }
 
-const warClipsRef = collection(db, "war-clips");
-const hacksRef = collection(db, "hacks");
-const locationsRef = collection(db, "locations");
-const jobsRef = collection(db, "jobs");
-const jobInfoRef = collection(db, "job-info");
 const gearRef = collection(db, "gear");
 const cardsRef = collection(db, "cards");
 const usbsRef = collection(db, "usbs");
@@ -91,7 +84,7 @@ export function onItemsSnapshot<T>(table: string, cb: (items: T[]) => void): Uns
   });
 }
 
-export function onItemByIdSnapshot<T>(table: DatabaseTable, id: string, cb: (profile: T) => void): Unsubscribe {
+export function onItemByIdSnapshot<T>(table: DatabaseTable, id: string, cb: (items: T) => void): Unsubscribe {
   return onSnapshot(doc(db, table, id), {}, snapshot => {
     cb({ id: snapshot.id, ...snapshot.data() } as T);
   });
@@ -161,143 +154,34 @@ export async function getStats() {
 }
 
 export async function getMembersForGroup(id: string): Promise<Member[]> {
-  const snapshot = await getDocs(collection(db, DatabaseTable.MEMBERS));
-  const members: Member[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted && data.group === id) {
-      members.push({ id: doc.id, ...data });
-    }
-  });
-  return members;
+  const items = await getItems<Member>(DatabaseTable.MEMBERS);
+  return items.filter(item => item.group === id);
 }
 
 export async function getIntelForGroup(id: string): Promise<Intel[]> {
-  const snapshot = await getDocs(collection(db, DatabaseTable.INTEL));
-  const intel: Intel[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted && data.group === id) {
-      intel.push({ id: doc.id, ...data });
-    }
-  });
-  return intel;
+  const items = await getItems<Intel>(DatabaseTable.INTEL);
+  return items.filter(item => item.group === id);
 }
 
 export async function getIntelForMember(id: string): Promise<Intel[]> {
-  const snapshot = await getDocs(collection(db, DatabaseTable.INTEL));
-  const intel: Intel[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted && data.member === id) {
-      intel.push({ id: doc.id, ...data });
-    }
-  });
-  return intel;
+  const items = await getItems<Intel>(DatabaseTable.INTEL);
+  return items.filter(item => item.member === id);
 }
 
 export async function getWarClipsForWar(id: string): Promise<WarClip[]> {
-  const snapshot = await getDocs(warClipsRef);
-  const clips: WarClip[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted && data.war === id) {
-      clips.push({ id: doc.id, ...data });
-    }
-  });
-  return clips;
-}
-
-export async function getHacks(): Promise<Hack[]> {
-  const snapshot = await getDocs(hacksRef);
-  const hacks: Hack[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      hacks.push({ id: doc.id, ...data });
-    }
-  });
-  return hacks;
-}
-
-export async function getLocations(): Promise<Location[]> {
-  const snapshot = await getDocs(locationsRef);
-  const locations: Location[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      locations.push({ id: doc.id, ...data });
-    }
-  });
-  return locations;
+  const items = await getItems<WarClip>(DatabaseTable.WAR_CLIPS);
+  return items.filter(item => item.war === id);
 }
 
 export async function getActiveJobs(): Promise<Job[]> {
-  const snapshot = await getDocs(jobsRef);
-  const jobs: Job[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted && !data.completed) {
-      jobs.push({ id: doc.id, ...data });
-    }
-  });
-  return jobs;
+  const items = await getItems<Job>(DatabaseTable.JOBS);
+  return items.filter(item => !item.completed);
 }
 
-export function onActiveJobsSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
-  return onSnapshot(jobsRef, {}, snapshot => {
-    const jobs: Job[] = [];
-    snapshot.forEach((doc: DocumentData) => {
-      const data = doc.data();
-      if (!data.deleted && !data.completed) {
-        jobs.push({ id: doc.id, ...data });
-      }
-    });
-    cb(jobs);
-  });
-}
-
-export async function createActiveJob(job: JobUpdate, user: User | null): Promise<Job> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(jobsRef, {
-    ...job,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...job,
-  };
-}
-
-export async function updateActiveJob(id: string, update: JobUpdate, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "jobs", id), {
-    ...update,
-    updatedAt: now,
-    updatedBy: user?.uid ?? '',
-  });
-}
-
-export async function deleteActiveJob(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "jobs", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
-}
-
-export async function getJobInfos(): Promise<JobInfo[]> {
-  const snapshot = await getDocs(jobInfoRef);
-  const jobs: JobInfo[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted) {
-      jobs.push({ id: doc.id, ...data });
-    }
-  });
-  return jobs;
+export function onActiveJobSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
+  return onItemsSnapshot<Job>(DatabaseTable.JOBS, items => {
+    cb(items.filter(item => !item.completed));
+  })
 }
 
 export async function getGear(): Promise<Gear[]> {

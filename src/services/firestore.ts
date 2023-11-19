@@ -1,9 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getHacks,
-  getActiveJobs,
-  onActiveJobsSnapshot,
-  getJobInfos,
   getGear,
   getRadios,
   onRadiosSnapshot,
@@ -12,7 +8,9 @@ import {
   DatabaseTable,
   onItemByIdSnapshot,
   getItems,
-  onItemsSnapshot
+  onItemsSnapshot,
+  getActiveJobs,
+  onActiveJobSnapshot
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -25,12 +23,13 @@ import { Neighbourhood, setNeighbourhoods } from "../redux/reducers/neighbourhoo
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
-import { setActiveJobs, setGear, setJobInfos } from "../redux/reducers/jobs";
+import { setActiveJobs, setGear } from "../redux/reducers/jobs";
 import { setRadios } from "../redux/reducers/radios";
 import { setQuotes } from "../redux/reducers/quotes";
 import { ProfileInfo } from "../state/profile";
 import { War } from "../state/war";
 import { CalendarEvent } from "../state/event";
+import { Hack } from "../state/hack";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -45,7 +44,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     events,
     hacks,
     activeJobs,
-    jobInfos,
     gear,
     radios,
     quotes,
@@ -57,9 +55,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<Neighbourhood>(DatabaseTable.NEIGHBOURHOODS),
     getItems<War>(DatabaseTable.WARS),
     getItems<CalendarEvent>(DatabaseTable.EVENTS),
-    getHacks(),
+    getItems<Hack>(DatabaseTable.HACKS),
     getActiveJobs(),
-    getJobInfos(),
     getGear(),
     getRadios(),
     getQuotes(),
@@ -73,7 +70,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setEvents(events));
   dispatch(setHacks(hacks));
   dispatch(setActiveJobs(activeJobs));
-  dispatch(setJobInfos(jobInfos));
   dispatch(setGear(gear));
   dispatch(setRadios(radios));
   dispatch(setQuotes(quotes));
@@ -87,7 +83,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onItemsSnapshot<DriverStrat>(DatabaseTable.DRIVER_STRATS, strats => dispatch(setDriverStrats(strats)));
   onItemsSnapshot<War>(DatabaseTable.WARS, wars => dispatch(setWars(wars)));
   onItemsSnapshot<CalendarEvent>(DatabaseTable.EVENTS, events => dispatch(setEvents(events)));
-  onActiveJobsSnapshot(jobs => dispatch(setActiveJobs(jobs)));
+  onActiveJobSnapshot(jobs => dispatch(setActiveJobs(jobs)));
   onRadiosSnapshot(radios => dispatch(setRadios(radios)));
   loadingSubject.next(false);
 }

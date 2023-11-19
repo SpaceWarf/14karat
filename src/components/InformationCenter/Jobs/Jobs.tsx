@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../Common/Header';
 import { useEffect, useState } from 'react';
 import { JobInfo } from '../../../state/jobs';
-import { getJobInfos } from '../../../utils/firestore';
+import { DatabaseTable, getItems } from '../../../utils/firestore';
 import JobInfoCard from '../../Jobs/JobInfoCard';
 
 function Jobs() {
@@ -12,7 +12,7 @@ function Jobs() {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      setJobs(await getJobInfos());
+      setJobs(await getItems<JobInfo>(DatabaseTable.JOB_INFO));
     }
     fetchJobs();
   }, []);

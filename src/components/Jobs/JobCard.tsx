@@ -1,6 +1,6 @@
 import "./Jobs.scss";
-import { CrewRoleMap, Job } from "../../state/jobs";
-import { DatabaseTable, deleteActiveJob, deleteRadio, getItemById, getItems, onItemsSnapshot, updateActiveJob } from "../../utils/firestore";
+import { CrewRoleMap, Job, JobUpdate } from "../../state/jobs";
+import { DatabaseTable, deleteItem, deleteRadio, getItemById, getItems, onItemsSnapshot, updateItem } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
@@ -45,7 +45,7 @@ function JobCard(props: JobCardProps) {
   }, []);
 
   const handleDelete = async () => {
-    deleteActiveJob(props.job.id, user);
+    deleteItem(DatabaseTable.JOBS, props.job.id, user);
 
     if (radio) {
       await deleteRadio(radio.id, user);
@@ -53,10 +53,15 @@ function JobCard(props: JobCardProps) {
   }
 
   const handleComplete = async () => {
-    await updateActiveJob(props.job.id, {
-      ...props.job,
-      completed: true,
-    }, user);
+    await updateItem<JobUpdate>(
+      DatabaseTable.JOBS,
+      props.job.id,
+      {
+        ...props.job,
+        completed: true,
+      },
+      user
+    );
 
     if (radio) {
       await deleteRadio(radio.id, user);

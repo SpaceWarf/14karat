@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { CrewRoleMap, Job } from "../../state/jobs";
+import { CrewRoleMap, Job, JobUpdate } from "../../state/jobs";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
-import { updateActiveJob } from "../../utils/firestore";
+import { DatabaseTable, updateItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { ProfileInfo } from "../../state/profile";
 
@@ -41,13 +41,18 @@ function JobCrew(props: JobCrewProps) {
     setEditing(true);
     const update = [...props.job.crew[role]]
     update[index] = member
-    await updateActiveJob(props.job.id, {
-      ...props.job,
-      crew: {
-        ...props.job.crew,
-        [role]: update
-      }
-    }, user);
+    await updateItem<JobUpdate>(
+      DatabaseTable.JOBS,
+      props.job.id,
+      {
+        ...props.job,
+        crew: {
+          ...props.job.crew,
+          [role]: update
+        }
+      },
+      user
+    );
     setEditing(false);
   }
 

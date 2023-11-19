@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../Common/Header';
 import { useEffect, useState } from 'react';
 import Loading from '../../Common/Loading';
-import { getLocations } from '../../../utils/firestore';
+import { DatabaseTable, getItems } from '../../../utils/firestore';
 import { Location } from '../../../state/location';
 import { Carousel } from 'react-responsive-carousel';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
@@ -16,7 +16,7 @@ function LocationsOfInterest() {
   useEffect(() => {
     const fetchLocations = async () => {
       setLoading(true);
-      setLocations(await getLocations());
+      setLocations(await getItems<Location>(DatabaseTable.LOCATIONS));
       setLoading(false);
     }
     fetchLocations();

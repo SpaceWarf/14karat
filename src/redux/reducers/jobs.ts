@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Card, Gear, Job, JobInfo, Usb } from "../../state/jobs";
+import { Card, Gear, Job, Usb } from "../../state/jobs";
 
 export interface JobsState {
   active: Job[];
-  info: JobInfo[];
   gear: Gear[];
   cards: Card[];
   usbs: Usb[];
@@ -11,7 +10,6 @@ export interface JobsState {
 
 const initialState: JobsState = {
   active: [],
-  info: [],
   gear: [],
   cards: [],
   usbs: [],
@@ -23,9 +21,6 @@ export const jobs = createSlice({
   reducers: {
     setActiveJobs: (state, action: PayloadAction<Job[]>) => {
       state.active = action.payload;
-    },
-    setJobInfos: (state, action: PayloadAction<JobInfo[]>) => {
-      state.info = action.payload;
     },
     setGear: (state, action: PayloadAction<Gear[]>) => {
       state.gear = action.payload;
@@ -39,5 +34,5 @@ export const jobs = createSlice({
   },
 });
 
-export const { setActiveJobs, setJobInfos, setGear, setCards, setUsbs } = jobs.actions;
+export const { setActiveJobs, setGear, setCards, setUsbs } = jobs.actions;
 export default jobs.reducer;
