@@ -31,6 +31,7 @@ import Lore from './components/InformationCenter/Lore/Lore';
 import Assets from './components/InformationCenter/Assets/Assets';
 import HackingPractice from './components/HackingPractice/HackingPractice';
 import VangieGuide from './components/Jobs/Guides/VangieGuide';
+import Inventory from './components/Inventory/Inventory';
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
             <Route path='/driver-strats' element={<DriverStrats />} />
             <Route path='/driver-strats/all' element={<DriverStratGallery />} />
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
-            {/* <Route path='/stash-search' element={<StashSearch />} /> */}
+            <Route path='/inventory' element={<Inventory />} />
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<War />} />

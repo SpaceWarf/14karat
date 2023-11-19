@@ -1,4 +1,4 @@
-import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { CollectionReference, DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
 import { Division } from "../redux/reducers/divisions";
@@ -18,6 +18,7 @@ import { ProfileInfo } from "../state/profile";
 import { Radio, RadioUpdate } from "../state/radio";
 import { Quote } from "../state/quotes";
 import { Asset } from "../state/asset";
+import dayjs from "dayjs";
 
 export interface FirestoreEntity {
   id: string;
@@ -28,6 +29,32 @@ export interface FirestoreEntity {
   deleted?: boolean;
   deletedAt?: string;
   deletedBy?: string;
+}
+
+export enum DatabaseTable {
+  PROFILES = "profiles",
+  ROLES = "roles",
+  DIVISIONS = "divisions",
+  DRIVER_STRATS = "driver-strats",
+  NEIGHBOURHOODS = "neighbourhoods",
+  GROUPS = "groups",
+  MEMBERS = "members",
+  INTEL = "intel",
+  WARS = "wars",
+  EVENTS = "events",
+  WAR_CLIPS = "war-clips",
+  HACKS = "hacks",
+  LOCATIONS = "locations",
+  JOBS = "jobs",
+  JOB_INFO = "job-info",
+  GEAR = "gear",
+  CARDS = "cards",
+  USBS = "usbs",
+  RADIOS = "radios",
+  QUOTES = "quotes",
+  ASSETS = "assets",
+  INVENTORY = "inventory",
+  STASHES = "stashes",
 }
 
 const profilesRef = collection(db, "profiles");
@@ -51,6 +78,92 @@ const usbsRef = collection(db, "usbs");
 const radiosRef = collection(db, "radios");
 const quotesRef = collection(db, "quotes");
 const assetsRef = collection(db, "assets");
+
+export async function getItems<T>(table: DatabaseTable): Promise<T[]> {
+  const snapshot = await getDocs(collection(db, table));
+  const items: T[] = [];
+  snapshot.forEach((doc: DocumentData) => {
+    if (!doc.data().deleted) {
+      items.push({ id: doc.id, ...doc.data() });
+    }
+  });
+  return items;
+}
+
+export function onItemsSnapshot<T>(table: string, cb: (items: T[]) => void): Unsubscribe {
+  return onSnapshot(collection(db, table), {}, snapshot => {
+    const items: T[] = [];
+    snapshot.forEach((doc: DocumentData) => {
+      if (!doc.data().deleted) {
+        items.push({ id: doc.id, ...doc.data() });
+      }
+    });
+    cb(items);
+  });
+}
+
+export async function createItem<T, U>(table: string, item: T, user: User | null): Promise<U> {
+  const now = new Date().toISOString();
+  const doc = await addDoc(collection(db, table), {
+    ...item,
+    createdAt: now,
+    createdBy: user?.uid ?? '',
+  });
+  return {
+    id: doc.id,
+    ...item,
+    createdAt: now,
+  } as U;
+}
+
+export async function updateItem<T>(id: string, table: string, update: T, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, table, id), {
+    ...update,
+    updatedAt: now,
+    updatedBy: user?.uid ?? "",
+  });
+}
+
+export async function deleteItem(id: string, table: string, user: User | null): Promise<void> {
+  const now = new Date().toISOString();
+  await updateDoc(doc(db, table, id), {
+    deleted: true,
+    deletedAt: now,
+    deletedBy: user?.uid ?? '',
+  });
+}
+
+export async function getStats() {
+  const jobs = await getItems<Job>(DatabaseTable.JOBS);
+  const profiles = await getItems<ProfileInfo>(DatabaseTable.PROFILES);
+  const dateFilter = dayjs().subtract(7, "days").toDate();
+
+  let stats = jobs.reduce((map, job) => {
+    if (job.createdAt && new Date(job.createdAt).getTime() < dateFilter.getTime()) {
+      return map;
+    }
+
+    const crew = [...new Set(Object.values(job.crew).reduce((crew, role) => [...crew, ...role]))].filter(member => member);
+
+    crew.forEach(member => {
+      if (map.has(member)) {
+        map.set(member, map.get(member) + 1);
+      } else {
+        map.set(member, 1);
+      }
+    });
+
+    return map;
+  }, new Map());
+
+  console.log("-------------------------------------------------------------")
+  stats = new Map([...stats.entries()].sort((a, b) => b[1] - a[1]));
+  stats.forEach((value: boolean, key: string) => {
+    const name = profiles.find(profile => profile.id === key)?.name ?? key;
+    console.log(`${name} has completed ${value} jobs in the last two weeks`)
+  });
+}
 
 export async function getProfiles(): Promise<ProfileInfo[]> {
   const snapshot = await getDocs(profilesRef);

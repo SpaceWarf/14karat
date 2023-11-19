@@ -48,10 +48,12 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
           </SidebarItem>
           <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
           {access.chainedAccess && (
-            <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
+            <>
+              <SidebarItem name='Inventory' icon='boxes' path='/inventory' onClick={() => navigate('/inventory')} />
+              <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
+            </>
           )}
           <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
-          {/* <SidebarItem name='Stash Search' icon='search' path='/stash-search' onClick={() => navigate('/stash-search')} /> */}
           <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
           <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
           {access.headAccess && (
