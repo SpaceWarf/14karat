@@ -1,8 +1,7 @@
 import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
-import { Group, GroupUpdate } from "../state/groups";
-import { Member, MemberUpdate } from "../state/member";
+import { Member } from "../state/member";
 import { Intel, IntelUpdate } from "../state/intel";
 import { War, WarClip, WarClipUpdate, WarUpdate } from "../state/war";
 import { Webhook } from "../state/webhook";
@@ -53,8 +52,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
 }
 
-const groupsRef = collection(db, "groups");
-const membersRef = collection(db, "members");
 const intelRef = collection(db, "intel");
 const warsRef = collection(db, "wars");
 const eventsRef = collection(db, "events");
@@ -168,7 +165,7 @@ export async function getStats() {
 }
 
 export async function getMembersForGroup(id: string): Promise<Member[]> {
-  const snapshot = await getDocs(membersRef);
+  const snapshot = await getDocs(collection(db, DatabaseTable.MEMBERS));
   const members: Member[] = [];
   snapshot.forEach((doc: DocumentData) => {
     const data = doc.data();
@@ -179,39 +176,8 @@ export async function getMembersForGroup(id: string): Promise<Member[]> {
   return members;
 }
 
-export async function updateMember(id: string, member: MemberUpdate, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "members", id), {
-    ...member,
-    updatedAt: now,
-    updatedBy: user?.uid ?? '',
-  });
-}
-
-export async function createMember(member: MemberUpdate, user: User | null): Promise<Member> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(membersRef, {
-    ...member,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...member,
-  }
-}
-
-export async function deleteMember(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "members", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
-}
-
 export async function getIntelForGroup(id: string): Promise<Intel[]> {
-  const snapshot = await getDocs(intelRef);
+  const snapshot = await getDocs(collection(db, DatabaseTable.INTEL));
   const intel: Intel[] = [];
   snapshot.forEach((doc: DocumentData) => {
     const data = doc.data();
@@ -223,7 +189,7 @@ export async function getIntelForGroup(id: string): Promise<Intel[]> {
 }
 
 export async function getIntelForMember(id: string): Promise<Intel[]> {
-  const snapshot = await getDocs(intelRef);
+  const snapshot = await getDocs(collection(db, DatabaseTable.INTEL));
   const intel: Intel[] = [];
   snapshot.forEach((doc: DocumentData) => {
     const data = doc.data();

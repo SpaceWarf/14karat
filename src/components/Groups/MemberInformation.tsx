@@ -1,6 +1,6 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { DatabaseTable, createMember, deleteMember, getItems, getMembersForGroup, updateMember } from "../../utils/firestore";
+import { DatabaseTable, createItem, deleteItem, getItems, getMembersForGroup, updateItem } from "../../utils/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
@@ -114,10 +114,10 @@ const MemberInformation = () => {
       };
 
       if (memberId === "new" && canSave()) {
-        const createdMember = await createMember(update, user);
+        const createdMember = await createItem<MemberUpdate, Member>(DatabaseTable.MEMBERS, update, user);
         navigate(`/groups/${groupId}/members/${createdMember.id}`);
       } else if (member && canSave()) {
-        await updateMember(member.id, update, user);
+        await updateItem<MemberUpdate>(DatabaseTable.MEMBERS, member.id, update, user);
 
         if (group !== member.group) {
           navigate(`/groups/${groupId}?active=1`);
@@ -143,7 +143,7 @@ const MemberInformation = () => {
   const handleDelete = async () => {
     if (member) {
       setSaving(true);
-      await deleteMember(member.id, user);
+      await deleteItem(DatabaseTable.MEMBERS, member.id, user);
       navigate(`/groups/${groupId}?active=1`);
       setSaving(false);
     }
