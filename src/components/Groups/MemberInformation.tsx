@@ -1,6 +1,6 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { createMember, deleteMember, getGroups, getMembersForGroup, updateMember } from "../../utils/firestore";
+import { DatabaseTable, createMember, deleteMember, getItems, getMembersForGroup, updateMember } from "../../utils/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
@@ -32,7 +32,7 @@ const MemberInformation = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       setLoading(true);
-      setGroups(await getGroups());
+      setGroups(await getItems<Group>(DatabaseTable.GROUPS));
       setLoading(false);
     }
     fetchGroups();

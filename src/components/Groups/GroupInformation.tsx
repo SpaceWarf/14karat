@@ -1,6 +1,6 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { createGroup, deleteGroup, getGroups, updateGroup } from "../../utils/firestore";
+import { DatabaseTable, createItem, deleteItem, getItems, updateItem } from "../../utils/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
@@ -33,7 +33,7 @@ const GroupInformation = () => {
   useEffect(() => {
     const fetchGroup = async () => {
       setLoading(true);
-      const groups = await getGroups();
+      const groups = await getItems<Group>(DatabaseTable.GROUPS);
       setGroups(groups);
       const group = groups.find(group => group.id === groupId);
 
@@ -118,10 +118,10 @@ const GroupInformation = () => {
     };
 
     if (groupId === "new" && canSave()) {
-      const createdGroup = await createGroup(update, user);
+      const createdGroup = await createItem<GroupUpdate, Group>(DatabaseTable.GROUPS, update, user);
       navigate(`/groups/${createdGroup.id}`);
     } else if (group && canSave()) {
-      await updateGroup(group.id, update, user);
+      await updateItem<GroupUpdate>(DatabaseTable.GROUPS, group.id, update, user);
       setGroup({
         id: group.id,
         name,
@@ -141,7 +141,7 @@ const GroupInformation = () => {
   const handleDelete = async () => {
     if (group) {
       setSaving(true);
-      await deleteGroup(group.id, user);
+      await deleteItem(DatabaseTable.GROUPS, group.id, user);
       navigate('/groups');
       setSaving(false);
     }

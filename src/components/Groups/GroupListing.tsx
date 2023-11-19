@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../Common/Header";
 import "./Groups.scss";
-import { getGroups } from "../../utils/firestore";
+import { DatabaseTable, getItems } from "../../utils/firestore";
 import Loading from "../Common/Loading";
 import GroupCard from "./GroupCard";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ function GroupListing() {
   useEffect(() => {
     const fetchGroups = async () => {
       setLoading(true);
-      setGroups(await getGroups());
+      setGroups(await getItems<Group>(DatabaseTable.GROUPS));
       setLoading(false);
     }
     fetchGroups();

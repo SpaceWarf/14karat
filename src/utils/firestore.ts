@@ -167,48 +167,6 @@ export async function getStats() {
   });
 }
 
-export async function getGroups(): Promise<Group[]> {
-  const snapshot = await getDocs(groupsRef);
-  const groups: Group[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    if (!doc.data().deleted) {
-      groups.push({ id: doc.id, ...doc.data() });
-    }
-  });
-  return groups;
-}
-
-export async function updateGroup(id: string, group: GroupUpdate, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "groups", id), {
-    ...group,
-    updatedAt: now,
-    updatedBy: user?.uid ?? '',
-  });
-}
-
-export async function createGroup(group: GroupUpdate, user: User | null): Promise<Group> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(groupsRef, {
-    ...group,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...group,
-  }
-}
-
-export async function deleteGroup(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "groups", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
-}
-
 export async function getMembersForGroup(id: string): Promise<Member[]> {
   const snapshot = await getDocs(membersRef);
   const members: Member[] = [];
