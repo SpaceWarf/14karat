@@ -3,7 +3,7 @@ import Header from '../Common/Header';
 import { useSelector } from 'react-redux';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../utils/time';
 import { useEffect, useState } from 'react';
-import { DatabaseTable, createItem, deleteWarClip, getItemById, getWarClipsForWar, updateItem } from '../../utils/firestore';
+import { DatabaseTable, createItem, deleteItem, getItemById, getWarClipsForWar, updateItem } from '../../utils/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Webhook } from '../../state/webhook';
 import { triggerDiscordWebhook } from '../../services/functions';
@@ -267,7 +267,7 @@ function WarInfo() {
   }
 
   const handleDeleteClip = async (id: string) => {
-    await deleteWarClip(id, user);
+    await deleteItem(DatabaseTable.WAR_CLIPS, id, user);
     setClips(await getWarClipsForWar(war.id))
   }
 

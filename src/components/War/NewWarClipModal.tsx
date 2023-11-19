@@ -2,12 +2,12 @@ import "./War.scss";
 import { Modal } from "semantic-ui-react";
 import { useState } from "react";
 import Input from "../Common/Input";
-import { createWarClip } from "../../utils/firestore";
+import { DatabaseTable, createItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
 import { getMostRecentWar } from "../../redux/selectors/wars";
 import Textarea from "../Common/Textarea";
-import { WarClipTag } from "../../state/war";
+import { WarClip, WarClipTag, WarClipUpdate } from "../../state/war";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 
 interface NewWarClipModalProps {
@@ -25,12 +25,16 @@ function NewWarClipModal(props: NewWarClipModalProps) {
 
   const handleAdd = async () => {
     setLoading(true);
-    await createWarClip({
-      war: war.id,
-      embed,
-      notes,
-      tags,
-    }, user);
+    await createItem<WarClipUpdate, WarClip>(
+      DatabaseTable.WAR_CLIPS,
+      {
+        war: war.id,
+        embed,
+        notes,
+        tags,
+      },
+      user
+    );
     props.onAdd();
     reset();
     setLoading(false);

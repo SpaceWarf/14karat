@@ -208,28 +208,6 @@ export async function getWarClipsForWar(id: string): Promise<WarClip[]> {
   return clips;
 }
 
-export async function createWarClip(clip: WarClipUpdate, user: User | null): Promise<WarClip> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(warClipsRef, {
-    ...clip,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...clip,
-  };
-}
-
-export async function deleteWarClip(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "war-clips", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
-}
-
 export async function getHacks(): Promise<Hack[]> {
   const snapshot = await getDocs(hacksRef);
   const hacks: Hack[] = [];
