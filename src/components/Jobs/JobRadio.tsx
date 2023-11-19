@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Job } from "../../state/jobs";
 import { getAllUsedChannels, getRadioForJob } from "../../redux/selectors/radios";
-import { createRadio } from "../../utils/firestore";
+import { DatabaseTable, createItem } from "../../utils/firestore";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import RadioChannel from "../Common/RadioChannel";
 import { generateRadioChannel } from "../../utils/radio";
+import { Radio, RadioUpdate } from "../../state/radio";
 
 interface JobRadioProps {
   job: Job;
@@ -21,12 +22,16 @@ function JobRadio(props: JobRadioProps) {
 
   const handleCreateRadio = async () => {
     setLoading(true);
-    await createRadio({
-      channel: generateRadioChannel(allUsedChannels),
-      main: false,
-      burned: false,
-      job: props.job.id,
-    }, user);
+    await createItem<RadioUpdate, Radio>(
+      DatabaseTable.RADIOS,
+      {
+        channel: generateRadioChannel(allUsedChannels),
+        main: false,
+        burned: false,
+        job: props.job.id,
+      },
+      user
+    );
     setLoading(false);
   }
 

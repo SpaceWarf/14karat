@@ -1,7 +1,7 @@
-import { DatabaseTable, createRadio, getItemById, updateRadio } from "../../utils/firestore";
+import { DatabaseTable, createItem, getItemById, updateItem } from "../../utils/firestore";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Radio } from "../../state/radio";
+import { Radio, RadioUpdate } from "../../state/radio";
 import { generateRadioChannel } from "../../utils/radio";
 import { Webhook } from "../../state/webhook";
 import { Job } from "../../state/jobs";
@@ -51,17 +51,6 @@ function RadioChannel(props: RadioChannelProps) {
     return `@here burn radio ~~${props.radio.channel}~~`
   }
 
-  // const handleRerollChannel = async () => {
-  //   if (props.radio) {
-  //     setLoading(true);
-  //     await updateRadio(props.radio.id, {
-  //       ...props.radio,
-  //       channel: generateRadioChannel(allUsedChannels),
-  //     }, user);
-  //     setLoading(false);
-  //   }
-  // }
-
   const handleBurnChannel = async () => {
     if (props.radio) {
       setLoading(true);
@@ -69,21 +58,30 @@ function RadioChannel(props: RadioChannelProps) {
       if (props.radio.main) {
         const newMain = generateRadioChannel(allUsedChannels)
         sendWebhook(newMain);
-        await createRadio({
-          channel: newMain,
-          main: true,
-          burned: false,
-          job: props.job?.id ?? "",
-        }, user);
+        await createItem<RadioUpdate, Radio>(
+          DatabaseTable.RADIOS,
+          {
+            channel: newMain,
+            main: true,
+            burned: false,
+            job: props.job?.id ?? "",
+          },
+          user
+        );
       } else {
         sendWebhook();
       }
 
-      await updateRadio(props.radio.id, {
-        ...props.radio,
-        burned: true,
-        burnTime: new Date().toISOString(),
-      }, user);
+      await updateItem<RadioUpdate>(
+        DatabaseTable.RADIOS,
+        props.radio.id,
+        {
+          ...props.radio,
+          burned: true,
+          burnTime: new Date().toISOString(),
+        },
+        user
+      );
       setLoading(false);
     }
   }
@@ -93,9 +91,6 @@ function RadioChannel(props: RadioChannelProps) {
       <p className="ChannelLabel">{props.radio.channel}</p>
       {!props.radio.burned && (
         <div className="ChannelActions">
-          {/* <button className="ui icon button" disabled={loading} onClick={() => handleRerollChannel()}>
-            <i className="refresh icon" />
-          </button> */}
           <button className="ui icon negative button" disabled={loading} onClick={() => handleBurnChannel()}>
             <i className="fire icon" />
           </button>

@@ -181,62 +181,6 @@ export function onActiveJobSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
   })
 }
 
-export async function getRadios(): Promise<Radio[]> {
-  const snapshot = await getDocs(radiosRef);
-  const radios: Radio[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    const data = doc.data();
-    if (!data.deleted && !data.completed) {
-      radios.push({ id: doc.id, ...data });
-    }
-  });
-  return radios;
-}
-
-export function onRadiosSnapshot(cb: (radios: Radio[]) => void): Unsubscribe {
-  return onSnapshot(radiosRef, {}, snapshot => {
-    const radios: Radio[] = [];
-    snapshot.forEach((doc: DocumentData) => {
-      const data = doc.data();
-      if (!data.deleted && !data.completed) {
-        radios.push({ id: doc.id, ...data });
-      }
-    });
-    cb(radios);
-  });
-}
-
-export async function createRadio(radio: RadioUpdate, user: User | null): Promise<Radio> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(radiosRef, {
-    ...radio,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...radio,
-  };
-}
-
-export async function updateRadio(id: string, update: RadioUpdate, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "radios", id), {
-    ...update,
-    updatedAt: now,
-    updatedBy: user?.uid ?? '',
-  });
-}
-
-export async function deleteRadio(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "radios", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
-  });
-}
-
 export async function getQuotes(): Promise<Quote[]> {
   const snapshot = await getDocs(quotesRef);
   const quotes: Quote[] = [];

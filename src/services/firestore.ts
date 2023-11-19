@@ -1,7 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getRadios,
-  onRadiosSnapshot,
   getQuotes,
   getItemById,
   DatabaseTable,
@@ -30,6 +28,7 @@ import { War } from "../state/war";
 import { CalendarEvent } from "../state/event";
 import { Hack } from "../state/hack";
 import { Gear } from "../state/jobs";
+import { Radio } from "../state/radio";
 
 export const loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -58,7 +57,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<Hack>(DatabaseTable.HACKS),
     getActiveJobs(),
     getItems<Gear>(DatabaseTable.GEAR),
-    getRadios(),
+    getItems<Radio>(DatabaseTable.RADIOS),
     getQuotes(),
   ]);
   dispatch(setProfile(profile));
@@ -84,6 +83,6 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onItemsSnapshot<War>(DatabaseTable.WARS, wars => dispatch(setWars(wars)));
   onItemsSnapshot<CalendarEvent>(DatabaseTable.EVENTS, events => dispatch(setEvents(events)));
   onActiveJobSnapshot(jobs => dispatch(setActiveJobs(jobs)));
-  onRadiosSnapshot(radios => dispatch(setRadios(radios)));
+  onItemsSnapshot<Radio>(DatabaseTable.RADIOS, radios => dispatch(setRadios(radios)));
   loadingSubject.next(false);
 }

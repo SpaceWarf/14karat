@@ -1,6 +1,6 @@
 import "./Jobs.scss";
 import { CrewRoleMap, Job, JobUpdate } from "../../state/jobs";
-import { DatabaseTable, deleteItem, deleteRadio, getItemById, getItems, onItemsSnapshot, updateItem } from "../../utils/firestore";
+import { DatabaseTable, deleteItem, getItemById, getItems, onItemsSnapshot, updateItem } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
@@ -48,7 +48,7 @@ function JobCard(props: JobCardProps) {
     deleteItem(DatabaseTable.JOBS, props.job.id, user);
 
     if (radio) {
-      await deleteRadio(radio.id, user);
+      await deleteItem(DatabaseTable.RADIOS, radio.id, user);
     }
   }
 
@@ -64,7 +64,7 @@ function JobCard(props: JobCardProps) {
     );
 
     if (radio) {
-      await deleteRadio(radio.id, user);
+      await deleteItem(DatabaseTable.RADIOS, radio.id, user);
     }
   }
 
