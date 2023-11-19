@@ -15,8 +15,8 @@ function InventoryItemRow(props: InventoryItemCardProps) {
   const handleRemove = (id: string) => {
     if (user) {
       updateItem<InventoryItem>(
-        props.item.id,
         DatabaseTable.INVENTORY,
+        props.item.id,
         {
           ...props.item,
           quantity: {
@@ -32,8 +32,8 @@ function InventoryItemRow(props: InventoryItemCardProps) {
   const handleAdd = (id: string) => {
     if (user) {
       updateItem<InventoryItem>(
-        props.item.id,
         DatabaseTable.INVENTORY,
+        props.item.id,
         {
           ...props.item,
           quantity: {
@@ -49,8 +49,8 @@ function InventoryItemRow(props: InventoryItemCardProps) {
   const handleChange = (value: number, id: string) => {
     if (user && !isNaN(value)) {
       updateItem<InventoryItem>(
-        props.item.id,
         DatabaseTable.INVENTORY,
+        props.item.id,
         {
           ...props.item,
           quantity: {
