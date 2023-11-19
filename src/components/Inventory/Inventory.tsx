@@ -33,7 +33,7 @@ function Inventory() {
 
   const getItemsForCategory = (category: InventoryCategory): InventoryItem[] => {
     return inventory.filter(item => {
-      const searchMatch = `${item.name} ${item.tags.join(' ')}`.includes(search)
+      const searchMatch = `${item.name} ${item.tags.join(' ')}`.toLowerCase().includes(search.toLowerCase())
       const tagMatch = tags.length === 0 || item.tags.some(tag => tags.includes(tag))
       return item.category === category && searchMatch && tagMatch
     });
