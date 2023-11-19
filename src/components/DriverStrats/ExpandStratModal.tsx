@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import { DriverStrat } from "../../redux/reducers/driverStrats";
 import Loading from "../Common/Loading";
 import AssetCard from "../Common/AssetCard";
-import { deleteDriverStrat } from "../../utils/firestore";
+import { DatabaseTable, deleteItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 
 function ExpandStratModal() {
@@ -32,7 +32,7 @@ function ExpandStratModal() {
   }, [searchParams, driverStrats]);
 
   const handleDelete = async (id: string) => {
-    await deleteDriverStrat(id, user);
+    await deleteItem(DatabaseTable.DRIVER_STRATS, id, user);
   }
 
   return (

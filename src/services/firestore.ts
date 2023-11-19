@@ -1,9 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 import {
-  getDriverStrats,
   getNeighbourhoods,
   onWarSnapshot,
-  onDriverStratsSnapshot,
   getWars,
   getEvents,
   onEventsSnapshot,
@@ -18,7 +16,8 @@ import {
   getItemById,
   DatabaseTable,
   onItemByIdSnapshot,
-  getItems
+  getItems,
+  onItemsSnapshot
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -26,7 +25,7 @@ import { setPfpUrl, setProfile } from "../redux/reducers/profile";
 import { getProfilePictureUrl } from "../utils/storage";
 import { Role, setRoles } from "../redux/reducers/roles";
 import { Division, setDivisions } from "../redux/reducers/divisions";
-import { setDriverStrats } from "../redux/reducers/driverStrats";
+import { DriverStrat, setDriverStrats } from "../redux/reducers/driverStrats";
 import { setNeighbourhoods } from "../redux/reducers/neighbourhoods";
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
@@ -57,7 +56,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItemById<ProfileInfo>(DatabaseTable.PROFILES, id),
     getItems<Division>(DatabaseTable.DIVISIONS),
     getItems<Role>(DatabaseTable.ROLES),
-    getDriverStrats(),
+    getItems<DriverStrat>(DatabaseTable.DRIVER_STRATS),
     getNeighbourhoods(),
     getWars(),
     getEvents(),
@@ -88,7 +87,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   }
 
   onItemByIdSnapshot<ProfileInfo>(DatabaseTable.PROFILES, id, profile => dispatch(setProfile(profile)));
-  onDriverStratsSnapshot(strats => dispatch(setDriverStrats(strats)));
+  onItemsSnapshot<DriverStrat>(DatabaseTable.DRIVER_STRATS, strats => dispatch(setDriverStrats(strats)));
   onWarSnapshot(wars => dispatch(setWars(wars)));
   onEventsSnapshot(events => dispatch(setEvents(events)));
   onActiveJobsSnapshot(jobs => dispatch(setActiveJobs(jobs)));

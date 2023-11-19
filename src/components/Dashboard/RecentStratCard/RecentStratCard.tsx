@@ -5,7 +5,7 @@ import { DriverStrat } from '../../../redux/reducers/driverStrats';
 import AssetCard from '../../Common/AssetCard';
 import { useNavigate } from 'react-router-dom';
 import ExpandStratModal from '../../DriverStrats/ExpandStratModal';
-import { deleteDriverStrat } from '../../../utils/firestore';
+import { DatabaseTable, deleteItem } from '../../../utils/firestore';
 import { useAuth } from '../../../contexts/AuthContext';
 
 function RecentStratCard() {
@@ -20,7 +20,7 @@ function RecentStratCard() {
   }
 
   const handleDelete = async (id: string) => {
-    await deleteDriverStrat(id, user);
+    await deleteItem(DatabaseTable.DRIVER_STRATS, id, user);
   }
 
   return (

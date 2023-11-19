@@ -9,7 +9,6 @@ import PageLayout from './components/PageLayout/PageLayout';
 import Roster from './components/Roster/Roster';
 import DriverStrats from './components/DriverStrats/DriverStrats';
 import NeighbourghoodGallery from './components/DriverStrats/NeighbourhoodGallery';
-import StashSearch from './components/StashSearch/StashSearch';
 import GroupListing from './components/Groups/GroupListing';
 import GroupDetails from './components/Groups/GroupDetails';
 import MemberDetails from './components/Groups/MemberDetails';

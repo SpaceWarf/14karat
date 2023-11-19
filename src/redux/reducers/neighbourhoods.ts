@@ -13,7 +13,7 @@ const initialState: NeighbourhoodsState = {
   neighbourhoods: [],
 };
 
-export const roles = createSlice({
+export const neighbourhoods = createSlice({
   name: 'Neighbourhoods',
   initialState: initialState,
   reducers: {
@@ -23,5 +23,5 @@ export const roles = createSlice({
   },
 });
 
-export const { setNeighbourhoods } = roles.actions;
-export default roles.reducer;
+export const { setNeighbourhoods } = neighbourhoods.actions;
+export default neighbourhoods.reducer;

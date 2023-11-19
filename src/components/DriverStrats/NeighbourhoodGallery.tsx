@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import NewStratModal from "./NewStratModal";
 import { DriverStrat, DriverStratTag } from "../../redux/reducers/driverStrats";
 import { GalleryItem } from "../../state/gallery";
-import { deleteDriverStrat } from "../../utils/firestore";
+import { DatabaseTable, deleteItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import ExpandStratModal from "./ExpandStratModal";
 
@@ -43,7 +43,7 @@ function NeighbourghoodGallery() {
   }
 
   const handleDelete = async (id: string) => {
-    await deleteDriverStrat(id, user);
+    await deleteItem(DatabaseTable.DRIVER_STRATS, id, user);
   }
 
   return (

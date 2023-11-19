@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import NewStratModal from "./NewStratModal";
 import { DriverStrat, DriverStratTag } from "../../redux/reducers/driverStrats";
 import { GalleryItem } from "../../state/gallery";
-import { deleteDriverStrat } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import ExpandStratModal from "./ExpandStratModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { deleteItem, DatabaseTable } from "../../utils/firestore";
 
 function DriverStratGallery() {
   const { user } = useAuth();
@@ -30,7 +30,7 @@ function DriverStratGallery() {
   }
 
   const handleDelete = async (id: string) => {
-    await deleteDriverStrat(id, user);
+    await deleteItem(DatabaseTable.DRIVER_STRATS, id, user);
   }
 
   return (

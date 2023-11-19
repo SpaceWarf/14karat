@@ -5,8 +5,8 @@ import Input from "../Common/Input";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { createDriverStrat, getWebhookById } from "../../utils/firestore";
-import { DriverStratTag } from "../../redux/reducers/driverStrats";
+import { DatabaseTable, createItem, getWebhookById } from "../../utils/firestore";
+import { DriverStrat, DriverStratTag, DriverStratUpdate } from "../../redux/reducers/driverStrats";
 import { useAuth } from "../../contexts/AuthContext";
 import Textarea from "../Common/Textarea";
 import { Webhook } from "../../state/webhook";
@@ -42,12 +42,16 @@ function NewStratModal(props: NewStratModalProps) {
 
   const handleAdd = async () => {
     setLoading(true);
-    await createDriverStrat({
-      neighbourhood: selectedNeighbourhood,
-      embed,
-      notes,
-      tags,
-    }, user);
+    await createItem<DriverStratUpdate, DriverStrat>(
+      DatabaseTable.DRIVER_STRATS,
+      {
+        neighbourhood: selectedNeighbourhood,
+        embed,
+        notes,
+        tags,
+      },
+      user,
+    );
 
     if (notification) {
       sendWebhook();

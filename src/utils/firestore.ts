@@ -1,7 +1,6 @@
 import { DocumentData, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Unsubscribe, User } from "firebase/auth";
-import { DriverStrat, DriverStratUpdate } from "../redux/reducers/driverStrats";
 import { Neighbourhood } from "../redux/reducers/neighbourhoods";
 import { Group, GroupUpdate } from "../state/groups";
 import { Member, MemberUpdate } from "../state/member";
@@ -55,7 +54,6 @@ export enum DatabaseTable {
   STASHES = "stashes",
 }
 
-const driverStratsRef = collection(db, "driver-strats");
 const neighbourhoodsRef = collection(db, "neighbourhoods");
 const groupsRef = collection(db, "groups");
 const membersRef = collection(db, "members");
@@ -168,52 +166,6 @@ export async function getStats() {
   stats.forEach((value: boolean, key: string) => {
     const name = profiles.find(profile => profile.id === key)?.name ?? key;
     console.log(`${name} has completed ${value} jobs in the last two weeks`)
-  });
-}
-
-export async function getDriverStrats(): Promise<DriverStrat[]> {
-  const snapshot = await getDocs(driverStratsRef);
-  const driverStrats: DriverStrat[] = [];
-  snapshot.forEach((doc: DocumentData) => {
-    if (!doc.data().deleted) {
-      driverStrats.push({ id: doc.id, ...doc.data() });
-    }
-  });
-  return driverStrats;
-}
-
-export function onDriverStratsSnapshot(cb: (strats: DriverStrat[]) => void): Unsubscribe {
-  return onSnapshot(driverStratsRef, {}, snapshot => {
-    const driverStrats: DriverStrat[] = [];
-    snapshot.forEach((doc: DocumentData) => {
-      if (!doc.data().deleted) {
-        driverStrats.push({ id: doc.id, ...doc.data() });
-      }
-    });
-    cb(driverStrats);
-  });
-}
-
-export async function createDriverStrat(strat: DriverStratUpdate, user: User | null): Promise<DriverStrat> {
-  const now = new Date().toISOString();
-  const doc = await addDoc(driverStratsRef, {
-    ...strat,
-    createdAt: now,
-    createdBy: user?.uid ?? '',
-  });
-  return {
-    id: doc.id,
-    ...strat,
-    createdAt: now,
-  };
-}
-
-export async function deleteDriverStrat(id: string, user: User | null): Promise<void> {
-  const now = new Date().toISOString();
-  await updateDoc(doc(db, "driver-strats", id), {
-    deleted: true,
-    deletedAt: now,
-    deletedBy: user?.uid ?? '',
   });
 }
 
