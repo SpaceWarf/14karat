@@ -47,7 +47,6 @@ function App() {
             <Route path='/driver-strats' element={<DriverStrats />} />
             <Route path='/driver-strats/all' element={<DriverStratGallery />} />
             <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
-            <Route path='/inventory' element={<Inventory />} />
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<War />} />
@@ -67,6 +66,7 @@ function App() {
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/jobs' element={<JobListing />} />
               <Route path='/jobs/new' element={<JobPicker />} />
+              <Route path='/inventory' element={<Inventory />} />
             </Route>
 
             <Route element={<HeadRoute />}>
