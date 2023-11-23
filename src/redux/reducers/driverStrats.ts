@@ -23,6 +23,7 @@ export enum DriverStratTag {
   FENCE = "fence",
   WALL_BREAK = "wall break",
   STAIRS = "stairs",
+  VIP = "VIP",
 }
 
 export interface DriverStratsState {

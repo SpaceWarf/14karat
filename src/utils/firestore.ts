@@ -154,7 +154,7 @@ export async function getStats() {
       return map;
     }
 
-    const crew = [...new Set(Object.values(job.crew).reduce((crew, role) => [...crew, ...role]))].filter(member => member);
+    const crew = [...new Set(Object.values(job.crew).reduce((crew, role) => [...crew, ...role], []))].filter(member => member);
 
     crew.forEach(member => {
       if (map.has(member)) {
