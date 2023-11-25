@@ -2,7 +2,7 @@
   "projects": {
     "default": "fourteen-karat",
     "prod": "fourteen-karat",
-    "dev": "fourteen-karat-dev"
+    "dev": "hogakai-dev"
   },
   "targets": {},
   "etags": {}

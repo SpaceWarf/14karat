@@ -89,14 +89,14 @@ function JobCard(props: JobCardProps) {
   }
 
   const getMembersAsString = (): string => {
-    return Object.values(props.job.crew)
-      .reduce((str, members) => {
-        const membersStr = members
+    const tags = Object.values(props.job.crew)
+      .reduce((tags, roleMembers) => {
+        const newTags = roleMembers
           .filter(member => getProfileInfo(member))
-          .map(member => `<@${getProfileInfo(member)?.discord}>`)
-          .join(" ");
-        return `${str} ${membersStr}`
-      }, "");
+          .map(member => `<@${getProfileInfo(member)?.discord}>`);
+        return [...tags, ...newTags];
+      }, []);
+    return [...new Set(tags)].join(" ");
   }
 
   const getCrewAsString = () => {

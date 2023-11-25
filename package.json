@@ -41,8 +41,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "deploy-dev": "firebase use dev && npm run build && firebase deploy",
-    "deploy-prod": "firebase use prod && npm run build && firebase deploy"
+    "deploy-dev": "firebase use dev && npm run build && firebase deploy --only hosting",
+    "deploy-prod": "firebase use prod && npm run build && firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": [
