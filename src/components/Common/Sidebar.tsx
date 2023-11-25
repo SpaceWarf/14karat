@@ -60,6 +60,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
             <div className='AdminRoutes'>
               <div className='Divider' />
               <SidebarItem name='Groups' icon='group' path='/groups' onClick={() => navigate('/groups')} />
+              <SidebarItem name='Statistics' icon='chart bar' path='/statistics' onClick={() => navigate('/statistics')} />
             </div>
           )}
         </div>

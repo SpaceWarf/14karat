@@ -31,6 +31,7 @@ import Assets from './components/InformationCenter/Assets/Assets';
 import HackingPractice from './components/HackingPractice/HackingPractice';
 import VangieGuide from './components/Jobs/Guides/VangieGuide';
 import Inventory from './components/Inventory/Inventory';
+import Statistics from './components/Statistics/Statistics';
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
               <Route path='/groups/:groupId/members/:memberId' element={<MemberDetails />} />
+              <Route path='/statistics' element={<Statistics />} />
             </Route>
           </Route>
           <Route path='*' element={<Navigate to='/notfound' />} />

@@ -1,0 +1,53 @@
+import { ReactElement } from "react";
+import { ProfileInfo } from "../../state/profile";
+import "./Statistics.scss";
+import { JobInfo } from "../../state/jobs";
+
+interface StatsCardProps {
+  profile: ProfileInfo;
+  stats?: Map<string, number>;
+  total: number;
+  jobInfos: JobInfo[];
+}
+
+function StatsCard(props: StatsCardProps) {
+  const getStatsLines = (): ReactElement[] => {
+    const lines: ReactElement[] = [];
+
+    if (props.stats) {
+      new Map([...props.stats.entries()]
+        .sort((a, b) => a[0].localeCompare(b[0])))
+        .forEach((value, key) => {
+          const jobInfo = props.jobInfos.find(info => info.id === key);
+
+          if (jobInfo) {
+            lines.push(
+              <p>{jobInfo.name}: {value}</p>
+            )
+          }
+        });
+    } else {
+      lines.push(
+        <p>No jobs to show...</p>
+      )
+    }
+
+    return lines;
+  }
+
+  return (
+    <div className="StatsCard ui card external">
+      <div className="content">
+        <div className="header">
+          <p>{props.profile.name}</p>
+          <p>{props.total}</p>
+        </div>
+        <div className="StatsContainer">
+          {getStatsLines()}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default StatsCard;

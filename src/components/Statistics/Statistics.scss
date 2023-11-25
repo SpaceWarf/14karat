@@ -1,0 +1,48 @@
+@import "../../assets/scss/index";
+
+.Statistics {
+  .Actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .Filters {
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+
+      .MuiFormControl-root input {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+  &>.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    &>* {
+      flex-basis: calc(20% - 10px);
+    }
+  }
+}
+
+.StatsCard {
+  .StatsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+
+    &>* {
+      flex-basis: 50%;
+      margin: 0;
+      text-align: start;
+    }
+  }
+}

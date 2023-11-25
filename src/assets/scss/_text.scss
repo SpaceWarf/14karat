@@ -47,6 +47,10 @@ p {
     font-size: 0.9rem;
     color: darken($gray-pale, 10%);
   }
+
+  &.error {
+    color: $red;
+  }
 }
 
 .quote {
