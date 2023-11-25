@@ -11,6 +11,13 @@ import StatsCard from "./StatsCard";
 
 type statistics = Map<string, Map<string, number>>;
 
+enum QuickFilters {
+  TODAY = "today",
+  THIS_WEEK = "this week",
+  LAST_TWO_WEEKS = "last two weeks",
+  MONTH_TO_DATE = "month to date",
+}
+
 function Statistics() {
   const [roster, setRoster] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +27,7 @@ function Statistics() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [stats, setStats] = useState<statistics>();
   const [jobInfos, setJobInfos] = useState<JobInfo[]>([]);
+  const [quickFilter, setQuickFilter] = useState<string | undefined>(QuickFilters.LAST_TWO_WEEKS);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +78,7 @@ function Statistics() {
   }, [roster, jobs, start, end])
 
   const handleUpdateStart = (start: Dayjs) => {
+    setQuickFilter(undefined);
     setDateError(false);
     setStart(start);
 
@@ -79,6 +88,7 @@ function Statistics() {
   }
 
   const handleUpdateEnd = (end: Dayjs) => {
+    setQuickFilter(undefined);
     setDateError(false);
     setEnd(end);
 
@@ -119,25 +129,57 @@ function Statistics() {
     return sum;
   }
 
+  const handleSelectQuickfilter = (filter: string) => {
+    setQuickFilter(filter);
+
+    switch (filter) {
+      case QuickFilters.TODAY:
+        setStart(dayjs());
+        setEnd(dayjs());
+        break;
+      case QuickFilters.THIS_WEEK:
+        setStart(dayjs().subtract(new Date().getDay(), "days"));
+        setEnd(dayjs());
+        break;
+      case QuickFilters.LAST_TWO_WEEKS:
+        setStart(dayjs().subtract(new Date().getDay() + 7, "days"));
+        setEnd(dayjs());
+        break;
+      case QuickFilters.MONTH_TO_DATE:
+        setStart(dayjs().subtract(new Date().getDate() - 1, "days"));
+        setEnd(dayjs());
+        break;
+    }
+  }
+
   return (
     <div className="Statistics">
       <Header text="Statistics" decorated />
       <div className='Actions'>
         <div className='Filters'>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Start"
-              value={start}
-              disabled={loading}
-              onChange={value => handleUpdateStart(dayjs(value))}
-            />
-            <DatePicker
-              label="End"
-              value={end}
-              disabled={loading}
-              onChange={value => handleUpdateEnd(dayjs(value))}
-            />
-          </LocalizationProvider>
+          <div className="DateFilters">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Start"
+                value={start}
+                disabled={loading}
+                onChange={value => handleUpdateStart(dayjs(value))}
+              />
+              <DatePicker
+                label="End"
+                value={end}
+                disabled={loading}
+                onChange={value => handleUpdateEnd(dayjs(value))}
+              />
+            </LocalizationProvider>
+          </div>
+          <div className="FilterLabels">
+            {Object.values(QuickFilters).map(filter => (
+              <div className={`ui label ${quickFilter === filter ? 'selected pale' : ''}`} onClick={() => handleSelectQuickfilter(filter)}>
+                {filter}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       {dateError && <p className='error'>The start date must be before the end date.</p>}

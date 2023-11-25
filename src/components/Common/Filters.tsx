@@ -49,7 +49,7 @@ function Filters(props: FiltersProps) {
           onChange={handleSearchUpdate}
         />
         {props.tags.length > 0 && (
-          <div className="Tags">
+          <div className="FilterLabels">
             {props.tags.sort((a, b) => a.localeCompare(b)).map(tag => (
               <div className={`ui label ${tags.includes(tag) ? 'selected pale' : ''}`} onClick={() => handleTagsUpdate(tag)}>
                 {tag}

@@ -8,14 +8,20 @@
 
     .Filters {
       display: flex;
-      justify-content: flex-start;
-      gap: 20px;
-      margin-top: 20px;
-      margin-bottom: 10px;
+      flex-direction: column;
+      align-items: flex-start;
 
-      .MuiFormControl-root input {
-        padding-top: 10px;
-        padding-bottom: 10px;
+      .DateFilters {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+
+        .MuiFormControl-root input {
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
       }
     }
   }

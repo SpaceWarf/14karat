@@ -10,27 +10,27 @@
     .input {
       width: 350px;
     }
+  }
+}
 
-    .Tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
+.FilterLabels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 
-      .label {
-        cursor: pointer;
+  .label {
+    cursor: pointer;
 
-        &:hover {
-          background-color: $gray-pale;
+    &:hover {
+      background-color: $gray-pale;
 
-          &.selected {
-            background-color: $primary-colour-dark;
-          }
-        }
-
-        &.selected {
-          background-color: $primary-colour;
-        }
+      &.selected {
+        background-color: $primary-colour-dark;
       }
+    }
+
+    &.selected {
+      background-color: $primary-colour;
     }
   }
 }
