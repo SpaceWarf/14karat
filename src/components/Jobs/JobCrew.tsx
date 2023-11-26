@@ -179,7 +179,7 @@ function JobCrew(props: JobCrewProps) {
           ))}
       </div>
       <div className="CustomMembers">
-        <h4>Custom Crew</h4>
+        <h4>Unaffiliated Members</h4>
         <p className="Subheader pale">
           This section is used to add members that are unaffiliated with the gang. Once added, they will be available from the crew dropdowns.
         </p>
