@@ -2,7 +2,6 @@ import './HackingPractice.scss';
 import { useEffect, useState } from 'react';
 import { Checkbox } from 'semantic-ui-react';
 import { cloneDeep } from 'lodash';
-import { getRandomColour } from '../../utils/colours';
 import { Position, getRandomPosition, isPositionChosen } from '../../utils/grid';
 import Dropdown from '../Common/Dropdown';
 
@@ -65,7 +64,6 @@ function CircleSwapHackPractice() {
       return circles.map((circle, i) => ({
         ...circle,
         position: positions[i],
-        colour: getRandomColour(),
       }));
     }
 

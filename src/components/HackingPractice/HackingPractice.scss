@@ -228,9 +228,10 @@
         left 0.3s ease 0s,
         background-color 0.3s ease 0s;
       cursor: pointer;
+      border: 1px solid black;
 
       &.Answer {
-        background-color: red !important;
+        background-color: white !important;
       }
 
       &.disabled {
