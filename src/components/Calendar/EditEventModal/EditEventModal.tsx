@@ -128,7 +128,7 @@ function EditEventModal(props: EditEventModalProps) {
           {
             type: "rich",
             title: title,
-            description: "",
+            description: notes,
             fields: [
               {
                 name: 'Starts On',

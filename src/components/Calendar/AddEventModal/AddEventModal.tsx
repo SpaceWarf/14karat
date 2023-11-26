@@ -77,7 +77,7 @@ function AddEventModal(props: AddEventModalProps) {
           {
             type: "rich",
             title: title,
-            description: "",
+            description: notes,
             fields: [
               {
                 name: 'Starts On',
