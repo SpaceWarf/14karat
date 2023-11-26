@@ -80,7 +80,7 @@ function Statistics() {
   const handleUpdateStart = (start: Dayjs) => {
     setQuickFilter(undefined);
     setDateError(false);
-    setStart(start);
+    setStart(start.startOf("day"));
 
     if (!start.isBefore(end)) {
       setDateError(true);
@@ -90,7 +90,7 @@ function Statistics() {
   const handleUpdateEnd = (end: Dayjs) => {
     setQuickFilter(undefined);
     setDateError(false);
-    setEnd(end);
+    setEnd(end.endOf("day"));
 
     if (!start.isBefore(end)) {
       setDateError(true);
@@ -134,20 +134,20 @@ function Statistics() {
 
     switch (filter) {
       case QuickFilters.TODAY:
-        setStart(dayjs());
-        setEnd(dayjs());
+        setStart(dayjs().startOf("day"));
+        setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.THIS_WEEK:
-        setStart(dayjs().subtract(new Date().getDay(), "days"));
-        setEnd(dayjs());
+        setStart(dayjs().subtract(new Date().getDay(), "days").startOf("day"));
+        setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.LAST_TWO_WEEKS:
-        setStart(dayjs().subtract(new Date().getDay() + 7, "days"));
-        setEnd(dayjs());
+        setStart(dayjs().subtract(new Date().getDay() + 7, "days").startOf("day"));
+        setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.MONTH_TO_DATE:
-        setStart(dayjs().subtract(new Date().getDate() - 1, "days"));
-        setEnd(dayjs());
+        setStart(dayjs().subtract(new Date().getDate() - 1, "days").startOf("day"));
+        setEnd(dayjs().endOf("day"));
         break;
     }
   }
