@@ -96,7 +96,7 @@ function JobCard(props: JobCardProps) {
           .map(member => `<@${getProfileInfo(member)?.discord}>`);
         return [...tags, ...newTags];
       }, []);
-    return [...new Set(tags)].join(" ");
+    return [...new Set(tags)].join(", ");
   }
 
   const getCrewAsString = () => {
@@ -106,9 +106,17 @@ function JobCard(props: JobCardProps) {
         const members = props.job.crew[role]
           .map(member => {
             const profile = getProfileInfo(member);
-            return profile ? `<@${getProfileInfo(member)?.discord}>` : member;
+            const customMember = props.job.customCrew?.find(customMember => customMember.id === member);
+
+            if (profile) {
+              return `<@${getProfileInfo(member)?.discord}>`;
+            } else if (customMember) {
+              return customMember.name;
+            }
+            return member;
           })
-          .join(" ");
+          .filter(member => member)
+          .join(", ");
         return `${str}**${CrewRoleMap[role]}**: ${members}\n`
       }, "");
   }

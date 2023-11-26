@@ -69,20 +69,43 @@ function JobCrew(props: JobCrewProps) {
     setEditing(false);
   }
 
+  const getUpdatedCrew = (customCrew: CustomMember[]) => {
+    const updatedCrew: { [key: string]: string[] } = {};
+    for (const [role, members] of Object.entries(props.job.crew)) {
+      const updatedMembers: string[] = [];
+      members.forEach(member => {
+        if (
+          [
+            ...props.members.map(profile => profile.id),
+            ...customCrew.map(member => member.id),
+          ].includes(member)
+        ) {
+          updatedMembers.push(member);
+        } else {
+          updatedMembers.push("");
+        }
+      })
+      updatedCrew[role] = updatedMembers;
+    }
+    return updatedCrew;
+  }
+
   const handleCustomMemberChange = async (id: string, value: string) => {
     const index = getCustomCrew().findIndex(member => member.id === id);
 
     if (index !== -1) {
+      const customCrew = [
+        ...getCustomCrew().slice(0, index),
+        { ...getCustomCrew()[index], name: value },
+        ...getCustomCrew().slice(index + 1),
+      ];
       await updateItem<JobUpdate>(
         DatabaseTable.JOBS,
         props.job.id,
         {
           ...props.job,
-          customCrew: [
-            ...getCustomCrew().slice(0, index),
-            { ...getCustomCrew()[index], name: value },
-            ...getCustomCrew().slice(index + 1),
-          ]
+          crew: value ? props.job.crew : getUpdatedCrew(customCrew.filter(member => member.name)),
+          customCrew,
         },
         user
       );
@@ -93,15 +116,17 @@ function JobCrew(props: JobCrewProps) {
     const index = getCustomCrew().findIndex(member => member.id === id);
 
     if (index !== -1) {
+      const customCrew = [
+        ...getCustomCrew().slice(0, index),
+        ...getCustomCrew().slice(index + 1),
+      ];
       await updateItem<JobUpdate>(
         DatabaseTable.JOBS,
         props.job.id,
         {
           ...props.job,
-          customCrew: [
-            ...getCustomCrew().slice(0, index),
-            ...getCustomCrew().slice(index + 1),
-          ]
+          crew: getUpdatedCrew(customCrew),
+          customCrew,
         },
         user
       );
