@@ -10,6 +10,10 @@ button.ui.button {
   &.negative {
     background-color: $red !important;
 
+    &:focus {
+      background-color: $red;
+    }
+
     &:hover:not(:disabled) {
       background-color: $red-dark !important;
     }
@@ -22,6 +26,10 @@ button.ui.button {
   &.positive {
     background-color: $green !important;
 
+    &:focus {
+      background-color: $green;
+    }
+
     &:hover:not(:disabled) {
       background-color: $green-dark !important;
     }
@@ -29,6 +37,10 @@ button.ui.button {
     &:active:not(:disabled) {
       background-color: $green !important;
     }
+  }
+
+  &:focus {
+    background-color: $primary-colour;
   }
 
   &:hover:not(:disabled) {
