@@ -104,8 +104,10 @@ function JobCard(props: JobCardProps) {
       .sort((a, b) => a.localeCompare(b))
       .reduce((str, role) => {
         const members = props.job.crew[role]
-          .filter(member => getProfileInfo(member))
-          .map(member => `<@${getProfileInfo(member)?.discord}>`)
+          .map(member => {
+            const profile = getProfileInfo(member);
+            return profile ? `<@${getProfileInfo(member)?.discord}>` : member;
+          })
           .join(" ");
         return `${str}**${CrewRoleMap[role]}**: ${members}\n`
       }, "");
