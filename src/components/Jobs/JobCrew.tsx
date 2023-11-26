@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { CrewRoleMap, Job, JobUpdate } from "../../state/jobs";
+import { useState } from "react";
+import { CrewRoleMap, CustomMember, Job, JobUpdate } from "../../state/jobs";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { DatabaseTable, updateItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { ProfileInfo } from "../../state/profile";
 import Input from "../Common/Input";
+import { uniqueId } from "lodash";
 
 interface JobCrewProps {
   job: Job;
@@ -15,43 +16,10 @@ interface JobCrewProps {
 function JobCrew(props: JobCrewProps) {
   const { user } = useAuth();
   const [editing, setEditing] = useState<boolean>(false);
-  const [customCrew, setCustomCrew] = useState<string>("");
 
-  useEffect(() => {
-    const removeDeletedMembers = async () => {
-      setEditing(true);
-      console.log(customCrew)
-      const updatedCrew: { [key: string]: string[] } = {};
-      for (const [role, members] of Object.entries(props.job.crew)) {
-        const updatedMembers: string[] = [];
-        members.forEach(member => {
-          if (
-            [
-              ...props.members.map(profile => profile.id),
-              ...customCrew.split(", ")
-            ].includes(member)
-          ) {
-            updatedMembers.push(member);
-          } else {
-            updatedMembers.push("");
-          }
-        })
-        updatedCrew[role] = updatedMembers;
-      }
-      await updateItem<JobUpdate>(
-        DatabaseTable.JOBS,
-        props.job.id,
-        {
-          ...props.job,
-          crew: updatedCrew
-        },
-        user
-      );
-      setEditing(false);
-    }
-
-    removeDeletedMembers();
-  }, [customCrew])
+  const getCustomCrew = (): CustomMember[] => {
+    return props.job.customCrew ?? [];
+  }
 
   const getMemberDropdownOptions = (role: string): DropdownOption[] => {
     return [
@@ -72,13 +40,13 @@ function JobCrew(props: JobCrewProps) {
           text: member.name,
           value: member.id,
         })),
-      ...customCrew
-        .split(", ")
+      ...getCustomCrew()
+        .filter(member => member.name)
         .map(member => ({
-          key: member,
-          text: member,
-          value: member,
-        }))
+          key: member.id,
+          text: member.name,
+          value: member.id,
+        })),
     ]
   }
 
@@ -99,6 +67,60 @@ function JobCrew(props: JobCrewProps) {
       user
     );
     setEditing(false);
+  }
+
+  const handleCustomMemberChange = async (id: string, value: string) => {
+    const index = getCustomCrew().findIndex(member => member.id === id);
+
+    if (index !== -1) {
+      await updateItem<JobUpdate>(
+        DatabaseTable.JOBS,
+        props.job.id,
+        {
+          ...props.job,
+          customCrew: [
+            ...getCustomCrew().slice(0, index),
+            { ...getCustomCrew()[index], name: value },
+            ...getCustomCrew().slice(index + 1),
+          ]
+        },
+        user
+      );
+    }
+  }
+
+  const handleDeleteCustomMember = async (id: string) => {
+    const index = getCustomCrew().findIndex(member => member.id === id);
+
+    if (index !== -1) {
+      await updateItem<JobUpdate>(
+        DatabaseTable.JOBS,
+        props.job.id,
+        {
+          ...props.job,
+          customCrew: [
+            ...getCustomCrew().slice(0, index),
+            ...getCustomCrew().slice(index + 1),
+          ]
+        },
+        user
+      );
+    }
+  }
+
+  const handleAddCustomMember = async () => {
+    await updateItem<JobUpdate>(
+      DatabaseTable.JOBS,
+      props.job.id,
+      {
+        ...props.job,
+        customCrew: [
+          ...getCustomCrew(),
+          { id: uniqueId("custom-crew-"), name: "" },
+        ]
+      },
+      user
+    );
   }
 
   return (
@@ -131,24 +153,33 @@ function JobCrew(props: JobCrewProps) {
             </div>
           ))}
       </div>
-      <div>
-        <div className="ListHeader">
-          <h4>Add Custom Crew</h4>
-        </div>
+      <div className="CustomMembers">
+        <h4>Custom Crew</h4>
+        <p className="Subheader pale">
+          This section is used to add members that are unaffiliated with the gang. Once added, they will be available from the crew dropdowns.
+        </p>
         <div className="CustomMemberSelector">
           <div className="ui form">
-            <Input
-              type="text"
-              name="custom-members"
-              placeholder="Custom Crew"
-              icon="group"
-              value={customCrew}
-              onChange={setCustomCrew}
-              disabled={props.loading}
-            />
-            <p className="pale">
-              To add crew that is unaffiliated with the gang, enter their names separated by a comma (Name1, Name2, etc.). You will then be able to select them in the crew dropdowns.
-            </p>
+            {getCustomCrew().map(member => (
+              <div className="InputContainer">
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  icon=""
+                  value={member.name}
+                  onChange={value => handleCustomMemberChange(member.id, value)}
+                  disabled={props.loading}
+                />
+                <button className='ui icon button negative' onClick={() => handleDeleteCustomMember(member.id)}>
+                  <i className='times icon' />
+                </button>
+              </div>
+            ))}
+            <button className="ui button positive hover-animation" onClick={handleAddCustomMember}>
+              <p className='label contrast'>Add Member</p>
+              <p className='IconContainer contrast'><i className='plus icon'></i></p>
+            </button>
           </div>
         </div>
       </div>

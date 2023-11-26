@@ -92,6 +92,7 @@ function JobInfoCard(props: JobInfoCardProps) {
           name: props.info.name,
           index: indexes.length ? Math.max(...indexes) + 1 : 1,
           icon: props.info.icon,
+          customCrew: [],
         },
         user
       );

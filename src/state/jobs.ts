@@ -11,6 +11,7 @@ export interface Job extends FirestoreEntity {
   name: string;
   index: number;
   icon: string;
+  customCrew: CustomMember[];
 }
 
 export interface JobUpdate {
@@ -24,6 +25,12 @@ export interface JobUpdate {
   name: string;
   index: number;
   icon: string;
+  customCrew: CustomMember[];
+}
+
+export interface CustomMember {
+  id: string;
+  name: string;
 }
 
 export interface Checklist {
