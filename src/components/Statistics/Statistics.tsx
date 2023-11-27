@@ -13,7 +13,8 @@ type statistics = Map<string, Map<string, number>>;
 
 enum QuickFilters {
   TODAY = "today",
-  THIS_WEEK = "this week",
+  WEEK_TO_DATE = "week to date",
+  LAST_WEEK = "last week",
   LAST_TWO_WEEKS = "last two weeks",
   MONTH_TO_DATE = "month to date",
 }
@@ -157,12 +158,16 @@ function Statistics() {
         setStart(dayjs().startOf("day"));
         setEnd(dayjs().endOf("day"));
         break;
-      case QuickFilters.THIS_WEEK:
+      case QuickFilters.WEEK_TO_DATE:
         setStart(dayjs().subtract(new Date().getDay(), "days").startOf("day"));
         setEnd(dayjs().endOf("day"));
         break;
+      case QuickFilters.LAST_WEEK:
+        setStart(dayjs().subtract(7, "days").startOf("day"));
+        setEnd(dayjs().endOf("day"));
+        break;
       case QuickFilters.LAST_TWO_WEEKS:
-        setStart(dayjs().subtract(new Date().getDay() + 7, "days").startOf("day"));
+        setStart(dayjs().subtract(14, "days").startOf("day"));
         setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.MONTH_TO_DATE:
