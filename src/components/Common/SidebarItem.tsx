@@ -32,7 +32,7 @@ function SidebarItem({ name, icon, image, path, onClick, children }: SidebarItem
       <div className="Label">
         {!image && <i className={`${icon} icon`}></i>}
         {image && <img className={`${icon} icon`} src={image} alt="Profile" />}
-        <span className="contrast">{name}</span>
+        <span className={isActive() ? 'primary' : 'contrast'}>{name}</span>
       </div>
       {children}
     </div>

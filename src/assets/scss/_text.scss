@@ -36,6 +36,10 @@ span {
   margin: 0;
   color: $text-colour;
 
+  &.primary {
+    color: $primary-colour;
+  }
+
   &.contrast {
     color: $text-colour-contrast;
   }
