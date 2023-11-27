@@ -31,7 +31,8 @@
   }
 }
 
-p {
+p,
+span {
   margin: 0;
   color: $text-colour;
 
@@ -48,8 +49,17 @@ p {
     color: darken($gray-pale, 10%);
   }
 
-  &.error {
+  &.error,
+  &.red {
     color: $red;
+  }
+
+  &.green {
+    color: $green;
+  }
+
+  &.yellow {
+    color: $yellow;
   }
 }
 

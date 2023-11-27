@@ -104,6 +104,7 @@ function Statistics() {
         profile,
         stats: profileStats,
         total: getStatsTotal(profileStats),
+        ratio: getStatsRatio(profileStats),
       }
     });
 
@@ -114,6 +115,7 @@ function Statistics() {
           profile={data.profile}
           stats={data.stats}
           total={data.total}
+          ratio={data.ratio}
           jobInfos={jobInfos}
         />
       ));
@@ -127,6 +129,24 @@ function Statistics() {
       });
     }
     return sum;
+  }
+
+  const getStatsRatio = (stats?: Map<string, number>): number => {
+    const total = getStatsTotal(stats);
+
+    if (total === 0) {
+      return 0;
+    }
+
+    let paidTotal = 0;
+    if (stats) {
+      jobInfos
+        .filter(jobInfo => jobInfo.payout)
+        .forEach(jobInfo => {
+          paidTotal += stats.get(jobInfo.id) ?? 0;
+        });
+    }
+    return paidTotal / total;
   }
 
   const handleSelectQuickfilter = (filter: string) => {

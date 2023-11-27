@@ -7,6 +7,7 @@ interface StatsCardProps {
   profile: ProfileInfo;
   stats?: Map<string, number>;
   total: number;
+  ratio: number;
   jobInfos: JobInfo[];
 }
 
@@ -35,12 +36,21 @@ function StatsCard(props: StatsCardProps) {
     return lines;
   }
 
+  const getRatioClass = (): string => {
+    if (props.ratio < 0.45) {
+      return "green";
+    } else if (props.ratio >= 0.45 && props.ratio <= 0.55) {
+      return "yellow";
+    }
+    return "red"
+  }
+
   return (
     <div className="StatsCard ui card external">
       <div className="content">
         <div className="header">
           <p>{props.profile.name}</p>
-          <p>{props.total}</p>
+          <p>{props.total} (<span className={getRatioClass()}>{(props.ratio * 100).toFixed(0)}%</span>)</p>
         </div>
         <div className="StatsContainer">
           {getStatsLines()}
