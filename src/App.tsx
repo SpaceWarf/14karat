@@ -32,6 +32,7 @@ import HackingPractice from './components/HackingPractice/HackingPractice';
 import VangieGuide from './components/Jobs/Guides/VangieGuide';
 import Inventory from './components/Inventory/Inventory';
 import Statistics from './components/Statistics/Statistics';
+import Drugs from './components/InformationCenter/Drugs/Drugs';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
             <Route path='/information-center/lore' element={<Lore />} />
             <Route path='/information-center/assets' element={<Assets />} />
+            <Route path='/information-center/drugs' element={<Drugs />} />
             <Route path='/radios' element={<Radios />} />
 
             <Route element={<ChainedRoute />}>
