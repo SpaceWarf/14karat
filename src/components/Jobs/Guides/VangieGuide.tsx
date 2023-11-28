@@ -68,7 +68,7 @@ function VangieGuide() {
           </p>
           <div className='Media'>
             {jewelers.map((jeweler, i) => (
-              <img className='JewelerImg' src={jeweler} alt={`Jeweler ${i}`} />
+              <img src={jeweler} alt={`Jeweler ${i}`} />
             ))}
           </div>
         </div>

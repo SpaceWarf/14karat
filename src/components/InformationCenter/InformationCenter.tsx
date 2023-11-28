@@ -69,20 +69,22 @@ function InformationCenter() {
             </div>
           </div>
         )}
-        <div
-          className="InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/assets')}
-        >
-          <div className="content">
-            <div className='header'>
-              <p><i className='image icon' /> Assets</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/assets')}>
-                <i className='external alternate icon' />
-              </button>
+        {access.chainedAccess && (
+          <div
+            className="InformationCenterCard ui card attached link external"
+            onClick={() => navigate('/information-center/black-markets')}
+          >
+            <div className="content">
+              <div className='header'>
+                <p><i className='user secret icon' /> Black Markets</p>
+                <button className="ui icon button" onClick={() => navigate('/information-center/black-markets')}>
+                  <i className='external alternate icon' />
+                </button>
+              </div>
+              <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
             </div>
-            <div className='Notes'><p>A list of all gang assets including logos and sprays.</p></div>
           </div>
-        </div>
+        )}
         <div
           className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/locations')}
@@ -95,6 +97,20 @@ function InformationCenter() {
               </button>
             </div>
             <div className='Notes'><p>A list of discreet locations that can be used for operations.</p></div>
+          </div>
+        </div>
+        <div
+          className="InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/assets')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='image icon' /> Assets</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/assets')}>
+                <i className='external alternate icon' />
+              </button>
+            </div>
+            <div className='Notes'><p>A list of all gang assets including logos and sprays.</p></div>
           </div>
         </div>
         <div

@@ -1,6 +1,8 @@
 @import "../../../assets/scss/index";
 @import "../InformationCenter";
 
-.Lore {
-  @include InformationCenterPage;
+.BlackMarkets {
+  .Section {
+    padding-bottom: 20px;
+  }
 }

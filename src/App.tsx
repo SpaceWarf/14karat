@@ -33,6 +33,7 @@ import VangieGuide from './components/Jobs/Guides/VangieGuide';
 import Inventory from './components/Inventory/Inventory';
 import Statistics from './components/Statistics/Statistics';
 import Drugs from './components/InformationCenter/Drugs/Drugs';
+import BlackMarkets from './components/InformationCenter/BlackMarkets/BlackMarkets';
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               <Route path='/hacking/practice' element={<HackingPractice />} />
               <Route path='/information-center/jobs' element={<Jobs />} />
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
+              <Route path='/information-center/black-markets' element={<BlackMarkets />} />
               <Route path='/jobs' element={<JobListing />} />
               <Route path='/jobs/new' element={<JobPicker />} />
               <Route path='/inventory' element={<Inventory />} />
@@ -101,12 +103,6 @@ function HeadRoute() {
 function ChainedRoute() {
   const { access } = useAuth();
   return access.chainedAccess ? <Outlet /> : <Navigate to="/" replace />;
-};
-
-//@ts-ignore
-function MemberRoute() {
-  const { access } = useAuth();
-  return access.memberAccess ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default App;

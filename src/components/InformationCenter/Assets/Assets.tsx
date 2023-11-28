@@ -41,7 +41,7 @@ function Assets() {
           <Loading />
         )}
         {!loading && (
-          <div className='CarouselContainer'>
+          <div className='MainContainer CarouselContainer'>
             <Carousel width='500px' infiniteLoop onClickItem={handleClickItem}>
               {assets.map((item: Asset) => (
                 <div key={item.id} className='Preview'>

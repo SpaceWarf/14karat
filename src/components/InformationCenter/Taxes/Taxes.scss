@@ -1,17 +1,12 @@
 @import "../../../assets/scss/index";
+@import "../InformationCenter";
 
 .Taxes {
-  &>.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  @include InformationCenterPage;
 
+  &>.content {
     .actions {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
       max-width: 1500px;
-      margin-bottom: 10px;
     }
 
     iframe {

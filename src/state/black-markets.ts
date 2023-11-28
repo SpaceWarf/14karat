@@ -1,3 +1,5 @@
 export enum BlackMarketType {
-  JEWELERS = "jewelers"
+  JEWELERS = "jewelers",
+  CRYPTOS = "cryptos",
+  NORMALS = "normals",
 }

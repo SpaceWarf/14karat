@@ -1,19 +1,10 @@
 @import "../../../assets/scss/index";
+@import "../InformationCenter";
 
 .Assets {
+  @include InformationCenterPage;
+
   &>.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 1000px;
-      margin-bottom: 10px;
-    }
-
     .CarouselContainer {
       position: relative;
 

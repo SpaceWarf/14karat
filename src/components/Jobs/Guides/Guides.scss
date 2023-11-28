@@ -15,20 +15,6 @@
       p {
         margin: 0;
       }
-
-      .Media {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-
-        .JewelerImg {
-          object-fit: cover;
-          width: 500px;
-          height: 300px;
-        }
-      }
     }
   }
 }
