@@ -137,7 +137,7 @@ const MemberInformation = (props: MemberInformationProps) => {
     if (member) {
       setSaving(true);
       await deleteItem(DatabaseTable.MEMBERS, member.id, user);
-      navigate(`/groups/${member.group}?active=1`);
+      navigate(groupId ? `/groups/${groupId}?active=1` : '/members');
       setSaving(false);
     }
   }
