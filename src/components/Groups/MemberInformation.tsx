@@ -17,7 +17,7 @@ interface MemberInformationProps {
 
 const MemberInformation = (props: MemberInformationProps) => {
   const { memberId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, _] = useSearchParams();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [groupId, setGroupId] = useState<string>();
@@ -33,14 +33,6 @@ const MemberInformation = (props: MemberInformationProps) => {
   const [leader, setLeader] = useState<boolean>(false);
   const [dead, setDead] = useState<boolean>(false);
   const [group, setGroup] = useState<string>("");
-
-  useEffect(() => {
-    const fetchGroups = async () => {
-      setLoading(true);
-      setLoading(false);
-    }
-    fetchGroups();
-  }, []);
 
   useEffect(() => {
     const group = searchParams.get('group')
@@ -70,7 +62,7 @@ const MemberInformation = (props: MemberInformationProps) => {
       setName("New Member");
       setLoading(false);
     }
-  }, [memberId, navigate]);
+  }, [memberId, groupId, navigate]);
 
   const setDefaults = (member: Member | undefined) => {
     if (member) {

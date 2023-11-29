@@ -1,6 +1,6 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { DatabaseTable, createItem, deleteItem, getItems, updateItem } from "../../utils/firestore";
+import { DatabaseTable, createItem, deleteItem, updateItem } from "../../utils/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
