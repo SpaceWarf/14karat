@@ -13,3 +13,46 @@ img.HeaderDecoration {
   right: 50px;
   bottom: 55px;
 }
+
+.Snowflakes {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+
+  .Snowflake {
+    --size: 1vw;
+    width: var(--size);
+    height: var(--size);
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: -5vh;
+    pointer-events: none;
+    z-index: 99;
+    filter: drop-shadow(0 0 7px white) blur(#{random(10)*0.1}px);
+  }
+
+  @keyframes snowfall {
+    0% {
+      transform: translate3d(var(--left-ini), 0, 0);
+    }
+
+    100% {
+      transform: translate3d(var(--left-end), 110vh, 0);
+    }
+  }
+
+  @for $i from 1 through 40 {
+    .Snowflake:nth-child(#{$i}) {
+      --size: #{random(4) * 0.2}vw;
+      --left-ini: #{random(25) - 10}vw;
+      --left-end: #{random(25) - 10}vw;
+      left: #{random(60)}px;
+      animation: snowfall #{5 + random(10)}s linear infinite;
+      animation-delay: -#{random(10)}s;
+    }
+  }
+}
