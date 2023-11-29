@@ -75,7 +75,7 @@ function GroupMembers() {
       <div className="GroupMembers">
         <Filters tags={['leader', 'dead']} onUpdate={handleFiltersUpdate} />
         <div className="content">
-          {getOrderedMembers().map(member => <MemberCard member={member} />)}
+          {getOrderedMembers().map(member => <MemberCard key={member.id} member={member} />)}
           <div
             className='AddMemberCard ui link card attached'
             onClick={() => navigate(`/groups/${groupId}/members/new`)}

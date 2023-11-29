@@ -14,13 +14,13 @@ function Header({ id, text, element, contrast, decorated }: HeaderProps) {
     <div id={id} className='Header'>
       {decorated && (
         <div>
-          <img className='HeaderDecoration left' src={headerDecoration} alt='Header Decoration'></img>
+          <img className='HeaderDecorator left' src={headerDecoration} alt='Header Decoration'></img>
         </div>
       )}
       <h1 className={`ui header ${contrast ? 'contrast' : ''}`}>{text ? text : element}</h1>
       {decorated && (
         <div>
-          <img className='HeaderDecoration right' src={headerDecoration} alt='Header Decoration'></img>
+          <img className='HeaderDecorator right' src={headerDecoration} alt='Header Decoration'></img>
         </div>
       )}
     </div>
