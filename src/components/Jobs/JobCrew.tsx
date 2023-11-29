@@ -5,7 +5,7 @@ import { DatabaseTable, updateItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { ProfileInfo } from "../../state/profile";
 import Input from "../Common/Input";
-import { uniqueId } from "lodash";
+import { v4 as uuid } from 'uuid';
 
 interface JobCrewProps {
   job: Job;
@@ -141,7 +141,7 @@ function JobCrew(props: JobCrewProps) {
         ...props.job,
         customCrew: [
           ...getCustomCrew(),
-          { id: uniqueId("custom-crew-"), name: "" },
+          { id: uuid(), name: "" },
         ]
       },
       user
