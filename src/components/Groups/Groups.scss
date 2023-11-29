@@ -1,26 +1,60 @@
 @import "../../assets/scss/index";
 
 .GroupListing,
-.GroupMembers {
+.GroupMembers,
+.MembersListing {
   &>.content {
-    margin: 20px 0;
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    flex-direction: column;
 
-    .AddGroupCard,
-    .AddMemberCard {
+    .actions {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-end;
+      margin-right: 10px;
 
-      i {
-        font-size: 3rem;
-        line-height: 3rem;
-        color: $green;
+      .hover-animation {
+        width: 300px;
+
+        .label {
+          width: 120px;
+        }
+
+        &:hover:not(:disabled) {
+          .label {
+            left: calc((100% - 145px) / 2);
+          }
+
+          .IconContainer {
+            right: calc((100% - 145px) / 2);
+          }
+        }
+      }
+    }
+
+    .CardsContainer {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .AddGroupCard,
+      .AddMemberCard {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i {
+          font-size: 3rem;
+          line-height: 3rem;
+          color: $green;
+        }
       }
     }
   }
+}
+
+.MembersListing>.content .actions {
+  justify-content: flex-start;
 }
 
 .GroupDetails,

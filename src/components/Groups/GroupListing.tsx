@@ -25,17 +25,23 @@ function GroupListing() {
     <div className="GroupListing">
       <Header text="Group Listing" decorated />
       <div className="content">
+        <div className="actions">
+          <button className="ui button positive hover-animation" onClick={() => navigate("/members")}>
+            <p className='label contrast'>View All Members</p>
+            <p className='IconContainer contrast'><i className='group icon'></i></p>
+          </button>
+        </div>
         {loading ? (
           <Loading />
         ) : (
-          <>
+          <div className="CardsContainer">
             {groups.filter(group => group.cardColor).map(group => <GroupCard group={group} groups={groups} />)}
             {groups.filter(group => !group.cardColor).map(group => <GroupCard group={group} groups={groups} />)}
             <div
               className='AddGroupCard ui link card attached'
               onClick={() => navigate('/groups/new')}
             ><i className="add icon" /></div>
-          </>
+          </div>
         )}
       </div>
     </div>

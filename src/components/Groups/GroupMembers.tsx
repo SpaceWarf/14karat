@@ -75,11 +75,13 @@ function GroupMembers() {
       <div className="GroupMembers">
         <Filters tags={['leader', 'dead']} onUpdate={handleFiltersUpdate} />
         <div className="content">
-          {getOrderedMembers().map(member => <MemberCard key={member.id} member={member} />)}
-          <div
-            className='AddMemberCard ui link card attached'
-            onClick={() => navigate(`/groups/${groupId}/members/new`)}
-          ><i className="add icon" /></div>
+          <div className="CardsContainer">
+            {getOrderedMembers().map(member => <MemberCard key={member.id} member={member} fromGroup />)}
+            <div
+              className='AddMemberCard ui link card attached'
+              onClick={() => navigate(`/members/new?group=${groupId}`)}
+            ><i className="add icon" /></div>
+          </div>
         </div>
       </div>
     )

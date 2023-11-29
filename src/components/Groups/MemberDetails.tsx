@@ -5,37 +5,21 @@ import { Tab } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import MemberInformation from "./MemberInformation";
 import MemberIntel from "./MemberIntel";
-import { Group } from "../../state/groups";
-import { getItemById, DatabaseTable } from "../../utils/firestore";
-import { Member } from "../../state/member";
 
 function MemberDetails() {
-  const { groupId, memberId } = useParams();
+  const { memberId } = useParams();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
-  const [group, setGroup] = useState<Group>();
-  const [member, setMember] = useState<Member>();
-
-  useEffect(() => {
-    const fetchGroup = async () => {
-      if (groupId) {
-        setGroup(await getItemById(DatabaseTable.GROUPS, groupId))
-      }
-    }
-    const fetchMember = async () => {
-      if (memberId) {
-        setMember(await getItemById(DatabaseTable.MEMBERS, memberId))
-      }
-    }
-
-    fetchGroup();
-    fetchMember();
-  }, [groupId, memberId]);
+  const [groupId, setGroupId] = useState<string | null>();
 
   useEffect(() => {
     if (searchParams.has('active') && !isNaN(Number(searchParams.get('active')))) {
       setActive(Number(searchParams.get('active')))
+    }
+
+    if (searchParams.has('group')) {
+      setGroupId(searchParams.get('group'))
     }
   }, [searchParams]);
 
@@ -62,10 +46,13 @@ function MemberDetails() {
 
   return (
     <div className="MemberDetails">
-      <Header text={group && member ? `${group.name} - ${member.name}` : 'Member Details'} decorated />
+      <Header text='Member Details' decorated />
       <div className="content">
         <div className="actions">
-          <p className="hyperlink-button" onClick={() => navigate(`/groups/${groupId}?active=1`)}><i className='arrow left icon' />back</p>
+          <p
+            className="hyperlink-button"
+            onClick={() => navigate(groupId ? `/groups/${groupId}` : '/members')}
+          ><i className='arrow left icon' />back</p>
         </div>
         <Tab
           menu={{ secondary: true, pointing: true }}

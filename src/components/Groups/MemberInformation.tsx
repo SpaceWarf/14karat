@@ -1,7 +1,7 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { DatabaseTable, createItem, deleteItem, getItems, getMembersForGroup, updateItem } from "../../utils/firestore";
-import { useNavigate, useParams } from "react-router-dom";
+import { DatabaseTable, createItem, deleteItem, getItemById, getItems, updateItem } from "../../utils/firestore";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
 import Textarea from "../Common/Textarea";
@@ -12,9 +12,11 @@ import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { Group } from "../../state/groups";
 
 const MemberInformation = () => {
-  const { groupId, memberId } = useParams();
+  const { memberId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [groupId, setGroupId] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
   const [groups, setGroups] = useState<Group[]>([]);
@@ -27,7 +29,7 @@ const MemberInformation = () => {
   const [notes, setNotes] = useState<string>("");
   const [leader, setLeader] = useState<boolean>(false);
   const [dead, setDead] = useState<boolean>(false);
-  const [group, setGroup] = useState<string | undefined>(groupId);
+  const [group, setGroup] = useState<string>("");
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -39,14 +41,17 @@ const MemberInformation = () => {
   }, []);
 
   useEffect(() => {
-    setGroup(groupId);
-  }, [groupId]);
+    const group = searchParams.get('group')
+    if (group) {
+      setGroupId(group);
+      setGroup(group);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
-    const fetchMember = async (groupId: string, memberId: string) => {
+    const fetchMember = async (memberId: string) => {
       setLoading(true);
-      const members = await getMembersForGroup(groupId);
-      const member = members.find(member => member.id === memberId);
+      const member = await getItemById<Member>(DatabaseTable.MEMBERS, memberId);
 
       if (member) {
         setDefaults(member);
@@ -57,15 +62,13 @@ const MemberInformation = () => {
       setLoading(false);
     }
 
-    if (groupId === 'new') {
-      navigate('/groups/new')
-    } else if (groupId && memberId && memberId !== 'new') {
-      fetchMember(groupId, memberId);
-    } else if (groupId && memberId) {
+    if (memberId && memberId !== 'new') {
+      fetchMember(memberId);
+    } else if (memberId) {
       setName("New Member");
       setLoading(false);
     }
-  }, [groupId, memberId, navigate]);
+  }, [memberId, navigate]);
 
   const setDefaults = (member: Member | undefined) => {
     if (member) {
@@ -115,13 +118,9 @@ const MemberInformation = () => {
 
       if (memberId === "new" && canSave()) {
         const createdMember = await createItem<MemberUpdate, Member>(DatabaseTable.MEMBERS, update, user);
-        navigate(`/groups/${groupId}/members/${createdMember.id}`);
+        navigate(`/members/${createdMember.id}`);
       } else if (member && canSave()) {
         await updateItem<MemberUpdate>(DatabaseTable.MEMBERS, member.id, update, user);
-
-        if (group !== member.group) {
-          navigate(`/groups/${groupId}?active=1`);
-        }
 
         setMember({
           id: member.id,
@@ -144,7 +143,7 @@ const MemberInformation = () => {
     if (member) {
       setSaving(true);
       await deleteItem(DatabaseTable.MEMBERS, member.id, user);
-      navigate(`/groups/${groupId}?active=1`);
+      navigate(`/groups/${member.group}?active=1`);
       setSaving(false);
     }
   }
@@ -242,7 +241,7 @@ const MemberInformation = () => {
                 <button
                   className='ui button negative hover-animation'
                   disabled={saving || !isDataUpdated()}
-                  onClick={() => memberId === 'new' ? navigate(`/groups/${groupId}?active=1`) : setDefaults(member)}
+                  onClick={() => memberId === 'new' ? navigate(`/groups/${groupId}`) : setDefaults(member)}
                 >
                   <p className='label contrast'>{memberId === 'new' ? 'Cancel' : 'Reset'}</p>
                   <p className='IconContainer contrast'><i className='close icon'></i></p>

@@ -6,25 +6,12 @@ import { Tab } from "semantic-ui-react";
 import GroupMembers from "./GroupMembers";
 import { useEffect, useState } from "react";
 import GroupIntel from "./GroupIntel";
-import { Group } from "../../state/groups";
-import { DatabaseTable, getItemById } from "../../utils/firestore";
 
 function GroupDetails() {
   const navigate = useNavigate();
   const { groupId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
-  const [group, setGroup] = useState<Group>();
-
-  useEffect(() => {
-    const fetchGroup = async () => {
-      if (groupId) {
-        setGroup(await getItemById(DatabaseTable.GROUPS, groupId))
-      }
-    }
-
-    fetchGroup();
-  }, [groupId]);
 
   useEffect(() => {
     if (searchParams.has('active') && !isNaN(Number(searchParams.get('active')))) {
@@ -59,7 +46,7 @@ function GroupDetails() {
 
   return (
     <div className="GroupDetails">
-      <Header text={group ? group.name : 'Group Details'} decorated />
+      <Header text='Group Details' decorated />
       <div className="content">
         <div className="actions">
           <p className="hyperlink-button" onClick={() => navigate('/groups')}><i className='arrow left icon' />back</p>

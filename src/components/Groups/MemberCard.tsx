@@ -1,19 +1,25 @@
 import "./Groups.scss";
 import { Member } from "../../state/member";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface MemberCardProps {
-  member: Member
+  member: Member;
+  fromGroup?: boolean;
 }
 
 function MemberCard(props: MemberCardProps) {
-  const { groupId } = useParams();
   const navigate = useNavigate();
 
   return (
     <div
       className={`MemberCard ui link card attached ${props.member.dead ? 'red' : ''}`}
-      onClick={() => navigate(`/groups/${groupId}/members/${props.member.id}`)}
+      onClick={
+        () => navigate(
+          props.fromGroup
+            ? `/members/${props.member.id}?group=${props.member.group}`
+            : `/members/${props.member.id}`
+        )
+      }
     >
       <div className="content">
         <div className={`header ${props.member.dead ? 'negative' : ''}`}>

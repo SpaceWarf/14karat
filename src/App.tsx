@@ -34,6 +34,7 @@ import Inventory from './components/Inventory/Inventory';
 import Statistics from './components/Statistics/Statistics';
 import Drugs from './components/InformationCenter/Drugs/Drugs';
 import BlackMarkets from './components/InformationCenter/BlackMarkets/BlackMarkets';
+import MembersListing from './components/Groups/MembersListing';
 
 function App() {
   return (
@@ -76,7 +77,8 @@ function App() {
             <Route element={<HeadRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
-              <Route path='/groups/:groupId/members/:memberId' element={<MemberDetails />} />
+              <Route path='/members' element={<MembersListing />} />
+              <Route path='/members/:memberId' element={<MemberDetails />} />
               <Route path='/statistics' element={<Statistics />} />
             </Route>
           </Route>
