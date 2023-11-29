@@ -163,7 +163,7 @@ function JobCard(props: JobCardProps) {
           <p className='IconContainer pale'><i className='discord icon'></i></p>
         </button>
         <button className="ui button positive hover-animation" onClick={handleComplete}>
-          <p className='label contrast'>Complete</p>
+          <p className='label contrast'>Mark Job As Finished</p>
           <p className='IconContainer contrast'><i className='check icon'></i></p>
         </button>
       </div>
