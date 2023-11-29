@@ -62,7 +62,7 @@ function MemberDetails() {
         <div className="actions">
           <p
             className="hyperlink-button"
-            onClick={() => navigate(groupId ? `/groups/${groupId}` : '/members')}
+            onClick={() => navigate(groupId ? `/groups/${groupId}?active=1` : '/members')}
           ><i className='arrow left icon' />back</p>
         </div>
         <Tab
