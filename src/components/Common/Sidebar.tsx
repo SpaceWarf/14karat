@@ -5,6 +5,7 @@ import SidebarItem from './SidebarItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getMainRadio } from '../../redux/selectors/radios';
+import { getSidebarBackground } from '../../utils/themes';
 
 interface SidebarProps {
   onCollapse: () => void;
@@ -23,7 +24,10 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
   }
 
   return (
-    <div className={`ui sidebar inverted vertical menu visible ${collapsed ? 'collapsed' : ''}`}>
+    <div
+      className={`ui sidebar inverted vertical menu visible ${collapsed ? 'collapsed' : ''}`}
+      style={{ backgroundImage: `url(${getSidebarBackground()})` }}
+    >
       <div className='CollapseContainer'>
         <button className='ui icon button Collapse' onClick={onCollapse}>
           {collapsed ? <i className='angle double right icon'></i> : <i className='angle double left icon'></i>}

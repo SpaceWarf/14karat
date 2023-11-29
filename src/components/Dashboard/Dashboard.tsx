@@ -11,6 +11,7 @@ import QuoteCard from './QuoteCard/QuoteCard';
 import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
 import { useAuth } from '../../contexts/AuthContext';
 import JobsCard from './JobsCard/JobsCard';
+import { getAvatarBorder, getHeaderBackground, getHeaderDecoration, isThemeActive } from '../../utils/themes';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -31,8 +32,9 @@ function Dashboard() {
 
   return (
     <div className="Dashboard">
-      <div className='PageHeader'>
+      <div className='PageHeader' style={{ backgroundImage: `url(${getHeaderBackground()})` }}>
         <div className='UserInfo' onClick={() => navigate('/profile')}>
+          {isThemeActive() && <img className='AvatarBorder' src={getAvatarBorder()} alt='Avatar Border' />}
           {!profile.pfpUrl && <i className='user circle icon'></i>}
           {profile.pfpUrl && <img src={profile.pfpUrl} alt="Profile" />}
           <div>
@@ -40,7 +42,8 @@ function Dashboard() {
             <h4 className='Division'>{getRoles().join(', ')}</h4>
           </div>
         </div>
-        <img className='BannerDecorator' src={banner} alt='Chery Blossom Branch' />
+        {!isThemeActive() && <img className='BannerDecorator' src={banner} alt='Chery Blossom Branch' />}
+        {isThemeActive() && <img className='HeaderDecoration' src={getHeaderDecoration()} alt='Decoration' />}
       </div>
       <div className='content'>
         <div className='Col'><RecentStratCard /></div>

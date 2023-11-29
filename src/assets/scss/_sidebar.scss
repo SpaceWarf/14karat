@@ -2,6 +2,8 @@
   display: flex !important;
   background-color: $sidebar-background-colour !important;
   width: auto !important;
+  background-repeat: no-repeat !important;
+  background-position-x: center !important;
 
   .CollapseContainer {
     display: flex;
