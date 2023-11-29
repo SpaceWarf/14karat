@@ -65,49 +65,49 @@ function GuardiansListing() {
         </div>
       </div>
       <div className='Guardian'>
-        <Header id="houou" element={<p>Hoo (<span className='Kanji'>鳳凰</span>)</p>} decorated />
-        <div className='Description'>
-          <p>
-            <a href='https://yokai.com/houou/' target='_blank' rel="noreferrer">Hōō (鳳凰)</a> are majestic phoenix spirits with colourful plumage, typically portrayed with brilliant
-            red feathers on their heads, a white bodies, and green tail feathers. Hōō are a symbol of rebirth, immortality, and renewal, and their ability to rise from their own ashes
-            after death represents the cyclical nature of life. As such, Hōō are associated with the concept of eternal life and the renewal of hope. Hōō are creatures of peace and
-            never cause harm to other living things. It is said that when a Hōō flies, the wind stops, dust settles, and birds and insects grow quiet.
-          </p>
-          <img src={houou} alt='Houou' />
-        </div>
-      </div>
-      <div className='Guardian'>
         <Header id="byakko" element={<p>Byakko (<span className='Kanji'>白虎</span>)</p>} decorated />
         <div className='Description'>
-          <img src={byakko} alt='Byakko' />
           <p>
             <a href='https://yokai.com/byakko-tiger/' target='_blank' rel="noreferrer">Byakko (白虎)</a> the White Tiger is depicted as a majestic and powerful tiger with gleaming white
             fur and a commanding presence. He is one of the Four Symbols (Seiryu, Suzaku, Genbu, and Byakko), each associated with a cardinal direction. Its white color symbolizes purity,
             protection, and the west, which is the cardinal direction it represents. Byakko is considered a guardian and protector, bound to safeguard against evil forces and negative influences.
             Its presence brings balance and harmony to the west and to the land in general.
           </p>
+          <img src={byakko} alt='Byakko' />
         </div>
       </div>
       <div className='Guardian'>
         <Header id="inugami" element={<p>Inugami (<span className='Kanji'>犬神</span>)</p>} decorated />
         <div className='Description'>
+          <img src={inugami} alt='Inugami' />
           <p>
             <a href='https://yokai.com/inugami/' target='_blank' rel="noreferrer">Inugami (犬神)</a> are spirits originating from dogs and their loyalty to their master. They look identical to an ordinary
             dog in order to blend in, however, their true form is that of a desiccated, mummified dog's head, often dressed up in ceremonial trappings. Inugamis are created from the manipulation
             of dog spirits though occult rituals, which involve capturing and confining a dog, and subjecting it to cruelty or death to bind its spirit to its conjurer. Inugamis are historically
             used for curses, vengeance, and causing harm to ennemies, and are bound to carry out their conjurer's wishes.
           </p>
-          <img src={inugami} alt='Inugami' />
         </div>
       </div>
       <div className='Guardian'>
         <Header id="raijuu" element={<p>Raiju (<span className='Kanji'>雷獣</span>)</p>} decorated />
         <div className='Description'>
-          <img src={raiju} alt='Raijū' />
           <p>
             <a href='https://yokai.com/raijuu/' target='_blank' rel="noreferrer">Raijū (雷獣)</a> are wild beasts depicted as wolves with bright blue claws and a body surrounded by electrical sparks.
             They are associated with storms, and have the ability to generate and control lightning. Raijū live in the sky and ride down lightning bolts to earth when they are needed. Whenever thunder
             strikes, a Raijū was sent to achieve a dark deed. They take great pleasure in cause chaos and mayhem wherever they land, and will stop at nothing to cause mass desctruction.
+          </p>
+          <img src={raiju} alt='Raijū' />
+        </div>
+      </div>
+      <div className='Guardian'>
+        <Header id="houou" element={<p>Hoo (<span className='Kanji'>鳳凰</span>)</p>} decorated />
+        <div className='Description'>
+          <img src={houou} alt='Houou' />
+          <p>
+            <a href='https://yokai.com/houou/' target='_blank' rel="noreferrer">Hōō (鳳凰)</a> are majestic phoenix spirits with colourful plumage, typically portrayed with brilliant
+            red feathers on their heads, a white bodies, and green tail feathers. Hōō are a symbol of rebirth, immortality, and renewal, and their ability to rise from their own ashes
+            after death represents the cyclical nature of life. As such, Hōō are associated with the concept of eternal life and the renewal of hope. Hōō are creatures of peace and
+            never cause harm to other living things. It is said that when a Hōō flies, the wind stops, dust settles, and birds and insects grow quiet.
           </p>
         </div>
       </div>

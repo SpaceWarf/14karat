@@ -75,18 +75,6 @@ function Hierarchy() {
               </p>
             </div>
             <div className='Role'>
-              <h2>Ceremonies Head (Phoenix's Head)</h2>
-              <p>
-                Ceremonies Heads hold a unique and symbolic role within the organization. They are responsible for overseeing and conducting various rituals
-                and ceremonies that are integral to the family's traditions and code of conduct. They oversee rituals related to initiation ceremonies,
-                promotions, blood oaths, and other important events.
-              </p>
-              <p>
-                Ceremonies Heads are under the protection of <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
-                a phoenix spirit with immense cultural significance that symbolizes beauty, change, and harmony.
-              </p>
-            </div>
-            <div className='Role'>
               <h2>Enforcement Head (Tiger's Head)</h2>
               <p>
                 Enforcement Heads are responsible for ensuring that the organization's rules and directives are carried out with authority and, if necessary,
@@ -122,16 +110,6 @@ function Hierarchy() {
               </p>
               <p>
                 Operations Leads are also under the protection of <a href='/information-center/lore?active=Guardians#yatagarasu' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>.
-              </p>
-            </div>
-            <div className='Role'>
-              <h2>Ceremonies Lead (Phoenix's Feather)</h2>
-              <p>
-                Ceremonies Leads are second to the Ceremonies Heads. They oversee more or less the same responsibilities but are not directly included in
-                high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
-              </p>
-              <p>
-                Ceremonies Leads are also under the protection of <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>.
               </p>
             </div>
             <div className='Role'>
@@ -205,6 +183,18 @@ function Hierarchy() {
                 Raijū are also referred to as <a href='/information-center/lore?active=Spirits#onryou' target='_blank' rel="noreferrer">Onryō (怨霊)</a>, or
                 vengeful spirits, and are associated with intense emotions such as anger, hatred, and a desire for revenge. They are used as a weapon to achieve
                 revenge on those who have wronged the family.
+              </p>
+            </div>
+            <div className='Role'>
+              <h2>Master of Ceremonies (Hōō)</h2>
+              <p>
+                Masters of Ceremonies hold a unique and symbolic role within the organization. They are responsible for overseeing and conducting various rituals
+                and ceremonies that are integral to the family's traditions and code of conduct. They oversee rituals related to initiation ceremonies,
+                promotions, blood oaths, and other important events.
+              </p>
+              <p>
+                Ceremonies Heads are also reffered to as <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
+                a phoenix spirit with immense cultural significance that symbolizes beauty, change, and harmony.
               </p>
             </div>
             <div className='Role'>
