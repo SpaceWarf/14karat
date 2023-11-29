@@ -1,6 +1,6 @@
 import "./Groups.scss";
 import { useState, useEffect } from "react";
-import { DatabaseTable, createItem, deleteItem, getItemById, getItems, updateItem } from "../../utils/firestore";
+import { DatabaseTable, createItem, deleteItem, getItemById, updateItem } from "../../utils/firestore";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Loading from "../Common/Loading";
 import Input from "../Common/Input";
@@ -11,7 +11,11 @@ import { Checkbox } from "semantic-ui-react";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { Group } from "../../state/groups";
 
-const MemberInformation = () => {
+interface MemberInformationProps {
+  groups: Group[];
+}
+
+const MemberInformation = (props: MemberInformationProps) => {
   const { memberId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
@@ -19,7 +23,6 @@ const MemberInformation = () => {
   const [groupId, setGroupId] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
-  const [groups, setGroups] = useState<Group[]>([]);
 
   const [member, setMember] = useState<Member>();
   const [name, setName] = useState<string>("");
@@ -34,7 +37,6 @@ const MemberInformation = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       setLoading(true);
-      setGroups(await getItems<Group>(DatabaseTable.GROUPS));
       setLoading(false);
     }
     fetchGroups();
@@ -149,7 +151,7 @@ const MemberInformation = () => {
   }
 
   const getGroupsDropdownOptions = (): DropdownOption[] => {
-    return groups
+    return props.groups
       .map(group => ({
         key: group.id,
         text: group.name,

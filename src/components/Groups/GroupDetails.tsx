@@ -6,12 +6,23 @@ import { Tab } from "semantic-ui-react";
 import GroupMembers from "./GroupMembers";
 import { useEffect, useState } from "react";
 import GroupIntel from "./GroupIntel";
+import { Group } from "../../state/groups";
+import { DatabaseTable, getItems } from "../../utils/firestore";
 
 function GroupDetails() {
   const navigate = useNavigate();
   const { groupId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
+  const [groups, setGroups] = useState<Group[]>([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setGroups(await getItems<Group>(DatabaseTable.GROUPS));
+    }
+
+    fetchGroups();
+  }, []);
 
   useEffect(() => {
     if (searchParams.has('active') && !isNaN(Number(searchParams.get('active')))) {
@@ -22,16 +33,16 @@ function GroupDetails() {
   const getPanes = () => (groupId === 'new' ? [
     {
       menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-      render: () => <GroupInformation />
+      render: () => <GroupInformation groups={groups} />
     }
   ] : [
     {
       menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-      render: () => <GroupInformation />
+      render: () => <GroupInformation groups={groups} />
     },
     {
       menuItem: { key: 'members', icon: 'users', content: 'Members' },
-      render: () => <GroupMembers />
+      render: () => <GroupMembers groups={groups} />
     },
     {
       menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },

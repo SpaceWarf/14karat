@@ -1,9 +1,11 @@
 import "./Groups.scss";
 import { Member } from "../../state/member";
 import { useNavigate } from "react-router-dom";
+import { Group } from "../../state/groups";
 
 interface MemberCardProps {
   member: Member;
+  groups: Group[];
   fromGroup?: boolean;
 }
 
@@ -29,7 +31,11 @@ function MemberCard(props: MemberCardProps) {
         </div>
         <div className="Details">
           <div className="DetailsRow">
-            <div className="Detail centered large">
+            <div className="Detail">
+              <i className="group icon" />
+              <p>{props.groups.find(group => group.id === props.member.group)?.name || "-"}</p>
+            </div>
+            <div className="Detail">
               <i className="sitemap icon" />
               <p>{props.member.position || "-"}</p>
             </div>

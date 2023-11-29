@@ -44,8 +44,18 @@ function GroupListing() {
           <Loading />
         ) : (
           <div className="CardsContainer">
-            {filteredGroups.filter(group => group.cardColor).map(group => <GroupCard group={group} groups={groups} />)}
-            {filteredGroups.filter(group => !group.cardColor).map(group => <GroupCard group={group} groups={groups} />)}
+            {
+              filteredGroups
+                .filter(group => group.cardColor)
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(group => <GroupCard group={group} groups={groups} />)
+            }
+            {
+              filteredGroups
+                .filter(group => !group.cardColor)
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(group => <GroupCard group={group} groups={groups} />)
+            }
             <div
               className='AddGroupCard ui link card attached'
               onClick={() => navigate('/groups/new')}

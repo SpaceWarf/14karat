@@ -6,8 +6,13 @@ import { getMembersForGroup } from "../../utils/firestore";
 import Loading from "../Common/Loading";
 import MemberCard from "./MemberCard";
 import Filters, { FilterData } from "../Common/Filters";
+import { Group } from "../../state/groups";
 
-function GroupMembers() {
+interface GroupMembersProps {
+  groups: Group[];
+}
+
+function GroupMembers(props: GroupMembersProps) {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
@@ -76,7 +81,14 @@ function GroupMembers() {
         <Filters tags={['leader', 'dead']} onUpdate={handleFiltersUpdate} />
         <div className="content">
           <div className="CardsContainer">
-            {getOrderedMembers().map(member => <MemberCard key={member.id} member={member} fromGroup />)}
+            {getOrderedMembers().map(member => (
+              <MemberCard
+                key={member.id}
+                member={member}
+                groups={props.groups}
+                fromGroup
+              />
+            ))}
             <div
               className='AddMemberCard ui link card attached'
               onClick={() => navigate(`/members/new?group=${groupId}`)}

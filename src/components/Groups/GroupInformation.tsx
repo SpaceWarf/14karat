@@ -12,13 +12,16 @@ import { Group, GroupUpdate } from "../../state/groups";
 
 const COLOURS = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
 
-const GroupInformation = () => {
+interface GroupInformationProps {
+  groups: Group[];
+}
+
+const GroupInformation = (props: GroupInformationProps) => {
   const { groupId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
-  const [groups, setGroups] = useState<Group[]>([]);
 
   const [group, setGroup] = useState<Group>();
   const [name, setName] = useState<string>("");
@@ -33,9 +36,7 @@ const GroupInformation = () => {
   useEffect(() => {
     const fetchGroup = async () => {
       setLoading(true);
-      const groups = await getItems<Group>(DatabaseTable.GROUPS);
-      setGroups(groups);
-      const group = groups.find(group => group.id === groupId);
+      const group = props.groups.find(group => group.id === groupId);
 
       if (group) {
         setDefaults(group);
@@ -47,12 +48,14 @@ const GroupInformation = () => {
     }
 
     if (groupId !== 'new') {
-      fetchGroup();
+      if (props.groups.length) {
+        fetchGroup();
+      }
     } else {
       setName("New Group");
       setLoading(false);
     }
-  }, [groupId, navigate]);
+  }, [groupId, props.groups, navigate]);
 
   const getColoursDropdownOptions = (): DropdownOption[] => {
     return COLOURS
@@ -64,7 +67,7 @@ const GroupInformation = () => {
   }
 
   const getGroupsDropdownOptions = (): DropdownOption[] => {
-    return groups
+    return props.groups
       .map(group => ({
         key: group.id,
         text: group.name,
@@ -148,7 +151,7 @@ const GroupInformation = () => {
   }
 
   return (
-    loading ? (
+    loading || !props.groups.length ? (
       <Loading />
     ) : (
       <div className="GroupInformation">

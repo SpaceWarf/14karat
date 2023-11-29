@@ -5,6 +5,8 @@ import { Tab } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import MemberInformation from "./MemberInformation";
 import MemberIntel from "./MemberIntel";
+import { Group } from "../../state/groups";
+import { getItems, DatabaseTable } from "../../utils/firestore";
 
 function MemberDetails() {
   const { memberId } = useParams();
@@ -12,6 +14,15 @@ function MemberDetails() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState<number>(0);
   const [groupId, setGroupId] = useState<string | null>();
+  const [groups, setGroups] = useState<Group[]>([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setGroups(await getItems<Group>(DatabaseTable.GROUPS));
+    }
+
+    fetchGroups();
+  }, []);
 
   useEffect(() => {
     if (searchParams.has('active') && !isNaN(Number(searchParams.get('active')))) {
@@ -26,12 +37,12 @@ function MemberDetails() {
   const getPanes = () => (memberId === 'new' ? [
     {
       menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-      render: () => <MemberInformation />
+      render: () => <MemberInformation groups={groups} />
     },
   ] : [
     {
       menuItem: { key: 'information', icon: 'address card', content: 'Information' },
-      render: () => <MemberInformation />
+      render: () => <MemberInformation groups={groups} />
     },
     {
       menuItem: { key: 'intel', icon: 'picture', content: 'Intel' },

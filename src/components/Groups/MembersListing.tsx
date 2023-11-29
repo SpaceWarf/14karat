@@ -7,22 +7,26 @@ import { useNavigate } from "react-router-dom";
 import { Member } from "../../state/member";
 import MemberCard from "./MemberCard";
 import Filters, { FilterData } from "../Common/Filters";
+import { Group } from "../../state/groups";
 
 function MembersListing() {
   const [loading, setLoading] = useState<boolean>(false);
   const [members, setMembers] = useState<Member[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMembers = async () => {
+    const fetchData = async () => {
       setLoading(true);
+      setGroups(await getItems<Group>(DatabaseTable.GROUPS))
+
       const members = await getItems<Member>(DatabaseTable.MEMBERS);
       setMembers(members);
       setFilteredMembers(members);
       setLoading(false);
     }
-    fetchMembers();
+    fetchData();
   }, []);
 
   const handleFiltersUpdate = (update: FilterData) => {
@@ -41,7 +45,11 @@ function MembersListing() {
           <Loading />
         ) : (
           <div className="CardsContainer">
-            {filteredMembers.sort((a, b) => a.name.localeCompare(b.name)).map(member => <MemberCard member={member} />)}
+            {
+              filteredMembers
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(member => <MemberCard member={member} groups={groups} />)
+            }
             <div
               className='AddGroupCard ui link card attached'
               onClick={() => navigate('/members/new')}
