@@ -10,7 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 function MemberIntel() {
   const { user } = useAuth();
-  const { groupId, memberId } = useParams();
+  const { memberId } = useParams();
   const [intel, setIntel] = useState<Intel[]>([]);
 
   useEffect(() => {
@@ -47,9 +47,8 @@ function MemberIntel() {
 
   return (
     <div className="MemberIntel">
-      {groupId && memberId && (
+      {memberId && (
         <NewIntelModal
-          groupId={groupId}
           memberId={memberId}
           onAdd={async () => setIntel(await getIntelForMember(memberId))}
         />

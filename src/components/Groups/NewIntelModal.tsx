@@ -9,7 +9,7 @@ import Textarea from "../Common/Textarea";
 import { Intel, IntelTag, IntelType, IntelUpdate } from "../../state/intel";
 
 interface NewStratModalProps {
-  groupId: string;
+  groupId?: string;
   memberId?: string;
   onAdd: () => void
 }
