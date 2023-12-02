@@ -27,6 +27,7 @@ function JobRadio(props: JobRadioProps) {
       {
         channel: generateRadioChannel(allUsedChannels),
         main: false,
+        slide: false,
         burned: false,
         job: props.job.id,
       },

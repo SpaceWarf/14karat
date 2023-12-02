@@ -119,7 +119,9 @@
 
       .Rules {
         display: flex;
-        justify-content: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
         width: 35%;
         margin-top: 5px;
 

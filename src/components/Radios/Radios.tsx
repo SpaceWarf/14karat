@@ -2,19 +2,21 @@ import './Radios.scss';
 import { useSelector } from 'react-redux';
 import RadioCard from '../Common/RadioCard';
 import Header from '../Common/Header';
-import { getActiveRadios, getMainRadio, getRecentlyBurnedRadios } from '../../redux/selectors/radios';
+import { getActiveRadios, getMainRadio, getRecentlyBurnedRadios, getSlideRadio } from '../../redux/selectors/radios';
 
 function Radios() {
   const mainRadio = useSelector(getMainRadio);
+  const slideRadio = useSelector(getSlideRadio);
   const activeRadios = useSelector(getActiveRadios);
   const burnedRadios = useSelector(getRecentlyBurnedRadios);
 
   return (
     <div className='Radios'>
       <div className='content'>
-        <Header text='Main Radio' decorated />
+        <Header text='Main Radios' decorated />
         <div className='Listing'>
           {mainRadio && <RadioCard radio={mainRadio} />}
+          {slideRadio && <RadioCard radio={slideRadio} />}
         </div>
         <Header text='Active Radios' decorated />
         <div className='Listing'>

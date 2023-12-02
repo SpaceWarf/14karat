@@ -19,11 +19,17 @@ import NewWarClipModal from './NewWarClipModal';
 import { War, WarClip, WarClipTag, WarUpdate } from '../../state/war';
 import { GalleryItem } from '../../state/gallery';
 import ExpandWarClipModal from './ExpandWarClipModal';
+import { getAllUsedChannels, getSlideRadio } from '../../redux/selectors/radios';
+import { Radio, RadioUpdate } from '../../state/radio';
+import { generateRadioChannel } from '../../utils/radio';
+import RadioCard from '../Common/RadioCard';
 
 function WarInfo() {
   const { user, access } = useAuth();
   const war = useSelector(getMostRecentWar);
   const profile = useSelector((state: RootState) => state.profile);
+  const allUsedChannels = useSelector(getAllUsedChannels);
+  const slideRadio = useSelector(getSlideRadio);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingWebhook, setLoadingWebhook] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
@@ -135,26 +141,47 @@ function WarInfo() {
     setLoading(false);
   }
 
-  const handleEndWar = () => {
+  const handleEndWar = async () => {
     setLoading(true);
     setGroup('');
-    updateItem<WarUpdate>(
+    await updateItem<WarUpdate>(
       DatabaseTable.WARS,
       war.id,
       { ...war, endedAt: new Date().toISOString() },
       user
     );
+
+    if (slideRadio) {
+      await deleteItem(
+        DatabaseTable.RADIOS,
+        slideRadio.id,
+        user,
+      );
+    }
+
     setLoading(false);
   }
 
-  const handleDeclareWar = () => {
+  const handleDeclareWar = async () => {
     setLoading(true);
-    createItem<WarUpdate, War>(
+    await createItem<WarUpdate, War>(
       DatabaseTable.WARS,
       {
         group: 'New War',
         kills: 0,
         deaths: 0,
+      },
+      user
+    );
+    const newChannel = generateRadioChannel(allUsedChannels);
+    await createItem<RadioUpdate, Radio>(
+      DatabaseTable.RADIOS,
+      {
+        channel: newChannel,
+        main: false,
+        slide: true,
+        burned: false,
+        job: "",
       },
       user
     );
@@ -475,6 +502,7 @@ function WarInfo() {
                 </div>
               </div>
               <div className='Rules'>
+                {slideRadio && <RadioCard radio={slideRadio} />}
                 <div>
                   <h4>Standard War Procedure</h4>
                   <ul>

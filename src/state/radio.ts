@@ -4,6 +4,7 @@ export interface Radio extends FirestoreEntity {
   id: string;
   channel: string;
   main: boolean;
+  slide: boolean;
   burned: boolean;
   burnTime?: string;
   job?: string;
@@ -12,6 +13,7 @@ export interface Radio extends FirestoreEntity {
 export interface RadioUpdate {
   channel: string;
   main: boolean;
+  slide: boolean;
   burned: boolean;
   burnTime?: string;
   job?: string;

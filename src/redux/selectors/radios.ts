@@ -11,9 +11,13 @@ export const getMainRadio = (state: RootState): Radio | undefined => {
   return state.radios.radios.find(radio => radio.main && !radio.burned);
 }
 
+export const getSlideRadio = (state: RootState): Radio | undefined => {
+  return state.radios.radios.find(radio => radio.slide && !radio.burned);
+}
+
 export const getActiveRadios = (state: RootState): Radio[] => {
   return state.radios.radios
-    .filter(radio => !radio.main && !radio.burned)
+    .filter(radio => !radio.main && !radio.slide && !radio.burned)
     .sort((a, b) => new Date(a.createdAt || "").getTime() - new Date(b.createdAt || "").getTime());
 }
 

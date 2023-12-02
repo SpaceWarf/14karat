@@ -44,6 +44,10 @@ function RadioChannel(props: RadioChannelProps) {
       return `@here burn main ~~${props.radio.channel}~~!\nNEW MAIN - ${newChannel}`;
     }
 
+    if (props.radio.slide) {
+      return `@here burn slide radio ~~${props.radio.channel}~~!\nNEW SLIDE RADIO - ${newChannel}`;
+    }
+
     if (props.job) {
       return `@here burn ${props.job.name} ${props.job.index} radio ~~${props.radio.channel}~~`;
     }
@@ -55,14 +59,15 @@ function RadioChannel(props: RadioChannelProps) {
     if (props.radio) {
       setLoading(true);
 
-      if (props.radio.main) {
-        const newMain = generateRadioChannel(allUsedChannels)
-        sendWebhook(newMain);
+      if (props.radio.main || props.radio.slide) {
+        const newChannel = generateRadioChannel(allUsedChannels);
+        sendWebhook(newChannel);
         await createItem<RadioUpdate, Radio>(
           DatabaseTable.RADIOS,
           {
-            channel: newMain,
-            main: true,
+            channel: newChannel,
+            main: props.radio.main,
+            slide: props.radio.slide ?? false,
             burned: false,
             job: props.job?.id ?? "",
           },

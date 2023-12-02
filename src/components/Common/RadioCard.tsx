@@ -18,6 +18,10 @@ function RadioCard(props: RadioCardProps) {
       return "Main Radio";
     }
 
+    if (props.radio.slide) {
+      return "Slide Radio";
+    }
+
     if (job) {
       return `${job.name} ${job.index} Radio`;
     }
