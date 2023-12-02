@@ -25,6 +25,7 @@ export enum DriverStratTag {
   STAIRS = "stairs",
   VIP = "VIP",
   BIKE = "bike",
+  TUNNEL = "tunnel",
 }
 
 export interface DriverStratsState {
