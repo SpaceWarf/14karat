@@ -11,8 +11,6 @@ interface RadioCardProps {
 function RadioCard(props: RadioCardProps) {
   const job = useSelector((state: RootState) => getJobById(state, props.radio.job));
 
-  console.log(job, props.radio.id)
-
   const getTitle = () => {
     if (props.radio.main) {
       return "Main Radio";

@@ -6,6 +6,12 @@
   .Listing {
     padding: 20px 0;
 
+    &.MainListing {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
     .RadioLabel {
       margin: 0;
       font-weight: 600;

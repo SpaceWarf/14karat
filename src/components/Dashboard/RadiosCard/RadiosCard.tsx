@@ -1,6 +1,6 @@
 import './RadiosCard.scss';
 import { useSelector } from 'react-redux';
-import { getActiveRadios, getMainRadio } from '../../../redux/selectors/radios';
+import { getActiveRadios, getMainRadio, getSlideRadio } from '../../../redux/selectors/radios';
 import { useNavigate } from 'react-router-dom';
 import RadioChannel from '../../Common/RadioChannel';
 import { Radio } from '../../../state/radio';
@@ -9,12 +9,17 @@ import { RootState } from '../../../redux/store';
 function RadiosCard() {
   const navigate = useNavigate();
   const mainRadio = useSelector(getMainRadio);
+  const slideRadio = useSelector(getSlideRadio);
   const activeRadios = useSelector(getActiveRadios);
   const activeJobs = useSelector((state: RootState) => state.jobs.active);
 
   const getRadioName = (radio: Radio): string => {
     if (radio.main) {
       return "Main Radio";
+    }
+
+    if (radio.slide) {
+      return "Slide Radio";
     }
 
     if (radio.job) {
@@ -42,6 +47,12 @@ function RadiosCard() {
             <div>
               <RadioChannel radio={mainRadio} />
               <p className='RadioLabel'>{getRadioName(mainRadio)}</p>
+            </div>
+          )}
+          {slideRadio && (
+            <div>
+              <RadioChannel radio={slideRadio} />
+              <p className='RadioLabel'>{getRadioName(slideRadio)}</p>
             </div>
           )}
         </div>

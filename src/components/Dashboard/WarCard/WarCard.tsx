@@ -3,10 +3,13 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../../../utils/time';
 import { getMostRecentWar } from '../../../redux/selectors/wars';
+import { getSlideRadio } from '../../../redux/selectors/radios';
+import RadioChannel from '../../Common/RadioChannel';
 
 function WarCard() {
   const navigate = useNavigate();
   const war = useSelector(getMostRecentWar);
+  const slideRadio = useSelector(getSlideRadio);
 
   const getTimeString = (): string => {
     return war.endedAt ? getTimeSince(new Date(), new Date(war.endedAt)) : '0 days';
@@ -64,14 +67,22 @@ function WarCard() {
               </div>
             </div>
             <div className='Rules'>
-              <h4>Standard War Procedure</h4>
-              <ul>
-                <li>No bleets related to the war.</li>
-                <li>Working at businesses is allowed.</li>
-                <li>Do not hangout alone at the block.</li>
-                <li>Always carry a gun & armour.</li>
-                <li>Do not wear your katana or chain.</li>
-              </ul>
+              <div>
+                <h4>Standard War Procedure</h4>
+                <ul>
+                  <li>No bleets related to the war.</li>
+                  <li>Working at businesses is allowed.</li>
+                  <li>Do not hangout alone at the block.</li>
+                  <li>Always carry a gun & armour.</li>
+                  <li>Do not wear your katana or chain.</li>
+                </ul>
+              </div>
+              {slideRadio && (
+                <div>
+                  <RadioChannel radio={slideRadio} />
+                  <p className='RadioLabel'>Slide Radio</p>
+                </div>
+              )}
             </div>
           </>
         )}
