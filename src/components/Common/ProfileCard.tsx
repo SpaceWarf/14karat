@@ -41,13 +41,13 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
   const [emailError, setEmailError] = useState(false);
 
   const [bleeter, setBleeter] = useState(profile.bleeter);
-  const [bleeterError, setBleeterError] = useState(false);
 
   const [bank, setBank] = useState(profile.bank);
   const [bankError, setBankError] = useState(false);
 
   const [division, setDivision] = useState(profile.division);
   const [profileRoles, setProfileRoles] = useState(profile.roles);
+  const [nickname, setNickname] = useState(profile.nickname ?? "");
 
   const [loading, setLoading] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -61,12 +61,12 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
     setEmail(profile.email);
     setEmailError(false);
     setBleeter(profile.bleeter);
-    setBleeterError(false);
     setBank(profile.bank);
     setBankError(false);
     setUploadedPfp(null);
     setDivision(profile.division);
     setProfileRoles(profile.roles);
+    setNickname(profile.nickname ?? "");
 
     if (user && user.uid !== profile.id && profile.pfp) {
       getProfilePictureUrl(profile.pfp).then(url => setLoadedPfpUrl(url));
@@ -82,18 +82,18 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
   function setValue(
     value: string,
     setter: Dispatch<SetStateAction<string>>,
-    errorSetter: Dispatch<SetStateAction<boolean>>,
+    errorSetter?: Dispatch<SetStateAction<boolean>>,
     required = false
   ) {
     setter(value);
 
-    if (required) {
+    if (required && errorSetter) {
       validateNotEmpty(value, errorSetter);
     }
   }
 
   function canSave(): boolean {
-    return !nameError && !ssnError && !phoneError && !emailError && !bleeterError && !bankError;
+    return !nameError && !ssnError && !phoneError && !emailError && !bankError;
   }
 
   function isDataUpdated(): boolean {
@@ -105,7 +105,8 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
       || bank !== profile.bank
       || division !== profile.division
       || !isEqual(profileRoles, profile.roles)
-      || !!uploadedPfp;
+      || !!uploadedPfp
+      || nickname !== profile.nickname;
   }
 
   function handleCancel() {
@@ -118,12 +119,12 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
     setEmail(profile.email);
     setEmailError(false);
     setBleeter(profile.bleeter);
-    setBleeterError(false);
     setBank(profile.bank);
     setBankError(false);
     setUploadedPfp(null);
     setDivision(profile.division);
     setProfileRoles(profile.roles);
+    setNickname(profile.nickname ?? "");
   }
 
   async function handleSave() {
@@ -139,7 +140,8 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
       division,
       roles: profileRoles,
       pfp: profile.pfp,
-      discord: profile.discord
+      discord: profile.discord,
+      nickname,
     };
 
     setLoading(true);
@@ -240,17 +242,27 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
               />
               <Input
                 type="text"
+                name="nickname"
+                placeholder="Nickname"
+                icon="user outline"
+                value={nickname}
+                onChange={e => setValue(e, setNickname)}
+                disabled={loading}
+                readonly={!editable}
+              />
+            </div>
+            <div className='Row'>
+              <Input
+                type="text"
                 name="ssn"
                 placeholder={editable ? "SSN *" : "SSN"}
-                icon="user"
+                icon="id card"
                 value={ssn}
                 onChange={e => setValue(e, setSsn, setSsnError, true)}
                 disabled={loading}
                 readonly={!editable}
                 error={ssnError}
               />
-            </div>
-            <div className='Row'>
               <Input
                 type="text"
                 name="phone"
@@ -262,6 +274,8 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
                 readonly={!editable}
                 error={phoneError}
               />
+            </div>
+            <div className='Row'>
               <Input
                 type="text"
                 name="bank"
@@ -272,19 +286,6 @@ function ProfileCard({ profile, editable, nameAsTitle }: ProfileCardProps) {
                 disabled={loading}
                 readonly={!editable}
                 error={bankError}
-              />
-            </div>
-            <div className='Row'>
-              <Input
-                type="text"
-                name="bleeter"
-                placeholder="Bleeter"
-                icon="comments"
-                value={bleeter}
-                onChange={e => setValue(e, setBleeter, setBleeterError)}
-                disabled={loading}
-                readonly={!editable}
-                error={bleeterError}
               />
               <Dropdown
                 placeholder='Division'

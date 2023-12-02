@@ -13,4 +13,5 @@ export interface ProfileInfo extends FirestoreEntity {
   roles: string[];
   discord: string;
   ssn: string;
+  nickname?: string;
 }
