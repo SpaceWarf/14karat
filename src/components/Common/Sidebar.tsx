@@ -60,9 +60,9 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
             <>
               <SidebarItem name='Inventory' icon='boxes' path='/inventory' onClick={() => navigate('/inventory')} />
               <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
+              <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
             </>
           )}
-          <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
           <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
           <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
           {access.headAccess && (

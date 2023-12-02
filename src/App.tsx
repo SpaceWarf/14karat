@@ -47,9 +47,6 @@ function App() {
           <Route element={<ProtectedRoute><PageLayout /></ProtectedRoute>}>
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
-            <Route path='/driver-strats' element={<DriverStrats />} />
-            <Route path='/driver-strats/all' element={<DriverStratGallery />} />
-            <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             <Route path='/roster' element={<Roster />} />
             <Route path='/calendar' element={<Calendar />} />
             <Route path='/war' element={<WarInfo />} />
@@ -64,6 +61,9 @@ function App() {
             <Route path='/radios' element={<Radios />} />
 
             <Route element={<ChainedRoute />}>
+              <Route path='/driver-strats' element={<DriverStrats />} />
+              <Route path='/driver-strats/all' element={<DriverStratGallery />} />
+              <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
               <Route path='/hacking' element={<Hacking />} />
               <Route path='/hacking/practice' element={<HackingPractice />} />
               <Route path='/information-center/jobs' element={<Jobs />} />
