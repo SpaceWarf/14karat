@@ -52,7 +52,7 @@ function WordleHackPractice() {
   const [failure, setFailure] = useState<boolean>(false);
   const [infiniteTimer, setInfiniteTimer] = useState<boolean>(false);
   const [infiniteAttempts, setInfiniteAttempts] = useState<boolean>(false);
-  const [viewSolution, setViewSolution] = useState<boolean>(true);
+  const [viewSolution, setViewSolution] = useState<boolean>(false);
 
   useEffect(() => {
     const initialGrid: WordleCell[][] = [];

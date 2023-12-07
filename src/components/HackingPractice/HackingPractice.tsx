@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import WordleHackPractice from './WordleHackPractice';
 import CircleSwapHackPractice from './CircleSwapHackPractice';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import CrocodileHackPractice from './CrocodileHackPractice';
 
 const HACKS: DropdownOption[] = [
   { key: 'wordle', value: 'wordle', text: 'Wordle' },
   { key: 'circle-swaps', value: 'circle-swaps', text: 'Circle Swaps' },
+  { key: 'crocodile', value: 'crocodile', text: 'Crocodile' },
 ];
 
 function HackingPractice() {
@@ -50,6 +52,9 @@ function HackingPractice() {
           )}
           {hack === 'circle-swaps' && (
             <CircleSwapHackPractice />
+          )}
+          {hack === 'crocodile' && (
+            <CrocodileHackPractice />
           )}
         </div>
       </div>

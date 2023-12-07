@@ -246,3 +246,101 @@
     }
   }
 }
+
+.CrocodileHackPractice {
+  .content {
+    .Actions {
+      width: 1200px;
+    }
+
+    .Hack {
+      display: flex;
+      flex-direction: column;
+      width: 1200px;
+      height: 400px;
+
+      .Info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .progress {
+          width: 500px;
+
+          &[data-percent="0"] {
+            .bar {
+              visibility: hidden;
+            }
+          }
+        }
+
+        p,
+        .progress {
+          margin: 0;
+          color: white;
+        }
+      }
+
+      .Grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        .CrocodileCard {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: calc(8% - 1px);
+          height: 125px;
+          background-color: #34353e;
+          border-radius: 5px;
+          border-bottom: 5px solid #4d505a;
+
+          p {
+            margin: 0;
+            color: #393b3f;
+
+            &.Value {
+              font-size: 3rem;
+            }
+
+            &.Solution {
+              color: white;
+            }
+          }
+
+          &.success {
+            background-color: #045c51;
+          }
+
+          &.current,
+          &.success {
+            border-bottom: 5px solid #229084;
+
+            p {
+              color: white;
+            }
+          }
+        }
+      }
+
+      .Buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        gap: 10px;
+
+        button {
+          border: 1px solid white;
+          border-radius: 5px;
+
+          i {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
