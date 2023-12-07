@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Checkbox, Progress } from 'semantic-ui-react';
 import { v4 as uuid } from 'uuid';
 
-const MAX_TIMER = 30;
+const MAX_TIMER = 25;
 const MAX_COUNTDOWN = 3;
 const CARD_COUNT = 24;
 const MAX_MISTAKES = 2;
