@@ -18,7 +18,7 @@ function Jobs() {
       setJobs(await getJobInfosForDivision(info.division));
     }
     fetchJobs();
-  }, []);
+  }, [info]);
 
   return (
     <div className="Jobs">

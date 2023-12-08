@@ -18,7 +18,7 @@ function JobPicker() {
       setJobs(await getJobInfosForDivision(info.division));
     }
     fetchJobs();
-  }, []);
+  }, [info]);
 
   return (
     <div className='JobPicker'>
