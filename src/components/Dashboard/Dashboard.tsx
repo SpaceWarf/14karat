@@ -12,6 +12,7 @@ import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
 import { useAuth } from '../../contexts/AuthContext';
 import JobsCard from './JobsCard/JobsCard';
 import { getAvatarBorder, getHeaderBackground, getHeaderDecoration, isThemeActive } from '../../utils/themes';
+import UnchainedCard from './UnchainedCard/UnchainedCard';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -46,7 +47,10 @@ function Dashboard() {
         {isThemeActive() && <img className='HeaderDecoration' src={getHeaderDecoration()} alt='Decoration' />}
       </div>
       <div className='content'>
-        <div className='Col'><RecentStratCard /></div>
+        <div className='Col'>
+          {access.chainedAccess && <RecentStratCard />}
+          {!access.chainedAccess && <UnchainedCard />}
+        </div>
         <div className='Col'>
           <RadiosCard />
           <JobsCard />

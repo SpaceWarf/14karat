@@ -57,6 +57,10 @@
       flex-direction: column;
       gap: 20px;
 
+      &:first-child {
+        width: 670px;
+      }
+
       &:not(:first-child) {
         flex: 1 1 0;
         max-width: 600px;
