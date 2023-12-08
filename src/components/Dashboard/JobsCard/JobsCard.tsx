@@ -31,11 +31,9 @@ function JobsCard() {
       <div className="content">
         <div className='header'>
           <p><i className='dollar alternate icon' /> Active Jobs</p>
-          {access.chainedAccess && (
-            <button className="ui icon button" onClick={() => navigate('/jobs')}>
-              <i className='external alternate icon' />
-            </button>
-          )}
+          <button className="ui icon button" onClick={() => navigate('/jobs')}>
+            <i className='external alternate icon' />
+          </button>
         </div>
         <div className='JobsContainer'>
           {jobs.length === 0 && (
