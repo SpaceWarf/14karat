@@ -18,7 +18,7 @@ interface JobCardProps {
 }
 
 function JobCard(props: JobCardProps) {
-  const { user, access } = useAuth();
+  const { user } = useAuth();
   const [jobWebhook, setJobWebhook] = useState<Webhook>();
   const [radioWebhook, setRadioWebhook] = useState<Webhook>();
   const [members, setMembers] = useState([] as ProfileInfo[]);
