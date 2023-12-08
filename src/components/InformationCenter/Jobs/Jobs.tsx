@@ -3,16 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../Common/Header';
 import { useEffect, useState } from 'react';
 import { JobInfo } from '../../../state/jobs';
-import { DatabaseTable, getItems } from '../../../utils/firestore';
+import { getJobInfosForDivision } from '../../../utils/firestore';
 import JobInfoCard from '../../Jobs/JobInfoCard';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
 function Jobs() {
   const navigate = useNavigate();
+  const { info } = useSelector((state: RootState) => state.profile);
   const [jobs, setJobs] = useState<JobInfo[]>([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
-      setJobs(await getItems<JobInfo>(DatabaseTable.JOB_INFO));
+      setJobs(await getJobInfosForDivision(info.division));
     }
     fetchJobs();
   }, []);

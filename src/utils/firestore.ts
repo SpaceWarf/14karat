@@ -4,7 +4,8 @@ import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
 import { Intel } from "../state/intel";
 import { WarClip } from "../state/war";
-import { Job } from "../state/jobs";
+import { Job, JobInfo, UNCHAINED_JOBS } from "../state/jobs";
+import { Division } from "../state/division";
 
 export interface FirestoreEntity {
   id: string;
@@ -128,6 +129,16 @@ export async function getIntelForMember(id: string): Promise<Intel[]> {
 export async function getWarClipsForWar(id: string): Promise<WarClip[]> {
   const items = await getItems<WarClip>(DatabaseTable.WAR_CLIPS);
   return items.filter(item => item.war === id);
+}
+
+export async function getJobInfosForDivision(division: string): Promise<JobInfo[]> {
+  const items = await getItems<JobInfo>(DatabaseTable.JOB_INFO);
+
+  if (division === Division.HANGAROUND || Division.SHATEI) {
+    return items.filter(item => UNCHAINED_JOBS.includes(item.id))
+  }
+
+  return items;
 }
 
 export async function getActiveJobs(): Promise<Job[]> {

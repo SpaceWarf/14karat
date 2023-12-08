@@ -53,22 +53,20 @@ function InformationCenter() {
             <div className='Notes'><p>A breakdown of our lore, including our spirits, guardians, and ceremonies.</p></div>
           </div>
         </div>
-        {access.chainedAccess && (
-          <div
-            className="InformationCenterCard ui card attached link external"
-            onClick={() => navigate('/information-center/jobs')}
-          >
-            <div className="content">
-              <div className='header'>
-                <p><i className='dollar sign icon' /> Job Information</p>
-                <button className="ui icon button" onClick={() => navigate('/information-center/jobs')}>
-                  <i className='external alternate icon' />
-                </button>
-              </div>
-              <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
+        <div
+          className="InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/jobs')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='dollar sign icon' /> Job Information</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/jobs')}>
+                <i className='external alternate icon' />
+              </button>
             </div>
+            <div className='Notes'><p>List of all crew heists in the city with detailed requirements.</p></div>
           </div>
-        )}
+        </div>
         {access.chainedAccess && (
           <div
             className="InformationCenterCard ui card attached link external"

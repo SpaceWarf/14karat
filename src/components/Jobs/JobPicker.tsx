@@ -4,15 +4,18 @@ import { useNavigate } from "react-router-dom";
 import JobInfoCard from "./JobInfoCard";
 import { useState, useEffect } from "react";
 import { JobInfo } from "../../state/jobs";
-import { getItems, DatabaseTable } from "../../utils/firestore";
+import { getJobInfosForDivision } from "../../utils/firestore";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 function JobPicker() {
   const navigate = useNavigate();
+  const { info } = useSelector((state: RootState) => state.profile);
   const [jobs, setJobs] = useState<JobInfo[]>([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
-      setJobs(await getItems<JobInfo>(DatabaseTable.JOB_INFO));
+      setJobs(await getJobInfosForDivision(info.division));
     }
     fetchJobs();
   }, []);

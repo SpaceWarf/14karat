@@ -41,6 +41,7 @@ export interface Checklist {
 }
 
 export interface JobInfo extends FirestoreEntity {
+  id: string;
   name: string;
   icon: string;
   squadMax: number;
@@ -96,3 +97,5 @@ export const CrewRoleMap: { [key: string]: string } = {
   "robber": "Robbers",
   "cook": "Cooks",
 }
+
+export const UNCHAINED_JOBS = ["stores", "warehouses", "houses"];

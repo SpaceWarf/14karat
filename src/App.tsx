@@ -59,6 +59,9 @@ function App() {
             <Route path='/information-center/assets' element={<Assets />} />
             <Route path='/information-center/drugs' element={<Drugs />} />
             <Route path='/radios' element={<Radios />} />
+            <Route path='/jobs' element={<JobListing />} />
+            <Route path='/jobs/new' element={<JobPicker />} />
+            <Route path='/information-center/jobs' element={<Jobs />} />
 
             <Route element={<ChainedRoute />}>
               <Route path='/driver-strats' element={<DriverStrats />} />
@@ -66,11 +69,8 @@ function App() {
               <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
               <Route path='/hacking' element={<Hacking />} />
               <Route path='/hacking/practice' element={<HackingPractice />} />
-              <Route path='/information-center/jobs' element={<Jobs />} />
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/information-center/black-markets' element={<BlackMarkets />} />
-              <Route path='/jobs' element={<JobListing />} />
-              <Route path='/jobs/new' element={<JobPicker />} />
               <Route path='/inventory' element={<Inventory />} />
             </Route>
 
