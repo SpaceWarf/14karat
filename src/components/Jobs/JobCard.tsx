@@ -134,13 +134,11 @@ function JobCard(props: JobCardProps) {
       <div className="content">
         <div className='header'>
           <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
-          {access.headAccess && (
-            <div className="Actions">
-              <button className="ui icon negative button" onClick={handleDelete}>
-                <i className="trash icon" />
-              </button>
-            </div>
-          )}
+          <div className="Actions">
+            <button className="ui icon negative button" onClick={handleDelete}>
+              <i className="trash icon" />
+            </button>
+          </div>
         </div>
         <div className="Details">
           <div className="Section">
