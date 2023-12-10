@@ -37,9 +37,9 @@ function StatsCard(props: StatsCardProps) {
   }
 
   const getRatioClass = (): string => {
-    if (props.ratio < 0.45) {
+    if (props.ratio < 0.55) {
       return "green";
-    } else if (props.ratio >= 0.45 && props.ratio <= 0.55) {
+    } else if (props.ratio >= 0.55 && props.ratio <= 0.65) {
       return "yellow";
     }
     return "red"
