@@ -163,11 +163,11 @@ function Statistics() {
         setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.LAST_WEEK:
-        setStart(dayjs().subtract(7, "days").startOf("day"));
+        setStart(dayjs().subtract(6, "days").startOf("day"));
         setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.LAST_TWO_WEEKS:
-        setStart(dayjs().subtract(14, "days").startOf("day"));
+        setStart(dayjs().subtract(13, "days").startOf("day"));
         setEnd(dayjs().endOf("day"));
         break;
       case QuickFilters.MONTH_TO_DATE:
