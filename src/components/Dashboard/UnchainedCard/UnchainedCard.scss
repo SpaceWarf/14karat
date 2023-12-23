@@ -12,4 +12,40 @@
       text-align: justify;
     }
   }
+
+  button.ui.button {
+    margin-top: 10px;
+
+    // &.hover-animation:first-child {
+    //   .label {
+    //     width: 115px;
+    //   }
+
+    //   &:hover:not(:disabled) {
+    //     .label {
+    //       left: calc((100% - 140px) / 2);
+    //     }
+
+    //     .IconContainer {
+    //       right: calc((100% - 140px) / 2);
+    //     }
+    //   }
+    // }
+
+    &.hover-animation:last-child {
+      .label {
+        width: 30px;
+      }
+
+      &:hover:not(:disabled) {
+        .label {
+          left: calc((100% - 55px) / 2);
+        }
+
+        .IconContainer {
+          right: calc((100% - 55px) / 2);
+        }
+      }
+    }
+  }
 }

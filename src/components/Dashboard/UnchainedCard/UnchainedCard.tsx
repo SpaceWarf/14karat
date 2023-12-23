@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import './UnchainedCard.scss';
 
 function UnchainedCard() {
+  const navigate = useNavigate();
+
   return (
     <div className="UnchainedCard ui card attached external">
       <div className="content">
@@ -9,7 +12,7 @@ function UnchainedCard() {
         </div>
         <div className='TextContainer'>
           <p>
-            We are pleased to have you as a part of us! As a new hangaround / recruit, you face your hardest challenge yet: proving your skills, and impressing us.
+            We are pleased to have you as a part of us! As a new recruit, you face your hardest challenge yet: proving your skills, and impressing us.
             We are expecting a lot from you, and we will be pushing you to find out exactly what you're capable of. Here's examples of things we are looking for in
             our new members:
           </p>
@@ -24,7 +27,16 @@ function UnchainedCard() {
             be more than willing to talk with you and help sort it out. The biggest thing we want to avoid is a member having problems and not being willing to resolve
             them, and bringing the entire mood of the group down with them.
           </p>
+          <p>Please familiarize yourself with our hierarchy and lore:</p>
         </div>
+        <button className="ui button hover-animation" onClick={() => navigate("/information-center/hierarchy")}>
+          <p className='label'>Hierarchy</p>
+          <p className='IconContainer'><i className='sitemap icon'></i></p>
+        </button>
+        <button className="ui button hover-animation" onClick={() => navigate("/information-center/lore")}>
+          <p className='label'>Lore</p>
+          <p className='IconContainer'><i className='book icon'></i></p>
+        </button>
       </div>
     </div>
   );

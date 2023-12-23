@@ -59,7 +59,7 @@ function Dashboard() {
           <UpcomingEventsCard />
           <WarCard />
           <QuoteCard />
-          {access.chainedAccess && <NewFeatureCard />}
+          {/* {access.chainedAccess && <NewFeatureCard />} */}
         </div>
       </div>
     </div>

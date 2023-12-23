@@ -27,20 +27,6 @@ function InformationCenter() {
         </div>
         <div
           className="InformationCenterCard ui card attached link external"
-          onClick={() => navigate('/information-center/rules')}
-        >
-          <div className="content">
-            <div className='header'>
-              <p><i className='numbered list icon' /> Rules</p>
-              <button className="ui icon button" onClick={() => navigate('/information-center/rules')}>
-                <i className='external alternate icon' />
-              </button>
-            </div>
-            <div className='Notes'><p>A list of the rules to be respected by all gang members.</p></div>
-          </div>
-        </div>
-        <div
-          className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/lore')}
         >
           <div className="content">
@@ -53,6 +39,20 @@ function InformationCenter() {
             <div className='Notes'><p>A breakdown of our lore, including our spirits, guardians, and ceremonies.</p></div>
           </div>
         </div>
+        {/* <div
+          className="InformationCenterCard ui card attached link external"
+          onClick={() => navigate('/information-center/rules')}
+        >
+          <div className="content">
+            <div className='header'>
+              <p><i className='numbered list icon' /> Rules</p>
+              <button className="ui icon button" onClick={() => navigate('/information-center/rules')}>
+                <i className='external alternate icon' />
+              </button>
+            </div>
+            <div className='Notes'><p>A list of the rules to be respected by all gang members.</p></div>
+          </div>
+        </div> */}
         <div
           className="InformationCenterCard ui card attached link external"
           onClick={() => navigate('/information-center/jobs')}
