@@ -96,7 +96,7 @@ function RadioChannel(props: RadioChannelProps) {
       <p className="ChannelLabel">{props.radio.channel}</p>
       {!props.radio.burned && (
         <div className="ChannelActions">
-          <button className="ui icon negative button" disabled={loading} onClick={() => handleBurnChannel()}>
+          <button className="ui icon negative button" disabled={!webhook || loading} onClick={() => handleBurnChannel()}>
             <i className="fire icon" />
           </button>
         </div>
