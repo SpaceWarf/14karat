@@ -66,23 +66,21 @@ function WarCard() {
                 </h2>
               </div>
             </div>
-            <div className='Rules'>
-              <div>
-                <h4>Standard War Procedure</h4>
-                <ul>
-                  <li>No bleets related to the war.</li>
-                  <li>Working at businesses is allowed.</li>
-                  <li>Do not hangout alone at the block.</li>
-                  <li>Always carry a gun & armour.</li>
-                  <li>Do not wear your katana or chain.</li>
-                </ul>
+            {slideRadio && (
+              <div className='Radio'>
+                <RadioChannel radio={slideRadio} />
+                <p className='RadioLabel'>Slide Radio</p>
               </div>
-              {slideRadio && (
-                <div>
-                  <RadioChannel radio={slideRadio} />
-                  <p className='RadioLabel'>Slide Radio</p>
-                </div>
-              )}
+            )}
+            <div className='Rules'>
+              <h4>Standard War Procedure</h4>
+              <ul>
+                <li>No bleets related to the war.</li>
+                <li>Working at businesses is allowed.</li>
+                <li>Do not hangout alone at the block.</li>
+                <li>Always carry a gun & armour.</li>
+                <li>Do not wear your katana or chain.</li>
+              </ul>
             </div>
           </>
         )}
