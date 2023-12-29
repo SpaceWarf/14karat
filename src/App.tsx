@@ -35,6 +35,7 @@ import Statistics from './components/Statistics/Statistics';
 import Drugs from './components/InformationCenter/Drugs/Drugs';
 import BlackMarkets from './components/InformationCenter/BlackMarkets/BlackMarkets';
 import MembersListing from './components/Groups/MembersListing';
+import FleecaGuide from './components/Jobs/Guides/FleecaGuide';
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
               <Route path='/hacking' element={<Hacking />} />
               <Route path='/hacking/practice' element={<HackingPractice />} />
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
+              <Route path='/information-center/jobs/fleeca' element={<FleecaGuide />} />
               <Route path='/information-center/black-markets' element={<BlackMarkets />} />
               <Route path='/inventory' element={<Inventory />} />
             </Route>

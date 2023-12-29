@@ -4,11 +4,9 @@ import { RootState } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
 import { Job } from '../../../state/jobs';
 import JobListing from './JobListing';
-import { useAuth } from '../../../contexts/AuthContext';
 
 function JobsCard() {
   const navigate = useNavigate();
-  const { access } = useAuth();
   const jobs = useSelector((state: RootState) => state.jobs.active);
   const profileInfo = useSelector((state: RootState) => state.profile.info);
 

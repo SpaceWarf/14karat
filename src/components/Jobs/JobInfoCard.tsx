@@ -149,7 +149,7 @@ function JobInfoCard(props: JobInfoCardProps) {
       </div>
       {props.showActionButton && (
         <div className='extra content'>
-          {["vangelico"].includes(props.info.id) ? (
+          {["vangelico", "fleeca"].includes(props.info.id) ? (
             <button className="ui button hover-animation" onClick={() => navigate(`/information-center/jobs/${props.info.id}`)}>
               <p className='label'>View Guide</p>
               <p className='IconContainer'><i className='eye icon'></i></p>

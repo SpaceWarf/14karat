@@ -41,7 +41,7 @@ function VangieGuide() {
               width='640'
               height='360'
               style={{ border: 'none' }}
-              src='https://medal.tv/clip/1EkIVx9EdOYARd/vp3d0ipS8?invite=cr-MSxBWUYsMTkzNTA2NDc2LA'
+              src='https://medal.tv/clip/1EkIVx9EdOYARd/vp4qksCq4'
               allow='autoplay'
               allowFullScreen
             />
@@ -56,7 +56,7 @@ function VangieGuide() {
               title='Vangie Robbing'
               width='640'
               height='360'
-              src='https://medal.tv/clip/1EkO6gTrLZbHyV/vpivrOIc3?invite=cr-MSxFMVAsMTkzNTA2NDc2LA'
+              src='https://medal.tv/clip/1EkO6gTrLZbHyV/vpWjDrIZG'
               allow='autoplay'
               allowFullScreen
             />
