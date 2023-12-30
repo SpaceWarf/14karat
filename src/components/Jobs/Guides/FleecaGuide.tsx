@@ -39,7 +39,7 @@ function FleecaGuide() {
               width='640'
               height='360'
               style={{ border: 'none' }}
-              src='https://medal.tv/clip/1LVB3Jp_pricLc/vpujC7xic'
+              src='https://medal.tv/clip/1LVv5MEebll7bI/vpQIvjAOx'
               allow='autoplay'
               allowFullScreen
             />
@@ -57,7 +57,15 @@ function FleecaGuide() {
               title='Fleeca Vault Hacking'
               width='640'
               height='360'
-              src='https://medal.tv/clip/1LVB3Jp_pricLc/vpujC7xic'
+              src='https://medal.tv/clip/1MedPQWB3dYyKp/vpmjAnZuz'
+              allow='autoplay'
+              allowFullScreen
+            />
+            <iframe
+              title='Fleeca Vault Hacking'
+              width='640'
+              height='360'
+              src='https://medal.tv/clip/1LVwa88hz7d76H/vph2Gluv0'
               allow='autoplay'
               allowFullScreen
             />
@@ -72,7 +80,15 @@ function FleecaGuide() {
               title='Fleeca Strongbox Drilling'
               width='640'
               height='360'
-              src='https://medal.tv/clip/1LVB3Jp_pricLc/vpujC7xic'
+              src='https://medal.tv/clip/1LVybjQZD41pr1/vpDdengIA'
+              allow='autoplay'
+              allowFullScreen
+            />
+            <iframe
+              title='Fleeca Strongbox Drilling'
+              width='640'
+              height='360'
+              src='https://medal.tv/clip/1LVyQtqdkZwzjm/vpvoPMzOB'
               allow='autoplay'
               allowFullScreen
             />
