@@ -235,7 +235,7 @@ const MemberInformation = (props: MemberInformationProps) => {
                 <button
                   className='ui button negative hover-animation'
                   disabled={saving || !isDataUpdated()}
-                  onClick={() => memberId === 'new' ? navigate(`/groups/${groupId}`) : setDefaults(member)}
+                  onClick={() => memberId === 'new' ? navigate(groupId ? `/groups/${groupId}?active=1` : '/members') : setDefaults(member)}
                 >
                   <p className='label contrast'>{memberId === 'new' ? 'Cancel' : 'Reset'}</p>
                   <p className='IconContainer contrast'><i className='close icon'></i></p>

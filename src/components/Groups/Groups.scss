@@ -87,6 +87,35 @@
   }
 }
 
+.GroupMembers {
+  .actions {
+    display: flex;
+    justify-content: space-between;
+
+    .hover-animation.positive {
+      width: 300px;
+
+      .label {
+        width: 85px;
+      }
+
+      &:hover:not(:disabled) {
+        .label {
+          left: calc((100% - 110px) / 2);
+        }
+
+        .IconContainer {
+          right: calc((100% - 110px) / 2);
+        }
+      }
+    }
+  }
+
+  .CardsContainer {
+    justify-content: flex-start !important;
+  }
+}
+
 .MembersListing>.content .actions {
   &>p {
     margin-bottom: 20px;
@@ -97,10 +126,12 @@
 
 .GroupDetails,
 .MemberDetails {
-  .actions {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 20px;
+  &>.content {
+    &>.actions {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
   }
 }
 

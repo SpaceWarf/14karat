@@ -78,7 +78,13 @@ function GroupMembers(props: GroupMembersProps) {
       <Loading />
     ) : (
       <div className="GroupMembers">
-        <Filters tags={['leader', 'dead']} onUpdate={handleFiltersUpdate} />
+        <div className="actions">
+          <Filters tags={['leader', 'dead']} onUpdate={handleFiltersUpdate} />
+          <button className="ui button positive hover-animation" onClick={() => navigate(`/members/new?group=${groupId}`)}>
+            <p className='label contrast'>Add Member</p>
+            <p className='IconContainer contrast'><i className='add icon'></i></p>
+          </button>
+        </div>
         <div className="content">
           <div className="CardsContainer">
             {getOrderedMembers().map(member => (
@@ -89,10 +95,6 @@ function GroupMembers(props: GroupMembersProps) {
                 fromGroup
               />
             ))}
-            <div
-              className='AddMemberCard ui link card attached'
-              onClick={() => navigate(`/members/new?group=${groupId}`)}
-            ><i className="add icon" /></div>
           </div>
         </div>
       </div>
