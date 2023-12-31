@@ -10,6 +10,7 @@ export interface Group extends FirestoreEntity {
   identifiers: string;
   notes: string;
   cardColor: string;
+  type: GroupType;
 }
 
 export interface GroupUpdate {
@@ -21,4 +22,12 @@ export interface GroupUpdate {
   identifiers: string;
   notes: string;
   cardColor: string;
+  type: GroupType;
+}
+
+export enum GroupType {
+  ILLEGAL = "Illegal",
+  LEGAL = "Legal",
+  MC = "MC",
+  OTHER = "Other",
 }

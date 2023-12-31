@@ -5,7 +5,7 @@ import { DatabaseTable, getItems } from "../../utils/firestore";
 import Loading from "../Common/Loading";
 import GroupCard from "./GroupCard";
 import { useNavigate } from "react-router-dom";
-import { Group } from "../../state/groups";
+import { Group, GroupType } from "../../state/groups";
 import Filters, { FilterData } from "../Common/Filters";
 
 function GroupListing() {
@@ -29,38 +29,42 @@ function GroupListing() {
     setFilteredGroups(groups.filter(group => group.name.toLowerCase().includes(update.search.toLowerCase())))
   }
 
+  const getGroupCards = (type: GroupType, coloured = true): JSX.Element[] => {
+    return filteredGroups
+      .filter(group => group.type === type && !!group.cardColor === coloured)
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(group => <GroupCard group={group} groups={groups} />);
+  }
+
   return (
     <div className="GroupListing">
       <Header text="Group Listing" decorated />
       <div className="content">
         <div className="actions">
           <Filters tags={[]} onUpdate={handleFiltersUpdate} />
-          <button className="ui button positive hover-animation" onClick={() => navigate("/members")}>
-            <p className='label contrast'>View All Members</p>
-            <p className='IconContainer contrast'><i className='group icon'></i></p>
-          </button>
+          <div className="Buttons">
+            <button className="ui button hover-animation" onClick={() => navigate("/members")}>
+              <p className='label'>View All Members</p>
+              <p className='IconContainer'><i className='group icon'></i></p>
+            </button>
+            <button className="ui button positive hover-animation" onClick={() => navigate("/groups/new")}>
+              <p className='label contrast'>Add Group</p>
+              <p className='IconContainer contrast'><i className='add icon'></i></p>
+            </button>
+          </div>
         </div>
         {loading ? (
           <Loading />
         ) : (
-          <div className="CardsContainer">
-            {
-              filteredGroups
-                .filter(group => group.cardColor)
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map(group => <GroupCard group={group} groups={groups} />)
-            }
-            {
-              filteredGroups
-                .filter(group => !group.cardColor)
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map(group => <GroupCard group={group} groups={groups} />)
-            }
-            <div
-              className='AddGroupCard ui link card attached'
-              onClick={() => navigate('/groups/new')}
-            ><i className="add icon" /></div>
-          </div>
+          Object.values(GroupType).map(type => (
+            <div className="GroupTypeSection">
+              <Header text={type} />
+              <div key={type} className="CardsContainer">
+                {getGroupCards(type)}
+                {getGroupCards(type, false)}
+              </div>
+            </div>
+          ))
         )}
       </div>
     </div>

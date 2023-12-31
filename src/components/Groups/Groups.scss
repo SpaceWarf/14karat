@@ -12,20 +12,66 @@
       justify-content: space-between;
       margin: 20px 10px 0 0;
 
-      .hover-animation {
-        width: 300px;
+      .Row {
+        display: flex;
+        justify-content: space-between;
 
-        .label {
-          width: 120px;
-        }
+        .hover-animation {
+          width: 300px;
 
-        &:hover:not(:disabled) {
           .label {
-            left: calc((100% - 145px) / 2);
+            width: 85px;
           }
 
-          .IconContainer {
-            right: calc((100% - 145px) / 2);
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 110px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 110px) / 2);
+            }
+          }
+        }
+      }
+
+      .Buttons {
+        display: flex;
+        gap: 10px;
+
+        .hover-animation {
+          width: 300px;
+
+          .label {
+            width: 120px;
+          }
+
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 145px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 145px) / 2);
+            }
+          }
+        }
+
+        .hover-animation.positive {
+          width: 300px;
+
+          .label {
+            width: 75px;
+          }
+
+          &:hover:not(:disabled) {
+            .label {
+              left: calc((100% - 100px) / 2);
+            }
+
+            .IconContainer {
+              right: calc((100% - 100px) / 2);
+            }
           }
         }
       }
@@ -33,21 +79,10 @@
 
     .CardsContainer {
       display: flex;
+      justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
-
-      .AddGroupCard,
-      .AddMemberCard {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        i {
-          font-size: 3rem;
-          line-height: 3rem;
-          color: $green;
-        }
-      }
+      margin: 10px 0;
     }
   }
 }
@@ -119,9 +154,7 @@
 }
 
 .GroupCard.ui.card,
-.MemberCard.ui.card,
-.AddGroupCard.ui.card,
-.AddMemberCard.ui.card {
+.MemberCard.ui.card {
   width: calc(25% - 10px);
   min-width: 300px;
   min-height: 170px;

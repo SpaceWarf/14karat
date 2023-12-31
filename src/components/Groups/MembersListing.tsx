@@ -39,7 +39,13 @@ function MembersListing() {
       <div className="content">
         <div className="actions">
           <p className="hyperlink-button" onClick={() => navigate('/groups')}><i className='arrow left icon' /> back</p>
-          <Filters tags={[]} onUpdate={handleFiltersUpdate} />
+          <div className="Row">
+            <Filters tags={[]} onUpdate={handleFiltersUpdate} />
+            <button className="ui button positive hover-animation" onClick={() => navigate("/members/new")}>
+              <p className='label contrast'>Add Member</p>
+              <p className='IconContainer contrast'><i className='add icon'></i></p>
+            </button>
+          </div>
         </div>
         {loading ? (
           <Loading />
@@ -50,10 +56,6 @@ function MembersListing() {
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map(member => <MemberCard member={member} groups={groups} />)
             }
-            <div
-              className='AddGroupCard ui link card attached'
-              onClick={() => navigate('/members/new')}
-            ><i className="add icon" /></div>
           </div>
         )}
       </div>

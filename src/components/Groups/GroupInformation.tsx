@@ -8,7 +8,7 @@ import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import Textarea from "../Common/Textarea";
 import { isEqual } from "lodash";
 import { useAuth } from "../../contexts/AuthContext";
-import { Group, GroupUpdate } from "../../state/groups";
+import { Group, GroupType, GroupUpdate } from "../../state/groups";
 
 const COLOURS = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
 
@@ -32,6 +32,7 @@ const GroupInformation = (props: GroupInformationProps) => {
   const [enemies, setEnemies] = useState<string[]>([]);
   const [cardColour, setColour] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
+  const [type, setType] = useState<GroupType>();
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -75,6 +76,15 @@ const GroupInformation = (props: GroupInformationProps) => {
       }));
   }
 
+  const getTypesDropdownOptions = (): DropdownOption[] => {
+    return Object.values(GroupType)
+      .map(colour => ({
+        key: colour,
+        text: colour,
+        value: colour,
+      }));
+  }
+
   const setDefaults = (group: Group | undefined) => {
     if (group) {
       setGroup(group);
@@ -86,6 +96,7 @@ const GroupInformation = (props: GroupInformationProps) => {
       setEnemies(group.enemies);
       setColour(group.cardColor);
       setNotes(group.notes);
+      setType(group.type || GroupType.ILLEGAL);
     }
   }
 
@@ -99,6 +110,7 @@ const GroupInformation = (props: GroupInformationProps) => {
       || !isEqual(enemies, group.enemies)
       || cardColour !== group.cardColor
       || notes !== group.notes
+      || type !== group.type
     );
     return groupId === "new" || isEdited;
   }
@@ -118,6 +130,7 @@ const GroupInformation = (props: GroupInformationProps) => {
       enemies,
       cardColor: cardColour,
       notes,
+      type: type || GroupType.ILLEGAL,
     };
 
     if (groupId === "new" && canSave()) {
@@ -125,17 +138,7 @@ const GroupInformation = (props: GroupInformationProps) => {
       navigate(`/groups/${createdGroup.id}`);
     } else if (group && canSave()) {
       await updateItem<GroupUpdate>(DatabaseTable.GROUPS, group.id, update, user);
-      setGroup({
-        id: group.id,
-        name,
-        hq,
-        flag,
-        identifiers,
-        allies,
-        enemies,
-        cardColor: cardColour,
-        notes,
-      });
+      setGroup({ id: group.id, ...update });
     }
 
     setSaving(false);
@@ -178,6 +181,13 @@ const GroupInformation = (props: GroupInformationProps) => {
                   onChange={setName}
                   disabled={saving}
                 />
+                <Dropdown
+                  placeholder='Type'
+                  disabled={saving}
+                  options={getTypesDropdownOptions()}
+                  value={type || GroupType.ILLEGAL}
+                  onChange={value => setType(value)}
+                />
                 <Input
                   type="text"
                   name="hq"
@@ -195,6 +205,8 @@ const GroupInformation = (props: GroupInformationProps) => {
                   clearable
                   onChange={value => setColour(value)}
                 />
+              </div>
+              <div className="Row">
                 <Input
                   type="text"
                   name="flag"
@@ -204,8 +216,6 @@ const GroupInformation = (props: GroupInformationProps) => {
                   onChange={setFlag}
                   disabled={saving}
                 />
-              </div>
-              <div className="Row">
                 <Input
                   type="text"
                   name="identifiers"
