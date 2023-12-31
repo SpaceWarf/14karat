@@ -32,7 +32,7 @@ const GroupInformation = (props: GroupInformationProps) => {
   const [enemies, setEnemies] = useState<string[]>([]);
   const [cardColour, setColour] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
-  const [type, setType] = useState<GroupType>();
+  const [type, setType] = useState<GroupType>(GroupType.ILLEGAL);
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -96,7 +96,7 @@ const GroupInformation = (props: GroupInformationProps) => {
       setEnemies(group.enemies);
       setColour(group.cardColor);
       setNotes(group.notes);
-      setType(group.type || GroupType.ILLEGAL);
+      setType(group.type);
     }
   }
 
@@ -130,7 +130,7 @@ const GroupInformation = (props: GroupInformationProps) => {
       enemies,
       cardColor: cardColour,
       notes,
-      type: type || GroupType.ILLEGAL,
+      type,
     };
 
     if (groupId === "new" && canSave()) {
@@ -185,7 +185,7 @@ const GroupInformation = (props: GroupInformationProps) => {
                   placeholder='Type'
                   disabled={saving}
                   options={getTypesDropdownOptions()}
-                  value={type || GroupType.ILLEGAL}
+                  value={type}
                   onChange={value => setType(value)}
                 />
                 <Input

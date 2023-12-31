@@ -190,11 +190,12 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 5px 0;
+        padding: 5px 5px 5px 0;
 
         .Detail {
           display: flex;
           justify-content: flex-start;
+          align-items: center;
           flex-basis: 50%;
 
           &.centered {
@@ -208,7 +209,7 @@
 
           i {
             margin-right: 5px;
-            line-height: 1.5em;
+            line-height: 1em;
           }
 
           p {
@@ -218,7 +219,12 @@
         }
 
         &.large .Detail {
+          align-items: flex-start;
           flex-basis: 100%;
+
+          i {
+            line-height: 1.5em;
+          }
         }
       }
     }
