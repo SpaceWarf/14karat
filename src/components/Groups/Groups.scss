@@ -221,6 +221,15 @@
         &.large .Detail {
           align-items: flex-start;
           flex-basis: 100%;
+          max-height: 50px;
+
+          p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+          }
 
           i {
             line-height: 1.5em;
