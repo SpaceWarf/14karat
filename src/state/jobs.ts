@@ -98,4 +98,4 @@ export const CrewRoleMap: { [key: string]: string } = {
   "cook": "Cooks",
 }
 
-export const UNCHAINED_JOBS = ["stores", "warehouses", "houses"];
+export const UNCHAINED_JOBS = ["stores", "warehouses", "houses", "atm"];
