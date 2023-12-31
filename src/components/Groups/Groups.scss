@@ -79,10 +79,13 @@
 
     .CardsContainer {
       display: flex;
-      justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
       margin: 10px 0;
+
+      &.centered {
+        justify-content: center;
+      }
     }
   }
 }
@@ -109,10 +112,6 @@
         }
       }
     }
-  }
-
-  .CardsContainer {
-    justify-content: flex-start !important;
   }
 }
 
