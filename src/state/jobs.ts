@@ -96,6 +96,7 @@ export const CrewRoleMap: { [key: string]: string } = {
   "crates": "Crates",
   "robber": "Robbers",
   "cook": "Cooks",
+  "vip": "VIP",
 }
 
 export const UNCHAINED_JOBS = ["stores", "warehouses", "houses", "atm"];
