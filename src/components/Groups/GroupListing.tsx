@@ -59,7 +59,7 @@ function GroupListing() {
           Object.values(GroupType).map(type => (
             <div className="GroupTypeSection">
               <Header text={type} />
-              <div key={type} className="CardsContainer centered">
+              <div key={type} className="CardsContainer">
                 {getGroupCards(type)}
                 {getGroupCards(type, false)}
               </div>

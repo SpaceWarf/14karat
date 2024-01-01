@@ -12,6 +12,9 @@ function BlackMarkets() {
   const [jewelers, setJewelers] = useState<string[]>([]);
   const [cryptos, setCryptos] = useState<string[]>([]);
   const [normals, setNormals] = useState<string[]>([]);
+  const [hitman, setHitman] = useState<string[]>([]);
+  const [laundering, setLaundering] = useState<string[]>([]);
+  const [cheng, setCheng] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +22,9 @@ function BlackMarkets() {
       setJewelers(await getAllBlackMarketUrlsForType(BlackMarketType.JEWELERS));
       setCryptos(await getAllBlackMarketUrlsForType(BlackMarketType.CRYPTOS));
       setNormals(await getAllBlackMarketUrlsForType(BlackMarketType.NORMALS));
+      setHitman(await getAllBlackMarketUrlsForType(BlackMarketType.HITMAN));
+      setLaundering(await getAllBlackMarketUrlsForType(BlackMarketType.LAUNDERING));
+      setCheng(await getAllBlackMarketUrlsForType(BlackMarketType.CHENG));
       setLoading(false);
     }
     fetchData();
@@ -40,8 +46,8 @@ function BlackMarkets() {
                 <Header text='Normal' />
                 <div className='Media'>
                   {normals.length === 0 && <p>Nothing to show...</p>}
-                  {normals.map((normal, i) => (
-                    <img className='JewelerImg' src={normal} alt={`Jeweler ${i}`} />
+                  {normals.map((img, i) => (
+                    <img src={img} alt={`Normal ${i}`} />
                   ))}
                 </div>
               </div>
@@ -49,8 +55,8 @@ function BlackMarkets() {
                 <Header text='Crypto' />
                 <div className='Media'>
                   {cryptos.length === 0 && <p>Nothing to show...</p>}
-                  {cryptos.map((crypto, i) => (
-                    <img className='JewelerImg' src={crypto} alt={`Jeweler ${i}`} />
+                  {cryptos.map((img, i) => (
+                    <img src={img} alt={`Crypto ${i}`} />
                   ))}
                 </div>
               </div>
@@ -58,8 +64,35 @@ function BlackMarkets() {
                 <Header text='Jeweler' />
                 <div className='Media'>
                   {jewelers.length === 0 && <p>Nothing to show...</p>}
-                  {jewelers.map((jeweler, i) => (
-                    <img className='JewelerImg' src={jeweler} alt={`Jeweler ${i}`} />
+                  {jewelers.map((img, i) => (
+                    <img src={img} alt={`Jeweler ${i}`} />
+                  ))}
+                </div>
+              </div>
+              <div className='Section'>
+                <Header text='Hitman' />
+                <div className='Media'>
+                  {hitman.length === 0 && <p>Nothing to show...</p>}
+                  {hitman.map((img, i) => (
+                    <img src={img} alt={`Hitman ${i}`} />
+                  ))}
+                </div>
+              </div>
+              <div className='Section'>
+                <Header text='Tabitha / Laundering' />
+                <div className='Media'>
+                  {laundering.length === 0 && <p>Nothing to show...</p>}
+                  {laundering.map((img, i) => (
+                    <img src={img} alt={`Laundering ${i}`} />
+                  ))}
+                </div>
+              </div>
+              <div className='Section'>
+                <Header text='Cheng / Bank Truck' />
+                <div className='Media'>
+                  {cheng.length === 0 && <p>Nothing to show...</p>}
+                  {cheng.map((img, i) => (
+                    <img src={img} alt={`Cheng ${i}`} />
                   ))}
                 </div>
               </div>
