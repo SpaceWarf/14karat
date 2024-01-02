@@ -4,8 +4,16 @@
   justify-content: flex-end;
 }
 
-.CompletedJobListing .content>.Actions {
-  justify-content: flex-start;
+.CompletedJobListing .content {
+  &>.Actions {
+    justify-content: flex-start;
+  }
+
+  .pagination {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .JobListing,

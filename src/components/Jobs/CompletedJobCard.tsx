@@ -115,8 +115,8 @@ function CompletedJobCard(props: JobCardProps) {
                   <p>No loot to show...</p>
                 )}
                 {loot.map((url, i) => (
-                  <div className="Thumbnail" onClick={() => window.open(url, "_blank")}>
-                    <img src={url} alt={`Loot ${i}`} />
+                  <div key={`loot-${props.job.id}-${i}`} className="Thumbnail" onClick={() => window.open(url, "_blank")}>
+                    <img src={url} alt={`Loot ${props.job.name} ${i}`} />
                   </div>
                 ))}
               </div>
