@@ -94,7 +94,7 @@ function JobCard(props: JobCardProps) {
             const customMember = props.job.customCrew?.find(customMember => customMember.id === member);
 
             if (profile) {
-              return `<@${getProfileInfo(member)?.discord}>`;
+              return `<@${profile.discord}>`;
             } else if (customMember) {
               return customMember.name;
             }

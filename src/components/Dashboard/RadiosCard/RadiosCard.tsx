@@ -4,14 +4,14 @@ import { getActiveRadios, getMainRadio, getSlideRadio } from '../../../redux/sel
 import { useNavigate } from 'react-router-dom';
 import RadioChannel from '../../Common/RadioChannel';
 import { Radio } from '../../../state/radio';
-import { RootState } from '../../../redux/store';
+import { getActiveJobs } from '../../../redux/selectors/jobs';
 
 function RadiosCard() {
   const navigate = useNavigate();
   const mainRadio = useSelector(getMainRadio);
   const slideRadio = useSelector(getSlideRadio);
   const activeRadios = useSelector(getActiveRadios);
-  const activeJobs = useSelector((state: RootState) => state.jobs.active);
+  const activeJobs = useSelector(getActiveJobs);
 
   const getRadioName = (radio: Radio): string => {
     if (radio.main) {

@@ -52,3 +52,22 @@ export async function getAllBlackMarketUrlsForType(type: BlackMarketType): Promi
 export async function uploadJobLoot(job: string, file: File, filename: string) {
   await uploadBytes(ref(storage, `job-loot/${job}/${filename}`), file);
 }
+
+export async function getAllLootUrlsForJob(job: string): Promise<string[]> {
+  try {
+    const files = await listAll(ref(storage, `job-loot/${job}`));
+    const urls = [];
+
+    for (const file of files.items) {
+      urls.push(await getDownloadURL(ref(storage, file.fullPath)))
+    }
+
+    return urls;
+  } catch (e: any) {
+    if (e.code === 'storage/object-not-found') {
+      console.error('Could not load job loot pictures.');
+      return Promise.resolve([]);
+    }
+    throw new Error(e);
+  }
+}

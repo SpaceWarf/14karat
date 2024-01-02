@@ -1,22 +1,22 @@
 import "./Jobs.scss";
 import Header from "../Common/Header";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import JobCard from "./JobCard";
 import { useNavigate } from "react-router-dom";
+import { getActiveJobs } from "../../redux/selectors/jobs";
 
 function JobListing() {
   const navigate = useNavigate();
-  const jobs = useSelector((state: RootState) => state.jobs.active);
+  const jobs = useSelector(getActiveJobs);
 
   return (
     <div className="JobListing">
       <div className="content">
         <Header text='Active Jobs' decorated />
         <div className="Actions">
-          <button className="ui button hover-animation" onClick={() => navigate('/information-center/jobs')}>
-            <p className='label pale'>View job info</p>
-            <p className='IconContainer pale'><i className='info circle icon'></i></p>
+          <button className="ui button hover-animation" onClick={() => navigate('/jobs/completed')}>
+            <p className='label pale'>View completed jobs</p>
+            <p className='IconContainer pale'><i className='eye circle icon'></i></p>
           </button>
           <button className="ui button positive hover-animation" onClick={() => navigate('/jobs/new')}>
             <p className='label contrast'>Create a job</p>

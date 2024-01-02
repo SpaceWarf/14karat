@@ -45,3 +45,16 @@ export const getTimeString = (date: Date): string => {
     hour12: true,
   });
 }
+
+export const getDateTimeString = (date: Date): string => {
+  const dateStr = date.toLocaleString('default', {
+    month: "long",
+    day: "numeric",
+  });
+  const timeStr = date.toLocaleTimeString('default', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+  return `${dateStr} at ${timeStr}`;
+}

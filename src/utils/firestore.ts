@@ -4,7 +4,7 @@ import { Unsubscribe, User } from "firebase/auth";
 import { Member } from "../state/member";
 import { Intel } from "../state/intel";
 import { WarClip } from "../state/war";
-import { Job, JobInfo, UNCHAINED_JOBS } from "../state/jobs";
+import { JobInfo, UNCHAINED_JOBS } from "../state/jobs";
 import { Division } from "../state/division";
 
 export interface FirestoreEntity {
@@ -139,15 +139,4 @@ export async function getJobInfosForDivision(division: string): Promise<JobInfo[
   }
 
   return items;
-}
-
-export async function getActiveJobs(): Promise<Job[]> {
-  const items = await getItems<Job>(DatabaseTable.JOBS);
-  return items.filter(item => !item.completed);
-}
-
-export function onActiveJobSnapshot(cb: (jobs: Job[]) => void): Unsubscribe {
-  return onItemsSnapshot<Job>(DatabaseTable.JOBS, items => {
-    cb(items.filter(item => !item.completed));
-  })
 }

@@ -36,6 +36,7 @@ import Drugs from './components/InformationCenter/Drugs/Drugs';
 import BlackMarkets from './components/InformationCenter/BlackMarkets/BlackMarkets';
 import MembersListing from './components/Groups/MembersListing';
 import FleecaGuide from './components/Jobs/Guides/FleecaGuide';
+import CompletedJobListing from './components/Jobs/CompletedJobListing';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
             <Route path='/radios' element={<Radios />} />
             <Route path='/jobs' element={<JobListing />} />
             <Route path='/jobs/new' element={<JobPicker />} />
+            <Route path='/jobs/completed' element={<CompletedJobListing />} />
             <Route path='/information-center/jobs' element={<Jobs />} />
 
             <Route element={<ChainedRoute />}>

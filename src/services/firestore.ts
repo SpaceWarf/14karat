@@ -5,8 +5,6 @@ import {
   onItemByIdSnapshot,
   getItems,
   onItemsSnapshot,
-  getActiveJobs,
-  onActiveJobSnapshot
 } from "../utils/firestore";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -19,14 +17,14 @@ import { Neighbourhood, setNeighbourhoods } from "../redux/reducers/neighbourhoo
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
-import { setActiveJobs, setGear } from "../redux/reducers/jobs";
+import { setGear, setJobs } from "../redux/reducers/jobs";
 import { setRadios } from "../redux/reducers/radios";
 import { setQuotes } from "../redux/reducers/quotes";
 import { ProfileInfo } from "../state/profile";
 import { War } from "../state/war";
 import { CalendarEvent } from "../state/event";
 import { Hack } from "../state/hack";
-import { Gear } from "../state/jobs";
+import { Gear, Job } from "../state/jobs";
 import { Radio } from "../state/radio";
 import { Quote } from "../state/quotes";
 
@@ -42,7 +40,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     wars,
     events,
     hacks,
-    activeJobs,
+    jobs,
     gear,
     radios,
     quotes,
@@ -55,7 +53,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<War>(DatabaseTable.WARS),
     getItems<CalendarEvent>(DatabaseTable.EVENTS),
     getItems<Hack>(DatabaseTable.HACKS),
-    getActiveJobs(),
+    getItems<Job>(DatabaseTable.JOBS),
     getItems<Gear>(DatabaseTable.GEAR),
     getItems<Radio>(DatabaseTable.RADIOS),
     getItems<Quote>(DatabaseTable.QUOTES),
@@ -68,7 +66,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setWars(wars));
   dispatch(setEvents(events));
   dispatch(setHacks(hacks));
-  dispatch(setActiveJobs(activeJobs));
+  dispatch(setJobs(jobs));
   dispatch(setGear(gear));
   dispatch(setRadios(radios));
   dispatch(setQuotes(quotes));
@@ -82,7 +80,7 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   onItemsSnapshot<DriverStrat>(DatabaseTable.DRIVER_STRATS, strats => dispatch(setDriverStrats(strats)));
   onItemsSnapshot<War>(DatabaseTable.WARS, wars => dispatch(setWars(wars)));
   onItemsSnapshot<CalendarEvent>(DatabaseTable.EVENTS, events => dispatch(setEvents(events)));
-  onActiveJobSnapshot(jobs => dispatch(setActiveJobs(jobs)));
+  onItemsSnapshot<Job>(DatabaseTable.JOBS, jobs => dispatch(setJobs(jobs)));
   onItemsSnapshot<Radio>(DatabaseTable.RADIOS, radios => dispatch(setRadios(radios)));
   loadingSubject.next(false);
 }
