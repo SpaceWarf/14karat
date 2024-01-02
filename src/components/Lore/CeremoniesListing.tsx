@@ -21,7 +21,7 @@ function CeremoniesListing() {
         <Header id="bloodin" element={<p>Blood-in</p>} decorated />
         <div className='Description'>
           <p>
-            The blood-in ceremony is the ritual in which an newcomer becomes a full-fledged member of the family. The goal of the ceremony is to sever the connection
+            The blood-in ceremony is the ritual in which a newcomer becomes a full-fledged member of the family. The goal of the ceremony is to sever the connection
             between the newcomer's body and spirit, and bind their spirit to the family. The ceremony takes place at the blood altar where all past blood-in ceremonies
             have taken place. The family will gather at the altar with the newcomer, and invite them to walk up the steps next to the Oyabun. The Oyabun then prompts
             the newcomer to hold their hand over the blade of the katana before reciting the blood rite:

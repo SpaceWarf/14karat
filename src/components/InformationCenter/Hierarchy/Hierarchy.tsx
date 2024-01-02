@@ -193,7 +193,7 @@ function Hierarchy() {
                 promotions, blood oaths, and other important events.
               </p>
               <p>
-                Ceremonies Heads are also reffered to as <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
+                Ceremonies Heads are also refered to as <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
                 a phoenix spirit with immense cultural significance that symbolizes beauty, change, and harmony.
               </p>
             </div>

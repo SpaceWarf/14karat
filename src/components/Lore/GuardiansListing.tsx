@@ -83,8 +83,8 @@ function GuardiansListing() {
           <p>
             <a href='https://yokai.com/inugami/' target='_blank' rel="noreferrer">Inugami (犬神)</a> are spirits originating from dogs and their loyalty to their master. They look identical to an ordinary
             dog in order to blend in, however, their true form is that of a desiccated, mummified dog's head, often dressed up in ceremonial trappings. Inugamis are created from the manipulation
-            of dog spirits though occult rituals, which involve capturing and confining a dog, and subjecting it to cruelty or death to bind its spirit to its conjurer. Inugamis are historically
-            used for curses, vengeance, and causing harm to ennemies, and are bound to carry out their conjurer's wishes.
+            of dog spirits through occult rituals, which involve capturing and confining a dog, and subjecting it to cruelty or death to bind its spirit to its conjurer. Inugamis are historically
+            used for curses, vengeance, and causing harm to enemies, and are bound to carry out their conjurer's wishes.
           </p>
         </div>
       </div>
@@ -94,7 +94,7 @@ function GuardiansListing() {
           <p>
             <a href='https://yokai.com/raijuu/' target='_blank' rel="noreferrer">Raijū (雷獣)</a> are wild beasts depicted as wolves with bright blue claws and a body surrounded by electrical sparks.
             They are associated with storms, and have the ability to generate and control lightning. Raijū live in the sky and ride down lightning bolts to earth when they are needed. Whenever thunder
-            strikes, a Raijū was sent to achieve a dark deed. They take great pleasure in cause chaos and mayhem wherever they land, and will stop at nothing to cause mass desctruction.
+            strikes, a Raijū was sent to achieve a dark deed. They take great pleasure in causing chaos and mayhem wherever they land, and will stop at nothing to cause mass destruction.
           </p>
           <img src={raiju} alt='Raijū' />
         </div>
