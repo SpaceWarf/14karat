@@ -89,6 +89,17 @@ function CeremoniesListing() {
           </p>
         </div>
       </div>
+      <div className='Ceremony'>
+        <Header id="yubitsume" element={<p>Yubitsume (<span className='Kanji'>指詰め</span>)</p>} decorated />
+        <div className='Description'>
+          <p>
+            Yubitsume (指詰め), translated to “finger shortening”, is the ceremony through which members of the family atone for their offenses by means of finger
+            amputation. The punished member will lay their hand on a white cloth facing down, then use a tanto to sever parts of their finger. The amputated finger is then
+            wrapped in the cloth and presented to the Oyabun. Each joint of the finger represents a different level of apology, with the tip being the first and the base
+            being the most severe. As a member continues to make mistakes, they may end up with multiple joints of their finger amputated, or multiple fingers amputated.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
