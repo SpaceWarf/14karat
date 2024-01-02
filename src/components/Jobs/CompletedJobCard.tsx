@@ -22,10 +22,16 @@ function CompletedJobCard(props: JobCardProps) {
       setLoading(true);
       setMembers(await getItems<ProfileInfo>(DatabaseTable.PROFILES));
       onItemsSnapshot<ProfileInfo>(DatabaseTable.PROFILES, profiles => setMembers(profiles));
-      setLoot(await getAllLootUrlsForJob(props.job.id));
       setLoading(false);
     }
     fetchProfiles();
+  }, []);
+
+  useEffect(() => {
+    const fetchLoot = async () => {
+      setLoot(await getAllLootUrlsForJob(props.job.id));
+    }
+    fetchLoot();
   }, [props.job]);
 
   const handleDelete = async () => {
