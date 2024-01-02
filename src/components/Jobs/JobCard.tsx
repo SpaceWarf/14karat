@@ -1,6 +1,6 @@
 import "./Jobs.scss";
-import { CrewRoleMap, Job, JobUpdate } from "../../state/jobs";
-import { DatabaseTable, deleteItem, getItemById, getItems, onItemsSnapshot, updateItem } from "../../utils/firestore";
+import { CrewRoleMap, Job } from "../../state/jobs";
+import { DatabaseTable, deleteItem, getItemById, getItems, onItemsSnapshot } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { triggerDiscordWebhook } from "../../services/functions";
 import { ProfileInfo } from "../../state/profile";
 import JobRadio from "./JobRadio";
 import { getRadioForJob } from "../../redux/selectors/radios";
+import JobLootModal from "./JobLootModal";
 
 interface JobCardProps {
   job: Job;
@@ -46,22 +47,6 @@ function JobCard(props: JobCardProps) {
 
   const handleDelete = async () => {
     deleteItem(DatabaseTable.JOBS, props.job.id, user);
-
-    if (radio) {
-      await deleteItem(DatabaseTable.RADIOS, radio.id, user);
-    }
-  }
-
-  const handleComplete = async () => {
-    await updateItem<JobUpdate>(
-      DatabaseTable.JOBS,
-      props.job.id,
-      {
-        ...props.job,
-        completed: true,
-      },
-      user
-    );
 
     if (radio) {
       await deleteItem(DatabaseTable.RADIOS, radio.id, user);
@@ -160,10 +145,7 @@ function JobCard(props: JobCardProps) {
           <p className='label pale'>Send Notification</p>
           <p className='IconContainer pale'><i className='discord icon'></i></p>
         </button>
-        <button className="ui button positive hover-animation" onClick={handleComplete}>
-          <p className='label contrast'>Mark Job As Finished</p>
-          <p className='IconContainer contrast'><i className='check icon'></i></p>
-        </button>
+        <JobLootModal job={props.job} radio={radio} />
       </div>
     </div>
   );

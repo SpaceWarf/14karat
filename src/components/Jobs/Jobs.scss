@@ -93,16 +93,16 @@
             margin-left: 10px;
 
             .label {
-              width: 135px;
+              width: 70px;
             }
 
             &:hover:not(:disabled) {
               .label {
-                left: calc((100% - 160px) / 2);
+                left: calc((100% - 95px) / 2);
               }
 
               .IconContainer {
-                right: calc((100% - 160px) / 2);
+                right: calc((100% - 95px) / 2);
               }
             }
           }

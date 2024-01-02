@@ -48,3 +48,7 @@ export async function getAllBlackMarketUrlsForType(type: BlackMarketType): Promi
     throw new Error(e);
   }
 }
+
+export async function uploadJobLoot(job: string, file: File, filename: string) {
+  await uploadBytes(ref(storage, `job-loot/${job}/${filename}`), file);
+}
