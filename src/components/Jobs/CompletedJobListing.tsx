@@ -23,8 +23,8 @@ function CompletedJobListing() {
         <div className="JobsContainer">
           {jobs.length > 0 ? (
             [...jobs]
-              .slice(activePage * PAGE_SIZE, (activePage * PAGE_SIZE) + PAGE_SIZE)
               .sort((a, b) => new Date(b.updatedAt || '').getTime() - new Date(a.updatedAt || '').getTime())
+              .slice(activePage * PAGE_SIZE, (activePage * PAGE_SIZE) + PAGE_SIZE)
               .map(job => (
                 <CompletedJobCard job={job} />
               ))
