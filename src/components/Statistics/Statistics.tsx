@@ -34,10 +34,11 @@ function Statistics() {
     const fetchData = async () => {
       setLoading(true);
 
-      setRoster(await getItems<ProfileInfo>(DatabaseTable.PROFILES));
-      onItemsSnapshot(DatabaseTable.PROFILES, (profiles: ProfileInfo[]) => setRoster(profiles));
+      onItemsSnapshot(
+        DatabaseTable.PROFILES,
+        (profiles: ProfileInfo[]) => setRoster(profiles.filter(profile => !!profile.division))
+      );
 
-      setJobs(await getItems<Job>(DatabaseTable.JOBS));
       onItemsSnapshot(DatabaseTable.JOBS, (jobs: Job[]) => setJobs(jobs));
 
       setJobInfos(await getItems<JobInfo>(DatabaseTable.JOB_INFO));
