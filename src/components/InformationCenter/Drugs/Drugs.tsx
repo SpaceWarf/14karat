@@ -40,8 +40,8 @@ function Drugs() {
               </tr>
               <tr>
                 <td data-label="Name">Heroin</td>
-                <td data-label="GangPrice" className='centered'>{currencyFormat(150)}</td>
-                <td data-label="OthersPrice" className='centered'>{currencyFormat(150)}</td>
+                <td data-label="GangPrice" className='centered'>{currencyFormat(250)}</td>
+                <td data-label="OthersPrice" className='centered'>{currencyFormat(300)}</td>
               </tr>
               <tr>
                 <td data-label="Name">LSD</td>

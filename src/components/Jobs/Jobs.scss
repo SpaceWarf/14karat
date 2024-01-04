@@ -353,3 +353,12 @@
     }
   }
 }
+
+.GearListItem {
+  display: flex;
+
+  p,
+  li {
+    margin-right: 5px !important;
+  }
+}

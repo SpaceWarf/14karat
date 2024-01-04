@@ -35,7 +35,7 @@ export interface CustomMember {
 
 export interface Checklist {
   [key: string]: {
-    quantity: number,
+    quantity: string,
     checked: boolean,
   }
 }

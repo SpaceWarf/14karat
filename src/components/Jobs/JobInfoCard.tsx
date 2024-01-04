@@ -8,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import { getActiveJobs } from "../../redux/selectors/jobs";
+import GearListItem from "./GearListItem";
 
 interface JobInfoCardProps {
   info: JobInfo;
@@ -17,7 +18,6 @@ interface JobInfoCardProps {
 function JobInfoCard(props: JobInfoCardProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const gear = useSelector((state: RootState) => state.jobs.gear);
   const { hacks } = useSelector((state: RootState) => state.hacks);
   const jobs = useSelector(getActiveJobs);
 
@@ -25,13 +25,9 @@ function JobInfoCard(props: JobInfoCardProps) {
     const components: ReactElement[] = [];
 
     for (const [key, value] of Object.entries(gearMap)) {
-      const gearData = gear.find(g => g.id === key);
-
-      if (gearData) {
-        components.push(
-          <li>{value} {gearData.name}</li>
-        )
-      }
+      components.push(
+        <GearListItem id={key} quantity={value} bulletted />
+      )
     }
 
     return components;
