@@ -12,6 +12,7 @@ import { DatabaseTable, updateItem } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
+import { DiscordWebhook } from "../../../state/discordWebhook";
 
 interface EditEventModalProps {
   open: boolean,
@@ -121,7 +122,7 @@ function EditEventModal(props: EditEventModalProps) {
 
   const sendWebhook = () => {
     if (props.webhook) {
-      triggerDiscordWebhook({
+      const payload: DiscordWebhook = {
         url: props.webhook.url,
         content: `@everyone An event was edited`,
         embeds: [
@@ -143,7 +144,18 @@ function EditEventModal(props: EditEventModalProps) {
             ]
           }
         ]
-      }).catch(error => {
+      };
+
+      if (poster) {
+        payload.embeds.push({
+          type: "rich",
+          image: {
+            url: poster,
+          }
+        })
+      }
+
+      triggerDiscordWebhook(payload).catch(error => {
         console.error(error);
       });
     }

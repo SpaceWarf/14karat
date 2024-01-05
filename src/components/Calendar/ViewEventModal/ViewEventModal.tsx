@@ -9,6 +9,7 @@ import { DatabaseTable, deleteItem } from "../../../utils/firestore";
 import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
+import { DiscordWebhook } from "../../../state/discordWebhook";
 
 interface ViewEventModalProps {
   open: boolean,
@@ -28,14 +29,14 @@ function ViewEventModal(props: ViewEventModalProps) {
 
   const sendWebhook = () => {
     if (props.webhook) {
-      triggerDiscordWebhook({
+      const payload: DiscordWebhook = {
         url: props.webhook.url,
         content: `@everyone Event reminder`,
         embeds: [
           {
             type: "rich",
             title: props.event.title,
-            description: "",
+            description: `This event starts <t:${props.event.start.getTime() / 1000}:R>`,
             fields: [
               {
                 name: 'Starts On',
@@ -50,7 +51,18 @@ function ViewEventModal(props: ViewEventModalProps) {
             ]
           }
         ]
-      }).catch(error => {
+      };
+
+      if (props.event.poster) {
+        payload.embeds.push({
+          type: "rich",
+          image: {
+            url: props.event.poster,
+          }
+        })
+      }
+
+      triggerDiscordWebhook(payload).catch(error => {
         console.error(error);
       });
     }
