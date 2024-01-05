@@ -9,7 +9,7 @@ export enum Theme {
 }
 
 export const getActiveTheme = (): Theme => {
-  return Theme.CHRISTMAS;
+  return Theme.NONE;
 }
 
 export const isThemeActive = (): boolean => {
