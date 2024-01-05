@@ -10,7 +10,7 @@ import { triggerDiscordWebhook } from '../../services/functions';
 import Input from '../Common/Input';
 import { getMostRecentWar } from '../../redux/selectors/wars';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { LocalizationProvider, renderTimeViewClock } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { RootState } from '../../redux/store';
