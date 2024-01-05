@@ -344,12 +344,6 @@ function WarInfo() {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
                           label="Last Slide Start"
-                          viewRenderers={{
-                            hours: renderTimeViewClock,
-                            minutes: renderTimeViewClock,
-                            seconds: renderTimeViewClock,
-                          }}
-                          openTo="hours"
                           value={ourSlide}
                           onChange={value => setOurSlide(dayjs(value))}
                         />
@@ -386,12 +380,6 @@ function WarInfo() {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
                           label="Last Slide Start"
-                          viewRenderers={{
-                            hours: renderTimeViewClock,
-                            minutes: renderTimeViewClock,
-                            seconds: renderTimeViewClock,
-                          }}
-                          openTo="hours"
                           value={theirSlide}
                           onChange={value => setTheirSlide(dayjs(value))}
                         />
