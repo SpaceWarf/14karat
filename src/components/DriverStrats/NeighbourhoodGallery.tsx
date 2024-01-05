@@ -11,6 +11,7 @@ import { GalleryItem } from "../../state/gallery";
 import { DatabaseTable, deleteItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import ExpandStratModal from "./ExpandStratModal";
+import { useState, useEffect } from "react";
 
 function NeighbourghoodGallery() {
   const { user } = useAuth();
@@ -18,19 +19,10 @@ function NeighbourghoodGallery() {
   const navigate = useNavigate();
   const neighbourhoods = useSelector((state: RootState) => state.neighbourhoods.neighbourhoods);
   const driverStratsMap = useSelector(getDriverStratsByNeighbourhood);
+  const [orderedItems, setOrderedItems] = useState<GalleryItem[]>([]);
 
-  const getNeighbourhoodFromParams = () => {
-    const hood = neighbourhoods.find(hood => hood.id === neighbourhood);
-
-    if (hood) {
-      return hood.name;
-    } else {
-      navigate("/driver-strats")
-    }
-  }
-
-  const getOrderedItems = (): GalleryItem[] => {
-    return (driverStratsMap.get(neighbourhood) || [])
+  useEffect(() => {
+    const items = (driverStratsMap.get(neighbourhood) || [])
       .sort((a: DriverStrat, b: DriverStrat) => {
         return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
       })
@@ -40,6 +32,17 @@ function NeighbourghoodGallery() {
         notes: strat.notes,
         tags: strat.tags,
       }));
+    setOrderedItems(items);
+  }, [driverStratsMap, neighbourhood]);
+
+  const getNeighbourhoodFromParams = () => {
+    const hood = neighbourhoods.find(hood => hood.id === neighbourhood);
+
+    if (hood) {
+      return hood.name;
+    } else {
+      navigate("/driver-strats")
+    }
   }
 
   const handleDelete = async (id: string) => {
@@ -55,7 +58,7 @@ function NeighbourghoodGallery() {
           {neighbourhood && <NewStratModal neighbourhood={neighbourhood} />}
         </div>
         <Gallery
-          items={getOrderedItems()}
+          items={orderedItems}
           tags={Object.values(DriverStratTag)}
           onDelete={handleDelete}
           expandModal={<ExpandStratModal />}

@@ -10,14 +10,16 @@ import ExpandStratModal from "./ExpandStratModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { deleteItem, DatabaseTable } from "../../utils/firestore";
+import { useEffect, useState } from "react";
 
 function DriverStratGallery() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { driverStrats } = useSelector((state: RootState) => state.driverStrats);
+  const [orderedItems, setOrderedItems] = useState<GalleryItem[]>([]);
 
-  const getOrderedItems = (): GalleryItem[] => {
-    return [...driverStrats]
+  useEffect(() => {
+    const items = [...driverStrats]
       .sort((a: DriverStrat, b: DriverStrat) => {
         return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
       })
@@ -27,7 +29,8 @@ function DriverStratGallery() {
         notes: strat.notes,
         tags: strat.tags,
       }));
-  }
+    setOrderedItems(items);
+  }, [driverStrats]);
 
   const handleDelete = async (id: string) => {
     await deleteItem(DatabaseTable.DRIVER_STRATS, id, user);
@@ -42,7 +45,7 @@ function DriverStratGallery() {
           <NewStratModal neighbourhood='' />
         </div>
         <Gallery
-          items={getOrderedItems()}
+          items={orderedItems}
           tags={Object.values(DriverStratTag)}
           onDelete={handleDelete}
           expandModal={<ExpandStratModal />}
