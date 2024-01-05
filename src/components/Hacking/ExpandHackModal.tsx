@@ -20,6 +20,7 @@ function ExpandHackModal() {
       const hack = hacks.find(hack => hack.id === id);
       if (hack) {
         setHack(hack);
+        setOpen(true);
       } else {
         setOpen(false);
       }

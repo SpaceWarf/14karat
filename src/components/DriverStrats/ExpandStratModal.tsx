@@ -23,6 +23,7 @@ function ExpandStratModal() {
       const strat = driverStrats.find(strat => strat.id === id);
       if (strat) {
         setStrat(strat);
+        setOpen(true);
       } else {
         setOpen(false);
       }
