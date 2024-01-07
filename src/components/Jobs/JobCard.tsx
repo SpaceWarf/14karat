@@ -13,6 +13,7 @@ import { ProfileInfo } from "../../state/profile";
 import JobRadio from "./JobRadio";
 import { getRadioForJob } from "../../redux/selectors/radios";
 import JobLootModal from "./JobLootModal";
+import ConfirmationModal from "../Common/ConfirmationModal";
 
 interface JobCardProps {
   job: Job;
@@ -120,9 +121,21 @@ function JobCard(props: JobCardProps) {
         <div className='header'>
           <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
           <div className="Actions">
-            <button className="ui icon negative button" onClick={handleDelete}>
-              <i className="trash icon" />
-            </button>
+            <ConfirmationModal
+              title='Confirm Delete Job'
+              content={
+                <>
+                  <p>You are about to delete the following job: <b>{props.job.name} {props.job.index}</b>. <b>This can be undone from the completed jobs page.</b></p>
+                  <p>Are you sure you want to proceed?</p>
+                </>
+              }
+              trigger={
+                <button className="ui icon negative button">
+                  <i className="trash icon" />
+                </button>
+              }
+              onConfirm={handleDelete}
+            />
           </div>
         </div>
         <div className="Details">

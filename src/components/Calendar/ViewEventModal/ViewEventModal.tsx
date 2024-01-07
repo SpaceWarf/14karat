@@ -10,6 +10,7 @@ import { Webhook } from "../../../state/webhook";
 import { triggerDiscordWebhook } from "../../../services/functions";
 import Textarea from "../../Common/Textarea";
 import { DiscordWebhook } from "../../../state/discordWebhook";
+import ConfirmationModal from "../../Common/ConfirmationModal";
 
 interface ViewEventModalProps {
   open: boolean,
@@ -88,9 +89,21 @@ function ViewEventModal(props: ViewEventModalProps) {
             <button className="ui icon button" onClick={props.onEdit}>
               <i className="pencil icon" />
             </button>
-            <button className="ui icon negative button" onClick={handleDelete}>
-              <i className="trash icon" />
-            </button>
+            <ConfirmationModal
+              title='Confirm Delete Event'
+              content={
+                <>
+                  <p>You are about to delete the following event: <b>{props.event.title}</b>. <b>This cannot be undone.</b></p>
+                  <p>Are you sure you want to proceed?</p>
+                </>
+              }
+              trigger={
+                <button className="ui icon negative button">
+                  <i className="trash icon" />
+                </button>
+              }
+              onConfirm={handleDelete}
+            />
           </div>
         )}
       </Modal.Header>

@@ -23,6 +23,7 @@ import { getAllUsedChannels, getSlideRadio } from '../../redux/selectors/radios'
 import { Radio, RadioUpdate } from '../../state/radio';
 import { generateRadioChannel } from '../../utils/radio';
 import RadioCard from '../Common/RadioCard';
+import ConfirmationModal from '../Common/ConfirmationModal';
 
 function WarInfo() {
   const { user, access } = useAuth();
@@ -476,14 +477,25 @@ function WarInfo() {
                           </button>
                           {scoreWebhookSuccess && <i className="check circle icon"></i>}
                         </div>
-                        <button
-                          className='ui button negative hover-animation'
-                          disabled={loading}
-                          onClick={handleEndWar}
-                        >
-                          <p className='label contrast'>End War</p>
-                          <p className='IconContainer contrast'><i className='handshake icon'></i></p>
-                        </button>
+                        <ConfirmationModal
+                          title='Confirm End War'
+                          content={
+                            <>
+                              <p>You are about to end the current war. <b>This cannot be undone.</b></p>
+                              <p>Are you sure you want to proceed?</p>
+                            </>
+                          }
+                          trigger={
+                            <button
+                              className='ui button negative hover-animation'
+                              disabled={loading}
+                            >
+                              <p className='label contrast'>End War</p>
+                              <p className='IconContainer contrast'><i className='handshake icon'></i></p>
+                            </button>
+                          }
+                          onConfirm={handleEndWar}
+                        />
                       </>
                     )}
                   </div>

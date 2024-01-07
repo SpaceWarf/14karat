@@ -10,6 +10,7 @@ import { Member, MemberUpdate } from "../../state/member";
 import { Checkbox } from "semantic-ui-react";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { Group } from "../../state/groups";
+import ConfirmationModal from "../Common/ConfirmationModal";
 
 interface MemberInformationProps {
   groups: Group[];
@@ -162,26 +163,25 @@ const MemberInformation = (props: MemberInformationProps) => {
               <p>General Information</p>
               <div>
                 {memberId !== 'new' && (
-                  <button className="ui icon negative button" onClick={handleDelete}>
-                    <i className="trash icon"></i>
-                  </button>
+                  <ConfirmationModal
+                    title='Confirm Delete Member'
+                    content={
+                      <>
+                        <p>You are about to delete a member. <b>This cannot be undone.</b></p>
+                        <p>Are you sure you want to proceed?</p>
+                      </>
+                    }
+                    trigger={
+                      <button className="ui icon negative button">
+                        <i className="trash icon"></i>
+                      </button>
+                    }
+                    onConfirm={handleDelete}
+                  />
                 )}
               </div>
             </div>
             <div className="ui form">
-              <div className="Row">
-                <Dropdown
-                  placeholder='Group'
-                  disabled={saving}
-                  options={getGroupsDropdownOptions()}
-                  value={group || ''}
-                  onChange={value => setGroup(value)}
-                />
-                <div className="field-container">
-                  <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />
-                  <Checkbox checked={dead} label="Dead?" toggle onChange={() => setDead(!dead)} />
-                </div>
-              </div>
               <div className="Row">
                 <Input
                   type="text"
@@ -191,6 +191,19 @@ const MemberInformation = (props: MemberInformationProps) => {
                   value={name}
                   onChange={setName}
                   disabled={saving}
+                />
+                <div className="field-container">
+                  <Checkbox checked={leader} label="Leader?" toggle onChange={() => setLeader(!leader)} />
+                  <Checkbox checked={dead} label="Dead?" toggle onChange={() => setDead(!dead)} />
+                </div>
+              </div>
+              <div className="Row">
+                <Dropdown
+                  placeholder='Group'
+                  disabled={saving}
+                  options={getGroupsDropdownOptions()}
+                  value={group || ''}
+                  onChange={value => setGroup(value)}
                 />
                 <Input
                   type="text"

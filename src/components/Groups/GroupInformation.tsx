@@ -9,6 +9,7 @@ import Textarea from "../Common/Textarea";
 import { isEqual } from "lodash";
 import { useAuth } from "../../contexts/AuthContext";
 import { Group, GroupType, GroupUpdate } from "../../state/groups";
+import ConfirmationModal from "../Common/ConfirmationModal";
 
 const COLOURS = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink", "brown", "grey", "black"];
 
@@ -164,9 +165,22 @@ const GroupInformation = (props: GroupInformationProps) => {
               <p>General Information</p>
               <div>
                 {groupId !== 'new' && (
-                  <button className="ui icon negative button" onClick={handleDelete}>
-                    <i className="trash icon"></i>
-                  </button>
+                  <ConfirmationModal
+                    title='Confirm Delete Group'
+                    content={
+                      <>
+                        <p>You are about to delete a group. <b>This cannot be undone.</b></p>
+                        <p>If the group has assigned members, please unassign them before proceeding.</p>
+                        <p>Are you sure you want to proceed?</p>
+                      </>
+                    }
+                    trigger={
+                      <button className="ui icon negative button">
+                        <i className="trash icon"></i>
+                      </button>
+                    }
+                    onConfirm={handleDelete}
+                  />
                 )}
               </div>
             </div>

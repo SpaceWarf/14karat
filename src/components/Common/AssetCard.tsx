@@ -2,6 +2,7 @@ import { ReactElement, useState } from "react";
 import { GalleryItem } from "../../state/gallery";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import ConfirmationModal from "./ConfirmationModal";
 
 interface GalleryProps {
   item: GalleryItem;
@@ -68,9 +69,23 @@ function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
               <i className="external icon" />
             </button>
           )}
-          {access.headAccess && onDelete && <button className="ui icon negative button" onClick={() => onDelete(item.id)}>
-            <i className="trash icon"></i>
-          </button>}
+          {access.headAccess && onDelete && (
+            <ConfirmationModal
+              title='Confirm Delete Gallery Item'
+              content={
+                <>
+                  <p>You are about to delete a gallery item. <b>This cannot be undone.</b></p>
+                  <p>Are you sure you want to proceed?</p>
+                </>
+              }
+              trigger={
+                <button className="ui icon negative button">
+                  <i className="trash icon"></i>
+                </button>
+              }
+              onConfirm={() => onDelete(item.id)}
+            />
+          )}
         </div>
       </div>
     </div>
