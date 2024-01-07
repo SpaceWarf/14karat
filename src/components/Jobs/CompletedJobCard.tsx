@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { ProfileInfo } from "../../state/profile";
 import { getDateTimeString } from "../../utils/time";
 import { getAllLootUrlsForJob } from "../../utils/storage";
+import ConfirmationModal from "../Common/ConfirmationModal";
 
 interface JobCardProps {
   job: Job;
@@ -87,9 +88,21 @@ function CompletedJobCard(props: JobCardProps) {
         <div className='header'>
           <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
           <div className="Actions">
-            <button className="ui icon negative button" disabled={loading} onClick={handleDelete}>
-              <i className="trash icon" />
-            </button>
+            <ConfirmationModal
+              title='Confirm Delete Job'
+              content={
+                <>
+                  <p>You are about to delete the following compelted job: <b>{props.job.name} {props.job.index}</b>. <b>This cannot be undone.</b></p>
+                  <p>Are you sure you want to proceed?</p>
+                </>
+              }
+              trigger={
+                <button className="ui icon negative button" disabled={loading}>
+                  <i className="trash icon" />
+                </button>
+              }
+              onConfirm={handleDelete}
+            />
           </div>
         </div>
         <div className="Details">

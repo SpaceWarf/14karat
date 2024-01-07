@@ -125,7 +125,7 @@ function JobCard(props: JobCardProps) {
               title='Confirm Delete Job'
               content={
                 <>
-                  <p>You are about to delete the following job: <b>{props.job.name} {props.job.index}</b>. <b>This can be undone from the completed jobs page.</b></p>
+                  <p>You are about to delete the following active job: <b>{props.job.name} {props.job.index}</b>. <b>This cannot be undone.</b></p>
                   <p>Are you sure you want to proceed?</p>
                 </>
               }
