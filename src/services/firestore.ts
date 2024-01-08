@@ -17,14 +17,14 @@ import { Neighbourhood, setNeighbourhoods } from "../redux/reducers/neighbourhoo
 import { setWars } from "../redux/reducers/wars";
 import { setEvents } from "../redux/reducers/events";
 import { setHacks } from "../redux/reducers/hacks";
-import { setGear, setJobs } from "../redux/reducers/jobs";
+import { setCards, setGear, setJobs, setUsbs } from "../redux/reducers/jobs";
 import { setRadios } from "../redux/reducers/radios";
 import { setQuotes } from "../redux/reducers/quotes";
 import { ProfileInfo } from "../state/profile";
 import { War } from "../state/war";
 import { CalendarEvent } from "../state/event";
 import { Hack } from "../state/hack";
-import { Gear, Job } from "../state/jobs";
+import { Card, Gear, Job, Usb } from "../state/jobs";
 import { Radio } from "../state/radio";
 import { Quote } from "../state/quotes";
 
@@ -42,6 +42,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     hacks,
     jobs,
     gear,
+    cards,
+    usbs,
     radios,
     quotes,
   ] = await Promise.all([
@@ -55,6 +57,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
     getItems<Hack>(DatabaseTable.HACKS),
     getItems<Job>(DatabaseTable.JOBS),
     getItems<Gear>(DatabaseTable.GEAR),
+    getItems<Card>(DatabaseTable.CARDS),
+    getItems<Usb>(DatabaseTable.USBS),
     getItems<Radio>(DatabaseTable.RADIOS),
     getItems<Quote>(DatabaseTable.QUOTES),
   ]);
@@ -68,6 +72,8 @@ export async function loadData(id: string, dispatch: Dispatch<AnyAction>) {
   dispatch(setHacks(hacks));
   dispatch(setJobs(jobs));
   dispatch(setGear(gear));
+  dispatch(setCards(cards));
+  dispatch(setUsbs(usbs));
   dispatch(setRadios(radios));
   dispatch(setQuotes(quotes));
 

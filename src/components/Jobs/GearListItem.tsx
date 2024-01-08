@@ -1,5 +1,5 @@
 import { Placeholder, PlaceholderImage, Popup, PopupContent } from "semantic-ui-react";
-import { getGearUrl } from "../../utils/storage";
+import { getGearThumbnailUrl } from "../../utils/storage";
 import "./Jobs.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,14 +13,24 @@ interface GearListItemProps {
 
 function GearListItem(props: GearListItemProps) {
   const [url, setUrl] = useState<string>();
-  const { gear } = useSelector((state: RootState) => state.jobs);
+  const { gear, cards, usbs } = useSelector((state: RootState) => state.jobs);
 
   const getName = (): string => {
-    return gear.find(g => g.id === props.id)?.name ?? props.id;
+    switch (props.id) {
+      case "any-bank":
+      case "all-bank":
+        return 'Bank Cards';
+      case "any-security":
+        return 'Security Cards';
+      case "any-humane":
+        return 'Humane Cards';
+      default:
+        return [...gear, ...cards, ...usbs].find(item => item.id === props.id)?.name ?? props.id;
+    }
   }
 
   const handleOpen = async () => {
-    setUrl(await getGearUrl(props.id));
+    setUrl(await getGearThumbnailUrl(props.id));
   }
 
   return (

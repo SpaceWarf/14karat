@@ -72,12 +72,12 @@ export async function getAllLootUrlsForJob(job: string): Promise<string[]> {
   }
 }
 
-export async function getGearUrl(id: string): Promise<string> {
+export async function getGearThumbnailUrl(id: string): Promise<string> {
   try {
     return await getDownloadURL(ref(storage, `gear/${id}.png`));
   } catch (e: any) {
     if (e.code === 'storage/object-not-found') {
-      console.error('Could not load gear picture.');
+      console.error('Could not load gear thumbnail.');
       return Promise.resolve('');
     }
     throw new Error(e);
