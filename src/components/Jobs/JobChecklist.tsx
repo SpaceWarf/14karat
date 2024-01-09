@@ -1,5 +1,5 @@
 import "./Jobs.scss";
-import { Checklist, Job, JobUpdate } from "../../state/jobs";
+import { Checklist, Job, JobInfo, JobUpdate } from "../../state/jobs";
 import { Checkbox } from "semantic-ui-react";
 import { DatabaseTable, updateItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
@@ -8,6 +8,7 @@ import GearListItem from "./GearListItem";
 
 interface JobChecklistProps {
   job: Job;
+  jobInfo?: JobInfo;
 }
 
 function JobChecklist(props: JobChecklistProps) {
@@ -83,6 +84,9 @@ function JobChecklist(props: JobChecklistProps) {
       <div className='header'>
         <p><i className='list icon' /> Checklist</p>
       </div>
+      {props.jobInfo && (
+        <p>{props.jobInfo.hostages ? `At least ${props.jobInfo.hostages} hostages` : "No hostages"}</p>
+      )}
       {Object.keys(props.job.gearChecklist).length > 0 && (
         <>
           <div className="ListHeader">

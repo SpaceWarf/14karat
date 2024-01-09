@@ -75,6 +75,17 @@
           flex-direction: column;
         }
 
+        .HeaderContent {
+          display: flex;
+          align-items: flex-end;
+          gap: 5px;
+
+          .HeaderDetail {
+            font-size: 0.9rem;
+            font-style: italic;
+          }
+        }
+
         .Details {
           flex: 1 1 0;
           display: flex;

@@ -1,5 +1,5 @@
 import "./Jobs.scss";
-import { CrewRoleMap, Job } from "../../state/jobs";
+import { CrewRoleMap, Job, JobInfo } from "../../state/jobs";
 import { DatabaseTable, deleteItem, getItemById, getItems, onItemsSnapshot } from "../../utils/firestore";
 import JobChecklist from "./JobChecklist";
 import { useAuth } from "../../contexts/AuthContext";
@@ -25,6 +25,7 @@ function JobCard(props: JobCardProps) {
   const [radioWebhook, setRadioWebhook] = useState<Webhook>();
   const [members, setMembers] = useState([] as ProfileInfo[]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [jobInfo, setJobInfo] = useState<JobInfo>();
   const radio = useSelector((state: RootState) => getRadioForJob(state, props.job.id));
 
   useEffect(() => {
@@ -45,6 +46,14 @@ function JobCard(props: JobCardProps) {
 
     fetchWebhooks();
   }, []);
+
+  useEffect(() => {
+    const fetchJobInfo = async () => {
+      setJobInfo(await getItemById<JobInfo>(DatabaseTable.JOB_INFO, props.job.job));
+    }
+
+    fetchJobInfo();
+  }, [props.job]);
 
   const handleDelete = async () => {
     deleteItem(DatabaseTable.JOBS, props.job.id, user);
@@ -119,7 +128,12 @@ function JobCard(props: JobCardProps) {
     <div className='JobCard ui card attached external'>
       <div className="content">
         <div className='header'>
-          <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
+          <div className="HeaderContent">
+            <p><i className={`${props.job.icon} icon`} /> {props.job.name} {props.job.index}</p>
+            {["vangelico", "fleeca"].includes(props.job.job) && (
+              <p className="HeaderDetail hyperlink-button" onClick={() => window.open(`/information-center/jobs/${props.job.job}`, '_blank')}>view guide</p>
+            )}
+          </div>
           <div className="Actions">
             <ConfirmationModal
               title='Confirm Delete Job'
@@ -142,13 +156,17 @@ function JobCard(props: JobCardProps) {
           <div className="Section">
             <JobCrew
               job={props.job}
+              jobInfo={jobInfo}
               members={members}
               loading={loading}
             />
           </div>
           <div className="seperator" />
           <div className="Section">
-            <JobChecklist job={props.job} />
+            <JobChecklist
+              job={props.job}
+              jobInfo={jobInfo}
+            />
             <JobRadio job={props.job} />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CrewRoleMap, CustomMember, Job, JobUpdate } from "../../state/jobs";
+import { CrewRoleMap, CustomMember, Job, JobInfo, JobUpdate } from "../../state/jobs";
 import Dropdown, { DropdownOption } from "../Common/Dropdown";
 import { DatabaseTable, updateItem } from "../../utils/firestore";
 import { useAuth } from "../../contexts/AuthContext";
@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 
 interface JobCrewProps {
   job: Job;
+  jobInfo?: JobInfo;
   members: ProfileInfo[];
   loading: boolean;
 }
@@ -148,10 +149,22 @@ function JobCrew(props: JobCrewProps) {
     );
   }
 
+  const getCrewSizeString = (): string => {
+    if (props.jobInfo) {
+      return props.jobInfo.squadMin === props.jobInfo.squadMax
+        ? `(${props.jobInfo.squadMin} members)`
+        : `(${props.jobInfo.squadMin} - ${props.jobInfo.squadMax} members)`;
+    }
+    return '';
+  }
+
   return (
     <div className='JobCrew'>
       <div className='header'>
-        <p><i className='group icon' /> Crew</p>
+        <p className="HeaderContent">
+          <p><i className='group icon' /> Crew</p>
+          {props.jobInfo && <p className="HeaderDetail">{getCrewSizeString()}</p>}
+        </p>
       </div>
       <div className="CrewRoles">
         {Object.keys(props.job.crew)
