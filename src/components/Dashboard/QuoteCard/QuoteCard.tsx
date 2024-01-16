@@ -4,6 +4,8 @@ import { RootState } from '../../../redux/store';
 import { Quote } from '../../../state/quotes';
 import { useEffect, useState } from 'react';
 
+const OFFSET = 1;
+
 function QuoteCard() {
   const { quotes } = useSelector((state: RootState) => state.quotes);
   const [quoteOfTheWeek, setQuoteOfTheWeek] = useState<Quote>();
@@ -14,7 +16,7 @@ function QuoteCard() {
     const days = Math.floor((now.getTime() - yearStart.getTime()) / (24 * 60 * 60 * 1000));
     const weekNumber = Math.ceil(days / 7);
 
-    setQuoteOfTheWeek(quotes[weekNumber % quotes.length])
+    setQuoteOfTheWeek(quotes[(weekNumber + OFFSET) % quotes.length])
   }, [quotes]);
 
   return (
