@@ -91,35 +91,35 @@ function Hierarchy() {
             </div>
           </div>
           <div className='Division'>
-            <h1>Shateigashira (Leads)</h1>
+            <h1>Shateigashira (Officers)</h1>
             <div className='Role'>
-              <h2>Intelligence Lead (Fox's Tail)</h2>
+              <h2>Intelligence Officer (Fox's Tail)</h2>
               <p>
-                Intelligence Leads are second to the Intelligence Heads. They oversee more or less the same responsibilities but are not directly included in
+                Intelligence Officers are second to the Intelligence Heads. They oversee more or less the same responsibilities but are not directly included in
                 high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Intelligence Leads are also under the protection of the <a href='/information-center/lore?active=Guardians#kitsune' target='_blank' rel="noreferrer">Kitsune (狐)</a>.
+                Intelligence Officers are also under the protection of the <a href='/information-center/lore?active=Guardians#kitsune' target='_blank' rel="noreferrer">Kitsune (狐)</a>.
               </p>
             </div>
             <div className='Role'>
-              <h2>Operations Lead (Crow's Beak)</h2>
+              <h2>Operations Officer (Crow's Beak)</h2>
               <p>
-                Operations Leads are second to the Operations Heads. They oversee more or less the same responsibilities but are not directly included in
+                Operations Officers are second to the Operations Heads. They oversee more or less the same responsibilities but are not directly included in
                 high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Operations Leads are also under the protection of <a href='/information-center/lore?active=Guardians#yatagarasu' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>.
+                Operations Officers are also under the protection of <a href='/information-center/lore?active=Guardians#yatagarasu' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>.
               </p>
             </div>
             <div className='Role'>
-              <h2>Enforcement Lead (Tiger's Claw)</h2>
+              <h2>Enforcement Officer (Tiger's Claw)</h2>
               <p>
-                Enforcement Leads are second to the Enforcement Heads. They oversee more or less the same responsibilities but are not directly included
+                Enforcement Officers are second to the Enforcement Heads. They oversee more or less the same responsibilities but are not directly included
                 in high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
               </p>
               <p>
-                Enforcement Leads are also under the protection of <a href='/information-center/lore?active=Guardians#byakko' target='_blank' rel="noreferrer">Byakko (白虎)</a>.
+                Enforcement Officers are also under the protection of <a href='/information-center/lore?active=Guardians#byakko' target='_blank' rel="noreferrer">Byakko (白虎)</a>.
               </p>
             </div>
           </div>
