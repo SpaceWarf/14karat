@@ -1,4 +1,4 @@
-import { Radio } from "../../state/radio";
+import { Radio, RadioType } from "../../state/radio";
 import { RootState } from "../store";
 
 export function getRadioForJob(state: RootState, job: string): Radio | undefined {
@@ -8,16 +8,20 @@ export function getRadioForJob(state: RootState, job: string): Radio | undefined
 }
 
 export const getMainRadio = (state: RootState): Radio | undefined => {
-  return state.radios.radios.find(radio => radio.main && !radio.burned);
+  return state.radios.radios.find(radio => radio.type === RadioType.MAIN && !radio.burned);
 }
 
 export const getSlideRadio = (state: RootState): Radio | undefined => {
-  return state.radios.radios.find(radio => radio.slide && !radio.burned);
+  return state.radios.radios.find(radio => radio.type === RadioType.SLIDE && !radio.burned);
+}
+
+export const getFriendsRadio = (state: RootState): Radio | undefined => {
+  return state.radios.radios.find(radio => radio.type === RadioType.FRIENDS && !radio.burned);
 }
 
 export const getActiveRadios = (state: RootState): Radio[] => {
   return state.radios.radios
-    .filter(radio => !radio.main && !radio.slide && !radio.burned)
+    .filter(radio => ![RadioType.MAIN, RadioType.FRIENDS, RadioType.SLIDE].includes(radio.type) && !radio.burned)
     .sort((a, b) => new Date(a.createdAt || "").getTime() - new Date(b.createdAt || "").getTime());
 }
 

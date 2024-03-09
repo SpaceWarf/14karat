@@ -2,11 +2,12 @@ import './Radios.scss';
 import { useSelector } from 'react-redux';
 import RadioCard from '../Common/RadioCard';
 import Header from '../Common/Header';
-import { getActiveRadios, getMainRadio, getRecentlyBurnedRadios, getSlideRadio } from '../../redux/selectors/radios';
+import { getActiveRadios, getFriendsRadio, getMainRadio, getRecentlyBurnedRadios, getSlideRadio } from '../../redux/selectors/radios';
 
 function Radios() {
   const mainRadio = useSelector(getMainRadio);
   const slideRadio = useSelector(getSlideRadio);
+  const friendsRadio = useSelector(getFriendsRadio);
   const activeRadios = useSelector(getActiveRadios);
   const burnedRadios = useSelector(getRecentlyBurnedRadios);
 
@@ -16,6 +17,7 @@ function Radios() {
         <Header text='Main Radios' decorated />
         <div className='Listing'>
           {mainRadio && <RadioCard radio={mainRadio} />}
+          {friendsRadio && <RadioCard radio={friendsRadio} />}
           {slideRadio && <RadioCard radio={slideRadio} />}
         </div>
         <Header text='Active Radios' decorated />

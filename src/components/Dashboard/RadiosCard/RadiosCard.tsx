@@ -1,27 +1,21 @@
 import './RadiosCard.scss';
 import { useSelector } from 'react-redux';
-import { getActiveRadios, getMainRadio, getSlideRadio } from '../../../redux/selectors/radios';
+import { getActiveRadios, getFriendsRadio, getMainRadio, getSlideRadio } from '../../../redux/selectors/radios';
 import { useNavigate } from 'react-router-dom';
 import RadioChannel from '../../Common/RadioChannel';
 import { Radio } from '../../../state/radio';
 import { getActiveJobs } from '../../../redux/selectors/jobs';
+import { capitalize } from '../../../utils/string';
 
 function RadiosCard() {
   const navigate = useNavigate();
   const mainRadio = useSelector(getMainRadio);
   const slideRadio = useSelector(getSlideRadio);
+  const friendsRadio = useSelector(getFriendsRadio);
   const activeRadios = useSelector(getActiveRadios);
   const activeJobs = useSelector(getActiveJobs);
 
   const getRadioName = (radio: Radio): string => {
-    if (radio.main) {
-      return "Main Radio";
-    }
-
-    if (radio.slide) {
-      return "Slide Radio";
-    }
-
     if (radio.job) {
       const job = activeJobs.find(active => active.id === radio.job);
 
@@ -30,7 +24,7 @@ function RadiosCard() {
       }
     }
 
-    return "Other Radio";
+    return `${capitalize(radio.type)} Radio`
   }
 
   return (
@@ -47,6 +41,12 @@ function RadiosCard() {
             <div>
               <RadioChannel radio={mainRadio} />
               <p className='RadioLabel'>{getRadioName(mainRadio)}</p>
+            </div>
+          )}
+          {friendsRadio && (
+            <div>
+              <RadioChannel radio={friendsRadio} />
+              <p className='RadioLabel'>{getRadioName(friendsRadio)}</p>
             </div>
           )}
           {slideRadio && (

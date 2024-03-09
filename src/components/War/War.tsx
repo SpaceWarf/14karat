@@ -20,7 +20,7 @@ import { War, WarClip, WarClipTag, WarUpdate } from '../../state/war';
 import { GalleryItem } from '../../state/gallery';
 import ExpandWarClipModal from './ExpandWarClipModal';
 import { getAllUsedChannels, getSlideRadio } from '../../redux/selectors/radios';
-import { Radio, RadioUpdate } from '../../state/radio';
+import { Radio, RadioType, RadioUpdate } from '../../state/radio';
 import { generateRadioChannel } from '../../utils/radio';
 import RadioCard from '../Common/RadioCard';
 import ConfirmationModal from '../Common/ConfirmationModal';
@@ -179,8 +179,7 @@ function WarInfo() {
       DatabaseTable.RADIOS,
       {
         channel: newChannel,
-        main: false,
-        slide: true,
+        type: RadioType.SLIDE,
         burned: false,
         job: "",
       },

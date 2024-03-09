@@ -1,7 +1,7 @@
 import { DatabaseTable, createItem, getItemById, updateItem } from "../../utils/firestore";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Radio, RadioUpdate } from "../../state/radio";
+import { Radio, RadioType, RadioUpdate } from "../../state/radio";
 import { generateRadioChannel } from "../../utils/radio";
 import { Webhook } from "../../state/webhook";
 import { Job } from "../../state/jobs";
@@ -18,20 +18,31 @@ function RadioChannel(props: RadioChannelProps) {
   const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
+  const [friendsWebhook, setFriendsWebhook] = useState<Webhook>();
   const allUsedChannels = useSelector(getAllUsedChannels);
 
   useEffect(() => {
     const fetchWebhook = async () => {
       setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'radio-update'));
+      setFriendsWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'friends-radio-update'));
     }
 
     fetchWebhook();
   }, []);
 
   const sendWebhook = (newChannel?: string) => {
-    if (webhook) {
+    if (props.radio.type !== RadioType.FRIENDS && webhook) {
       triggerDiscordWebhook({
         url: webhook.url,
+        content: getWebhookString(newChannel),
+      }).catch(error => {
+        console.error(error);
+      });
+    }
+
+    if (props.radio.type === RadioType.FRIENDS && friendsWebhook) {
+      triggerDiscordWebhook({
+        url: friendsWebhook.url,
         content: getWebhookString(newChannel),
       }).catch(error => {
         console.error(error);
@@ -40,34 +51,23 @@ function RadioChannel(props: RadioChannelProps) {
   }
 
   const getWebhookString = (newChannel?: string) => {
-    if (props.radio.main) {
-      return `@here burn main ~~${props.radio.channel}~~!\nNEW MAIN - ${newChannel}`;
-    }
-
-    if (props.radio.slide) {
-      return `@here burn slide radio ~~${props.radio.channel}~~!\nNEW SLIDE RADIO - ${newChannel}`;
-    }
-
-    if (props.job) {
-      return `@here burn ${props.job.name} ${props.job.index} radio ~~${props.radio.channel}~~`;
-    }
-
-    return `@here burn radio ~~${props.radio.channel}~~`
+    return props.job
+      ? `@here burn ${props.job.name} ${props.job.index} radio ~~${props.radio.channel}~~`
+      : `@here burn ${props.radio.type} radio ~~${props.radio.channel}~~!\nNEW ${props.radio.type.toUpperCase()} RADIO - ${newChannel}`;
   }
 
   const handleBurnChannel = async () => {
     if (props.radio) {
       setLoading(true);
 
-      if (props.radio.main || props.radio.slide) {
+      if ([RadioType.MAIN, RadioType.FRIENDS, RadioType.SLIDE].includes(props.radio.type)) {
         const newChannel = generateRadioChannel(allUsedChannels);
         sendWebhook(newChannel);
         await createItem<RadioUpdate, Radio>(
           DatabaseTable.RADIOS,
           {
             channel: newChannel,
-            main: props.radio.main,
-            slide: props.radio.slide ?? false,
+            type: props.radio.type,
             burned: false,
             job: props.job?.id ?? "",
           },
@@ -91,12 +91,20 @@ function RadioChannel(props: RadioChannelProps) {
     }
   }
 
+  const isDisabled = (): boolean => {
+    if (props.radio.type === RadioType.FRIENDS) {
+      return !friendsWebhook || loading
+    }
+
+    return !webhook || loading
+  }
+
   return (
     <div className='RadioChannel'>
       <p className="ChannelLabel">{props.radio.channel}</p>
       {!props.radio.burned && (
         <div className="ChannelActions">
-          <button className="ui icon negative button" disabled={!webhook || loading} onClick={() => handleBurnChannel()}>
+          <button className="ui icon negative button" disabled={isDisabled()} onClick={() => handleBurnChannel()}>
             <i className="fire icon" />
           </button>
         </div>

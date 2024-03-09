@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import RadioChannel from "../Common/RadioChannel";
 import { generateRadioChannel } from "../../utils/radio";
-import { Radio, RadioUpdate } from "../../state/radio";
+import { Radio, RadioType, RadioUpdate } from "../../state/radio";
 
 interface JobRadioProps {
   job: Job;
@@ -26,8 +26,7 @@ function JobRadio(props: JobRadioProps) {
       DatabaseTable.RADIOS,
       {
         channel: generateRadioChannel(allUsedChannels),
-        main: false,
-        slide: false,
+        type: RadioType.JOB,
         burned: false,
         job: props.job.id,
       },

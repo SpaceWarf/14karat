@@ -1,8 +1,9 @@
-import { Radio } from "../../state/radio";
+import { Radio, RadioType } from "../../state/radio";
 import RadioChannel from "./RadioChannel";
 import { getJobById } from "../../redux/selectors/jobs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { capitalize } from "../../utils/string";
 
 interface RadioCardProps {
   radio: Radio;
@@ -12,19 +13,11 @@ function RadioCard(props: RadioCardProps) {
   const job = useSelector((state: RootState) => getJobById(state, props.radio.job));
 
   const getTitle = () => {
-    if (props.radio.main) {
-      return "Main Radio";
-    }
-
-    if (props.radio.slide) {
-      return "Slide Radio";
-    }
-
     if (job) {
       return `${job.name} ${job.index} Radio`;
     }
 
-    return "Radio";
+    return `${capitalize(props.radio.type)} Radio`
   }
 
   return (
