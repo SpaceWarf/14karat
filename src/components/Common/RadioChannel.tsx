@@ -51,7 +51,7 @@ function RadioChannel(props: RadioChannelProps) {
   }
 
   const getWebhookString = (newChannel?: string) => {
-    return props.job
+    return props.radio.type === RadioType.JOB && props.job
       ? `@here burn ${props.job.name} ${props.job.index} radio ~~${props.radio.channel}~~`
       : `@here burn ${props.radio.type} radio ~~${props.radio.channel}~~!\nNEW ${props.radio.type.toUpperCase()} RADIO - ${newChannel}`;
   }
