@@ -14,9 +14,8 @@ export const getTimeSince = (start: Date, end: Date): string => {
   return `${daysStr}${daysStr && (hoursStr || minutesStr) ? ', ' : ''}${hoursStr}${hoursStr && minutesStr ? ' and ' : ''}${minutesStr}`;
 }
 
-export const getSlideTimer = (timer: string | undefined, upString: string): string => {
+export const getSlideTimer = (now: Date, timer: string | undefined, upString: string): string => {
   if (timer) {
-    const now = new Date();
     const timerStart = new Date(timer);
     const timerEnd = new Date(timerStart.getTime() + THREE_HOURS);
 
