@@ -247,7 +247,8 @@
   }
 }
 
-.CrocodileHackPractice {
+.CrocodileHackPractice,
+.AlphabetHackPractice {
   .content {
     .Actions {
       width: 1200px;
@@ -286,7 +287,8 @@
         flex-wrap: wrap;
         gap: 5px;
 
-        .CrocodileCard {
+        .CrocodileCard,
+        .AlphabetCard {
           display: flex;
           flex-direction: column;
           justify-content: center;

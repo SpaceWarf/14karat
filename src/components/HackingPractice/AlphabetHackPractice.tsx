@@ -15,7 +15,9 @@ interface Card {
   success: boolean;
 }
 
-function CrocodileHackPractice() {
+const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function AlphabetHackPractice() {
   const [countdown, setCountdown] = useState<number>(0);
   const [timer, setTimer] = useState<number>(0);
   const [started, setStarted] = useState<boolean>(false);
@@ -23,14 +25,6 @@ function CrocodileHackPractice() {
   const [failure, setFailure] = useState<boolean>(false);
   const [infiniteTimer, setInfiniteTimer] = useState<boolean>(false);
   const [infiniteMistakes, setInfiniteMistakes] = useState<boolean>(false);
-  const [viewSolution, setViewSolution] = useState<boolean>(false);
-
-  const [master, _setMaster] = useState<string>("");
-  const masterRef = useRef(master);
-  const setMaster = (newMaster: string) => {
-    masterRef.current = newMaster;
-    _setMaster(newMaster);
-  };
 
   const [cards, _setCards] = useState<Card[]>([]);
   const cardsRef = useRef(cards);
@@ -71,11 +65,7 @@ function CrocodileHackPractice() {
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") {
-        handleAnswerSubmit(false);
-      } else if (event.key === "ArrowRight") {
-        handleAnswerSubmit(true);
-      }
+      handleAnswerSubmit(event.key)
     }
 
     if (started) {
@@ -88,31 +78,20 @@ function CrocodileHackPractice() {
   }, [started]);
 
   useEffect(() => {
-    const generateMaster = (): string => {
-      return `${Math.floor(Math.floor(Math.random() * 90000) + 10000)}`;
-    }
-
-    const generateCards = (master: string): Card[] => {
-      const successIndex = Math.floor(Math.random() * 8 + 8);
+    const generateCards = (): Card[] => {
       return shuffle(
         Array(CARD_COUNT)
           .fill("")
           .map((_, i) => ({
             id: uuid(),
-            value: generateCardValue(master, i < successIndex),
+            value: generateCardValue(),
             success: false,
           }))
       );
     }
 
-    const generateCardValue = (master: string, answer: boolean): string => {
-      let value = "";
-
-      do {
-        value = `${Math.floor(Math.random() * 100)}`
-      } while (master.includes(value) !== answer);
-
-      return value;
+    const generateCardValue = (): string => {
+      return CHARACTERS.charAt(Math.floor(Math.random() * CHARACTERS.length));
     }
 
     if (started && countdown > 0) {
@@ -122,9 +101,7 @@ function CrocodileHackPractice() {
 
         if (newCountdown === 0) {
           setTimer(MAX_TIMER);
-          const master = generateMaster()
-          setMaster(master);
-          setCards(generateCards(master));
+          setCards(generateCards());
         }
       }, 1000);
     } else {
@@ -135,7 +112,6 @@ function CrocodileHackPractice() {
   const handleReset = () => {
     setSuccess(false);
     setFailure(false);
-    setViewSolution(false);
     setCountdown(0);
     setStarted(false);
     setCursor(0);
@@ -146,7 +122,6 @@ function CrocodileHackPractice() {
   const handleStart = () => {
     setSuccess(false);
     setFailure(false);
-    setViewSolution(false);
     setCountdown(MAX_COUNTDOWN);
     setStarted(true);
     setCursor(0);
@@ -154,14 +129,13 @@ function CrocodileHackPractice() {
     setCards([]);
   }
 
-  const handleAnswerSubmit = (answer: boolean) => {
+  const handleAnswerSubmit = (char: string) => {
     const currentCursor = cursorRef.current;
     const currentMistake = mistakesRef.current;
     const currentCards = cardsRef.current;
-    const currentMaster = masterRef.current;
     const card = currentCards[currentCursor];
 
-    if (card && currentMaster.includes(card.value) === answer) {
+    if (card && card.value.toLowerCase() === char.toLowerCase()) {
       setCards([
         ...currentCards.slice(0, currentCursor),
         {
@@ -188,7 +162,7 @@ function CrocodileHackPractice() {
   }
 
   return (
-    <div className="CrocodileHackPractice HackPractice">
+    <div className="AlphabetHackPractice HackPractice">
       <div className='content'>
         <div className='Actions'>
           <div className='Settings'>
@@ -216,12 +190,6 @@ function CrocodileHackPractice() {
             )}
             {started && (
               <>
-                <Checkbox
-                  checked={viewSolution}
-                  label="View Solution?"
-                  toggle
-                  onChange={() => setViewSolution(!viewSolution)}
-                />
                 <button className="ui button negative hover-animation" onClick={handleReset}>
                   <p className='label contrast'>Reset</p>
                   <p className='IconContainer contrast'><i className='refresh icon'></i></p>
@@ -244,29 +212,18 @@ function CrocodileHackPractice() {
                 {started && countdown === 0 && (
                   <>
                     <Progress size='small' value={timer} total={MAX_TIMER} warning />
-                    <p className='Master'>{master}</p>
                     <Progress size='small' value={mistakes} total={MAX_MISTAKES} error />
                   </>
                 )}
               </div>
               <div className='Grid'>
                 {cards.map((card, i) => (
-                  <CrocodileCard
+                  <AlphabetCard
                     card={card}
                     index={i}
                     cursor={cursor}
-                    master={master}
-                    viewSolution={viewSolution}
                   />
                 ))}
-              </div>
-              <div className='Buttons'>
-                <button className="ui icon button" onClick={() => handleAnswerSubmit(false)}>
-                  <i className="arrow left icon" />
-                </button>
-                <button className="ui icon button" onClick={() => handleAnswerSubmit(true)}>
-                  <i className="arrow right icon" />
-                </button>
               </div>
             </>
           )}
@@ -280,13 +237,11 @@ interface CardProps {
   card: Card;
   index: number;
   cursor: number;
-  master: string;
-  viewSolution: boolean;
 }
 
-function CrocodileCard(props: CardProps) {
+function AlphabetCard(props: CardProps) {
   const getClassName = (): string => {
-    const classes = ['CrocodileCard'];
+    const classes = ['AlphabetCard'];
 
     if (props.card.success) {
       classes.push('success');
@@ -299,19 +254,11 @@ function CrocodileCard(props: CardProps) {
     return classes.join(' ');
   }
 
-  const getSolution = () => {
-    if (props.master.includes(props.card.value)) {
-      return <p className='Solution'>Right</p>
-    }
-    return <p className='Solution'>Left</p>
-  }
-
   return (
     <div className={getClassName()}>
       <p className='Value'>{props.card.value}</p>
-      {props.viewSolution && getSolution()}
     </div>
   )
 }
 
-export default CrocodileHackPractice;
+export default AlphabetHackPractice;

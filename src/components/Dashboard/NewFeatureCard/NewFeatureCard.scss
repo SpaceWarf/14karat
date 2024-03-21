@@ -9,18 +9,36 @@
       margin: 10px 0;
     }
 
+    // New Guides
+    // button.hover-animation {
+    //   .label {
+    //     width: 75px;
+    //   }
+
+    //   &:hover:not(:disabled) {
+    //     .label {
+    //       left: calc((100% - 100px) / 2);
+    //     }
+
+    //     .IconContainer {
+    //       right: calc((100% - 100px) / 2);
+    //     }
+    //   }
+    // }
+
+    // New Minigames
     button.hover-animation {
       .label {
-        width: 75px;
+        width: 100px;
       }
 
       &:hover:not(:disabled) {
         .label {
-          left: calc((100% - 100px) / 2);
+          left: calc((100% - 125px) / 2);
         }
 
         .IconContainer {
-          right: calc((100% - 100px) / 2);
+          right: calc((100% - 125px) / 2);
         }
       }
     }

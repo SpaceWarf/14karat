@@ -1,4 +1,4 @@
-import { Radio, RadioType } from "../../state/radio";
+import { Radio } from "../../state/radio";
 import RadioChannel from "./RadioChannel";
 import { getJobById } from "../../redux/selectors/jobs";
 import { useSelector } from "react-redux";
