@@ -37,7 +37,6 @@ import BlackMarkets from './components/InformationCenter/BlackMarkets/BlackMarke
 import MembersListing from './components/Groups/MembersListing';
 import FleecaGuide from './components/Jobs/Guides/FleecaGuide';
 import CompletedJobListing from './components/Jobs/CompletedJobListing';
-import NOMS from './components/InformationCenter/NOMS/NOMS';
 
 function App() {
   return (
@@ -57,7 +56,6 @@ function App() {
             <Route path='/information-center/hierarchy' element={<Hierarchy />} />
             <Route path='/information-center/rules' element={<Rules />} />
             <Route path='/information-center/taxes' element={<Taxes />} />
-            <Route path='/information-center/noms' element={<NOMS />} />
             <Route path='/information-center/locations' element={<LocationsOfInterest />} />
             <Route path='/information-center/lore' element={<Lore />} />
             <Route path='/information-center/assets' element={<Assets />} />

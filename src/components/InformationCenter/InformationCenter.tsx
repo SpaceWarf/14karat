@@ -143,22 +143,6 @@ function InformationCenter() {
             </div>
           </div>
         )}
-        {access.chainedAccess && (
-          <div
-            className="InformationCenterCard ui card attached link external"
-            onClick={() => navigate('/information-center/noms')}
-          >
-            <div className="content">
-              <div className='header'>
-                <p><i className='dollar sign icon' /> NOMS Data</p>
-                <button className="ui icon button" onClick={() => navigate('/information-center/noms')}>
-                  <i className='external alternate icon' />
-                </button>
-              </div>
-              <div className='Notes'><p>A calculator and tracker for NOMs data.</p></div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
