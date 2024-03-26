@@ -66,7 +66,7 @@ function LocationsOfInterest() {
                       </button>
                     </div>
                     <TransformComponent>
-                      <img src='https://imgur.com/qhr8KLv.png' alt='Map' />
+                      <img src='https://imgur.com/XiEhb8R.png' alt='Map' />
                     </TransformComponent>
                   </>
                 )}
