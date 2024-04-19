@@ -36,16 +36,31 @@ function Hierarchy() {
             </div>
           </div>
           <div className='Division'>
-            <h1>Wakagashira (Heads)</h1>
+            <h1>Wakagashira (Underboss)</h1>
             <div className='Role'>
               <p>
-                Wakagashira are high-ranking members who are second-in-command to the Oyabun. This role involves significant authority and responsibility, as they
+                The Wakagashira acts as a second-in-command to the Oyabuns. He takes the role of head of the family when both Oyabuns are not able to be present, or
+                are otherwise occupied with their duties. The Wakagashira will help run day-to-day operations while the Oyabuns run big picture items, and also has
+                a counsel role within the leadership where they are to advise the Oyabuns on all matters related to the family's operations.
+              </p>
+              <p>
+                The Wakagashira is under the protection of <a href='/information-center/lore?active=Guardians#genbu' target='_blank' rel="noreferrer">Genbu (玄武)</a>,
+                a turtle-snake chimera associated with the virtue of knowledge. The intertwining of the turtle and snake symbolize the balance of yin and yang for
+                which Genbu was a protector of.
+              </p>
+            </div>
+          </div>
+          <div className='Division'>
+            <h1>Shateigashira (Heads)</h1>
+            <div className='Role'>
+              <p>
+                Shateigashira are high-ranking members who are second-in-command to the Oyabun. This role involves significant authority and responsibility, as they
                 are tasked with assisting the Oyabun in leading the family. They may be in charge of day-to-day operations, managing lower-ranking members, and
-                overseeing various activities. The Wakagashira often acts as a bridge between the Oyabun and the other members, helping to maintain discipline,
+                overseeing various activities. The Shateigashira often acts as a bridge between the Oyabun and the other members, helping to maintain discipline,
                 enforce the family's rules, and mediate disputes.
               </p>
               <p>
-                Wakagashira are under the protection of various spirits depending on their specific role within the family.
+                Shateigashira are under the protection of various spirits depending on their specific role within the family.
               </p>
             </div>
             <div className='Role'>
@@ -91,63 +106,44 @@ function Hierarchy() {
             </div>
           </div>
           <div className='Division'>
-            <h1>Shateigashira (Officers)</h1>
+            <h1>Kyōdai (Senior Operative)</h1>
             <div className='Role'>
-              <h2>Intelligence Officer (Fox's Tail)</h2>
               <p>
-                Intelligence Officers are second to the Intelligence Heads. They oversee more or less the same responsibilities but are not directly included in
-                high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
+                Kyōdai are members that have stood the test of time and proved their resolve and usefulness to the family. Kyōdai are important intermediary figures
+                in the hierarchy and act as a link between junior members and higher-ranking figures, helping to facilitate the smooth running of each branch of the
+                family. Kyōdai will specialize in one area and help the Wakagashira in the execution of tasks related to that branch, also helping ensure everything
+                runs smoothly.
               </p>
               <p>
-                Intelligence Officers are also under the protection of the <a href='/information-center/lore?active=Guardians#kitsune' target='_blank' rel="noreferrer">Kitsune (狐)</a>.
-              </p>
-            </div>
-            <div className='Role'>
-              <h2>Operations Officer (Crow's Beak)</h2>
-              <p>
-                Operations Officers are second to the Operations Heads. They oversee more or less the same responsibilities but are not directly included in
-                high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
-              </p>
-              <p>
-                Operations Officers are also under the protection of <a href='/information-center/lore?active=Guardians#yatagarasu' target='_blank' rel="noreferrer">Yatagarasu (八咫烏)</a>.
-              </p>
-            </div>
-            <div className='Role'>
-              <h2>Enforcement Officer (Tiger's Claw)</h2>
-              <p>
-                Enforcement Officers are second to the Enforcement Heads. They oversee more or less the same responsibilities but are not directly included
-                in high-ranking member meetings, instead focusing on managing the link between the lower and higher ranks in the hierarchy.
-              </p>
-              <p>
-                Enforcement Officers are also under the protection of <a href='/information-center/lore?active=Guardians#byakko' target='_blank' rel="noreferrer">Byakko (白虎)</a>.
+                Kyōdai are under the protection of the same guardian as the Head they are tasked with assisting.
               </p>
             </div>
           </div>
           <div className='Division'>
-            <h1>Kobun (Operatives)</h1>
+            <h1>Shatei (Operatives)</h1>
             <div className='Role'>
               <p>
-                Kobun are low-ranking members who play a crucial role in the day-to-day operations of the family. These individuals are often the backbone
+                Shatei are low-ranking members who play a crucial role in the day-to-day operations of the family. These individuals are often the backbone
                 of the group, and responsible for carrying out various tasks that contribute to the organization's overall objectives such as heists, debt
-                collection, acts of violence, etc. While they hold relatively low positions in the hierarchy, Kobun are essential for operations.
+                collection, acts of violence, etc. While they hold relatively low positions in the hierarchy, Shatei are essential for operations.
               </p>
               <p>
-                Kobun are under the protection of <a href='/information-center/lore?active=Guardians#inugami' target='_blank' rel="noreferrer">Inugami (犬神)</a>,
+                Shatei are under the protection of <a href='/information-center/lore?active=Guardians#inugami' target='_blank' rel="noreferrer">Inugami (犬神)</a>,
                 a dog spirit said to bring protection and good fortune, but also capable of bringing vengeance and destruction.
               </p>
             </div>
           </div>
           <div className='Division'>
-            <h1>Shatei (Recruits)</h1>
+            <h1>Kobun (Recruits)</h1>
             <div className='Role'>
               <p>
-                Shatei are apprentices in the early stages of their career. The role of Shatei is akin to that of a junior member. They are still learning
+                Kobun are apprentices in the early stages of their career. The role of Kobun is akin to that of a junior member. They are still learning
                 the ropes and working their way up the organization's hierarchy and are often responsible for performing various tasks and errands for
                 higher-ranking members. These tasks may include running errands, handling minor criminal activities, and generally providing support to their
                 superiors.
               </p>
               <p>
-                Shatei are not under the protection of any spirit as they are not blooded in members of the family. They are referred to
+                Kobun are not under the protection of any spirit as they are not blooded in members of the family. They are referred to
                 as <a href='/information-center/lore?active=Spirits#ikiryou' target='_blank' rel="noreferrer">Ikiryō (生霊)</a>, or living spirits, as their
                 connection between their body and spirit is still alive. That connection is severed as part of the blood-in process.
               </p>
@@ -193,7 +189,7 @@ function Hierarchy() {
                 promotions, blood oaths, and other important events.
               </p>
               <p>
-                Ceremonies Heads are also refered to as <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
+                Ceremonies Heads are also referred to as <a href='/information-center/lore?active=Guardians#houou' target='_blank' rel="noreferrer">Hōō (鳳凰)</a>,
                 a phoenix spirit with immense cultural significance that symbolizes beauty, change, and harmony.
               </p>
             </div>
