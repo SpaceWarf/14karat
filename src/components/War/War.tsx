@@ -59,7 +59,7 @@ function WarInfo() {
       setLoadingWebhook(false);
     }
 
-    if (access.leadAccess) {
+    if (access.headAccess) {
       fetchWebhook();
     }
   }, [access, profile]);
@@ -87,7 +87,7 @@ function WarInfo() {
   }, [war]);
 
   const canEdit = (): boolean => {
-    return access.leadAccess;
+    return access.headAccess;
   }
 
   const getTimeString = (): string => {

@@ -134,7 +134,7 @@ export async function getWarClipsForWar(id: string): Promise<WarClip[]> {
 export async function getJobInfosForDivision(division: string): Promise<JobInfo[]> {
   const items = await getItems<JobInfo>(DatabaseTable.JOB_INFO);
 
-  if (division === Division.HANGAROUND || division === Division.SHATEI) {
+  if (division === Division.HANGAROUND || division === Division.KOBUN) {
     return items.filter(item => UNCHAINED_JOBS.includes(item.id))
   }
 

@@ -63,7 +63,7 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
           )}
           <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
           <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
-          {access.leadAccess && (
+          {access.headAccess && (
             <div className='AdminRoutes'>
               <div className='Divider' />
               <SidebarItem name='Groups' icon='group' path='/groups' onClick={() => navigate('/groups')} />

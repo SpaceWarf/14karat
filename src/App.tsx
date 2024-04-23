@@ -78,7 +78,7 @@ function App() {
               <Route path='/inventory' element={<Inventory />} />
             </Route>
 
-            <Route element={<LeadRoute />}>
+            <Route element={<HeadRoute />}>
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
               <Route path='/members' element={<MembersListing />} />
@@ -100,9 +100,9 @@ function ProtectedRoute({ children }) {
 };
 
 //@ts-ignore
-function LeadRoute() {
+function HeadRoute() {
   const { access } = useAuth();
-  return access.leadAccess ? <Outlet /> : <Navigate to="/" replace />;
+  return access.headAccess ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 //@ts-ignore

@@ -12,6 +12,7 @@ import { DatabaseTable, getItemById, getItems } from '../utils/firestore';
 import { useDispatch } from 'react-redux';
 import { ProfileInfo } from '../state/profile';
 import { Division } from '../redux/reducers/divisions';
+import { Division as DivisionEnum } from '../state/division';
 
 interface AuthContextProps {
   user: User | null;
@@ -24,7 +25,6 @@ interface AuthContextProps {
 export interface Access {
   bossAccess: boolean,
   headAccess: boolean,
-  leadAccess: boolean,
   chainedAccess: boolean,
   memberAccess: boolean,
 }
@@ -32,7 +32,6 @@ export interface Access {
 const DEFAULT_ACCESS = {
   bossAccess: false,
   headAccess: false,
-  leadAccess: false,
   chainedAccess: false,
   memberAccess: false,
 };
@@ -83,7 +82,6 @@ export function AuthProvider({ children }) {
             return {
               bossAccess: true,
               headAccess: true,
-              leadAccess: true,
               chainedAccess: true,
               memberAccess: true,
             }
@@ -91,16 +89,14 @@ export function AuthProvider({ children }) {
 
           const divisions = await getItems<Division>(DatabaseTable.DIVISIONS);
           const profileDivision = divisions.find(division => division.id === profile.division);
-          const boss = divisions.find(division => division.id === 'oyabun');
-          const head = divisions.find(division => division.id === 'wakagashira');
-          const lead = divisions.find(division => division.id === 'shateigashira');
-          const operative = divisions.find(division => division.id === 'kobun');
-          const recruit = divisions.find(division => division.id === 'shatei');
+          const boss = divisions.find(division => division.id === DivisionEnum.WAKAGASHIRA);
+          const head = divisions.find(division => division.id === DivisionEnum.SHATEIGASHIRA);
+          const operative = divisions.find(division => division.id === DivisionEnum.SHATEI);
+          const recruit = divisions.find(division => division.id === DivisionEnum.KOBUN);
 
           return {
             bossAccess: boss && profileDivision ? boss.hierarchy >= profileDivision.hierarchy : false,
             headAccess: head && profileDivision ? head.hierarchy >= profileDivision.hierarchy : false,
-            leadAccess: lead && profileDivision ? lead.hierarchy >= profileDivision.hierarchy : false,
             chainedAccess: operative && profileDivision ? operative.hierarchy >= profileDivision.hierarchy : false,
             memberAccess: recruit && profileDivision ? recruit.hierarchy >= profileDivision.hierarchy : false,
           };

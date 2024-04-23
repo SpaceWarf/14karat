@@ -2,7 +2,8 @@ export enum Division {
   OYABUN = "oyabun",
   WAKAGASHIRA = "wakagashira",
   SHATEIGASHIRA = "shateigashira",
-  KOBUN = "kobun",
+  KYODAI = "kyodai",
   SHATEI = "shatei",
+  KOBUN = "kobun",
   HANGAROUND = "hangaround",
 }
