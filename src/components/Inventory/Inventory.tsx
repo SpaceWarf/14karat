@@ -1,20 +1,23 @@
 import "./Inventory.scss";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useReducer, useState } from "react";
 import Header from "../Common/Header";
 import { InventoryCategory, InventoryItem, InventoryTags } from "../../state/inventory";
 import { Stash } from "../../state/stash";
 import Loading from "../Common/Loading";
 import InventoryItemRow from "./InventoryItemRow";
 import { DatabaseTable, getItems, onItemsSnapshot } from "../../utils/firestore";
-import Filters from "../Common/Filters";
+import Filters, { FilterData } from "../Common/Filters";
 
 function Inventory() {
   const [loading, setLoading] = useState<boolean>(false);
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [stashes, setStashes] = useState<Stash[]>([]);
   const [collapsedCategories, setCollapsedCategories] = useState<string[]>([]);
-  const [search, setSearch] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [filters, setFilters] = useState<FilterData>({
+    search: '',
+    tags: [],
+    hideZeroValues: false,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,12 +34,17 @@ function Inventory() {
     fetchData();
   }, []);
 
-  const getItemsForCategory = (category: InventoryCategory): InventoryItem[] => {
+  const getItemsForCategory = (category: InventoryCategory): ReactElement[] => {
     return inventory.filter(item => {
-      const searchMatch = `${item.name} ${item.tags.join(' ')}`.toLowerCase().includes(search.toLowerCase())
-      const tagMatch = tags.length === 0 || item.tags.some(tag => tags.includes(tag))
-      return item.category === category && searchMatch && tagMatch
-    });
+      const searchMatch = `${item.name} ${item.tags.join(' ')}`.toLowerCase().includes(filters.search.toLowerCase())
+      const tagMatch = filters.tags.length === 0 || item.tags.some(tag => filters.tags.includes(tag))
+      const zeroValueMatch = !filters.hideZeroValues || Object.values(item.quantity).some(quantity => quantity > 0)
+      return item.category === category && searchMatch && tagMatch && zeroValueMatch
+    })
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(item => (
+        <InventoryItemRow item={item} stashes={stashes} />
+      ));
   }
 
   const handleToggleCategory = (category: string) => {
@@ -65,7 +73,7 @@ function Inventory() {
             <div className="Actions">
               <Filters
                 tags={Object.values(InventoryTags).sort((a, b) => a.localeCompare(b))}
-                onUpdate={({ search, tags }) => { setSearch(search); setTags(tags); }}
+                onUpdate={setFilters}
               />
             </div>
             <table className="ui very basic collapsing celled table">
@@ -93,10 +101,6 @@ function Inventory() {
                     </tr>
                     {!collapsedCategories.includes(category) && (
                       getItemsForCategory(category)
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map(item => (
-                          <InventoryItemRow item={item} stashes={stashes} />
-                        ))
                     )}
                   </>
                 ))}

@@ -22,6 +22,7 @@ export enum InventoryTags {
   GUNS = "guns",
   C1 = "c1",
   C2 = "c2",
+  C3 = "c3",
   AMMO = "ammo",
   PARTS = "parts",
   ATTACHEMENTS = "attachements",

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
+import { Checkbox } from "semantic-ui-react";
 
 interface FiltersProps {
   tags: string[];
@@ -9,17 +10,20 @@ interface FiltersProps {
 export interface FilterData {
   search: string;
   tags: string[];
+  hideZeroValues: boolean;
 }
 
 function Filters(props: FiltersProps) {
   const [search, setSearch] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
+  const [hideZeroValues, setHideZeroValues] = useState<boolean>(false)
 
   const handleSearchUpdate = (value: string) => {
     setSearch(value);
     props.onUpdate({
       search: value,
       tags,
+      hideZeroValues,
     });
   }
 
@@ -34,20 +38,38 @@ function Filters(props: FiltersProps) {
     props.onUpdate({
       search,
       tags: updatedTags,
+      hideZeroValues,
+    });
+  }
+
+  const handleCheckboxUpdate = (value: boolean) => {
+    setHideZeroValues(value);
+    props.onUpdate({
+      search,
+      tags,
+      hideZeroValues: value,
     });
   }
 
   return (
     <div className='Filters'>
       <div className='ui form'>
-        <Input
-          type="text"
-          name="search"
-          placeholder="Search"
-          icon="search"
-          value={search}
-          onChange={handleSearchUpdate}
-        />
+        <div>
+          <Input
+            type="text"
+            name="search"
+            placeholder="Search"
+            icon="search"
+            value={search}
+            onChange={handleSearchUpdate}
+          />
+          <Checkbox
+            checked={hideZeroValues}
+            label="Hide Zero Values"
+            toggle
+            onChange={() => handleCheckboxUpdate(!hideZeroValues)}
+          />
+        </div>
         {props.tags.length > 0 && (
           <div className="FilterLabels">
             {props.tags.sort((a, b) => a.localeCompare(b)).map(tag => (
