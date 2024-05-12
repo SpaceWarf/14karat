@@ -1,7 +1,7 @@
 import './Hierarchy.scss';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Common/Header';
-import hierarchy from '../../../assets/images/hierarchy.jpg';
+import hierarchy from '../../../assets/images/hierarchy.png';
 
 function Hierarchy() {
   const navigate = useNavigate();
