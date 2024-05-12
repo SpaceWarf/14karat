@@ -21,7 +21,7 @@ function Hierarchy() {
             <h1>Oyabun (Boss)</h1>
             <div className='Role'>
               <p>
-                Oyabun are the highest-ranking members of the group. They have ultimate authority within the organization and hold the power to make important
+                The Oyabun is the highest-ranking member of the group. They have ultimate authority within the organization and hold the power to make important
                 decisions, set the direction of the group, and oversee its criminal operations.
               </p>
               <p>
@@ -29,9 +29,8 @@ function Hierarchy() {
                 as maintain order and discipline within the family. Loyalty, respect, and adherence to the Oyabun's directives are paramount in the hierarchy.
               </p>
               <p>
-                The Oyabuns are under the protection of <a href='/information-center/lore?active=Guardians#komainu' target='_blank' rel="noreferrer">Koma inu (狛犬)</a>,
-                a twin pair of mythical lions with the power to repel evil. Koma inu are a symbol of yin and yang, with one lion being typically depicted with its
-                mouth open, symbolizing courage and strength, and the other lion depicted with its mouth closed, symbolizing wisdom and prudence.
+                The Oyabun is under the protection of <a href='/information-center/lore?active=Guardians#seiryuu' target='_blank' rel="noreferrer">Seiryū (青竜)</a>,
+                the Azure Dragon, a dragon spirit protector of the East and symbol of benevolance.
               </p>
             </div>
           </div>
@@ -39,14 +38,10 @@ function Hierarchy() {
             <h1>Wakagashira (Underboss)</h1>
             <div className='Role'>
               <p>
-                The Wakagashira acts as a second-in-command to the Oyabuns. He takes the role of head of the family when both Oyabuns are not able to be present, or
-                are otherwise occupied with their duties. The Wakagashira will help run day-to-day operations while the Oyabuns run big picture items, and also has
-                a counsel role within the leadership where they are to advise the Oyabuns on all matters related to the family's operations.
-              </p>
-              <p>
-                The Wakagashira is under the protection of <a href='/information-center/lore?active=Guardians#genbu' target='_blank' rel="noreferrer">Genbu (玄武)</a>,
-                a turtle-snake chimera associated with the virtue of knowledge. The intertwining of the turtle and snake symbolize the balance of yin and yang for
-                which Genbu was a protector of.
+                The role of Wakagashira is not a rank persay as it is attributed to a Shateigashira who will act as second-in-command to the Oyabun. The Wakagashira
+                will take the role of head of the family when the Oyabun is not able to be present, or is otherwise occupied with their duties. They will help run
+                day-to-day operations while the Oyabun runs big picture items, and also has a counsel role within the leadership where they are to advise the Oyabun
+                on all matters related to the family's operations.
               </p>
             </div>
           </div>
@@ -54,10 +49,10 @@ function Hierarchy() {
             <h1>Shateigashira (Heads)</h1>
             <div className='Role'>
               <p>
-                Shateigashira are high-ranking members who are second-in-command to the Oyabun. This role involves significant authority and responsibility, as they
+                Shateigashira are high-ranking members who make up the Oyabun's high command team. This role involves significant authority and responsibility, as they
                 are tasked with assisting the Oyabun in leading the family. They may be in charge of day-to-day operations, managing lower-ranking members, and
                 overseeing various activities. The Shateigashira often acts as a bridge between the Oyabun and the other members, helping to maintain discipline,
-                enforce the family's rules, and mediate disputes.
+                enforce the family's rules, and mediate disputes. One of the Shateigashira is selected to be named Wakagashira, or second-in-command.
               </p>
               <p>
                 Shateigashira are under the protection of various spirits depending on their specific role within the family.
