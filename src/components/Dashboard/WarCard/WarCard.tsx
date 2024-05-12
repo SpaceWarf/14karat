@@ -5,21 +5,11 @@ import { OUR_TIMER_UP, THEIR_TIMER_UP, getSlideTimer, getTimeSince } from '../..
 import { getMostRecentWar } from '../../../redux/selectors/wars';
 import { getSlideRadio } from '../../../redux/selectors/radios';
 import RadioChannel from '../../Common/RadioChannel';
-import { useEffect, useState } from 'react';
 
 function WarCard() {
   const navigate = useNavigate();
-  const [now, setNow] = useState<Date>(new Date())
   const war = useSelector(getMostRecentWar);
   const slideRadio = useSelector(getSlideRadio);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setNow(new Date())
-    }, 60000)
-
-    return () => clearTimeout(timeout)
-  }, [])
 
   const getTimeString = (): string => {
     return war.endedAt ? getTimeSince(new Date(), new Date(war.endedAt)) : '0 days';
@@ -65,14 +55,14 @@ function WarCard() {
             <div className='Timers'>
               <div className='OurTimer'>
                 <h3>Our Timer</h3>
-                <h2 className={getSlideTimer(now, war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
-                  {getSlideTimer(now, war.ourSlide, OUR_TIMER_UP)}
+                <h2 className={getSlideTimer(new Date(), war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                  {getSlideTimer(new Date(), war.ourSlide, OUR_TIMER_UP)}
                 </h2>
               </div>
               <div className='TheirTimer'>
                 <h3>Their Timer</h3>
-                <h2 className={getSlideTimer(now, war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
-                  {getSlideTimer(now, war.theirSlide, THEIR_TIMER_UP)}
+                <h2 className={getSlideTimer(new Date(), war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                  {getSlideTimer(new Date(), war.theirSlide, THEIR_TIMER_UP)}
                 </h2>
               </div>
             </div>

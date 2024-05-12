@@ -42,15 +42,6 @@ function WarInfo() {
   const [editingTheirTimer, setEditingTheirTimer] = useState<boolean>(false);
   const [theirSlide, setTheirSlide] = useState<Dayjs>(dayjs());
   const [clips, setClips] = useState<WarClip[]>([]);
-  const [now, setNow] = useState<Date>(new Date())
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setNow(new Date())
-    }, 60000)
-
-    return () => clearTimeout(timeout)
-  }, [])
 
   useEffect(() => {
     const fetchWebhook = async () => {
@@ -219,7 +210,7 @@ function WarInfo() {
       setLoadingWebhook(true);
       triggerDiscordWebhook({
         url: webhook.url,
-        content: `Our Timer: **${getSlideTimer(now, war.ourSlide, OUR_TIMER_UP)}**\nTheir Timer: **${getSlideTimer(now, war.theirSlide, THEIR_TIMER_UP)}**`
+        content: `Our Timer: **${getSlideTimer(new Date(), war.ourSlide, OUR_TIMER_UP)}**\nTheir Timer: **${getSlideTimer(new Date(), war.theirSlide, THEIR_TIMER_UP)}**`
       }).then(() => {
         setLoadingWebhook(false);
         setTimerWebhookSuccess(true);
@@ -344,8 +335,8 @@ function WarInfo() {
                     )}
                   </div>
                   {!editingOurTimer && (
-                    <h1 className={getSlideTimer(now, war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
-                      {getSlideTimer(now, war.ourSlide, OUR_TIMER_UP)}
+                    <h1 className={getSlideTimer(new Date(), war.ourSlide, OUR_TIMER_UP) === OUR_TIMER_UP ? 'green' : 'red'}>
+                      {getSlideTimer(new Date(), war.ourSlide, OUR_TIMER_UP)}
                     </h1>
                   )}
                   {editingOurTimer && (
@@ -380,8 +371,8 @@ function WarInfo() {
                     )}
                   </div>
                   {!editingTheirTimer && (
-                    <h1 className={getSlideTimer(now, war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
-                      {getSlideTimer(now, war.theirSlide, THEIR_TIMER_UP)}
+                    <h1 className={getSlideTimer(new Date(), war.theirSlide, THEIR_TIMER_UP) === THEIR_TIMER_UP ? 'red' : 'green'}>
+                      {getSlideTimer(new Date(), war.theirSlide, THEIR_TIMER_UP)}
                     </h1>
                   )}
                   {editingTheirTimer && (
