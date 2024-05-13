@@ -18,44 +18,44 @@ function Hierarchy() {
         </div>
         <div className='TextContainer'>
           <div className='Division'>
-            <h1>Oyabun (Boss)</h1>
+            <h1>Boss (Oyabun)</h1>
             <div className='Role'>
               <p>
-                The Oyabun is the highest-ranking member of the group. They have ultimate authority within the organization and hold the power to make important
+                The boss is the highest-ranking member of the group. They have ultimate authority within the organization and hold the power to make important
                 decisions, set the direction of the group, and oversee its criminal operations.
               </p>
               <p>
-                The role of the Oyabun extends beyond just leadership; they are also expected to provide guidance and protection to their subordinates, as well
-                as maintain order and discipline within the family. Loyalty, respect, and adherence to the Oyabun's directives are paramount in the hierarchy.
+                The role of the boss extends beyond just leadership; they are also expected to provide guidance and protection to their subordinates, as well
+                as maintain order and discipline within the family. Loyalty, respect, and adherence to the boss's directives are paramount in the hierarchy.
               </p>
               <p>
-                The Oyabun is under the protection of <a href='/information-center/lore?active=Guardians#seiryuu' target='_blank' rel="noreferrer">Seiryū (青竜)</a>,
+                The boss is under the protection of <a href='/information-center/lore?active=Guardians#seiryuu' target='_blank' rel="noreferrer">Seiryū (青竜)</a>,
                 the Azure Dragon, a dragon spirit protector of the East and symbol of benevolance.
               </p>
             </div>
           </div>
           <div className='Division'>
-            <h1>Wakagashira (Underboss)</h1>
+            <h1>Underboss (Wakagashira)</h1>
             <div className='Role'>
               <p>
-                The role of Wakagashira is not a rank persay as it is attributed to a Shateigashira who will act as second-in-command to the Oyabun. The Wakagashira
-                will take the role of head of the family when the Oyabun is not able to be present, or is otherwise occupied with their duties. They will help run
-                day-to-day operations while the Oyabun runs big picture items, and also has a counsel role within the leadership where they are to advise the Oyabun
+                The role of the underboss is not a rank persay as it is attributed to a head who will act as second-in-command to the boss. The underboss
+                will take the role of head of the family when the boss is not able to be present, or is otherwise occupied with their duties. They will help run
+                day-to-day operations while the boss runs big picture items, and also has a counsel role within the leadership where they are to advise the boss
                 on all matters related to the family's operations.
               </p>
             </div>
           </div>
           <div className='Division'>
-            <h1>Shateigashira (Heads)</h1>
+            <h1>Heads (Shateigashira)</h1>
             <div className='Role'>
               <p>
-                Shateigashira are high-ranking members who make up the Oyabun's high command team. This role involves significant authority and responsibility, as they
-                are tasked with assisting the Oyabun in leading the family. They may be in charge of day-to-day operations, managing lower-ranking members, and
-                overseeing various activities. The Shateigashira often acts as a bridge between the Oyabun and the other members, helping to maintain discipline,
-                enforce the family's rules, and mediate disputes. One of the Shateigashira is selected to be named Wakagashira, or second-in-command.
+                Heads are high-ranking members who make up the boss's high command team. This role involves significant authority and responsibility, as they
+                are tasked with assisting the boss in leading the family. They may be in charge of day-to-day operations, managing lower-ranking members, and
+                overseeing various activities. The heads often acts as a bridge between the boss and the other members, helping to maintain discipline,
+                enforce the family's rules, and mediate disputes. One of the heads is selected to be named Wakagashira, or second-in-command.
               </p>
               <p>
-                Shateigashira are under the protection of various spirits depending on their specific role within the family.
+                Heads are under the protection of various spirits depending on their specific role within the family.
               </p>
             </div>
             <div className='Role'>
@@ -101,44 +101,44 @@ function Hierarchy() {
             </div>
           </div>
           <div className='Division'>
-            <h1>Kyōdai (Senior Operative)</h1>
+            <h1>Senior Operatives (Kyōdai)</h1>
             <div className='Role'>
               <p>
-                Kyōdai are members that have stood the test of time and proved their resolve and usefulness to the family. Kyōdai are important intermediary figures
+                Senior operatives are members that have stood the test of time and proved their resolve and usefulness to the family. Senior operatives are important intermediary figures
                 in the hierarchy and act as a link between junior members and higher-ranking figures, helping to facilitate the smooth running of each branch of the
-                family. Kyōdai will specialize in one area and help the Wakagashira in the execution of tasks related to that branch, also helping ensure everything
+                family. Senior operatives will specialize in one area and help the Wakagashira in the execution of tasks related to that branch, also helping ensure everything
                 runs smoothly.
               </p>
               <p>
-                Kyōdai are under the protection of the same guardian as the Head they are tasked with assisting.
+                Senior operatives are under the protection of the same guardian as the Head they are tasked with assisting.
               </p>
             </div>
           </div>
           <div className='Division'>
-            <h1>Shatei (Operatives)</h1>
+            <h1>Operatives (Shatei)</h1>
             <div className='Role'>
               <p>
-                Shatei are low-ranking members who play a crucial role in the day-to-day operations of the family. These individuals are often the backbone
+                Operatives are low-ranking members who play a crucial role in the day-to-day operations of the family. These individuals are often the backbone
                 of the group, and responsible for carrying out various tasks that contribute to the organization's overall objectives such as heists, debt
-                collection, acts of violence, etc. While they hold relatively low positions in the hierarchy, Shatei are essential for operations.
+                collection, acts of violence, etc. While they hold relatively low positions in the hierarchy, operatives are essential for operations.
               </p>
               <p>
-                Shatei are under the protection of <a href='/information-center/lore?active=Guardians#inugami' target='_blank' rel="noreferrer">Inugami (犬神)</a>,
+                Operatives are under the protection of <a href='/information-center/lore?active=Guardians#inugami' target='_blank' rel="noreferrer">Inugami (犬神)</a>,
                 a dog spirit said to bring protection and good fortune, but also capable of bringing vengeance and destruction.
               </p>
             </div>
           </div>
           <div className='Division'>
-            <h1>Kobun (Recruits)</h1>
+            <h1>Recruits (Kobun)</h1>
             <div className='Role'>
               <p>
-                Kobun are apprentices in the early stages of their career. The role of Kobun is akin to that of a junior member. They are still learning
+                Recruits are apprentices in the early stages of their career. The role of recruits is akin to that of a junior member. They are still learning
                 the ropes and working their way up the organization's hierarchy and are often responsible for performing various tasks and errands for
                 higher-ranking members. These tasks may include running errands, handling minor criminal activities, and generally providing support to their
                 superiors.
               </p>
               <p>
-                Kobun are not under the protection of any spirit as they are not blooded in members of the family. They are referred to
+                recruits are not under the protection of any spirit as they are not blooded in members of the family. They are referred to
                 as <a href='/information-center/lore?active=Spirits#ikiryou' target='_blank' rel="noreferrer">Ikiryō (生霊)</a>, or living spirits, as their
                 connection between their body and spirit is still alive. That connection is severed as part of the blood-in process.
               </p>
