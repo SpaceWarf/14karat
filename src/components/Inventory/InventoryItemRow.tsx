@@ -2,74 +2,18 @@ import "./Inventory.scss";
 import { InventoryItem } from "../../state/inventory";
 import { Stash } from "../../state/stash";
 import { useAuth } from "../../contexts/AuthContext";
-import { DatabaseTable, updateItem } from "../../utils/firestore";
+import InventoryInput from "./InventoryInput";
 
 interface InventoryItemCardProps {
   item: InventoryItem;
   stashes: Stash[];
+  onChange: (value: number, stashId: string) => void;
+  onAdd: (stashId: string) => void;
+  onRemove: (stashId: string) => void;
 }
 
 function InventoryItemRow(props: InventoryItemCardProps) {
-  const { access, user } = useAuth();
-
-  const handleRemove = (id: string) => {
-    if (user) {
-      updateItem<InventoryItem>(
-        DatabaseTable.INVENTORY,
-        props.item.id,
-        {
-          ...props.item,
-          quantity: {
-            ...props.item.quantity,
-            [id]: props.item.quantity[id] - 1
-          }
-        },
-        user
-      );
-    }
-  }
-
-  const handleAdd = (id: string) => {
-    if (user) {
-      updateItem<InventoryItem>(
-        DatabaseTable.INVENTORY,
-        props.item.id,
-        {
-          ...props.item,
-          quantity: {
-            ...props.item.quantity,
-            [id]: props.item.quantity[id] + 1
-          }
-        },
-        user
-      );
-    }
-  }
-
-  const handleChange = (value: number, id: string) => {
-    if (user && !isNaN(value)) {
-      updateItem<InventoryItem>(
-        DatabaseTable.INVENTORY,
-        props.item.id,
-        {
-          ...props.item,
-          quantity: {
-            ...props.item.quantity,
-            [id]: value,
-          }
-        },
-        user
-      );
-    }
-  }
-
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>, id: string) {
-    if (e.key === 'ArrowDown' && props.item.quantity[id] > 0) {
-      handleRemove(id);
-    } else if (e.key === 'ArrowUp') {
-      handleAdd(id);
-    }
-  }
+  const { access } = useAuth();
 
   return (
     <tr className="InventoryItemRow">
@@ -84,24 +28,13 @@ function InventoryItemRow(props: InventoryItemCardProps) {
         return (
           <td className="centered">
             {access.headAccess ? (
-              <div className="ui form">
-                <button className="ui button negative" disabled={value <= 0} onClick={() => handleRemove(stash.id)}>
-                  <i className="minus icon"></i>
-                </button>
-                <div className='ui input'>
-                  <input
-                    name='quantity'
-                    type="text"
-                    value={value}
-                    onChange={({ target }) => handleChange(Number(target.value), stash.id)}
-                    onKeyDown={e => handleKeyDown(e, stash.id)}
-                    autoComplete='off'
-                  />
-                </div>
-                <button className="ui button positive" onClick={() => handleAdd(stash.id)}>
-                  <i className="add icon"></i>
-                </button>
-              </div>
+              <InventoryInput
+                value={value}
+                onChange={(value: number) => props.onChange(value, stash.id)}
+                onAdd={() => props.onAdd(stash.id)}
+                onRemove={() => props.onRemove(stash.id)}
+                showButtons
+              />
             ) : (
               value
             )}

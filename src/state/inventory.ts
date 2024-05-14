@@ -42,6 +42,8 @@ export interface InventoryItem extends FirestoreEntity {
   quantity: { [key: string]: number };
   category: string;
   tags: string[];
+  showAsCard: boolean;
+  isMonetary: boolean;
 }
 
 export interface InventoryItemUpdate {

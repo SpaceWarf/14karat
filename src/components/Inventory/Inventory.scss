@@ -10,7 +10,7 @@
     .Actions {
       display: flex;
       justify-content: flex-start;
-      width: 950px;
+      width: 1100px;
 
       .ui.form .ui.input {
         width: 300px;
@@ -18,7 +18,31 @@
     }
   }
 
+  .InventoryCards {
+    width: 1100px;
+    display: flex;
+    gap: 10px;
+    margin: 0 0 10px 0;
+
+    .ui.card {
+      p.header {
+        font-size: 1.4rem;
+        margin: 0;
+      }
+
+      .total {
+        font-weight: 600;
+      }
+
+      .inputs {
+        display: flex;
+        gap: 10px;
+      }
+    }
+  }
+
   .ui.table {
+    width: 1100px !important;
     margin: 0;
 
     thead {
@@ -58,27 +82,30 @@
         }
       }
     }
+  }
 
-    .InventoryItemRow {
-      .ui.form {
-        display: flex;
-        justify-content: center;
+  .InventoryInput {
+    display: flex;
+    justify-content: center;
 
-        .ui.input input {
-          width: 75px;
-          border-radius: 0 !important;
-          text-align: center;
-        }
+    .ui.input input {
+      width: 100px;
+      border-radius: 5px !important;
+      text-align: center;
 
-        .ui.button {
-          &.negative {
-            border-radius: 5px 0 0 5px;
-          }
+      &.has-buttons {
+        width: 75px;
+        border-radius: 0 !important;
+      }
+    }
 
-          &.positive {
-            border-radius: 0 5px 5px 0;
-          }
-        }
+    .ui.button {
+      &.negative {
+        border-radius: 5px 0 0 5px;
+      }
+
+      &.positive {
+        border-radius: 0 5px 5px 0;
       }
     }
   }
