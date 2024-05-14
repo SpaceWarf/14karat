@@ -4,6 +4,7 @@ import { Checkbox } from "semantic-ui-react";
 
 interface FiltersProps {
   tags: string[];
+  viewZeroValuesToggle?: boolean;
   onUpdate: (update: FilterData) => void;
 }
 
@@ -63,12 +64,14 @@ function Filters(props: FiltersProps) {
             value={search}
             onChange={handleSearchUpdate}
           />
-          <Checkbox
-            checked={hideZeroValues}
-            label="Hide Zero Values"
-            toggle
-            onChange={() => handleCheckboxUpdate(!hideZeroValues)}
-          />
+          {props.viewZeroValuesToggle && (
+            <Checkbox
+              checked={hideZeroValues}
+              label="Hide Zero Values"
+              toggle
+              onChange={() => handleCheckboxUpdate(!hideZeroValues)}
+            />
+          )}
         </div>
         {props.tags.length > 0 && (
           <div className="FilterLabels">

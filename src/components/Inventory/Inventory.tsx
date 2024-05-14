@@ -1,5 +1,5 @@
 import "./Inventory.scss";
-import { ReactElement, useEffect, useReducer, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Header from "../Common/Header";
 import { InventoryCategory, InventoryItem, InventoryTags } from "../../state/inventory";
 import { Stash } from "../../state/stash";
@@ -74,6 +74,7 @@ function Inventory() {
               <Filters
                 tags={Object.values(InventoryTags).sort((a, b) => a.localeCompare(b))}
                 onUpdate={setFilters}
+                viewZeroValuesToggle
               />
             </div>
             <table className="ui very basic collapsing celled table">
