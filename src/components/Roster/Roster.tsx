@@ -28,9 +28,10 @@ function Roster() {
   }, []);
 
   function getEmployeesForDivision(division: Division): ProfileInfo[] {
-    return getAlphabeticallyOrdered(members.filter(member => (
-      !member.hidden && member.division === division.id
-    )), 'name');
+    return getAlphabeticallyOrdered(members.filter(member => {
+      const hidden = !access.headAccess && member.hidden
+      return !hidden && member.division === division.id
+    }), 'name');
   }
 
   return (
