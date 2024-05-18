@@ -97,7 +97,7 @@ function Login() {
               }
             </div>
             <div className='Footer'>
-              <p className='quote'><i>"We put the hoe in Hōgakai."</i></p>
+              <p className='quote'><i>"It's a pink world 🩷"</i></p>
             </div>
           </div>
         </div>
