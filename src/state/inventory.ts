@@ -33,7 +33,8 @@ export enum InventoryTags {
   METALS = "metals",
   ELECTRONICS = "electronics",
   INGOTS = "ingots",
-  ORES = "ores"
+  ORES = "ores",
+  MELEE = "melee",
 }
 
 export interface InventoryItem extends FirestoreEntity {
