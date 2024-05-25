@@ -23,8 +23,9 @@ function JobCrew(props: JobCrewProps) {
   }
 
   const getMemberDropdownOptions = (role: string): DropdownOption[] => {
+    const members = props.members.filter(member => !member.hidden && member.division)
     return [
-      ...props.members
+      ...members
         .filter(member => member.roles.includes(role))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(member => ({
@@ -33,7 +34,7 @@ function JobCrew(props: JobCrewProps) {
           value: member.id,
           description: role,
         })),
-      ...props.members
+      ...members
         .filter(member => !member.roles.includes(role))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(member => ({
