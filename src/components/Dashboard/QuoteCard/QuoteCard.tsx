@@ -4,7 +4,7 @@ import { RootState } from '../../../redux/store';
 import { Quote } from '../../../state/quotes';
 import { useEffect, useState } from 'react';
 
-const OFFSET = 5;
+const OFFSET = 20;
 
 function QuoteCard() {
   const { quotes } = useSelector((state: RootState) => state.quotes);
