@@ -8,11 +8,12 @@ import WarCard from './WarCard/WarCard';
 import RadiosCard from './RadiosCard/RadiosCard';
 import banner from '../../assets/images/banner.png';
 import QuoteCard from './QuoteCard/QuoteCard';
-import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
+// import NewFeatureCard from './NewFeatureCard/NewFeatureCard';
 import { useAuth } from '../../contexts/AuthContext';
 import JobsCard from './JobsCard/JobsCard';
 import { getAvatarBorder, getHeaderBackground, getHeaderDecoration, isThemeActive } from '../../utils/themes';
 import UnchainedCard from './UnchainedCard/UnchainedCard';
+import RoninCard from './RoninCard/RoninCard';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -48,18 +49,19 @@ function Dashboard() {
       </div>
       <div className='content'>
         <div className='Col'>
-          {access.chainedAccess && <RecentStratCard />}
-          {!access.chainedAccess && <UnchainedCard />}
+          {!access.chainedAccess && access.roninAccess && <RoninCard />}
+          {!access.chainedAccess && !access.roninAccess && <UnchainedCard />}
+          {(access.chainedAccess || access.roninAccess) && <RecentStratCard />}
         </div>
         <div className='Col'>
           <RadiosCard />
           <JobsCard />
         </div>
         <div className='Col'>
-          <UpcomingEventsCard />
-          <WarCard />
+          {access.memberAccess && <UpcomingEventsCard />}
+          {access.memberAccess && <WarCard />}
           <QuoteCard />
-          {access.chainedAccess && <NewFeatureCard />}
+          {/* {access.chainedAccess && <NewFeatureCard />} */}
         </div>
       </div>
     </div>

@@ -48,21 +48,33 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         </div>
         <div className="Nav">
           <SidebarItem name='Dashboard' icon='chart pie' path='/' onClick={() => navigate('/')} />
-          <SidebarItem name='Calendar' icon='calendar alternate' path='/calendar' onClick={() => navigate('/calendar')} />
-          <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} />
+          {access.memberAccess && (
+            <>
+              <SidebarItem name='Calendar' icon='calendar alternate' path='/calendar' onClick={() => navigate('/calendar')} />
+              <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} />
+            </>
+          )}
           <SidebarItem name='Radios' icon='microphone circle' path='/radios' onClick={() => navigate('/radios')}>
             {mainRadio && <p className='SidebarItemDetail'>{mainRadio.channel}</p>}
           </SidebarItem>
-          <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
+          {access.memberAccess && (
+            <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
+          )}
           {access.chainedAccess && (
+            <SidebarItem name='Inventory' icon='boxes' path='/inventory' onClick={() => navigate('/inventory')} />
+          )}
+          {(access.chainedAccess || access.roninAccess) && (
             <>
-              <SidebarItem name='Inventory' icon='boxes' path='/inventory' onClick={() => navigate('/inventory')} />
               <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
               <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
             </>
           )}
-          <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
-          <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
+          {access.memberAccess && (
+            <>
+              <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
+              <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
+            </>
+          )}
           {access.headAccess && (
             <div className='AdminRoutes'>
               <div className='Divider' />

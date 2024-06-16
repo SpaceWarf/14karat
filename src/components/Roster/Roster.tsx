@@ -40,21 +40,24 @@ function Roster() {
         <Loading />
       ) : (
         <div className="content">
-          {[...divisions].sort((a, b) => a.hierarchy - b.hierarchy).map(division => (
-            <div className="Division">
-              <Header text={division.name} decorated />
-              <div className="content">
-                {getEmployeesForDivision(division).map((member: ProfileInfo) => (
-                  <ProfileCard
-                    key={member.id}
-                    profile={member}
-                    editable={access.headAccess}
-                    nameAsTitle
-                  />
-                ))}
+          {[...divisions]
+            .filter(division => !division.hidden)
+            .sort((a, b) => a.hierarchy - b.hierarchy)
+            .map(division => (
+              <div className="Division">
+                <Header text={division.name} decorated />
+                <div className="content">
+                  {getEmployeesForDivision(division).map((member: ProfileInfo) => (
+                    <ProfileCard
+                      key={member.id}
+                      profile={member}
+                      editable={access.headAccess}
+                      nameAsTitle
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

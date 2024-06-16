@@ -4,6 +4,7 @@ export interface Division {
   id: string;
   name: string;
   hierarchy: number;
+  hidden: boolean;
 }
 
 export interface DivisionsState {

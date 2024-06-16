@@ -27,13 +27,15 @@ export interface Access {
   headAccess: boolean,
   chainedAccess: boolean,
   memberAccess: boolean,
+  roninAccess: boolean,
 }
 
-const DEFAULT_ACCESS = {
+const DEFAULT_ACCESS: Access = {
   bossAccess: false,
   headAccess: false,
   chainedAccess: false,
   memberAccess: false,
+  roninAccess: false,
 };
 
 export function useAuth() {
@@ -84,6 +86,7 @@ export function AuthProvider({ children }) {
               headAccess: true,
               chainedAccess: true,
               memberAccess: true,
+              roninAccess: true,
             }
           }
 
@@ -93,12 +96,14 @@ export function AuthProvider({ children }) {
           const head = divisions.find(division => division.id === DivisionEnum.SHATEIGASHIRA);
           const operative = divisions.find(division => division.id === DivisionEnum.SHATEI);
           const recruit = divisions.find(division => division.id === DivisionEnum.KOBUN);
+          const ronin = divisions.find(division => division.id === DivisionEnum.RONIN);
 
           return {
             bossAccess: boss && profileDivision ? boss.hierarchy >= profileDivision.hierarchy : false,
             headAccess: head && profileDivision ? head.hierarchy >= profileDivision.hierarchy : false,
             chainedAccess: operative && profileDivision ? operative.hierarchy >= profileDivision.hierarchy : false,
             memberAccess: recruit && profileDivision ? recruit.hierarchy >= profileDivision.hierarchy : false,
+            roninAccess: profileDivision?.id === ronin?.id,
           };
         }
         return DEFAULT_ACCESS;

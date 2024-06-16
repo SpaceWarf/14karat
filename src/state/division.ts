@@ -6,4 +6,5 @@ export enum Division {
   SHATEI = "shatei",
   KOBUN = "kobun",
   HANGAROUND = "hangaround",
+  RONIN = "ronin",
 }
