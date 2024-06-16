@@ -9,13 +9,11 @@ function RoninCard() {
         </div>
         <div className='TextContainer'>
           <p>
-            This account gives you a limited access to the HK website. Your access includes the Radios pages,
-            which will allow you to burn our radios whenever necessary. You also have access to the hacking page
-            with which you can practice hacks for jobs.
+            This account gives you a limited access to the HK website. Your access includes the following features:
           </p>
           <ul>
-            <li><b>Radios</b>: view our active radios, and burn them when necessary;</li>
-            <li><b>Hacking</b>: view and practice the hacks necessary for jobs;</li>
+            <li><b>Radios</b>: view our active radios and burn them when necessary;</li>
+            <li><b>Hacking</b>: view and practice hacks for jobs;</li>
             <li><b>Driver Strats</b>: view our collection of rat strats and VIP spots.</li>
           </ul>
           <p>
