@@ -39,6 +39,8 @@ import FleecaGuide from './components/Jobs/Guides/FleecaGuide';
 import CompletedJobListing from './components/Jobs/CompletedJobListing';
 
 function App() {
+  const { access } = useAuth();
+
   return (
     <div className="App">
       <Router>
@@ -50,7 +52,7 @@ function App() {
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
 
-            <Route element={<MembersRoute />}>
+            <Route element={<ConditionalRoute condition={access.memberAccess || access.roninAccess} />}>
               <Route path='/roster' element={<Roster />} />
               <Route path='/calendar' element={<Calendar />} />
               <Route path='/war' element={<WarInfo />} />
@@ -66,19 +68,13 @@ function App() {
               <Route path='/jobs/new' element={<JobPicker />} />
               <Route path='/jobs/completed' element={<CompletedJobListing />} />
               <Route path='/information-center/jobs' element={<Jobs />} />
-            </Route>
-
-            <Route element={<MembersOrRoninRoute />}>
               <Route path='/radios' element={<Radios />} />
             </Route>
 
-            <Route element={<ChainedRoute />}>
+            <Route element={<ConditionalRoute condition={access.chainedAccess || access.roninAccess} />}>
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/information-center/jobs/fleeca' element={<FleecaGuide />} />
               <Route path='/information-center/black-markets' element={<BlackMarkets />} />
-            </Route>
-
-            <Route element={<ChainedOrRoninRoute />}>
               <Route path='/driver-strats' element={<DriverStrats />} />
               <Route path='/driver-strats/all' element={<DriverStratGallery />} />
               <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
@@ -86,7 +82,7 @@ function App() {
               <Route path='/hacking/practice' element={<HackingPractice />} />
             </Route>
 
-            <Route element={<SeniorOpRoute />}>
+            <Route element={<ConditionalRoute condition={access.seniorOpAccess} />}>
               <Route path='/inventory' element={<Inventory />} />
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
@@ -108,29 +104,8 @@ function ProtectedRoute({ children }) {
   return !!user ? children : <Navigate to="/login" replace />;
 };
 
-function SeniorOpRoute() {
-  const { access } = useAuth();
-  return access.seniorOpAccess ? <Outlet /> : <Navigate to="/" replace />;
-};
-
-function ChainedRoute() {
-  const { access } = useAuth();
-  return access.chainedAccess ? <Outlet /> : <Navigate to="/" replace />;
-};
-
-function MembersRoute() {
-  const { access } = useAuth();
-  return access.memberAccess ? <Outlet /> : <Navigate to="/" replace />;
-}
-
-function ChainedOrRoninRoute() {
-  const { access } = useAuth();
-  return access.chainedAccess || access.roninAccess ? <Outlet /> : <Navigate to="/" replace />;
-};
-
-function MembersOrRoninRoute() {
-  const { access } = useAuth();
-  return access.memberAccess || access.roninAccess ? <Outlet /> : <Navigate to="/" replace />;
+function ConditionalRoute(props: { condition: boolean }) {
+  return props.condition ? <Outlet /> : <Navigate to="/" replace />;
 }
 
 export default App;

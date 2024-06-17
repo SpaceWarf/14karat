@@ -48,30 +48,20 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
         </div>
         <div className="Nav">
           <SidebarItem name='Dashboard' icon='chart pie' path='/' onClick={() => navigate('/')} />
-          {access.memberAccess && (
-            <>
-              <SidebarItem name='Calendar' icon='calendar alternate' path='/calendar' onClick={() => navigate('/calendar')} />
-              <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} />
-            </>
-          )}
+          <SidebarItem name='Calendar' icon='calendar alternate' path='/calendar' onClick={() => navigate('/calendar')} />
+          <SidebarItem name='Jobs' icon='dollar sign' path='/jobs' onClick={() => navigate('/jobs')} />
           <SidebarItem name='Radios' icon='microphone circle' path='/radios' onClick={() => navigate('/radios')}>
             {mainRadio && <p className='SidebarItemDetail'>{mainRadio.channel}</p>}
           </SidebarItem>
-          {access.memberAccess && (
-            <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
-          )}
+          <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
           {(access.chainedAccess || access.roninAccess) && (
             <>
               <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
               <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
             </>
           )}
-          {access.memberAccess && (
-            <>
-              <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
-              <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
-            </>
-          )}
+          <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
+          <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
           {access.seniorOpAccess && (
             <div className='AdminRoutes'>
               <div className='Divider' />
