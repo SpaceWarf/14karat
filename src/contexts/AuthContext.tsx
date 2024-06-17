@@ -25,6 +25,7 @@ interface AuthContextProps {
 export interface Access {
   bossAccess: boolean,
   headAccess: boolean,
+  seniorOpAccess: boolean,
   chainedAccess: boolean,
   memberAccess: boolean,
   roninAccess: boolean,
@@ -33,6 +34,7 @@ export interface Access {
 const DEFAULT_ACCESS: Access = {
   bossAccess: false,
   headAccess: false,
+  seniorOpAccess: false,
   chainedAccess: false,
   memberAccess: false,
   roninAccess: false,
@@ -84,6 +86,7 @@ export function AuthProvider({ children }) {
             return {
               bossAccess: true,
               headAccess: true,
+              seniorOpAccess: true,
               chainedAccess: true,
               memberAccess: true,
               roninAccess: true,
@@ -94,6 +97,7 @@ export function AuthProvider({ children }) {
           const profileDivision = divisions.find(division => division.id === profile.division);
           const boss = divisions.find(division => division.id === DivisionEnum.WAKAGASHIRA);
           const head = divisions.find(division => division.id === DivisionEnum.SHATEIGASHIRA);
+          const seniorop = divisions.find(division => division.id === DivisionEnum.KYODAI);
           const operative = divisions.find(division => division.id === DivisionEnum.SHATEI);
           const recruit = divisions.find(division => division.id === DivisionEnum.KOBUN);
           const ronin = divisions.find(division => division.id === DivisionEnum.RONIN);
@@ -101,6 +105,7 @@ export function AuthProvider({ children }) {
           return {
             bossAccess: boss && profileDivision ? boss.hierarchy >= profileDivision.hierarchy : false,
             headAccess: head && profileDivision ? head.hierarchy >= profileDivision.hierarchy : false,
+            seniorOpAccess: seniorop && profileDivision ? seniorop.hierarchy >= profileDivision.hierarchy : false,
             chainedAccess: operative && profileDivision ? operative.hierarchy >= profileDivision.hierarchy : false,
             memberAccess: recruit && profileDivision ? recruit.hierarchy >= profileDivision.hierarchy : false,
             roninAccess: profileDivision?.id === ronin?.id,

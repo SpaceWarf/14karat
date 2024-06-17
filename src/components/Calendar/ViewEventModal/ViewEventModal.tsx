@@ -81,7 +81,7 @@ function ViewEventModal(props: ViewEventModalProps) {
           <div className="Label" style={{ backgroundColor: props.event.color }} />
           {props.event.title}
         </div>
-        {access.headAccess && (
+        {access.seniorOpAccess && (
           <div className="Actions">
             <button className="ui icon button" disabled={!props.webhook} onClick={sendWebhook}>
               <i className="discord icon" />

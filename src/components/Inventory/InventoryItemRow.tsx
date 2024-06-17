@@ -27,7 +27,7 @@ function InventoryItemRow(props: InventoryItemCardProps) {
         const value = props.item.quantity[stash.id] || 0;
         return (
           <td className="centered">
-            {access.headAccess ? (
+            {access.seniorOpAccess ? (
               <InventoryInput
                 value={value}
                 onChange={(value: number) => props.onChange(value, stash.id)}

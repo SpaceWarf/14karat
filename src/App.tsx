@@ -76,7 +76,6 @@ function App() {
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/information-center/jobs/fleeca' element={<FleecaGuide />} />
               <Route path='/information-center/black-markets' element={<BlackMarkets />} />
-              <Route path='/inventory' element={<Inventory />} />
             </Route>
 
             <Route element={<ChainedOrRoninRoute />}>
@@ -87,7 +86,8 @@ function App() {
               <Route path='/hacking/practice' element={<HackingPractice />} />
             </Route>
 
-            <Route element={<HeadRoute />}>
+            <Route element={<SeniorOpRoute />}>
+              <Route path='/inventory' element={<Inventory />} />
               <Route path='/groups' element={<GroupListing />} />
               <Route path='/groups/:groupId' element={<GroupDetails />} />
               <Route path='/members' element={<MembersListing />} />
@@ -108,9 +108,9 @@ function ProtectedRoute({ children }) {
   return !!user ? children : <Navigate to="/login" replace />;
 };
 
-function HeadRoute() {
+function SeniorOpRoute() {
   const { access } = useAuth();
-  return access.headAccess ? <Outlet /> : <Navigate to="/" replace />;
+  return access.seniorOpAccess ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 function ChainedRoute() {

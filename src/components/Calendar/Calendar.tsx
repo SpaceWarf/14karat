@@ -34,7 +34,7 @@ function EventCalendar() {
       setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'event-update'));
     }
 
-    if (access.headAccess || profile.info.roles.includes('master-of-ceremonies')) {
+    if (access.seniorOpAccess || profile.info.roles.includes('master-of-ceremonies')) {
       fetchWebhook();
     }
   }, [access, profile]);
@@ -71,7 +71,7 @@ function EventCalendar() {
   }
 
   const handleSelectSlot = (event: any) => {
-    if (access.headAccess || profile.info.roles.includes('master-of-ceremonies')) {
+    if (access.seniorOpAccess || profile.info.roles.includes('master-of-ceremonies')) {
       setSlotStart(event.start);
       setSlotEnd(event.end);
       setOpenCreateModal(true);

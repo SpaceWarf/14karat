@@ -69,7 +69,7 @@ function AssetCard({ item, onDelete, expandModal }: GalleryProps) {
               <i className="external icon" />
             </button>
           )}
-          {access.headAccess && onDelete && (
+          {access.seniorOpAccess && onDelete && (
             <ConfirmationModal
               title='Confirm Delete Gallery Item'
               content={

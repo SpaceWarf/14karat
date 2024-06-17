@@ -60,9 +60,6 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
           {access.memberAccess && (
             <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
           )}
-          {access.chainedAccess && (
-            <SidebarItem name='Inventory' icon='boxes' path='/inventory' onClick={() => navigate('/inventory')} />
-          )}
           {(access.chainedAccess || access.roninAccess) && (
             <>
               <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
@@ -75,9 +72,10 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
               <SidebarItem name='Information Center' icon='info circle' path='/information-center' onClick={() => navigate('/information-center')} />
             </>
           )}
-          {access.headAccess && (
+          {access.seniorOpAccess && (
             <div className='AdminRoutes'>
               <div className='Divider' />
+              <SidebarItem name='Inventory' icon='boxes' path='/inventory' onClick={() => navigate('/inventory')} />
               <SidebarItem name='Groups' icon='group' path='/groups' onClick={() => navigate('/groups')} />
               <SidebarItem name='Statistics' icon='chart bar' path='/statistics' onClick={() => navigate('/statistics')} />
             </div>

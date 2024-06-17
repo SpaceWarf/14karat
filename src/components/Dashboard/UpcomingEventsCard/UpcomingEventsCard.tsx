@@ -25,7 +25,7 @@ function UpcomingEventsCard() {
       setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'event-update'));
     }
 
-    if (access.headAccess) {
+    if (access.seniorOpAccess) {
       fetchWebhook();
     }
   }, [access]);
