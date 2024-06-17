@@ -24,7 +24,7 @@ function InventoryItemRow(props: InventoryItemCardProps) {
         {props.item.tags.join(", ")}
       </td>
       {props.stashes.map(stash => {
-        const value = props.item.quantity[stash.id];
+        const value = props.item.quantity[stash.id] || 0;
         return (
           <td className="centered">
             {access.headAccess ? (

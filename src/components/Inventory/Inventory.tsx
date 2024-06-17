@@ -85,7 +85,7 @@ function Inventory() {
           ...item,
           quantity: {
             ...item.quantity,
-            [stashId]: item.quantity[stashId] - 1
+            [stashId]: getItemQuantity(item, stashId) - 1
           }
         },
         user
@@ -102,7 +102,7 @@ function Inventory() {
           ...item,
           quantity: {
             ...item.quantity,
-            [stashId]: item.quantity[stashId] + 1
+            [stashId]: getItemQuantity(item, stashId) + 1
           }
         },
         user
@@ -127,6 +127,10 @@ function Inventory() {
     }
   }
 
+  const getItemQuantity = (item: InventoryItem, stashId: string): number => {
+    return item.quantity[stashId] || 0
+  }
+
   return (
     <div className="Inventory" >
       <Header text="Inventory" decorated />
@@ -148,7 +152,7 @@ function Inventory() {
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map(item => {
                   const total = stashes.reduce((total: number, stash: Stash) => {
-                    return total + (item.quantity[stash.id] || 0)
+                    return total + (getItemQuantity(item, stash.id))
                   }, 0)
 
                   return (
@@ -159,11 +163,11 @@ function Inventory() {
                           {item.isMonetary ? currencyFormat(total) : total}
                         </p>
                         <div className="inputs">
-                          {stashes.map(stash => (
+                          {stashes.sort((a, b) => a.order - b.order).map(stash => (
                             <div>
                               <p>{stash.name}</p>
                               <InventoryInput
-                                value={item.quantity[stash.id]}
+                                value={getItemQuantity(item, stash.id)}
                                 onChange={(value: number) => handleChange(value, item, stash.id)}
                                 onAdd={() => handleAdd(item, stash.id)}
                                 onRemove={() => handleRemove(item, stash.id)}
@@ -181,7 +185,7 @@ function Inventory() {
                 <tr>
                   <th>Item</th>
                   <th>Tags</th>
-                  {stashes.map(stash => (
+                  {stashes.sort((a, b) => a.order - b.order).map(stash => (
                     <th>{stash.name} Quantity</th>
                   ))}
                 </tr>
@@ -190,7 +194,7 @@ function Inventory() {
                 {Object.values(InventoryCategory).map(category => (
                   <>
                     <tr className="CategoryRow" onClick={() => handleToggleCategory(category)}>
-                      <td colSpan={4}>
+                      <td colSpan={2 + stashes.length}>
                         {collapsedCategories.includes(category) ? (
                           <i className="angle right icon" />
                         ) : (
