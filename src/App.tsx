@@ -51,6 +51,8 @@ function App() {
           <Route element={<ProtectedRoute><PageLayout /></ProtectedRoute>}>
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
+            <Route path='/war' element={<WarInfo />} />
+            <Route path='/radios' element={<Radios />} />
 
             <Route element={<ConditionalRoute condition={access.memberAccess} />}>
               <Route path='/roster' element={<Roster />} />
@@ -67,11 +69,6 @@ function App() {
               <Route path='/jobs/new' element={<JobPicker />} />
               <Route path='/jobs/completed' element={<CompletedJobListing />} />
               <Route path='/information-center/jobs' element={<Jobs />} />
-            </Route>
-
-            <Route element={<ConditionalRoute condition={access.memberAccess || access.roninAccess} />}>
-              <Route path='/war' element={<WarInfo />} />
-              <Route path='/radios' element={<Radios />} />
             </Route>
 
             <Route element={<ConditionalRoute condition={access.chainedAccess} />}>
