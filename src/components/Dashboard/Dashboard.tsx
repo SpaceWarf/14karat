@@ -13,6 +13,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import JobsCard from './JobsCard/JobsCard';
 import { getAvatarBorder, getHeaderBackground, getHeaderDecoration, isThemeActive } from '../../utils/themes';
 import UnchainedCard from './UnchainedCard/UnchainedCard';
+import RoninCard from './RoninCard/RoninCard';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -49,14 +50,15 @@ function Dashboard() {
       <div className='content'>
         <div className='Col'>
           {!access.chainedAccess && !access.roninAccess && <UnchainedCard />}
-          {(access.chainedAccess || access.roninAccess) && <RecentStratCard />}
+          {!access.chainedAccess && access.roninAccess && <RoninCard />}
+          {access.chainedAccess && <RecentStratCard />}
         </div>
         <div className='Col'>
           <RadiosCard />
-          <JobsCard />
+          {!access.roninAccess && <JobsCard />}
         </div>
         <div className='Col'>
-          <UpcomingEventsCard />
+          {!access.roninAccess && <UpcomingEventsCard />}
           <WarCard />
           <QuoteCard />
           {/* {access.chainedAccess && <NewFeatureCard />} */}

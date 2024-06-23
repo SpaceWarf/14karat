@@ -52,10 +52,9 @@ function App() {
             <Route index element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />} />
 
-            <Route element={<ConditionalRoute condition={access.memberAccess || access.roninAccess} />}>
+            <Route element={<ConditionalRoute condition={access.memberAccess} />}>
               <Route path='/roster' element={<Roster />} />
               <Route path='/calendar' element={<Calendar />} />
-              <Route path='/war' element={<WarInfo />} />
               <Route path='/information-center' element={<InformationCenter />} />
               <Route path='/information-center/hierarchy' element={<Hierarchy />} />
               <Route path='/information-center/rules' element={<Rules />} />
@@ -68,16 +67,23 @@ function App() {
               <Route path='/jobs/new' element={<JobPicker />} />
               <Route path='/jobs/completed' element={<CompletedJobListing />} />
               <Route path='/information-center/jobs' element={<Jobs />} />
+            </Route>
+
+            <Route element={<ConditionalRoute condition={access.memberAccess || access.roninAccess} />}>
+              <Route path='/war' element={<WarInfo />} />
               <Route path='/radios' element={<Radios />} />
             </Route>
 
-            <Route element={<ConditionalRoute condition={access.chainedAccess || access.roninAccess} />}>
+            <Route element={<ConditionalRoute condition={access.chainedAccess} />}>
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/information-center/jobs/fleeca' element={<FleecaGuide />} />
               <Route path='/information-center/black-markets' element={<BlackMarkets />} />
               <Route path='/driver-strats' element={<DriverStrats />} />
               <Route path='/driver-strats/all' element={<DriverStratGallery />} />
               <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
+            </Route>
+
+            <Route element={<ConditionalRoute condition={access.chainedAccess || access.roninAccess} />}>
               <Route path='/hacking' element={<Hacking />} />
               <Route path='/hacking/practice' element={<HackingPractice />} />
             </Route>
