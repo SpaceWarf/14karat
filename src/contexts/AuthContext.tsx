@@ -89,7 +89,7 @@ export function AuthProvider({ children }) {
               seniorOpAccess: true,
               chainedAccess: true,
               memberAccess: true,
-              roninAccess: true,
+              roninAccess: false,
             }
           }
 
