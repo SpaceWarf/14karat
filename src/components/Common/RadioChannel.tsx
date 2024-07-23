@@ -19,22 +19,35 @@ function RadioChannel(props: RadioChannelProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [webhook, setWebhook] = useState<Webhook>();
   const [friendsWebhook, setFriendsWebhook] = useState<Webhook>();
+  const [roninWebhook, setRoninWebhook] = useState<Webhook>();
   const allUsedChannels = useSelector(getAllUsedChannels);
 
   useEffect(() => {
     const fetchWebhook = async () => {
       setWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'radio-update'));
       setFriendsWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'friends-radio-update'));
+      setRoninWebhook(await getItemById<Webhook>(DatabaseTable.WEBHOOK, 'ronin-radio-update'));
     }
 
     fetchWebhook();
   }, []);
 
   const sendWebhook = (newChannel?: string) => {
+    const webhookStr = getWebhookString(newChannel)
+
     if (props.radio.type !== RadioType.FRIENDS && webhook) {
       triggerDiscordWebhook({
         url: webhook.url,
-        content: getWebhookString(newChannel),
+        content: webhookStr,
+      }).catch(error => {
+        console.error(error);
+      });
+    }
+
+    if (props.radio.type === RadioType.MAIN && roninWebhook) {
+      triggerDiscordWebhook({
+        url: roninWebhook.url,
+        content: webhookStr,
       }).catch(error => {
         console.error(error);
       });
@@ -43,7 +56,7 @@ function RadioChannel(props: RadioChannelProps) {
     if (props.radio.type === RadioType.FRIENDS && friendsWebhook) {
       triggerDiscordWebhook({
         url: friendsWebhook.url,
-        content: getWebhookString(newChannel),
+        content: webhookStr,
       }).catch(error => {
         console.error(error);
       });
