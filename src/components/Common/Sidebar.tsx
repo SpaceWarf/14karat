@@ -61,10 +61,10 @@ function Sidebar({ onCollapse, collapsed }: SidebarProps) {
             <SidebarItem name='Roster' icon='address book' path='/roster' onClick={() => navigate('/roster')} />
           )}
           {(access.chainedAccess || access.roninAccess) && (
-            <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
-          )}
-          {access.chainedAccess && (
-            <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
+            <>
+              <SidebarItem name='Hacking' icon='code circle' path='/hacking' onClick={() => navigate('/hacking')} />
+              <SidebarItem name='Driver Strats' icon='car' path='/driver-strats' onClick={() => navigate('/driver-strats')} />
+            </>
           )}
           <SidebarItem name='War Info' icon='bomb alternate' path='/war' onClick={() => navigate('/war')} />
           {access.memberAccess && (

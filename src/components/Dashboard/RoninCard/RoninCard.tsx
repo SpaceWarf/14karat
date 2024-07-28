@@ -14,6 +14,7 @@ function RoninCard() {
           <ul>
             <li><b>Radios</b>: view all the active radios and burn them if necessary;</li>
             <li><b>Hacking</b>: view and practice hacks used on jobs;</li>
+            <li><b>Driver Strats</b>: view a list of rat strats and VIP spots;</li>
             <li><b>War Info</b>: view the current war stats and slide timers.</li>
           </ul>
           <p>

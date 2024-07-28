@@ -75,14 +75,14 @@ function App() {
               <Route path='/information-center/jobs/vangelico' element={<VangieGuide />} />
               <Route path='/information-center/jobs/fleeca' element={<FleecaGuide />} />
               <Route path='/information-center/black-markets' element={<BlackMarkets />} />
-              <Route path='/driver-strats' element={<DriverStrats />} />
-              <Route path='/driver-strats/all' element={<DriverStratGallery />} />
-              <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             </Route>
 
             <Route element={<ConditionalRoute condition={access.chainedAccess || access.roninAccess} />}>
               <Route path='/hacking' element={<Hacking />} />
               <Route path='/hacking/practice' element={<HackingPractice />} />
+              <Route path='/driver-strats' element={<DriverStrats />} />
+              <Route path='/driver-strats/all' element={<DriverStratGallery />} />
+              <Route path='/driver-strats/:neighbourhood' element={<NeighbourghoodGallery />} />
             </Route>
 
             <Route element={<ConditionalRoute condition={access.seniorOpAccess} />}>

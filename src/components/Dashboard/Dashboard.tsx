@@ -51,7 +51,7 @@ function Dashboard() {
         <div className='Col'>
           {!access.chainedAccess && !access.roninAccess && <UnchainedCard />}
           {!access.chainedAccess && access.roninAccess && <RoninCard />}
-          {access.chainedAccess && <RecentStratCard />}
+          {(access.chainedAccess || access.roninAccess) && <RecentStratCard />}
         </div>
         <div className='Col'>
           <RadiosCard />
